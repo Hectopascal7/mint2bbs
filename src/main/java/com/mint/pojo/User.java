@@ -11,7 +11,7 @@ public class User {
 
     private String nickname;
 
-    private Integer character;
+    private Integer role;
 
     private String name;
 
@@ -33,12 +33,16 @@ public class User {
 
     private Date jointime;
 
-    public User(String uid, String loginid, String password, String nickname, Integer character, String name, Integer sex, String idcnum, String phone, Date birthday, String house, String license, String profile, Integer point, Date jointime) {
+    private Integer ulevel;
+
+    private String email;
+
+    public User(String uid, String loginid, String password, String nickname, Integer role, String name, Integer sex, String idcnum, String phone, Date birthday, String house, String license, String profile, Integer point, Date jointime, Integer ulevel, String email) {
         this.uid = uid;
         this.loginid = loginid;
         this.password = password;
         this.nickname = nickname;
-        this.character = character;
+        this.role = role;
         this.name = name;
         this.sex = sex;
         this.idcnum = idcnum;
@@ -49,6 +53,8 @@ public class User {
         this.profile = profile;
         this.point = point;
         this.jointime = jointime;
+        this.ulevel = ulevel;
+        this.email = email;
     }
 
     public User() {
@@ -87,12 +93,12 @@ public class User {
         this.nickname = nickname == null ? null : nickname.trim();
     }
 
-    public Integer getCharacter() {
-        return character;
+    public Integer getRole() {
+        return role;
     }
 
-    public void setCharacter(Integer character) {
-        this.character = character;
+    public void setRole(Integer role) {
+        this.role = role;
     }
 
     public String getName() {
@@ -173,5 +179,21 @@ public class User {
 
     public void setJointime(Date jointime) {
         this.jointime = jointime;
+    }
+
+    public Integer getUlevel() {
+        return ulevel;
+    }
+
+    public void setUlevel(Integer ulevel) {
+        this.ulevel = ulevel;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email == null ? null : email.trim();
     }
 }

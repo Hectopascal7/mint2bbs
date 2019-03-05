@@ -1,634 +1,245 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mint.dao.UserMapper">
-  <resultMap id="BaseResultMap" type="com.mint.pojo.User">
-    <constructor>
-      <idArg column="uid" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="loginid" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="password" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="nickname" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="character" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="sex" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="idcnum" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="phone" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="birthday" javaType="java.util.Date" jdbcType="DATE" />
-      <arg column="house" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="license" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="profile" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="point" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="jointime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-    </constructor>
-  </resultMap>
-  <sql id="Base_Column_List">
-    uid, loginid, password, nickname, character, name, sex, idcnum, phone, birthday, 
-    house, license, profile, point, jointime
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from tb_user
-    where uid = #{uid,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from tb_user
-    where uid = #{uid,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="com.mint.pojo.User">
-    insert into tb_user (uid, loginid, password, 
-      nickname, character, name, 
-      sex, idcnum, phone, 
-      birthday, house, license, 
-      profile, point, jointime
-      )
-    values (#{uid,jdbcType=VARCHAR}, #{loginid,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{nickname,jdbcType=VARCHAR}, #{character,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
-      #{sex,jdbcType=INTEGER}, #{idcnum,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{birthday,jdbcType=DATE}, #{house,jdbcType=VARCHAR}, #{license,jdbcType=VARCHAR}, 
-      #{profile,jdbcType=VARCHAR}, #{point,jdbcType=INTEGER}, #{jointime,jdbcType=TIMESTAMP}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.mint.pojo.User">
-    insert into tb_user
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="uid != null">
-        uid,
-      </if>
-      <if test="loginid != null">
-        loginid,
-      </if>
-      <if test="password != null">
-        password,
-      </if>
-      <if test="nickname != null">
-        nickname,
-      </if>
-      <if test="character != null">
-        character,
-      </if>
-      <if test="name != null">
-        name,
-      </if>
-      <if test="sex != null">
-        sex,
-      </if>
-      <if test="idcnum != null">
-        idcnum,
-      </if>
-      <if test="phone != null">
-        phone,
-      </if>
-      <if test="birthday != null">
-        birthday,
-      </if>
-      <if test="house != null">
-        house,
-      </if>
-      <if test="license != null">
-        license,
-      </if>
-      <if test="profile != null">
-        profile,
-      </if>
-      <if test="point != null">
-        point,
-      </if>
-      <if test="jointime != null">
-        jointime,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="uid != null">
-        #{uid,jdbcType=VARCHAR},
-      </if>
-      <if test="loginid != null">
-        #{loginid,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null">
-        #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="nickname != null">
-        #{nickname,jdbcType=VARCHAR},
-      </if>
-      <if test="character != null">
-        #{character,jdbcType=INTEGER},
-      </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="sex != null">
-        #{sex,jdbcType=INTEGER},
-      </if>
-      <if test="idcnum != null">
-        #{idcnum,jdbcType=VARCHAR},
-      </if>
-      <if test="phone != null">
-        #{phone,jdbcType=VARCHAR},
-      </if>
-      <if test="birthday != null">
-        #{birthday,jdbcType=DATE},
-      </if>
-      <if test="house != null">
-        #{house,jdbcType=VARCHAR},
-      </if>
-      <if test="license != null">
-        #{license,jdbcType=VARCHAR},
-      </if>
-      <if test="profile != null">
-        #{profile,jdbcType=VARCHAR},
-      </if>
-      <if test="point != null">
-        #{point,jdbcType=INTEGER},
-      </if>
-      <if test="jointime != null">
-        #{jointime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.mint.pojo.User">
-    update tb_user
-    <set>
-      <if test="loginid != null">
-        loginid = #{loginid,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null">
-        password = #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="nickname != null">
-        nickname = #{nickname,jdbcType=VARCHAR},
-      </if>
-      <if test="character != null">
-        character = #{character,jdbcType=INTEGER},
-      </if>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="sex != null">
-        sex = #{sex,jdbcType=INTEGER},
-      </if>
-      <if test="idcnum != null">
-        idcnum = #{idcnum,jdbcType=VARCHAR},
-      </if>
-      <if test="phone != null">
-        phone = #{phone,jdbcType=VARCHAR},
-      </if>
-      <if test="birthday != null">
-        birthday = #{birthday,jdbcType=DATE},
-      </if>
-      <if test="house != null">
-        house = #{house,jdbcType=VARCHAR},
-      </if>
-      <if test="license != null">
-        license = #{license,jdbcType=VARCHAR},
-      </if>
-      <if test="profile != null">
-        profile = #{profile,jdbcType=VARCHAR},
-      </if>
-      <if test="point != null">
-        point = #{point,jdbcType=INTEGER},
-      </if>
-      <if test="jointime != null">
-        jointime = #{jointime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where uid = #{uid,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.mint.pojo.User">
-    update tb_user
-    set loginid = #{loginid,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      nickname = #{nickname,jdbcType=VARCHAR},
-      character = #{character,jdbcType=INTEGER},
-      name = #{name,jdbcType=VARCHAR},
-      sex = #{sex,jdbcType=INTEGER},
-      idcnum = #{idcnum,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=VARCHAR},
-      birthday = #{birthday,jdbcType=DATE},
-      house = #{house,jdbcType=VARCHAR},
-      license = #{license,jdbcType=VARCHAR},
-      profile = #{profile,jdbcType=VARCHAR},
-      point = #{point,jdbcType=INTEGER},
-      jointime = #{jointime,jdbcType=TIMESTAMP}
-    where uid = #{uid,jdbcType=VARCHAR}
-  </update>
-  <resultMap id="BaseResultMap" type="com.mint.pojo.User">
-    <constructor>
-      <idArg column="uid" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="loginid" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="password" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="nickname" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="character" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="sex" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="idcnum" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="phone" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="birthday" javaType="java.util.Date" jdbcType="DATE" />
-      <arg column="house" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="license" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="profile" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="point" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="jointime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-    </constructor>
-  </resultMap>
-  <sql id="Base_Column_List">
-    uid, loginid, password, nickname, character, name, sex, idcnum, phone, birthday, 
-    house, license, profile, point, jointime
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from tb_user
-    where uid = #{uid,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from tb_user
-    where uid = #{uid,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="com.mint.pojo.User">
-    insert into tb_user (uid, loginid, password, 
-      nickname, character, name, 
-      sex, idcnum, phone, 
-      birthday, house, license, 
-      profile, point, jointime
-      )
-    values (#{uid,jdbcType=VARCHAR}, #{loginid,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{nickname,jdbcType=VARCHAR}, #{character,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{sex,jdbcType=INTEGER}, #{idcnum,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{birthday,jdbcType=DATE}, #{house,jdbcType=VARCHAR}, #{license,jdbcType=VARCHAR}, 
-      #{profile,jdbcType=VARCHAR}, #{point,jdbcType=INTEGER}, #{jointime,jdbcType=TIMESTAMP}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.mint.pojo.User">
-    insert into tb_user
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="uid != null">
-        uid,
-      </if>
-      <if test="loginid != null">
-        loginid,
-      </if>
-      <if test="password != null">
-        password,
-      </if>
-      <if test="nickname != null">
-        nickname,
-      </if>
-      <if test="character != null">
-        character,
-      </if>
-      <if test="name != null">
-        name,
-      </if>
-      <if test="sex != null">
-        sex,
-      </if>
-      <if test="idcnum != null">
-        idcnum,
-      </if>
-      <if test="phone != null">
-        phone,
-      </if>
-      <if test="birthday != null">
-        birthday,
-      </if>
-      <if test="house != null">
-        house,
-      </if>
-      <if test="license != null">
-        license,
-      </if>
-      <if test="profile != null">
-        profile,
-      </if>
-      <if test="point != null">
-        point,
-      </if>
-      <if test="jointime != null">
-        jointime,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="uid != null">
-        #{uid,jdbcType=VARCHAR},
-      </if>
-      <if test="loginid != null">
-        #{loginid,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null">
-        #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="nickname != null">
-        #{nickname,jdbcType=VARCHAR},
-      </if>
-      <if test="character != null">
-        #{character,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="sex != null">
-        #{sex,jdbcType=INTEGER},
-      </if>
-      <if test="idcnum != null">
-        #{idcnum,jdbcType=VARCHAR},
-      </if>
-      <if test="phone != null">
-        #{phone,jdbcType=VARCHAR},
-      </if>
-      <if test="birthday != null">
-        #{birthday,jdbcType=DATE},
-      </if>
-      <if test="house != null">
-        #{house,jdbcType=VARCHAR},
-      </if>
-      <if test="license != null">
-        #{license,jdbcType=VARCHAR},
-      </if>
-      <if test="profile != null">
-        #{profile,jdbcType=VARCHAR},
-      </if>
-      <if test="point != null">
-        #{point,jdbcType=INTEGER},
-      </if>
-      <if test="jointime != null">
-        #{jointime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.mint.pojo.User">
-    update tb_user
-    <set>
-      <if test="loginid != null">
-        loginid = #{loginid,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null">
-        password = #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="nickname != null">
-        nickname = #{nickname,jdbcType=VARCHAR},
-      </if>
-      <if test="character != null">
-        character = #{character,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="sex != null">
-        sex = #{sex,jdbcType=INTEGER},
-      </if>
-      <if test="idcnum != null">
-        idcnum = #{idcnum,jdbcType=VARCHAR},
-      </if>
-      <if test="phone != null">
-        phone = #{phone,jdbcType=VARCHAR},
-      </if>
-      <if test="birthday != null">
-        birthday = #{birthday,jdbcType=DATE},
-      </if>
-      <if test="house != null">
-        house = #{house,jdbcType=VARCHAR},
-      </if>
-      <if test="license != null">
-        license = #{license,jdbcType=VARCHAR},
-      </if>
-      <if test="profile != null">
-        profile = #{profile,jdbcType=VARCHAR},
-      </if>
-      <if test="point != null">
-        point = #{point,jdbcType=INTEGER},
-      </if>
-      <if test="jointime != null">
-        jointime = #{jointime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where uid = #{uid,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.mint.pojo.User">
-    update tb_user
-    set loginid = #{loginid,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      nickname = #{nickname,jdbcType=VARCHAR},
-      character = #{character,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
-      sex = #{sex,jdbcType=INTEGER},
-      idcnum = #{idcnum,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=VARCHAR},
-      birthday = #{birthday,jdbcType=DATE},
-      house = #{house,jdbcType=VARCHAR},
-      license = #{license,jdbcType=VARCHAR},
-      profile = #{profile,jdbcType=VARCHAR},
-      point = #{point,jdbcType=INTEGER},
-      jointime = #{jointime,jdbcType=TIMESTAMP}
-    where uid = #{uid,jdbcType=VARCHAR}
-  </update>
-  <resultMap id="BaseResultMap" type="com.mint.pojo.User">
-    <constructor>
-      <idArg column="uid" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="loginid" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="password" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="nickname" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="character" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="sex" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="idcnum" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="phone" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="birthday" javaType="java.util.Date" jdbcType="DATE" />
-      <arg column="house" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="license" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="profile" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="point" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="jointime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-    </constructor>
-  </resultMap>
-  <sql id="Base_Column_List">
-    uid, loginid, password, nickname, character, name, sex, idcnum, phone, birthday, 
-    house, license, profile, point, jointime
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from tb_user
-    where uid = #{uid,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from tb_user
-    where uid = #{uid,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="com.mint.pojo.User">
-    insert into tb_user (uid, loginid, password, 
-      nickname, character, name, 
-      sex, idcnum, phone, 
-      birthday, house, license, 
-      profile, point, jointime
-      )
-    values (#{uid,jdbcType=VARCHAR}, #{loginid,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{nickname,jdbcType=VARCHAR}, #{character,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{sex,jdbcType=INTEGER}, #{idcnum,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{birthday,jdbcType=DATE}, #{house,jdbcType=VARCHAR}, #{license,jdbcType=VARCHAR}, 
-      #{profile,jdbcType=VARCHAR}, #{point,jdbcType=INTEGER}, #{jointime,jdbcType=TIMESTAMP}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.mint.pojo.User">
-    insert into tb_user
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="uid != null">
-        uid,
-      </if>
-      <if test="loginid != null">
-        loginid,
-      </if>
-      <if test="password != null">
-        password,
-      </if>
-      <if test="nickname != null">
-        nickname,
-      </if>
-      <if test="character != null">
-        character,
-      </if>
-      <if test="name != null">
-        name,
-      </if>
-      <if test="sex != null">
-        sex,
-      </if>
-      <if test="idcnum != null">
-        idcnum,
-      </if>
-      <if test="phone != null">
-        phone,
-      </if>
-      <if test="birthday != null">
-        birthday,
-      </if>
-      <if test="house != null">
-        house,
-      </if>
-      <if test="license != null">
-        license,
-      </if>
-      <if test="profile != null">
-        profile,
-      </if>
-      <if test="point != null">
-        point,
-      </if>
-      <if test="jointime != null">
-        jointime,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="uid != null">
-        #{uid,jdbcType=VARCHAR},
-      </if>
-      <if test="loginid != null">
-        #{loginid,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null">
-        #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="nickname != null">
-        #{nickname,jdbcType=VARCHAR},
-      </if>
-      <if test="character != null">
-        #{character,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="sex != null">
-        #{sex,jdbcType=INTEGER},
-      </if>
-      <if test="idcnum != null">
-        #{idcnum,jdbcType=VARCHAR},
-      </if>
-      <if test="phone != null">
-        #{phone,jdbcType=VARCHAR},
-      </if>
-      <if test="birthday != null">
-        #{birthday,jdbcType=DATE},
-      </if>
-      <if test="house != null">
-        #{house,jdbcType=VARCHAR},
-      </if>
-      <if test="license != null">
-        #{license,jdbcType=VARCHAR},
-      </if>
-      <if test="profile != null">
-        #{profile,jdbcType=VARCHAR},
-      </if>
-      <if test="point != null">
-        #{point,jdbcType=INTEGER},
-      </if>
-      <if test="jointime != null">
-        #{jointime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.mint.pojo.User">
-    update tb_user
-    <set>
-      <if test="loginid != null">
-        loginid = #{loginid,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null">
-        password = #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="nickname != null">
-        nickname = #{nickname,jdbcType=VARCHAR},
-      </if>
-      <if test="character != null">
-        character = #{character,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="sex != null">
-        sex = #{sex,jdbcType=INTEGER},
-      </if>
-      <if test="idcnum != null">
-        idcnum = #{idcnum,jdbcType=VARCHAR},
-      </if>
-      <if test="phone != null">
-        phone = #{phone,jdbcType=VARCHAR},
-      </if>
-      <if test="birthday != null">
-        birthday = #{birthday,jdbcType=DATE},
-      </if>
-      <if test="house != null">
-        house = #{house,jdbcType=VARCHAR},
-      </if>
-      <if test="license != null">
-        license = #{license,jdbcType=VARCHAR},
-      </if>
-      <if test="profile != null">
-        profile = #{profile,jdbcType=VARCHAR},
-      </if>
-      <if test="point != null">
-        point = #{point,jdbcType=INTEGER},
-      </if>
-      <if test="jointime != null">
-        jointime = #{jointime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where uid = #{uid,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.mint.pojo.User">
-    update tb_user
-    set loginid = #{loginid,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      nickname = #{nickname,jdbcType=VARCHAR},
-      character = #{character,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
-      sex = #{sex,jdbcType=INTEGER},
-      idcnum = #{idcnum,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=VARCHAR},
-      birthday = #{birthday,jdbcType=DATE},
-      house = #{house,jdbcType=VARCHAR},
-      license = #{license,jdbcType=VARCHAR},
-      profile = #{profile,jdbcType=VARCHAR},
-      point = #{point,jdbcType=INTEGER},
-      jointime = #{jointime,jdbcType=TIMESTAMP}
-    where uid = #{uid,jdbcType=VARCHAR}
+    <resultMap id="BaseResultMap" type="com.mint.pojo.User">
+        <constructor>
+            <idArg column="uid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="loginid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="password" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="nickname" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="role" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="sex" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="idcnum" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="phone" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="birthday" javaType="java.util.Date" jdbcType="DATE"/>
+            <arg column="house" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="license" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="profile" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="point" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="jointime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="ulevel" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="email" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+        uid, loginid, password, nickname, role, name, sex, idcnum, phone, birthday, house, license, profile, point, jointime, ulevel, email
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_user
+        where uid = #{uid,jdbcType=VARCHAR}
+    </select>
+    <select id="checkLoginid" resultType="int" parameterType="string">
+        select count(1)
+        from tb_user
+        where loginid = #{loginid}
+    </select>
+    <select id="checkUser" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_user
+        where loginid = #{loginid}
+        and password = #{password}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete
+        from tb_user
+        where uid = #{uid,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.mint.pojo.User">
+        insert into tb_user (uid, loginid, password,nickname, role, name,sex,
+            idcnum, phone,birthday, house, license,
+            profile, point, jointime,ulevel, email)
+        values (#{uid,jdbcType=VARCHAR}, #{loginid,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+            #{nickname,jdbcType=VARCHAR}, #{role,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+            #{sex,jdbcType=INTEGER}, #{idcnum,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+            #{birthday,jdbcType=DATE}, #{house,jdbcType=VARCHAR}, #{license,jdbcType=VARCHAR},
+            #{profile,jdbcType=VARCHAR}, #{point,jdbcType=INTEGER}, #{jointime,jdbcType=TIMESTAMP},
+            #{ulevel,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.mint.pojo.User">
+        insert into tb_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="loginid != null">
+                loginid,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="nickname != null">
+                nickname,
+            </if>
+            <if test="role != null">
+                role,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="idcnum != null">
+                idcnum,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="birthday != null">
+                birthday,
+            </if>
+            <if test="house != null">
+                house,
+            </if>
+            <if test="license != null">
+                license,
+            </if>
+            <if test="profile != null">
+                profile,
+            </if>
+            <if test="point != null">
+                point,
+            </if>
+            <if test="jointime != null">
+                jointime,
+            </if>
+            <if test="ulevel != null">
+                ulevel,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                #{uid,jdbcType=VARCHAR},
+            </if>
+            <if test="loginid != null">
+                #{loginid,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="role != null">
+                #{role,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=INTEGER},
+            </if>
+            <if test="idcnum != null">
+                #{idcnum,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                #{birthday,jdbcType=DATE},
+            </if>
+            <if test="house != null">
+                #{house,jdbcType=VARCHAR},
+            </if>
+            <if test="license != null">
+                #{license,jdbcType=VARCHAR},
+            </if>
+            <if test="profile != null">
+                #{profile,jdbcType=VARCHAR},
+            </if>
+            <if test="point != null">
+                #{point,jdbcType=INTEGER},
+            </if>
+            <if test="jointime != null">
+                #{jointime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="ulevel != null">
+                #{ulevel,jdbcType=INTEGER},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.mint.pojo.User">
+        update tb_user
+        <set>
+            <if test="loginid != null">
+                loginid = #{loginid,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                nickname = #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="role != null">
+                role = #{role,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=INTEGER},
+            </if>
+            <if test="idcnum != null">
+                idcnum = #{idcnum,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday,jdbcType=DATE},
+            </if>
+            <if test="house != null">
+                house = #{house,jdbcType=VARCHAR},
+            </if>
+            <if test="license != null">
+                license = #{license,jdbcType=VARCHAR},
+            </if>
+            <if test="profile != null">
+                profile = #{profile,jdbcType=VARCHAR},
+            </if>
+            <if test="point != null">
+                point = #{point,jdbcType=INTEGER},
+            </if>
+            <if test="jointime != null">
+                jointime = #{jointime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="ulevel != null">
+                ulevel = #{ulevel,jdbcType=INTEGER},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where uid = #{uid,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.mint.pojo.User">
+        update tb_user
+          set loginid = #{loginid,jdbcType=VARCHAR},
+              password = #{password,jdbcType=VARCHAR},
+              nickname = #{nickname,jdbcType=VARCHAR},
+              role = #{role,jdbcType=INTEGER},
+              name = #{name,jdbcType=VARCHAR},
+              sex = #{sex,jdbcType=INTEGER},
+              idcnum = #{idcnum,jdbcType=VARCHAR},
+              phone = #{phone,jdbcType=VARCHAR},
+              birthday = #{birthday,jdbcType=DATE},
+              house = #{house,jdbcType=VARCHAR},
+              license = #{license,jdbcType=VARCHAR},
+              profile = #{profile,jdbcType=VARCHAR},
+              point = #{point,jdbcType=INTEGER},
+              jointime = #{jointime,jdbcType=TIMESTAMP},
+              ulevel = #{ulevel,jdbcType=INTEGER},
+              email = #{email,jdbcType=VARCHAR}
+        where uid = #{uid,jdbcType=VARCHAR}
   </update>
 </mapper>

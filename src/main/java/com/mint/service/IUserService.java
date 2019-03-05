@@ -2,7 +2,6 @@ package com.mint.service;
 
 import com.mint.common.ServerResponse;
 import com.mint.pojo.User;
-import org.springframework.stereotype.Service;
 
 /**
  * @Program: mint2bbs
@@ -12,5 +11,6 @@ import org.springframework.stereotype.Service;
  **/
 public interface IUserService {
 
+    // 登录
     ServerResponse<User> login(String loginid, String password);
 }
