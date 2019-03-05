@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mint.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="com.mint.pojo.User">
+    <constructor>
+      <idArg column="uid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="uname" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="sex" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="neckname" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="birthday" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="carnum" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="housenum" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    uid, uname, sex, neckname, birthday, carnum, housenum
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_user
+    where uid = #{uid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tb_user
+    where uid = #{uid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.mint.pojo.User">
+    insert into tb_user (uid, uname, sex, 
+      neckname, birthday, carnum, 
+      housenum)
+    values (#{uid,jdbcType=VARCHAR}, #{uname,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
+      #{neckname,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, #{carnum,jdbcType=VARCHAR}, 
+      #{housenum,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mint.pojo.User">
+    insert into tb_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="uname != null">
+        uname,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="neckname != null">
+        neckname,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="carnum != null">
+        carnum,
+      </if>
+      <if test="housenum != null">
+        housenum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="uname != null">
+        #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="neckname != null">
+        #{neckname,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="carnum != null">
+        #{carnum,jdbcType=VARCHAR},
+      </if>
+      <if test="housenum != null">
+        #{housenum,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mint.pojo.User">
+    update tb_user
+    <set>
+      <if test="uname != null">
+        uname = #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="neckname != null">
+        neckname = #{neckname,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="carnum != null">
+        carnum = #{carnum,jdbcType=VARCHAR},
+      </if>
+      <if test="housenum != null">
+        housenum = #{housenum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uid = #{uid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mint.pojo.User">
+    update tb_user
+    set uname = #{uname,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      neckname = #{neckname,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=DATE},
+      carnum = #{carnum,jdbcType=VARCHAR},
+      housenum = #{housenum,jdbcType=VARCHAR}
+    where uid = #{uid,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.mint.pojo.User">
+    <constructor>
+      <arg column="uid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="uname" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="sex" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="neckname" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="birthday" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="carnum" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="housenum" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <insert id="insert" parameterType="com.mint.pojo.User">
+    insert into tb_user (uid, uname, sex, 
+      neckname, birthday, carnum, 
+      housenum)
+    values (#{uid,jdbcType=VARCHAR}, #{uname,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
+      #{neckname,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, #{carnum,jdbcType=VARCHAR}, 
+      #{housenum,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mint.pojo.User">
+    insert into tb_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="uname != null">
+        uname,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="neckname != null">
+        neckname,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="carnum != null">
+        carnum,
+      </if>
+      <if test="housenum != null">
+        housenum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="uname != null">
+        #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="neckname != null">
+        #{neckname,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="carnum != null">
+        #{carnum,jdbcType=VARCHAR},
+      </if>
+      <if test="housenum != null">
+        #{housenum,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>
