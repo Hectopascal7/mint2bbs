@@ -3,53 +3,37 @@ package com.mint.pojo;
 import java.util.Date;
 
 public class User {
-
-    // 用户识别ID，UUID生成
     private String uid;
 
-    // 用户登录ID
     private String loginid;
 
-    // 用户密码
     private String password;
 
-    // 用户昵称
     private String nickname;
 
-    // 用户角色 0-管理员，1-普通用户，2-版主
-    private String character;
+    private Integer character;
 
-    // 用户真实姓名
     private String name;
 
-    // 用户性别
     private Integer sex;
 
-    // 用户身份证号
     private String idcnum;
 
-    // 用户手机号码
     private String phone;
 
-    // 用户生日
     private Date birthday;
 
-    // 用户住所
     private String house;
 
-    // 用户车牌号
     private String license;
 
-    //用户头像
     private String profile;
 
-    // 用户积分
     private Integer point;
 
-    // 用户注册时间
     private Date jointime;
 
-    public User(String uid, String loginid, String password, String nickname, String character, String name, Integer sex, String idcnum, String phone, Date birthday, String house, String license, String profile, Integer point, Date jointime) {
+    public User(String uid, String loginid, String password, String nickname, Integer character, String name, Integer sex, String idcnum, String phone, Date birthday, String house, String license, String profile, Integer point, Date jointime) {
         this.uid = uid;
         this.loginid = loginid;
         this.password = password;
@@ -103,12 +87,12 @@ public class User {
         this.nickname = nickname == null ? null : nickname.trim();
     }
 
-    public String getCharacter() {
+    public Integer getCharacter() {
         return character;
     }
 
-    public void setCharacter(String character) {
-        this.character = character == null ? null : character.trim();
+    public void setCharacter(Integer character) {
+        this.character = character;
     }
 
     public String getName() {
