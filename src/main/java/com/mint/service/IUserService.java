@@ -10,8 +10,7 @@ import org.springframework.stereotype.Service;
  * @Author: Jeanne d'Arc
  * @Create: 2019-03-05 15:43:26
  **/
-@Service
 public interface IUserService {
 
-    ServerResponse<User> login(String username, String password);
+    ServerResponse<User> login(String loginid, String password);
 }
