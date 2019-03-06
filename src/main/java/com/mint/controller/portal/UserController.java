@@ -41,4 +41,21 @@ public class UserController {
         }
         return response;
     }
+
+    /**
+     * @Description 用户注册
+     * @Param loginid
+     * @Param password
+     * @Param session
+     * @Return ServerResponse<User>
+     */
+    @RequestMapping(value = "register.do",method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<User> register(String loginid, String password, HttpSession session){
+        ServerResponse<User> response = iUserService.login(loginid,password);
+        if(response.isSuccess()){
+            session.setAttribute(Const.CURRENT_USER,response.getData());
+        }
+        return response;
+    }
 }
