@@ -5,7 +5,7 @@
     <title>薄荷社区-首页</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="keywords" content="薄荷社区">
-    <meta name="description" content="薄荷社区是模块化前端UI框架Layui的官网社区，致力于为web开发提供强劲动力">
+    <meta name="description" content="薄荷社区,MintBBS,橙色薄荷°">
     <link rel="stylesheet" href="/script/layui/css/layui.css">
     <link rel="stylesheet" href="/css/global.css">
 </head>
@@ -18,13 +18,13 @@
         </a>
         <ul class="layui-nav fly-nav layui-hide-xs">
             <li class="layui-nav-item layui-this">
-                <a href="/"><i class="iconfont icon-jiaoliu"></i>交流</a>
+                <a href="/"><i class="iconfont icon-jiaoliu"></i>社区</a>
             </li>
             <li class="layui-nav-item">
-                <a href="case/case.html"><i class="iconfont icon-iconmingxinganli"></i>案例</a>
+                <a href="/page/portal/case/case.html"><i class="iconfont icon-iconmingxinganli"></i>工具箱</a>
             </li>
             <li class="layui-nav-item">
-                <a href="http://www.layui.com/" target="_blank"><i class="iconfont icon-ui"></i>框架</a>
+                <a href="http://www.layui.com/" target="_blank"><i class="iconfont icon-ui"></i>吐槽版</a>
             </li>
         </ul>
 
@@ -41,12 +41,12 @@
                 <a href="user/reg.html">注册</a>
             </li>
             <!--<li class="layui-nav-item layui-hide-xs">-->
-                <!--<a href="/app/qq/" onclick="layer.msg('正在通过QQ登入', {icon:16, shade: 0.1, time:0})" title="QQ登入"-->
-                   <!--class="iconfont icon-qq"></a>-->
+            <!--<a href="/app/qq/" onclick="layer.msg('正在通过QQ登入', {icon:16, shade: 0.1, time:0})" title="QQ登入"-->
+            <!--class="iconfont icon-qq"></a>-->
             <!--</li>-->
             <!--<li class="layui-nav-item layui-hide-xs">-->
-                <!--<a href="/app/weibo/" onclick="layer.msg('正在通过微博登入', {icon:16, shade: 0.1, time:0})" title="微博登入"-->
-                   <!--class="iconfont icon-weibo"></a>-->
+            <!--<a href="/app/weibo/" onclick="layer.msg('正在通过微博登入', {icon:16, shade: 0.1, time:0})" title="微博登入"-->
+            <!--class="iconfont icon-weibo"></a>-->
             <!--</li>-->
 
             <!-- 登入后的状态 -->
@@ -82,20 +82,23 @@
             <li><a href="jie/index.html">二手交易</a></li>
             <li><a href="jie/index.html">建议意见</a></li>
             <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li>
-             <!--用户登入后显示-->
+            <!--用户登入后显示-->
             <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="user/index.html">我的贴子</a></li>
-            <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="user/index.html#collection">收藏</a>
+            <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a
+                    href="user/index.html#collection">收藏</a>
             </li>
         </ul>
 
         <div class="fly-column-right layui-hide-xs">
-            <span class="fly-search"><i class="layui-icon"></i></span>
-            <a href="jie/add.html" class="layui-btn">发表新帖</a>
+            <span class="fly-search">
+                <i class="layui-icon"></i>
+            </span>
+            <a href="page/portal/topic/add.html" class="layui-btn">发表新帖</a>
         </div>
-        <div class="layui-hide-sm layui-show-xs-block"
-             style="margin-top: -10px; padding-bottom: 10px; text-align: center;">
-            <a href="jie/add.html" class="layui-btn">发表新帖</a>
-        </div>
+        <!--<div class="layui-hide-sm layui-show-xs-block"-->
+        <!--style="margin-top: -10px; padding-bottom: 10px; text-align: center;">-->
+        <!--<a href="jie/add.html" class="layui-btn">发表新帖</a>-->
+        <!--</div>-->
     </div>
 </div>
 
@@ -115,21 +118,21 @@
                                  alt="橙色薄荷°">
                         </a>
                         <h2>
-                            <a class="layui-badge">动态</a>
-                            <a href="jie/detail.html">2019年3月水电费缴费通知</a>
+                            <a class="layui-badge">社区公告</a>
+                            <a href="page/portal/notice/detail.html">2019年3月水电费缴费通知</a>
                         </h2>
                         <div class="fly-list-info">
                             <a href="user/home.html" link>
                                 <cite>橙色薄荷°</cite>
-                                <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
-                                <i class="layui-badge fly-badge-vip">VIP3</i>
+                                <i class="iconfont icon-renzheng" title="认证信息：管理员"></i>
+                                <i class="layui-badge fly-badge-vip">管理员</i>
                             </a>
                             <span>刚刚</span>
 
-                            <span class="fly-list-kiss layui-hide-xs" title="悬赏飞吻"><i class="iconfont icon-kiss"></i> 60</span>
+                            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
                             <span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>
                             <span class="fly-list-nums">
-                <i class="iconfont icon-pinglun1" title="回答"></i> 66
+                <i class="iconfont icon-pinglun1" title="回复"></i> 66
               </span>
                         </div>
                         <div class="fly-list-badge">
@@ -833,7 +836,7 @@
     };
     layui.config({
         version: "3.0.0"
-        , base: '../res/mods/' //这里实际使用时，建议改成绝对路径
+        , base: '/script/mods/' //这里实际使用时，建议改成绝对路径
     }).extend({
         fly: 'index'
     }).use('fly');
