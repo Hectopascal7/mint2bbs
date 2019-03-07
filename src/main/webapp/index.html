@@ -9,8 +9,12 @@
     <link rel="stylesheet" href="/script/layui/css/layui.css">
     <link rel="stylesheet" href="/css/global.css">
 </head>
+<style>html {
+
+}</style>
 <body>
 
+<!--头部-->
 <div class="fly-header layui-bg-black">
     <div class="layui-container">
         <a class="fly-logo" href="/">
@@ -18,10 +22,10 @@
         </a>
         <ul class="layui-nav fly-nav layui-hide-xs">
             <li class="layui-nav-item layui-this">
-                <a href="/"><i class="iconfont icon-jiaoliu"></i>社区</a>
+                <a href="/"><i class="iconfont icon-jiaoliu"></i>薄荷社区</a>
             </li>
             <li class="layui-nav-item">
-                <a href="/page/portal/case/case.html"><i class="iconfont icon-iconmingxinganli"></i>工具箱</a>
+                <a href="/page/portal/market/market.html"><i class="iconfont icon-iconmingxinganli"></i>薄荷市场</a>
             </li>
             <li class="layui-nav-item">
                 <a href="http://www.layui.com/" target="_blank"><i class="iconfont icon-ui"></i>吐槽版</a>
@@ -32,13 +36,13 @@
 
             <!-- 未登入的状态 -->
             <li class="layui-nav-item">
-                <a class="iconfont icon-touxiang layui-hide-xs" href="user/login.html"></a>
+                <a class="iconfont icon-touxiang layui-hide-xs" href="/page/portal/user/login.html"></a>
             </li>
             <li class="layui-nav-item">
                 <a href="page/portal/user/login.html">登录</a>
             </li>
             <li class="layui-nav-item">
-                <a href="user/reg.html">注册</a>
+                <a href="/page/portal/user/register.html">注册</a>
             </li>
             <!--<li class="layui-nav-item layui-hide-xs">-->
             <!--<a href="/app/qq/" onclick="layer.msg('正在通过QQ登入', {icon:16, shade: 0.1, time:0})" title="QQ登入"-->
@@ -69,7 +73,9 @@
             -->
         </ul>
     </div>
+
 </div>
+
 
 <div class="fly-panel fly-column">
     <div class="layui-container">
@@ -119,7 +125,7 @@
                         </a>
                         <h2>
                             <a class="layui-badge">社区公告</a>
-                            <a href="page/portal/notice/detail.html">2019年3月水电费缴费通知</a>
+                            <a href="page/portal/topic/detail.html">2019年3月水电费缴费通知</a>
                         </h2>
                         <div class="fly-list-info">
                             <a href="user/home.html" link>
@@ -161,7 +167,7 @@
                             </a>
                             <span>2017-11-30</span>
 
-                            <span class="fly-list-kiss layui-hide-xs" title="悬赏飞吻"><i class="iconfont icon-kiss"></i> 60</span>
+                            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
                             <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
                             <span class="fly-list-nums">
                 <i class="iconfont icon-pinglun1" title="回答"></i> 66
@@ -193,7 +199,7 @@
                             </a>
                             <span>刚刚</span>
 
-                            <span class="fly-list-kiss layui-hide-xs" title="悬赏飞吻"><i class="iconfont icon-kiss"></i> 60</span>
+                            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
                             <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
                             <span class="fly-list-nums">
                 <i class="iconfont icon-pinglun1" title="回答"></i> 66
@@ -225,11 +231,13 @@
                             </a>
                             <span>刚刚</span>
 
-                            <span class="fly-list-kiss layui-hide-xs" title="悬赏飞吻"><i class="iconfont icon-kiss"></i> 60</span>
+                            <span class="layui-hide-xs" title="浏览">
+                                <i class="iconfont icon-liulanyanjing"></i> 60
+                            </span>
                             <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
                             <span class="fly-list-nums">
-                <i class="iconfont icon-pinglun1" title="回答"></i> 66
-              </span>
+                                <i class="iconfont icon-pinglun1" title="回答"></i> 66
+                            </span>
                         </div>
                         <div class="fly-list-badge">
                             <!--
@@ -241,8 +249,8 @@
                 </ul>
             </div>
 
+            <!--第二板块：回帖-->
             <div class="fly-panel" style="margin-bottom: 0;">
-
                 <div class="fly-panel-title fly-filter">
                     <a href="" class="layui-this">综合</a>
                     <span class="fly-mid"></span>
@@ -278,7 +286,7 @@
                             </a>
                             <span>刚刚</span>
 
-                            <span class="fly-list-kiss layui-hide-xs" title="悬赏飞吻"><i class="iconfont icon-kiss"></i> 60</span>
+                            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
                             <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
                             <span class="fly-list-nums">
                 <i class="iconfont icon-pinglun1" title="回答"></i> 66
@@ -301,11 +309,11 @@
                             <a href="user/home.html" link>
                                 <cite>橙色薄荷°</cite>
                                 <!--<i class="iconfont icon-renzheng" title="认证信息：XXX"></i>-->
-                                <i class="layui-badge fly-badge-vip">VIP3</i>
+                                <i class="layui-badge fly-badge-vip">管理员</i>
                             </a>
                             <span>刚刚</span>
 
-                            <span class="fly-list-kiss layui-hide-xs" title="悬赏飞吻"><i class="iconfont icon-kiss"></i> 60</span>
+                            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
                             <span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>
                             <span class="fly-list-nums">
                 <i class="iconfont icon-pinglun1" title="回答"></i> 66
@@ -334,7 +342,7 @@
                             </a>
                             <span>刚刚</span>
 
-                            <span class="fly-list-kiss layui-hide-xs" title="悬赏飞吻"><i class="iconfont icon-kiss"></i> 60</span>
+                            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
                             <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
                             <span class="fly-list-nums">
                 <i class="iconfont icon-pinglun1" title="回答"></i> 66
@@ -363,7 +371,7 @@
                             </a>
                             <span>刚刚</span>
 
-                            <span class="fly-list-kiss layui-hide-xs" title="悬赏飞吻"><i class="iconfont icon-kiss"></i> 60</span>
+                            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
                             <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
                             <span class="fly-list-nums">
                 <i class="iconfont icon-pinglun1" title="回答"></i> 66
@@ -392,7 +400,7 @@
                             </a>
                             <span>刚刚</span>
 
-                            <span class="fly-list-kiss layui-hide-xs" title="悬赏飞吻"><i class="iconfont icon-kiss"></i> 60</span>
+                            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
                             <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
                             <span class="fly-list-nums">
                 <i class="iconfont icon-pinglun1" title="回答"></i> 66
@@ -421,7 +429,7 @@
                             </a>
                             <span>刚刚</span>
 
-                            <span class="fly-list-kiss layui-hide-xs" title="悬赏飞吻"><i class="iconfont icon-kiss"></i> 60</span>
+                            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
                             <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
                             <span class="fly-list-nums">
                 <i class="iconfont icon-pinglun1" title="回答"></i> 66
@@ -450,7 +458,7 @@
                             </a>
                             <span>刚刚</span>
 
-                            <span class="fly-list-kiss layui-hide-xs" title="悬赏飞吻"><i class="iconfont icon-kiss"></i> 60</span>
+                            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
                             <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
                             <span class="fly-list-nums">
                 <i class="iconfont icon-pinglun1" title="回答"></i> 66
@@ -479,7 +487,7 @@
                             </a>
                             <span>刚刚</span>
 
-                            <span class="fly-list-kiss layui-hide-xs" title="悬赏飞吻"><i class="iconfont icon-kiss"></i> 60</span>
+                            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
                             <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
                             <span class="fly-list-nums">
                 <i class="iconfont icon-pinglun1" title="回答"></i> 66
@@ -508,7 +516,7 @@
                             </a>
                             <span>刚刚</span>
 
-                            <span class="fly-list-kiss layui-hide-xs" title="悬赏飞吻"><i class="iconfont icon-kiss"></i> 60</span>
+                            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
                             <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
                             <span class="fly-list-nums">
                 <i class="iconfont icon-pinglun1" title="回答"></i> 66
@@ -537,7 +545,7 @@
                             </a>
                             <span>刚刚</span>
 
-                            <span class="fly-list-kiss layui-hide-xs" title="悬赏飞吻"><i class="iconfont icon-kiss"></i> 60</span>
+                            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
                             <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
                             <span class="fly-list-nums">
                 <i class="iconfont icon-pinglun1" title="回答"></i> 66
@@ -566,7 +574,7 @@
                             </a>
                             <span>刚刚</span>
 
-                            <span class="fly-list-kiss layui-hide-xs" title="悬赏飞吻"><i class="iconfont icon-kiss"></i> 60</span>
+                            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
                             <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
                             <span class="fly-list-nums">
                 <i class="iconfont icon-pinglun1" title="回答"></i> 66
@@ -595,7 +603,36 @@
                             </a>
                             <span>刚刚</span>
 
-                            <span class="fly-list-kiss layui-hide-xs" title="悬赏飞吻"><i class="iconfont icon-kiss"></i> 60</span>
+                            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
+                            <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
+                            <span class="fly-list-nums">
+                <i class="iconfont icon-pinglun1" title="回答"></i> 66
+              </span>
+                        </div>
+                        <div class="fly-list-badge">
+                            <!--<span class="layui-badge layui-bg-red">精帖</span>-->
+                        </div>
+                    </li>
+                    <li>
+                        <a href="user/home.html" class="fly-avatar">
+                            <img src="image/asuna.jpg"
+                                 alt="橙色薄荷°">
+                        </a>
+                        <h2>
+                            <a class="layui-badge">动态</a>
+                            <a href="jie/detail.html">2019年3月水电费缴费通知</a>
+                        </h2>
+                        <div class="fly-list-info">
+                            <a href="user/home.html" link>
+                                <cite>橙色薄荷°</cite>
+                                <!--
+                                <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
+                                <i class="layui-badge fly-badge-vip">VIP3</i>
+                                -->
+                            </a>
+                            <span>刚刚</span>
+
+                            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
                             <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
                             <span class="fly-list-nums">
                 <i class="iconfont icon-pinglun1" title="回答"></i> 66
@@ -617,29 +654,26 @@
         <div class="layui-col-md4">
 
             <div class="fly-panel">
-                <h3 class="fly-panel-title">温馨通道</h3>
+                <h3 class="fly-panel-title">社区公告</h3>
                 <ul class="fly-panel-main fly-list-static">
                     <li>
-                        <a href="http://fly.layui.com/jie/4281/" target="_blank">layui 的 GitHub 及 Gitee (码云)
-                            仓库，欢迎Star</a>
+                        <a href="http://fly.layui.com/jie/4281/" target="_blank">2019年1月水电费收缴通知</a>
                     </li>
                     <li>
                         <a href="http://fly.layui.com/jie/5366/" target="_blank">
-                            layui 常见问题的处理和实用干货集锦
+                            2019年2月水电费收缴通知
                         </a>
                     </li>
                     <li>
-                        <a href="http://fly.layui.com/jie/4281/" target="_blank">layui 的 GitHub 及 Gitee (码云)
-                            仓库，欢迎Star</a>
+                        <a href="http://fly.layui.com/jie/4281/" target="_blank">小区公共区域禁停通知</a>
                     </li>
                     <li>
                         <a href="http://fly.layui.com/jie/5366/" target="_blank">
-                            layui 常见问题的处理和实用干货集锦
+                            薄荷社区业务养狗管理办法（征求）
                         </a>
                     </li>
                     <li>
-                        <a href="http://fly.layui.com/jie/4281/" target="_blank">layui 的 GitHub 及 Gitee (码云)
-                            仓库，欢迎Star</a>
+                        <a href="http://fly.layui.com/jie/4281/" target="_blank">薄荷社区第一次人口普查通知</a>
                     </li>
                 </ul>
             </div>
@@ -735,47 +769,48 @@
 
             <dl class="fly-panel fly-list-one">
                 <dt class="fly-panel-title">本周热议</dt>
-                <dd>
-                    <a href="jie/detail.html">2019年3月水电费缴费通知</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="jie/detail.html">2019年3月水电费缴费通知</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="jie/detail.html">2019年3月水电费缴费通知</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="jie/detail.html">2019年3月水电费缴费通知</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="jie/detail.html">2019年3月水电费缴费通知</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="jie/detail.html">2019年3月水电费缴费通知</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="jie/detail.html">2019年3月水电费缴费通知</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="jie/detail.html">2019年3月水电费缴费通知</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="jie/detail.html">2019年3月水电费缴费通知</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="jie/detail.html">2019年3月水电费缴费通知</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-
+                <dl class="fly-panel-main">
+                    <dd>
+                        <a href="jie/detail.html">2019年3月水电费缴费通知</a>
+                        <span><i class="iconfont icon-pinglun1"></i> 16</span>
+                    </dd>
+                    <dd>
+                        <a href="jie/detail.html">2019年3月水电费缴费通知</a>
+                        <span><i class="iconfont icon-pinglun1"></i> 16</span>
+                    </dd>
+                    <dd>
+                        <a href="jie/detail.html">2019年3月水电费缴费通知</a>
+                        <span><i class="iconfont icon-pinglun1"></i> 16</span>
+                    </dd>
+                    <dd>
+                        <a href="jie/detail.html">2019年3月水电费缴费通知</a>
+                        <span><i class="iconfont icon-pinglun1"></i> 16</span>
+                    </dd>
+                    <dd>
+                        <a href="jie/detail.html">2019年3月水电费缴费通知</a>
+                        <span><i class="iconfont icon-pinglun1"></i> 16</span>
+                    </dd>
+                    <dd>
+                        <a href="jie/detail.html">2019年3月水电费缴费通知</a>
+                        <span><i class="iconfont icon-pinglun1"></i> 16</span>
+                    </dd>
+                    <dd>
+                        <a href="jie/detail.html">2019年3月水电费缴费通知</a>
+                        <span><i class="iconfont icon-pinglun1"></i> 16</span>
+                    </dd>
+                    <dd>
+                        <a href="jie/detail.html">2019年3月水电费缴费通知</a>
+                        <span><i class="iconfont icon-pinglun1"></i> 16</span>
+                    </dd>
+                    <dd>
+                        <a href="jie/detail.html">2019年3月水电费缴费通知</a>
+                        <span><i class="iconfont icon-pinglun1"></i> 16</span>
+                    </dd>
+                    <dd>
+                        <a href="jie/detail.html">2019年3月水电费缴费通知</a>
+                        <span><i class="iconfont icon-pinglun1"></i> 16</span>
+                    </dd>
+                </dl>
                 <!-- 无数据时 -->
                 <!--
                 <div class="fly-none">没有相关数据</div>
@@ -784,29 +819,78 @@
 
             <div class="fly-panel">
                 <div class="fly-panel-title">
-                    这里可作为广告区域
+                    社区工具栏
                 </div>
                 <div class="fly-panel-main">
-                    <a href="http://layim.layui.com/?from=fly" target="_blank" class="fly-zanzhu"
-                       time-limit="2017.09.25-2099.01.01" style="background-color: #5FB878;">LayIM 3.0 - layui 旗舰之作</a>
+                    <a href="" target="_blank" class="fly-zanzhu"
+                       time-limit="2017.09.25-2099.01.01" style="background-color: #5FB878;">车牌号查询</a>
                 </div>
             </div>
 
-            <div class="fly-panel fly-link">
-                <h3 class="fly-panel-title">友情链接</h3>
+            <div class="fly-panel fly-list-one">
+
+
+                <dt class="fly-panel-title">社区管理组</dt>
                 <dl class="fly-panel-main">
-                    <dd><a href="http://www.layui.com/" target="_blank">layui</a>
-                    <dd>
-                    <dd><a href="http://layim.layui.com/" target="_blank">WebIM</a>
-                    <dd>
-                    <dd><a href="http://layer.layui.com/" target="_blank">layer</a>
-                    <dd>
-                    <dd><a href="http://www.layui.com/laydate/" target="_blank">layDate</a>
-                    <dd>
-                    <dd>
-                        <a href="mailto:xianxin@layui-inc.com?subject=%E7%94%B3%E8%AF%B7Fly%E7%A4%BE%E5%8C%BA%E5%8F%8B%E9%93%BE"
-                           class="fly-link">申请友链</a>
-                    <dd>
+                    <table>
+                        <tr>
+                            <td>
+                                <dd>
+                                    居委会：
+                                </dd>
+                            </td>
+                            <td>
+                                <dd>橙色薄荷°——17863909380</dd>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <dd>
+                                    物业：
+                                </dd>
+                            </td>
+                            <td>
+                                <dd>橙色薄荷°——17863909380</dd>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <dd>
+                                    保卫处：
+                                </dd>
+                            </td>
+                            <td>
+                                <dd>橙色薄荷°——17863909380</dd>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <dd>
+                                    值班室：
+                                </dd>
+                            </td>
+                            <td>
+                                <dd>橙色薄荷°——17863909380</dd>
+                            </td>
+                        </tr>
+
+
+                    </table>
+
+
+                    <!--<dd>-->
+                    <!--<a href="http://layim.layui.com/" target="_blank">物业负责人：橙色薄荷°——17863909380</a>-->
+                    <!--</dd>-->
+                    <!--<dd>-->
+                    <!--<a href="http://layer.layui.com/" target="_blank">保卫处负责人：橙色薄荷°——17863909380</a>-->
+                    <!--</dd>-->
+                    <!--<dd>-->
+                    <!--<a href="http://layer.layui.com/" target="_blank">值班室负责人：橙色薄荷°——17863909380</a>-->
+                    <!--</dd>-->
+                    <!--<dd>-->
+                    <!--<a href="mailto:xianxin@layui-inc.com?subject=%E7%94%B3%E8%AF%B7Fly%E7%A4%BE%E5%8C%BA%E5%8F%8B%E9%93%BE"-->
+                    <!--class="fly-link">商务洽谈：mint_com@163.com</a>-->
+                    <!--</dd>-->
                 </dl>
             </div>
 
@@ -815,12 +899,12 @@
 </div>
 
 <div class="fly-footer">
-    <p><a href="http://fly.layui.com/" target="_blank">薄荷社区</a> 2019 &copy; <a href="http://www.layui.com/"
-                                                                               target="_blank">橙色薄荷° 出品</a></p>
     <p>
-        <a href="http://fly.layui.com/jie/3147/" target="_blank">付费计划</a>
-        <a href="http://www.layui.com/template/fly/" target="_blank">获取Fly社区模版</a>
-        <a href="http://fly.layui.com/jie/2461/" target="_blank">微信公众号</a>
+        <a href="http://fly.layui.com/" target="_blank">薄荷社区</a> 2019 &copy;
+        <a href="http://www.layui.com/" target="_blank">橙色薄荷° 出品</a>
+    </p>
+    <p>
+        <a href="http://fly.layui.com/jie/3147/" target="_blank">Copyright &copy; 2019 橙色薄荷° All Rights Reserved.</a>
     </p>
 </div>
 
@@ -830,7 +914,7 @@
     layui.cache.user = {
         username: '游客'
         , uid: -1
-        , avatar: '../res/images/avatar/00.jpg'
+        , avatar: '/image/avatar/00.jpg'
         , experience: 83
         , sex: '男'
     };
