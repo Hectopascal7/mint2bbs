@@ -342,6 +342,7 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function 
         });
         */
     }
+
     $('body').on('click', '#LAY_signin', function () {
         var othis = $(this);
         if (othis.hasClass(DISABLED)) return;

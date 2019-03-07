@@ -52,10 +52,10 @@
             <!-- 登入后的状态 -->
             <li class="layui-nav-item">
                 <a class="fly-nav-avatar" href="javascript:;">
-                    <cite class="layui-hide-xs">贤心</cite>
+                    <cite class="layui-hide-xs">橙色薄荷°</cite>
                     <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：layui 作者"></i>
-                    <i class="layui-badge fly-badge-vip layui-hide-xs">VIP3</i>
-                    <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
+                    <i class="layui-badge fly-badge-vip layui-hide-xs">管理员</i>
+                    <img src="../../../image/asuna.jpg">
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="../user/set.html"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
@@ -88,12 +88,12 @@
                                     <div class="layui-input-block">
                                         <select lay-verify="required" name="class" lay-filter="column">
                                             <option></option>
-                                            <option value="0">社区公告</option>
-                                            <option value="99">分享</option>
-                                            <option value="100">讨论</option>
-                                            <option value="101">建议</option>
-                                            <option value="168">公告</option>
-                                            <option value="169">动态</option>
+                                            <option value="100">业主交流</option>
+                                            <option value="101">活动发起</option>
+                                            <option value="168">社区公告</option>
+                                            <option value="99">社区新闻</option>
+                                            <option value="169">XXXX</option>
+                                            <option value="0">薄荷市场</option>
                                         </select>
                                     </div>
                                 </div>
@@ -108,20 +108,20 @@
                             </div>
                             <div class="layui-row layui-col-space15 layui-form-item layui-hide" id="LAY_quiz">
                                 <div class="layui-col-md3">
-                                    <label class="layui-form-label">所属产品</label>
+                                    <label class="layui-form-label">新旧程度</label>
                                     <div class="layui-input-block">
                                         <select name="project">
                                             <option></option>
-                                            <option value="layui">layui</option>
-                                            <option value="独立版layer">独立版layer</option>
-                                            <option value="独立版layDate">独立版layDate</option>
-                                            <option value="LayIM">LayIM</option>
-                                            <option value="Fly社区模板">Fly社区模板</option>
+                                            <option value="layui">9成新</option>
+                                            <option value="独立版layer">8成新</option>
+                                            <option value="独立版layDate">6成新</option>
+                                            <option value="LayIM">5成新</option>
+                                            <option value="Fly社区模板">5成以下</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="layui-col-md3">
-                                    <label class="layui-form-label" for="L_version">版本号</label>
+                                    <label class="layui-form-label" for="L_version">理想价格</label>
                                     <div class="layui-input-block">
                                         <input type="text" id="L_version" value="" name="version" autocomplete="off"
                                                class="layui-input">
@@ -138,7 +138,7 @@
                             <div class="layui-form-item layui-form-text">
                                 <div class="layui-input-block">
                                     <textarea id="L_content" name="content" required lay-verify="required"
-                                              placeholder="详细描述" class="layui-textarea fly-editor"
+                                              placeholder="" class="layui-textarea fly-editor"
                                               style="height: 260px;"></textarea>
                                 </div>
                             </div>
