@@ -18,13 +18,13 @@
         </a>
         <ul class="layui-nav fly-nav layui-hide-xs">
             <li class="layui-nav-item layui-this">
-                <a href="/"><i class="iconfont icon-jiaoliu"></i>薄荷社区</a>
+                <a href="/"><i class="iconfont icon-jiaoliu"></i>业主论坛</a>
             </li>
             <li class="layui-nav-item">
-                <a href="../case/case.html"><i class="iconfont icon-iconmingxinganli"></i>薄荷市场</a>
+                <a href="/page/portal/market/market.html"><i class="iconfont icon-iconmingxinganli"></i>交易市场</a>
             </li>
             <li class="layui-nav-item">
-                <a href="http://www.layui.com/" target="_blank"><i class="iconfont icon-ui"></i>吐槽版</a>
+                <a href="http://www.layui.com/" target="_blank"><i class="iconfont icon-ui"></i>吐槽区</a>
             </li>
         </ul>
 
@@ -47,12 +47,12 @@
     <div class="fly-panel fly-panel-user" pad20>
         <div class="layui-tab layui-tab-brief" lay-filter="user">
             <ul class="layui-tab-title">
-                <li class="layui-this">登入</li>
+                <li class="layui-this">登录</li>
                 <li><a href="register.html">注册</a></li>
             </ul>
             <div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;">
                 <div class="layui-tab-item layui-show">
-                    <div class="layui-form layui-form-pane">
+                    <div class="layui-form layui-form-pane" style="text-align: center;margin: 0 auto; width: 310px">
                         <form method="post" action="/user/login.do">
                             <div class="layui-form-item">
                                 <label for="L_email" class="layui-form-label">账号</label>
@@ -72,7 +72,7 @@
                                 <label for="L_vercode" class="layui-form-label">验证码</label>
                                 <div class="layui-input-inline">
                                     <input type="text" id="L_vercode" name="vercode" lay-verify="required"
-                                           placeholder="请回答后面的问题" autocomplete="off" class="layui-input">
+                                           placeholder="请输入验证码" autocomplete="off" class="layui-input">
                                 </div>
                                 <!--<div class="layui-form-mid">-->
                                 <!--<span style="color: #c00;">{{d.vervicode}}</span>-->

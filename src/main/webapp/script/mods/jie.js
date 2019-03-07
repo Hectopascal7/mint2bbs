@@ -231,11 +231,11 @@ layui.define('fly', function(exports){
   });
 
 
-  //定位分页
-  if(/\/page\//.test(location.href) && !location.hash){
-    var replyTop = $('#flyReply').offset().top - 80;
-    $('html,body').scrollTop(replyTop);
-  }
+  // //定位分页
+  // if(/\/page\//.test(location.href) && !location.hash){
+  //   var replyTop = $('#flyReply').offset().top - 80;
+  //   $('html,body').scrollTop(replyTop);
+  // }
 
   exports('jie', null);
 });
