@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mint.dao.ResidentMapper">
+  <resultMap id="BaseResultMap" type="com.mint.pojo.Resident">
+    <constructor>
+      <idArg column="uid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="building" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="unit" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="room" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="phone" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="idcnum" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    uid, name, building, unit, room, phone, idcnum
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_resident
+    where uid = #{uid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tb_resident
+    where uid = #{uid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.mint.pojo.Resident">
+    insert into tb_resident (uid, name, building, 
+      unit, room, phone, 
+      idcnum)
+    values (#{uid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{building,jdbcType=INTEGER}, 
+      #{unit,jdbcType=INTEGER}, #{room,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{idcnum,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mint.pojo.Resident">
+    insert into tb_resident
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="building != null">
+        building,
+      </if>
+      <if test="unit != null">
+        unit,
+      </if>
+      <if test="room != null">
+        room,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="idcnum != null">
+        idcnum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="building != null">
+        #{building,jdbcType=INTEGER},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=INTEGER},
+      </if>
+      <if test="room != null">
+        #{room,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="idcnum != null">
+        #{idcnum,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mint.pojo.Resident">
+    update tb_resident
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="building != null">
+        building = #{building,jdbcType=INTEGER},
+      </if>
+      <if test="unit != null">
+        unit = #{unit,jdbcType=INTEGER},
+      </if>
+      <if test="room != null">
+        room = #{room,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="idcnum != null">
+        idcnum = #{idcnum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uid = #{uid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mint.pojo.Resident">
+    update tb_resident
+    set name = #{name,jdbcType=VARCHAR},
+      building = #{building,jdbcType=INTEGER},
+      unit = #{unit,jdbcType=INTEGER},
+      room = #{room,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      idcnum = #{idcnum,jdbcType=VARCHAR}
+    where uid = #{uid,jdbcType=VARCHAR}
+  </update>
+</mapper>
