@@ -2,6 +2,7 @@ package com.mint.controller.portal;
 
 import com.mint.common.Const;
 import com.mint.common.ServerResponse;
+import com.mint.pojo.Resident;
 import com.mint.pojo.User;
 import com.mint.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +33,13 @@ public class UserController {
      * @Param session
      * @Return ServerResponse<User>
      */
-    @RequestMapping(value = "login.do",method = RequestMethod.POST)
+    @RequestMapping(value = "login.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<User> login(String loginid, String password, HttpSession session){
-        ServerResponse<User> response = iUserService.login(loginid,password);
-        if(response.isSuccess()){
-            session.setAttribute(Const.CURRENT_USER,response.getData());
+    public ServerResponse<User> login(String loginid, String password, HttpSession session) {
+        System.out.println("121-------------------------------------------------");
+        ServerResponse<User> response = iUserService.login(loginid, password);
+        if (response.isSuccess()) {
+            session.setAttribute(Const.CURRENT_USER, response.getData());
         }
         return response;
     }
@@ -49,12 +51,13 @@ public class UserController {
      * @Param session
      * @Return ServerResponse<User>
      */
-    @RequestMapping(value = "register.do",method = RequestMethod.POST)
+    @RequestMapping(value = "register.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<User> register(String loginid, String password, HttpSession session){
-        ServerResponse<User> response = iUserService.login(loginid,password);
-        if(response.isSuccess()){
-            session.setAttribute(Const.CURRENT_USER,response.getData());
+    public ServerResponse<String> register(User user, Resident resident, HttpSession session) {
+        ServerResponse<String> response = iUserService.register(user,resident);
+        System.out.println(resident);
+        if (response.isSuccess()) {
+            session.setAttribute(Const.CURRENT_USER, response.getData());
         }
         return response;
     }

@@ -1,6 +1,7 @@
 package com.mint.service;
 
 import com.mint.common.ServerResponse;
+import com.mint.pojo.Resident;
 import com.mint.pojo.User;
 
 /**
@@ -13,4 +14,7 @@ public interface IUserService {
 
     // 登录
     ServerResponse<User> login(String loginid, String password);
+
+    // 注册
+    ServerResponse<String> register(User user, Resident resident);
 }
