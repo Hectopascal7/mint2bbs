@@ -1,9 +1,8 @@
 package com.mint.controller.portal;
 
-import com.mint.common.Const;
 import com.mint.common.ServerResponse;
 import com.mint.pojo.Topic;
-import com.mint.service.ITopicService;
+import com.mint.service.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,11 +18,11 @@ import javax.servlet.http.HttpSession;
  * @Create: 2019-03-07 20:55:31
  **/
 @Controller
-@RequestMapping("/topic")
-public class TopicController {
+@RequestMapping("/post")
+public class PostController {
 
     @Autowired
-    private ITopicService iTopicService;
+    private IPostService iPostService;
 
     /**
      * @Description 发帖
@@ -35,7 +34,7 @@ public class TopicController {
     @RequestMapping(value = "post.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<String> post(Topic topic, String partid, HttpSession session) {
-        ServerResponse<String> response = iTopicService.post(topic, partid, session);
+        ServerResponse<String> response = iPostService.post(topic, partid, session);
         return response;
     }
 }

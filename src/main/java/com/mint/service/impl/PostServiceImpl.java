@@ -5,13 +5,11 @@ import com.mint.common.ServerResponse;
 import com.mint.dao.TopicMapper;
 import com.mint.pojo.Topic;
 import com.mint.pojo.User;
-import com.mint.service.ITopicService;
+import com.mint.service.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -20,8 +18,8 @@ import java.util.UUID;
  * @Author: Jeanne d'Arc
  * @Create: 2019-03-07 20:56:41
  **/
-@Service("iTopicService")
-public class TopicServiceImpl implements ITopicService {
+@Service("iPostService")
+public class PostServiceImpl implements IPostService {
 
     @Autowired
     private TopicMapper topicMapper;
