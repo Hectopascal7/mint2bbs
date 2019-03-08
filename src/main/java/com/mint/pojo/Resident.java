@@ -27,7 +27,19 @@ public class Resident {
         this.idcnum = idcnum;
     }
 
-    // 重写equals方法，比较两个对象的内容是否相同
+    @Override
+    public String toString() {
+        return "Resident{" +
+                "uid='" + uid + '\'' +
+                ", name='" + name + '\'' +
+                ", building=" + building +
+                ", unit=" + unit +
+                ", room='" + room + '\'' +
+                ", phone='" + phone + '\'' +
+                ", idcnum='" + idcnum + '\'' +
+                '}';
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -45,19 +57,6 @@ public class Resident {
     @Override
     public int hashCode() {
         return Objects.hash(uid, name, building, unit, room, phone, idcnum);
-    }
-
-    @Override
-    public String toString() {
-        return "Resident{" +
-                "uid='" + uid + '\'' +
-                ", name='" + name + '\'' +
-                ", building=" + building +
-                ", unit=" + unit +
-                ", room='" + room + '\'' +
-                ", phone='" + phone + '\'' +
-                ", idcnum='" + idcnum + '\'' +
-                '}';
     }
 
     public Resident() {

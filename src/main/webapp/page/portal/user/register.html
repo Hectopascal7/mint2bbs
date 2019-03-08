@@ -106,6 +106,22 @@
                                 </div>
                             </div>
                             <div class="layui-form-item">
+                                <label class="layui-form-label">性别</label>
+                                <div class="layui-input-block">
+                                    <input type="radio" name="sex" value="0" title="男">
+                                    <input type="radio" name="sex" value="1" title="女">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">生日</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="birthday" id="birthday" autocomplete="off"
+                                               class="layui-input" style="width: 288px">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
                                 <label for="idcnum" class="layui-form-label">身份证号</label>
                                 <div class="layui-input-inline">
                                     <input type="text" id="idcnum" name="idcnum" required lay-verify="identity"
@@ -207,6 +223,14 @@
     }).extend({
         fly: 'index'
     }).use('fly');
+
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var laydate = layui.laydate;
+        //日期
+        laydate.render({
+            elem: '#birthday'
+        });
+    });
 </script>
 
 </body>

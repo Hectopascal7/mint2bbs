@@ -3,43 +3,65 @@ package com.mint.pojo;
 import java.util.Date;
 
 public class Topic {
-    private Integer tid;
+    private String tid;
+
+    private String uid;
 
     private String title;
 
+    private Date ptime;
+
+    private Integer acount;
+
+    private Integer rcount;
+
+    private Integer isbest;
+
+    private Integer issticky;
+
     private String content;
 
-    private String publisherid;
-
-    private Date publishtime;
-
-    private String accesscount;
-
-    private String replycount;
-
-    private Integer partid;
-
-    public Topic(Integer tid, String title, String content, String publisherid, Date publishtime, String accesscount, String replycount, Integer partid) {
+    public Topic(String tid, String uid, String title, Date ptime, Integer acount, Integer rcount, Integer isbest, Integer issticky) {
         this.tid = tid;
+        this.uid = uid;
         this.title = title;
+        this.ptime = ptime;
+        this.acount = acount;
+        this.rcount = rcount;
+        this.isbest = isbest;
+        this.issticky = issticky;
+    }
+
+    public Topic(String tid, String uid, String title, Date ptime, Integer acount, Integer rcount, Integer isbest, Integer issticky, String content) {
+        this.tid = tid;
+        this.uid = uid;
+        this.title = title;
+        this.ptime = ptime;
+        this.acount = acount;
+        this.rcount = rcount;
+        this.isbest = isbest;
+        this.issticky = issticky;
         this.content = content;
-        this.publisherid = publisherid;
-        this.publishtime = publishtime;
-        this.accesscount = accesscount;
-        this.replycount = replycount;
-        this.partid = partid;
     }
 
     public Topic() {
         super();
     }
 
-    public Integer getTid() {
+    public String getTid() {
         return tid;
     }
 
-    public void setTid(Integer tid) {
-        this.tid = tid;
+    public void setTid(String tid) {
+        this.tid = tid == null ? null : tid.trim();
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid == null ? null : uid.trim();
     }
 
     public String getTitle() {
@@ -50,51 +72,51 @@ public class Topic {
         this.title = title == null ? null : title.trim();
     }
 
+    public Date getPtime() {
+        return ptime;
+    }
+
+    public void setPtime(Date ptime) {
+        this.ptime = ptime;
+    }
+
+    public Integer getAcount() {
+        return acount;
+    }
+
+    public void setAcount(Integer acount) {
+        this.acount = acount;
+    }
+
+    public Integer getRcount() {
+        return rcount;
+    }
+
+    public void setRcount(Integer rcount) {
+        this.rcount = rcount;
+    }
+
+    public Integer getIsbest() {
+        return isbest;
+    }
+
+    public void setIsbest(Integer isbest) {
+        this.isbest = isbest;
+    }
+
+    public Integer getIssticky() {
+        return issticky;
+    }
+
+    public void setIssticky(Integer issticky) {
+        this.issticky = issticky;
+    }
+
     public String getContent() {
         return content;
     }
 
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
-    }
-
-    public String getPublisherid() {
-        return publisherid;
-    }
-
-    public void setPublisherid(String publisherid) {
-        this.publisherid = publisherid == null ? null : publisherid.trim();
-    }
-
-    public Date getPublishtime() {
-        return publishtime;
-    }
-
-    public void setPublishtime(Date publishtime) {
-        this.publishtime = publishtime;
-    }
-
-    public String getAccesscount() {
-        return accesscount;
-    }
-
-    public void setAccesscount(String accesscount) {
-        this.accesscount = accesscount == null ? null : accesscount.trim();
-    }
-
-    public String getReplycount() {
-        return replycount;
-    }
-
-    public void setReplycount(String replycount) {
-        this.replycount = replycount == null ? null : replycount.trim();
-    }
-
-    public Integer getPartid() {
-        return partid;
-    }
-
-    public void setPartid(Integer partid) {
-        this.partid = partid;
     }
 }

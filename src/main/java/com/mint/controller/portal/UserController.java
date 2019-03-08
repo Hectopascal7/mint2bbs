@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 
 /**
  * @Program: mint2bbs
@@ -36,11 +37,13 @@ public class UserController {
     @RequestMapping(value = "login.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<User> login(String loginid, String password, HttpSession session) {
-        System.out.println("121-------------------------------------------------");
         ServerResponse<User> response = iUserService.login(loginid, password);
         if (response.isSuccess()) {
+            System.out.println("sc");
             session.setAttribute(Const.CURRENT_USER, response.getData());
         }
+        User user1 = (User) session.getAttribute(Const.CURRENT_USER);
+        System.out.println(user1.getUid());
         return response;
     }
 
@@ -54,11 +57,15 @@ public class UserController {
     @RequestMapping(value = "register.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<String> register(User user, Resident resident, HttpSession session) {
-        ServerResponse<String> response = iUserService.register(user,resident);
+        ServerResponse<String> response = iUserService.register(user, resident);
+        System.out.println(user);
         System.out.println(resident);
         if (response.isSuccess()) {
+
             session.setAttribute(Const.CURRENT_USER, response.getData());
         }
+
         return response;
     }
+
 }

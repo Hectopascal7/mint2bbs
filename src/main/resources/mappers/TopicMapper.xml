@@ -3,36 +3,56 @@
 <mapper namespace="com.mint.dao.TopicMapper">
   <resultMap id="BaseResultMap" type="com.mint.pojo.Topic">
     <constructor>
-      <idArg column="tid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <idArg column="tid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="uid" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="title" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="content" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="publisherid" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="publishtime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-      <arg column="accesscount" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="replycount" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="partid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="ptime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="acount" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="rcount" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="isbest" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="issticky" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.mint.pojo.Topic">
+    <constructor>
+      <idArg column="tid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="uid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="title" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="ptime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="acount" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="rcount" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="isbest" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="issticky" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="content" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    tid, title, content, publisherid, publishtime, accesscount, replycount, partid
+    tid, uid, title, ptime, acount, rcount, isbest, issticky
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <sql id="Blob_Column_List">
+    content
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from tb_topic
-    where tid = #{tid,jdbcType=INTEGER}
+    where tid = #{tid,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from tb_topic
-    where tid = #{tid,jdbcType=INTEGER}
+    where tid = #{tid,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.mint.pojo.Topic">
-    insert into tb_topic (tid, title, content, 
-      publisherid, publishtime, accesscount, 
-      replycount, partid)
-    values (#{tid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
-      #{publisherid,jdbcType=VARCHAR}, #{publishtime,jdbcType=TIMESTAMP}, #{accesscount,jdbcType=VARCHAR}, 
-      #{replycount,jdbcType=VARCHAR}, #{partid,jdbcType=INTEGER})
+    insert into tb_topic (tid, uid, title, 
+      ptime, acount, rcount, 
+      isbest, issticky, content
+      )
+    values (#{tid,jdbcType=VARCHAR}, #{uid,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{ptime,jdbcType=TIMESTAMP}, #{acount,jdbcType=INTEGER}, #{rcount,jdbcType=INTEGER}, 
+      #{isbest,jdbcType=INTEGER}, #{issticky,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.mint.pojo.Topic">
     insert into tb_topic
@@ -40,91 +60,112 @@
       <if test="tid != null">
         tid,
       </if>
+      <if test="uid != null">
+        uid,
+      </if>
       <if test="title != null">
         title,
+      </if>
+      <if test="ptime != null">
+        ptime,
+      </if>
+      <if test="acount != null">
+        acount,
+      </if>
+      <if test="rcount != null">
+        rcount,
+      </if>
+      <if test="isbest != null">
+        isbest,
+      </if>
+      <if test="issticky != null">
+        issticky,
       </if>
       <if test="content != null">
         content,
       </if>
-      <if test="publisherid != null">
-        publisherid,
-      </if>
-      <if test="publishtime != null">
-        publishtime,
-      </if>
-      <if test="accesscount != null">
-        accesscount,
-      </if>
-      <if test="replycount != null">
-        replycount,
-      </if>
-      <if test="partid != null">
-        partid,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="tid != null">
-        #{tid,jdbcType=INTEGER},
+        #{tid,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=VARCHAR},
       </if>
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
       </if>
+      <if test="ptime != null">
+        #{ptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="acount != null">
+        #{acount,jdbcType=INTEGER},
+      </if>
+      <if test="rcount != null">
+        #{rcount,jdbcType=INTEGER},
+      </if>
+      <if test="isbest != null">
+        #{isbest,jdbcType=INTEGER},
+      </if>
+      <if test="issticky != null">
+        #{issticky,jdbcType=INTEGER},
+      </if>
       <if test="content != null">
-        #{content,jdbcType=VARCHAR},
-      </if>
-      <if test="publisherid != null">
-        #{publisherid,jdbcType=VARCHAR},
-      </if>
-      <if test="publishtime != null">
-        #{publishtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="accesscount != null">
-        #{accesscount,jdbcType=VARCHAR},
-      </if>
-      <if test="replycount != null">
-        #{replycount,jdbcType=VARCHAR},
-      </if>
-      <if test="partid != null">
-        #{partid,jdbcType=INTEGER},
+        #{content,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.mint.pojo.Topic">
     update tb_topic
     <set>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=VARCHAR},
+      </if>
       <if test="title != null">
         title = #{title,jdbcType=VARCHAR},
       </if>
+      <if test="ptime != null">
+        ptime = #{ptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="acount != null">
+        acount = #{acount,jdbcType=INTEGER},
+      </if>
+      <if test="rcount != null">
+        rcount = #{rcount,jdbcType=INTEGER},
+      </if>
+      <if test="isbest != null">
+        isbest = #{isbest,jdbcType=INTEGER},
+      </if>
+      <if test="issticky != null">
+        issticky = #{issticky,jdbcType=INTEGER},
+      </if>
       <if test="content != null">
-        content = #{content,jdbcType=VARCHAR},
-      </if>
-      <if test="publisherid != null">
-        publisherid = #{publisherid,jdbcType=VARCHAR},
-      </if>
-      <if test="publishtime != null">
-        publishtime = #{publishtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="accesscount != null">
-        accesscount = #{accesscount,jdbcType=VARCHAR},
-      </if>
-      <if test="replycount != null">
-        replycount = #{replycount,jdbcType=VARCHAR},
-      </if>
-      <if test="partid != null">
-        partid = #{partid,jdbcType=INTEGER},
+        content = #{content,jdbcType=LONGVARCHAR},
       </if>
     </set>
-    where tid = #{tid,jdbcType=INTEGER}
+    where tid = #{tid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mint.pojo.Topic">
+    update tb_topic
+    set uid = #{uid,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      ptime = #{ptime,jdbcType=TIMESTAMP},
+      acount = #{acount,jdbcType=INTEGER},
+      rcount = #{rcount,jdbcType=INTEGER},
+      isbest = #{isbest,jdbcType=INTEGER},
+      issticky = #{issticky,jdbcType=INTEGER},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where tid = #{tid,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.mint.pojo.Topic">
     update tb_topic
-    set title = #{title,jdbcType=VARCHAR},
-      content = #{content,jdbcType=VARCHAR},
-      publisherid = #{publisherid,jdbcType=VARCHAR},
-      publishtime = #{publishtime,jdbcType=TIMESTAMP},
-      accesscount = #{accesscount,jdbcType=VARCHAR},
-      replycount = #{replycount,jdbcType=VARCHAR},
-      partid = #{partid,jdbcType=INTEGER}
-    where tid = #{tid,jdbcType=INTEGER}
+    set uid = #{uid,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      ptime = #{ptime,jdbcType=TIMESTAMP},
+      acount = #{acount,jdbcType=INTEGER},
+      rcount = #{rcount,jdbcType=INTEGER},
+      isbest = #{isbest,jdbcType=INTEGER},
+      issticky = #{issticky,jdbcType=INTEGER}
+    where tid = #{tid,jdbcType=VARCHAR}
   </update>
 </mapper>

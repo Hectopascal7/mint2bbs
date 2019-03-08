@@ -1,8 +1,10 @@
 package com.mint.service.impl;
 
 import com.mint.common.ServerResponse;
+import com.mint.dao.CountMapper;
 import com.mint.dao.ResidentMapper;
 import com.mint.dao.UserMapper;
+import com.mint.pojo.Count;
 import com.mint.pojo.Resident;
 import com.mint.pojo.User;
 import com.mint.service.IUserService;
@@ -22,6 +24,8 @@ public class UserServiceImpl implements IUserService {
     private UserMapper userMapper;
     @Autowired
     private ResidentMapper residentMapper;
+    @Autowired
+    private CountMapper countMapper;
 
     // 登录
     @Override
@@ -44,16 +48,22 @@ public class UserServiceImpl implements IUserService {
     @Override
     public ServerResponse<String> register(User user, Resident resident) {
         // 检查住户信息是否正确
-        if(checkResident(resident)){
+        if (checkResident(resident)) {
             // 住户信息正确，检查登录id是否存在
             int resultCount = userMapper.checkLoginid(user.getLoginid());
             if (resultCount == 0) {
                 int result = userMapper.insertSelective(user);
-                return ServerResponse.createBySuccessMessage("注册成功！");
+                if (result == 1) {
+                    Count count=new Count(user.getUid(),0,0,0,0);
+                    countMapper.insert(count);
+                    return ServerResponse.createBySuccessMessage("注册成功！");
+                } else {
+                    return ServerResponse.createByErrorMessage("注册失败！");
+                }
             } else {
                 return ServerResponse.createByErrorMessage("注册账号已存在，请重新输入。");
             }
-        }else{
+        } else {
             return ServerResponse.createByErrorMessage("用户信息校验错误！");
         }
     }
@@ -61,6 +71,8 @@ public class UserServiceImpl implements IUserService {
     // 检查住户信息是否正确
     public boolean checkResident(Resident resident) {
         Resident result = residentMapper.selectByPrimaryKey(resident.getUid());
+        System.out.println(resident);
+        System.out.println(result);
         if (null != result && resident.equals(result)) {
             return true;
         } else {

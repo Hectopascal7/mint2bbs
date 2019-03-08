@@ -1,9 +1,13 @@
 package com.mint.pojo;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class User {
     private String loginid;
+
+    private String uid;
 
     private String password;
 
@@ -11,17 +15,10 @@ public class User {
 
     private Integer role;
 
-    private String name;
-
     private Integer sex;
 
-    private String idcnum;
-
-    private String phone;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
-
-    private String house;
 
     private String license;
 
@@ -31,27 +28,47 @@ public class User {
 
     private Date jointime;
 
-    private Integer ulevel;
+    private Integer level;
 
     private String email;
 
-    public User(String loginid, String password, String nickname, Integer role, String name, Integer sex, String idcnum, String phone, Date birthday, String house, String license, String profile, Integer point, Date jointime, Integer ulevel, String email) {
+    private String signature;
+
+    public User(String loginid, String uid, String password, String nickname, Integer role, Integer sex, Date birthday, String license, String profile, Integer point, Date jointime, Integer level, String email, String signature) {
         this.loginid = loginid;
+        this.uid = uid;
         this.password = password;
         this.nickname = nickname;
         this.role = role;
-        this.name = name;
         this.sex = sex;
-        this.idcnum = idcnum;
-        this.phone = phone;
         this.birthday = birthday;
-        this.house = house;
         this.license = license;
         this.profile = profile;
         this.point = point;
         this.jointime = jointime;
-        this.ulevel = ulevel;
+        this.level = level;
         this.email = email;
+        this.signature = signature;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "loginid='" + loginid + '\'' +
+                ", uid='" + uid + '\'' +
+                ", password='" + password + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", role=" + role +
+                ", sex=" + sex +
+                ", birthday=" + birthday +
+                ", license='" + license + '\'' +
+                ", profile='" + profile + '\'' +
+                ", point=" + point +
+                ", jointime=" + jointime +
+                ", level=" + level +
+                ", email='" + email + '\'' +
+                ", signature='" + signature + '\'' +
+                '}';
     }
 
     public User() {
@@ -64,6 +81,14 @@ public class User {
 
     public void setLoginid(String loginid) {
         this.loginid = loginid == null ? null : loginid.trim();
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid == null ? null : uid.trim();
     }
 
     public String getPassword() {
@@ -90,14 +115,6 @@ public class User {
         this.role = role;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
-
     public Integer getSex() {
         return sex;
     }
@@ -106,36 +123,12 @@ public class User {
         this.sex = sex;
     }
 
-    public String getIdcnum() {
-        return idcnum;
-    }
-
-    public void setIdcnum(String idcnum) {
-        this.idcnum = idcnum == null ? null : idcnum.trim();
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone == null ? null : phone.trim();
-    }
-
     public Date getBirthday() {
         return birthday;
     }
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
-    }
-
-    public String getHouse() {
-        return house;
-    }
-
-    public void setHouse(String house) {
-        this.house = house == null ? null : house.trim();
     }
 
     public String getLicense() {
@@ -170,12 +163,12 @@ public class User {
         this.jointime = jointime;
     }
 
-    public Integer getUlevel() {
-        return ulevel;
+    public Integer getLevel() {
+        return level;
     }
 
-    public void setUlevel(Integer ulevel) {
-        this.ulevel = ulevel;
+    public void setLevel(Integer level) {
+        this.level = level;
     }
 
     public String getEmail() {
@@ -184,5 +177,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email == null ? null : email.trim();
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature == null ? null : signature.trim();
     }
 }

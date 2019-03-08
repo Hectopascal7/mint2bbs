@@ -1,6 +1,7 @@
 package com.mint.dao;
 
 import com.mint.pojo.User;
+import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper {
     int deleteByPrimaryKey(String loginid);
@@ -15,7 +16,8 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
 
+    User checkUser(@Param("loginid") String loginid, @Param("password") String password);
+
     int checkLoginid(String loginid);
 
-    User checkUser(String loginid, String password);
 }
