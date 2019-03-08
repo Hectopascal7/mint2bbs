@@ -26,10 +26,17 @@ public class TopicServiceImpl implements ITopicService {
     @Autowired
     private TopicMapper topicMapper;
 
+    /**
+     * @Description 发帖
+     * @Param loginid
+     * @Param password
+     * @Param session
+     * @Return ServerResponse<User>
+     */
     @Override
     public ServerResponse<String> post(Topic topic, String partid, HttpSession session) {
-        if("001".equals(partid)){
-            User user=(User)session.getAttribute(Const.CURRENT_USER);
+        if ("001".equals(partid)) {
+            User user = (User) session.getAttribute(Const.CURRENT_USER);
             topic.setUid(user.getUid());
             topic.setTid(UUID.randomUUID().toString());
             System.out.println(topic.getTid());

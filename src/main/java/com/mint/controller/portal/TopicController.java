@@ -35,11 +35,7 @@ public class TopicController {
     @RequestMapping(value = "post.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<String> post(Topic topic, String partid, HttpSession session) {
-        System.out.println(partid);
         ServerResponse<String> response = iTopicService.post(topic, partid, session);
-//        if (response.isSuccess()) {
-//            session.setAttribute(Const.CURRENT_USER, response.getData());
-//        }
         return response;
     }
 }

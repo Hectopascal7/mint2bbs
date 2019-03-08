@@ -12,9 +12,20 @@ import com.mint.pojo.User;
  **/
 public interface IUserService {
 
-    // 登录
+    /**
+     * @Description 用户登录
+     * @Param loginid
+     * @Param password
+     * @Return ServerResponse<User>
+     */
     ServerResponse<User> login(String loginid, String password);
 
-    // 注册
+    /**
+     * @Description 用户注册
+     * @Param user
+     * @Param resident
+     * @Return ServerResponse<String>
+     */
     ServerResponse<String> register(User user, Resident resident);
+
 }
