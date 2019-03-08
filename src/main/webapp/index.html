@@ -9,17 +9,14 @@
     <link rel="stylesheet" href="/script/layui/css/layui.css">
     <link rel="stylesheet" href="/css/global.css">
 </head>
-<style>html {
-
-}</style>
 <body>
-
 <!--头部-->
 <div class="fly-header layui-bg-black">
     <div class="layui-container">
         <a class="fly-logo" href="/">
             <img src="/image/logo.png" alt="layui">
         </a>
+        <!-- 论坛主标题区 -->
         <ul class="layui-nav fly-nav layui-hide-xs">
             <li class="layui-nav-item layui-this">
                 <a href="/"><i class="iconfont icon-jiaoliu"></i>业主论坛</a>
@@ -31,52 +28,34 @@
                 <a href="http://www.layui.com/" target="_blank"><i class="iconfont icon-ui"></i>吐槽区</a>
             </li>
         </ul>
-
+        <!-- 用户个人中心功能区 -->
         <ul class="layui-nav fly-nav-user">
-
-            <!-- 未登入的状态 -->
-            <li class="layui-nav-item">
-                <a class="iconfont icon-touxiang layui-hide-xs" href="/page/portal/user/login.html"></a>
-            </li>
-            <li class="layui-nav-item">
-                <a href="page/portal/user/login.html">登录</a>
-            </li>
-            <li class="layui-nav-item">
-                <a href="/page/portal/user/register.html">注册</a>
-            </li>
-            <!--<li class="layui-nav-item layui-hide-xs">-->
-            <!--<a href="/app/qq/" onclick="layer.msg('正在通过QQ登入', {icon:16, shade: 0.1, time:0})" title="QQ登入"-->
-            <!--class="iconfont icon-qq"></a>-->
-            <!--</li>-->
-            <!--<li class="layui-nav-item layui-hide-xs">-->
-            <!--<a href="/app/weibo/" onclick="layer.msg('正在通过微博登入', {icon:16, shade: 0.1, time:0})" title="微博登入"-->
-            <!--class="iconfont icon-weibo"></a>-->
-            <!--</li>-->
-
             <!-- 登入后的状态 -->
-            <!--
             <li class="layui-nav-item">
-              <a class="fly-nav-avatar" href="javascript:;">
-                <cite class="layui-hide-xs">橙色薄荷°</cite>
-                <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：layui 作者"></i>
-                <i class="layui-badge fly-badge-vip layui-hide-xs">VIP3</i>
-                <img src="image/asuna.jpg">
-              </a>
-              <dl class="layui-nav-child">
-                <dd><a href="user/set.html"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
-                <dd><a href="user/message.html"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a></dd>
-                <dd><a href="user/home.html"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a></dd>
-                <hr style="margin: 5px 0;">
-                <dd><a href="/user/logout/" style="text-align: center;">退出</a></dd>
-              </dl>
+                <a class="fly-nav-avatar" href="javascript:;">
+                    <cite class="layui-hide-xs">橙色薄荷°</cite>
+                    <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：管理员"></i>
+                    <i class="layui-badge fly-badge-vip layui-hide-xs">管理员</i>
+                    <img src="../../../image/asuna.jpg">
+                </a>
+                <dl class="layui-nav-child">
+                    <dd>
+                        <a href="page/portal/user/home.html"><i class="layui-icon"
+                                                                style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
+                    </dd>
+                    <dd>
+                        <a href="page/portal/user/message.html"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a>
+                    </dd>
+                    <dd>
+                        <a href="page/portal/user/setting.html"><i class="layui-icon">&#xe620;</i>基本设置</a>
+                    </dd>
+                    <hr style="margin: 5px 0;">
+                    <dd><a href="" style="text-align: center;">退出</a></dd>
+                </dl>
             </li>
-            -->
         </ul>
     </div>
-
 </div>
-
-
 <div class="fly-panel fly-column">
     <div class="layui-container">
         <ul class="layui-clear">
@@ -95,7 +74,6 @@
                     href="user/index.html#collection">收藏</a>
             </li>
         </ul>
-
         <div class="fly-column-right layui-hide-xs">
             <span class="fly-search">
                 <i class="layui-icon"></i>
@@ -108,7 +86,6 @@
         <!--</div>-->
     </div>
 </div>
-
 <div class="layui-container">
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md8">
@@ -135,12 +112,9 @@
                                 <i class="layui-badge fly-badge-vip">管理员</i>
                             </a>
                             <span>刚刚</span>
-
                             <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
                             <span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>
-                            <span class="fly-list-nums">
-                <i class="iconfont icon-pinglun1" title="回复"></i> 66
-              </span>
+                            <span class="fly-list-nums"><i class="iconfont icon-pinglun1" title="回复"></i> 66</span>
                         </div>
                         <div class="fly-list-badge">
                             <!--
@@ -151,8 +125,7 @@
                     </li>
                     <li>
                         <a href="user/home.html" class="fly-avatar">
-                            <img src="image/asuna.jpg"
-                                 alt="橙色薄荷°">
+                            <img src="image/asuna.jpg" alt="橙色薄荷°">
                         </a>
                         <h2>
                             <a class="layui-badge">社区新闻</a>
@@ -163,16 +136,13 @@
                                 <cite>橙色薄荷°</cite>
                                 <!--
                                 <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
-                                <i class="layui-badge fly-badge-vip">VIP3</i>
+                                <i class="layui-badge fly-badge-vip">管理员</i>
                                 -->
                             </a>
                             <span>2017-11-30</span>
-
                             <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
                             <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
-                            <span class="fly-list-nums">
-                <i class="iconfont icon-pinglun1" title="回答"></i> 66
-              </span>
+                            <span class="fly-list-nums"><i class="iconfont icon-pinglun1" title="回答"></i> 66</span>
                         </div>
                         <div class="fly-list-badge">
                             <!--
@@ -183,8 +153,7 @@
                     </li>
                     <li>
                         <a href="user/home.html" class="fly-avatar">
-                            <img src="image/asuna.jpg"
-                                 alt="橙色薄荷°">
+                            <img src="image/asuna.jpg" alt="橙色薄荷°">
                         </a>
                         <h2>
                             <a class="layui-badge">业主交流</a>
@@ -195,16 +164,13 @@
                                 <cite>橙色薄荷°</cite>
                                 <!--
                                 <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
-                                <i class="layui-badge fly-badge-vip">VIP3</i>
+                                <i class="layui-badge fly-badge-vip">管理员</i>
                                 -->
                             </a>
                             <span>刚刚</span>
-
                             <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
                             <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
-                            <span class="fly-list-nums">
-                <i class="iconfont icon-pinglun1" title="回答"></i> 66
-              </span>
+                            <span class="fly-list-nums"><i class="iconfont icon-pinglun1" title="回答"></i> 66</span>
                         </div>
                         <div class="fly-list-badge">
                             <!--
@@ -215,8 +181,7 @@
                     </li>
                     <li>
                         <a href="user/home.html" class="fly-avatar">
-                            <img src="image/asuna.jpg"
-                                 alt="橙色薄荷°">
+                            <img src="image/asuna.jpg" alt="橙色薄荷°">
                         </a>
                         <h2>
                             <a class="layui-badge">活动发起</a>
@@ -227,18 +192,13 @@
                                 <cite>橙色薄荷°</cite>
                                 <!--
                                 <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
-                                <i class="layui-badge fly-badge-vip">VIP3</i>
+                                <i class="layui-badge fly-badge-vip">管理员</i>
                                 -->
                             </a>
                             <span>刚刚</span>
-
-                            <span class="layui-hide-xs" title="浏览">
-                                <i class="iconfont icon-liulanyanjing"></i> 60
-                            </span>
+                            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
                             <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
-                            <span class="fly-list-nums">
-                                <i class="iconfont icon-pinglun1" title="回答"></i> 66
-                            </span>
+                            <span class="fly-list-nums"><i class="iconfont icon-pinglun1" title="回答"></i> 66</span>
                         </div>
                         <div class="fly-list-badge">
                             <!--
@@ -261,10 +221,10 @@
                     <span class="fly-mid"></span>
                     <a href="">精华</a>
                     <span class="fly-filter-right layui-hide-xs">
-            <a href="" class="layui-this">按最新</a>
-            <span class="fly-mid"></span>
-            <a href="">按热议</a>
-          </span>
+                        <a href="" class="layui-this">按最新</a>
+                        <span class="fly-mid"></span>
+                        <a href="">按热议</a>
+                    </span>
                 </div>
 
                 <ul class="fly-list">
@@ -282,7 +242,7 @@
                                 <cite>橙色薄荷°</cite>
                                 <!--
                                 <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
-                                <i class="layui-badge fly-badge-vip">VIP3</i>
+                                <i class="layui-badge fly-badge-vip">管理员</i>
                                 -->
                             </a>
                             <span>刚刚</span>
@@ -290,8 +250,8 @@
                             <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
                             <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
                             <span class="fly-list-nums">
-                <i class="iconfont icon-pinglun1" title="回答"></i> 66
-              </span>
+                                <i class="iconfont icon-pinglun1" title="回答"></i> 66
+                            </span>
                         </div>
                         <div class="fly-list-badge">
                             <!--<span class="layui-badge layui-bg-red">精帖</span>-->
@@ -317,8 +277,8 @@
                             <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
                             <span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>
                             <span class="fly-list-nums">
-                <i class="iconfont icon-pinglun1" title="回答"></i> 66
-              </span>
+                                <i class="iconfont icon-pinglun1" title="回答"></i> 66
+                            </span>
                         </div>
                         <div class="fly-list-badge">
                             <span class="layui-badge layui-bg-red">精帖</span>
@@ -338,7 +298,206 @@
                                 <cite>橙色薄荷°</cite>
                                 <!--
                                 <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
-                                <i class="layui-badge fly-badge-vip">VIP3</i>
+                                <i class="layui-badge fly-badge-vip">管理员</i>
+                                -->
+                            </a>
+                            <span>刚刚</span>
+
+                            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
+                            <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
+                            <span class="fly-list-nums">
+                                <i class="iconfont icon-pinglun1" title="回答"></i> 66
+                            </span>
+                        </div>
+                        <div class="fly-list-badge">
+                            <!--<span class="layui-badge layui-bg-red">精帖</span>-->
+                        </div>
+                    </li>
+                    <li>
+                        <a href="user/home.html" class="fly-avatar">
+                            <img src="image/asuna.jpg" alt="橙色薄荷°">
+                        </a>
+                        <h2>
+                            <a class="layui-badge">动态</a>
+                            <a href="jie/detail.html">2019年3月水电费缴费通知</a>
+                        </h2>
+                        <div class="fly-list-info">
+                            <a href="user/home.html" link>
+                                <cite>橙色薄荷°</cite>
+                                <!--
+                                <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
+                                <i class="layui-badge fly-badge-vip">管理员</i>
+                                -->
+                            </a>
+                            <span>刚刚</span>
+
+                            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
+                            <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
+                            <span class="fly-list-nums">
+                                <i class="iconfont icon-pinglun1" title="回答"></i> 66
+                            </span>
+                        </div>
+                        <div class="fly-list-badge">
+                            <!--<span class="layui-badge layui-bg-red">精帖</span>-->
+                        </div>
+                    </li>
+                    <li>
+                        <a href="user/home.html" class="fly-avatar">
+                            <img src="image/asuna.jpg" alt="橙色薄荷°">
+                        </a>
+                        <h2>
+                            <a class="layui-badge">动态</a>
+                            <a href="jie/detail.html">2019年3月水电费缴费通知</a>
+                        </h2>
+                        <div class="fly-list-info">
+                            <a href="user/home.html" link>
+                                <cite>橙色薄荷°</cite>
+                                <!--
+                                <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
+                                <i class="layui-badge fly-badge-vip">管理员</i>
+                                -->
+                            </a>
+                            <span>刚刚</span>
+
+                            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
+                            <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
+                            <span class="fly-list-nums">
+                                <i class="iconfont icon-pinglun1" title="回答"></i> 66
+                            </span>
+                        </div>
+                        <div class="fly-list-badge">
+                            <!--<span class="layui-badge layui-bg-red">精帖</span>-->
+                        </div>
+                    </li>
+                    <li>
+                        <a href="user/home.html" class="fly-avatar">
+                            <img src="image/asuna.jpg" alt="橙色薄荷°">
+                        </a>
+                        <h2>
+                            <a class="layui-badge">动态</a>
+                            <a href="jie/detail.html">2019年3月水电费缴费通知</a>
+                        </h2>
+                        <div class="fly-list-info">
+                            <a href="user/home.html" link>
+                                <cite>橙色薄荷°</cite>
+                                <!--
+                                <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
+                                <i class="layui-badge fly-badge-vip">管理员</i>
+                                -->
+                            </a>
+                            <span>刚刚</span>
+
+                            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
+                            <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
+                            <span class="fly-list-nums">
+                                <i class="iconfont icon-pinglun1" title="回答"></i> 66
+                            </span>
+                        </div>
+                        <div class="fly-list-badge">
+                            <!--<span class="layui-badge layui-bg-red">精帖</span>-->
+                        </div>
+                    </li>
+                    <li>
+                        <a href="user/home.html" class="fly-avatar">
+                            <img src="image/asuna.jpg"
+                                 alt="橙色薄荷°">
+                        </a>
+                        <h2>
+                            <a class="layui-badge">动态</a>
+                            <a href="jie/detail.html">2019年3月水电费缴费通知</a>
+                        </h2>
+                        <div class="fly-list-info">
+                            <a href="user/home.html" link>
+                                <cite>橙色薄荷°</cite>
+                                <!--
+                                <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
+                                <i class="layui-badge fly-badge-vip">管理员</i>
+                                -->
+                            </a>
+                            <span>刚刚</span>
+
+                            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
+                            <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
+                            <span class="fly-list-nums">
+                                <i class="iconfont icon-pinglun1" title="回答"></i> 66
+                            </span>
+                        </div>
+                        <div class="fly-list-badge">
+                            <!--<span class="layui-badge layui-bg-red">精帖</span>-->
+                        </div>
+                    </li>
+                    <li>
+                        <a href="user/home.html" class="fly-avatar">
+                            <img src="image/asuna.jpg" alt="橙色薄荷°">
+                        </a>
+                        <h2>
+                            <a class="layui-badge">动态</a>
+                            <a href="jie/detail.html">2019年3月水电费缴费通知</a>
+                        </h2>
+                        <div class="fly-list-info">
+                            <a href="user/home.html" link>
+                                <cite>橙色薄荷°</cite>
+                                <!--
+                                <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
+                                <i class="layui-badge fly-badge-vip">管理员</i>
+                                -->
+                            </a>
+                            <span>刚刚</span>
+
+                            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
+                            <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
+                            <span class="fly-list-nums">
+                                <i class="iconfont icon-pinglun1" title="回答"></i> 66
+                            </span>
+                        </div>
+                        <div class="fly-list-badge">
+                            <!--<span class="layui-badge layui-bg-red">精帖</span>-->
+                        </div>
+                    </li>
+                    <li>
+                        <a href="user/home.html" class="fly-avatar">
+                            <img src="image/asuna.jpg"
+                                 alt="橙色薄荷°">
+                        </a>
+                        <h2>
+                            <a class="layui-badge">动态</a>
+                            <a href="jie/detail.html">2019年3月水电费缴费通知</a>
+                        </h2>
+                        <div class="fly-list-info">
+                            <a href="user/home.html" link>
+                                <cite>橙色薄荷°</cite>
+                                <!--
+                                <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
+                                <i class="layui-badge fly-badge-vip">管理员</i>
+                                -->
+                            </a>
+                            <span>刚刚</span>
+
+                            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
+                            <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
+                            <span class="fly-list-nums">
+                                <i class="iconfont icon-pinglun1" title="回答"></i> 66
+                            </span>
+                        </div>
+                        <div class="fly-list-badge">
+                            <!--<span class="layui-badge layui-bg-red">精帖</span>-->
+                        </div>
+                    </li>
+                    <li>
+                        <a href="user/home.html" class="fly-avatar">
+                            <img src="image/asuna.jpg"
+                                 alt="橙色薄荷°">
+                        </a>
+                        <h2>
+                            <a class="layui-badge">动态</a>
+                            <a href="jie/detail.html">2019年3月水电费缴费通知</a>
+                        </h2>
+                        <div class="fly-list-info">
+                            <a href="user/home.html" link>
+                                <cite>橙色薄荷°</cite>
+                                <!--
+                                <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
+                                <i class="layui-badge fly-badge-vip">管理员</i>
                                 -->
                             </a>
                             <span>刚刚</span>
@@ -367,7 +526,7 @@
                                 <cite>橙色薄荷°</cite>
                                 <!--
                                 <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
-                                <i class="layui-badge fly-badge-vip">VIP3</i>
+                                <i class="layui-badge fly-badge-vip">管理员</i>
                                 -->
                             </a>
                             <span>刚刚</span>
@@ -396,7 +555,7 @@
                                 <cite>橙色薄荷°</cite>
                                 <!--
                                 <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
-                                <i class="layui-badge fly-badge-vip">VIP3</i>
+                                <i class="layui-badge fly-badge-vip">管理员</i>
                                 -->
                             </a>
                             <span>刚刚</span>
@@ -425,210 +584,7 @@
                                 <cite>橙色薄荷°</cite>
                                 <!--
                                 <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
-                                <i class="layui-badge fly-badge-vip">VIP3</i>
-                                -->
-                            </a>
-                            <span>刚刚</span>
-
-                            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
-                            <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
-                            <span class="fly-list-nums">
-                <i class="iconfont icon-pinglun1" title="回答"></i> 66
-              </span>
-                        </div>
-                        <div class="fly-list-badge">
-                            <!--<span class="layui-badge layui-bg-red">精帖</span>-->
-                        </div>
-                    </li>
-                    <li>
-                        <a href="user/home.html" class="fly-avatar">
-                            <img src="image/asuna.jpg"
-                                 alt="橙色薄荷°">
-                        </a>
-                        <h2>
-                            <a class="layui-badge">动态</a>
-                            <a href="jie/detail.html">2019年3月水电费缴费通知</a>
-                        </h2>
-                        <div class="fly-list-info">
-                            <a href="user/home.html" link>
-                                <cite>橙色薄荷°</cite>
-                                <!--
-                                <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
-                                <i class="layui-badge fly-badge-vip">VIP3</i>
-                                -->
-                            </a>
-                            <span>刚刚</span>
-
-                            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
-                            <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
-                            <span class="fly-list-nums">
-                <i class="iconfont icon-pinglun1" title="回答"></i> 66
-              </span>
-                        </div>
-                        <div class="fly-list-badge">
-                            <!--<span class="layui-badge layui-bg-red">精帖</span>-->
-                        </div>
-                    </li>
-                    <li>
-                        <a href="user/home.html" class="fly-avatar">
-                            <img src="image/asuna.jpg"
-                                 alt="橙色薄荷°">
-                        </a>
-                        <h2>
-                            <a class="layui-badge">动态</a>
-                            <a href="jie/detail.html">2019年3月水电费缴费通知</a>
-                        </h2>
-                        <div class="fly-list-info">
-                            <a href="user/home.html" link>
-                                <cite>橙色薄荷°</cite>
-                                <!--
-                                <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
-                                <i class="layui-badge fly-badge-vip">VIP3</i>
-                                -->
-                            </a>
-                            <span>刚刚</span>
-
-                            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
-                            <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
-                            <span class="fly-list-nums">
-                <i class="iconfont icon-pinglun1" title="回答"></i> 66
-              </span>
-                        </div>
-                        <div class="fly-list-badge">
-                            <!--<span class="layui-badge layui-bg-red">精帖</span>-->
-                        </div>
-                    </li>
-                    <li>
-                        <a href="user/home.html" class="fly-avatar">
-                            <img src="image/asuna.jpg"
-                                 alt="橙色薄荷°">
-                        </a>
-                        <h2>
-                            <a class="layui-badge">动态</a>
-                            <a href="jie/detail.html">2019年3月水电费缴费通知</a>
-                        </h2>
-                        <div class="fly-list-info">
-                            <a href="user/home.html" link>
-                                <cite>橙色薄荷°</cite>
-                                <!--
-                                <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
-                                <i class="layui-badge fly-badge-vip">VIP3</i>
-                                -->
-                            </a>
-                            <span>刚刚</span>
-
-                            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
-                            <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
-                            <span class="fly-list-nums">
-                <i class="iconfont icon-pinglun1" title="回答"></i> 66
-              </span>
-                        </div>
-                        <div class="fly-list-badge">
-                            <!--<span class="layui-badge layui-bg-red">精帖</span>-->
-                        </div>
-                    </li>
-                    <li>
-                        <a href="user/home.html" class="fly-avatar">
-                            <img src="image/asuna.jpg"
-                                 alt="橙色薄荷°">
-                        </a>
-                        <h2>
-                            <a class="layui-badge">动态</a>
-                            <a href="jie/detail.html">2019年3月水电费缴费通知</a>
-                        </h2>
-                        <div class="fly-list-info">
-                            <a href="user/home.html" link>
-                                <cite>橙色薄荷°</cite>
-                                <!--
-                                <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
-                                <i class="layui-badge fly-badge-vip">VIP3</i>
-                                -->
-                            </a>
-                            <span>刚刚</span>
-
-                            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
-                            <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
-                            <span class="fly-list-nums">
-                <i class="iconfont icon-pinglun1" title="回答"></i> 66
-              </span>
-                        </div>
-                        <div class="fly-list-badge">
-                            <!--<span class="layui-badge layui-bg-red">精帖</span>-->
-                        </div>
-                    </li>
-                    <li>
-                        <a href="user/home.html" class="fly-avatar">
-                            <img src="image/asuna.jpg"
-                                 alt="橙色薄荷°">
-                        </a>
-                        <h2>
-                            <a class="layui-badge">动态</a>
-                            <a href="jie/detail.html">2019年3月水电费缴费通知</a>
-                        </h2>
-                        <div class="fly-list-info">
-                            <a href="user/home.html" link>
-                                <cite>橙色薄荷°</cite>
-                                <!--
-                                <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
-                                <i class="layui-badge fly-badge-vip">VIP3</i>
-                                -->
-                            </a>
-                            <span>刚刚</span>
-
-                            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
-                            <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
-                            <span class="fly-list-nums">
-                <i class="iconfont icon-pinglun1" title="回答"></i> 66
-              </span>
-                        </div>
-                        <div class="fly-list-badge">
-                            <!--<span class="layui-badge layui-bg-red">精帖</span>-->
-                        </div>
-                    </li>
-                    <li>
-                        <a href="user/home.html" class="fly-avatar">
-                            <img src="image/asuna.jpg"
-                                 alt="橙色薄荷°">
-                        </a>
-                        <h2>
-                            <a class="layui-badge">动态</a>
-                            <a href="jie/detail.html">2019年3月水电费缴费通知</a>
-                        </h2>
-                        <div class="fly-list-info">
-                            <a href="user/home.html" link>
-                                <cite>橙色薄荷°</cite>
-                                <!--
-                                <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
-                                <i class="layui-badge fly-badge-vip">VIP3</i>
-                                -->
-                            </a>
-                            <span>刚刚</span>
-
-                            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
-                            <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
-                            <span class="fly-list-nums">
-                <i class="iconfont icon-pinglun1" title="回答"></i> 66
-              </span>
-                        </div>
-                        <div class="fly-list-badge">
-                            <!--<span class="layui-badge layui-bg-red">精帖</span>-->
-                        </div>
-                    </li>
-                    <li>
-                        <a href="user/home.html" class="fly-avatar">
-                            <img src="image/asuna.jpg"
-                                 alt="橙色薄荷°">
-                        </a>
-                        <h2>
-                            <a class="layui-badge">动态</a>
-                            <a href="jie/detail.html">2019年3月水电费缴费通知</a>
-                        </h2>
-                        <div class="fly-list-info">
-                            <a href="user/home.html" link>
-                                <cite>橙色薄荷°</cite>
-                                <!--
-                                <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
-                                <i class="layui-badge fly-badge-vip">VIP3</i>
+                                <i class="layui-badge fly-badge-vip">管理员</i>
                                 -->
                             </a>
                             <span>刚刚</span>
@@ -874,11 +830,7 @@
                                 <dd>橙色薄荷°——17863909380</dd>
                             </td>
                         </tr>
-
-
                     </table>
-
-
                     <!--<dd>-->
                     <!--<a href="http://layim.layui.com/" target="_blank">物业负责人：橙色薄荷°——17863909380</a>-->
                     <!--</dd>-->
@@ -894,7 +846,6 @@
                     <!--</dd>-->
                 </dl>
             </div>
-
         </div>
     </div>
 </div>
