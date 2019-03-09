@@ -8,6 +8,7 @@
     <meta name="description" content="薄荷社区,MintBBS,橙色薄荷°">
     <link rel="stylesheet" href="/script/layui/css/layui.css">
     <link rel="stylesheet" href="/css/global.css">
+    <script src="/script/jquery-3.3.1.min.js"></script>
 </head>
 <body>
 <!--头部-->
@@ -32,11 +33,11 @@
         <ul class="layui-nav fly-nav-user">
             <!-- 登入后的状态 -->
             <li class="layui-nav-item">
-                <a class="fly-nav-avatar" href="javascript:;">
-                    <cite class="layui-hide-xs">橙色薄荷°</cite>
-                    <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：管理员"></i>
-                    <i class="layui-badge fly-badge-vip layui-hide-xs">管理员</i>
-                    <img src="../../../image/asuna.jpg">
+                <a class="fly-nav-avatar" href="javascript:;" id="center">
+                    <!--<cite class="layui-hide-xs">橙色薄荷°</cite>-->
+                    <!--<i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：管理员"></i>-->
+                    <!--<i class="layui-badge fly-badge-vip layui-hide-xs">管理员</i>-->
+                    <!--<img src="../../../image/asuna.jpg">-->
                 </a>
                 <dl class="layui-nav-child">
                     <dd>
@@ -57,33 +58,8 @@
     </div>
 </div>
 <div class="fly-panel fly-column">
-    <div class="layui-container">
-        <ul class="layui-clear">
-            <li class="layui-hide-xs layui-this"><a href="/">首页</a></li>
-            <li><a href="page/portal/notice/notice.html">社区公告</a></li>
-            <li><a href="jie/index.html">社区新闻</a></li>
-            <li><a href="jie/index.html">业主交流</a></li>
-            <li><a href="jie/index.html">活动发起</a></li>
-            <li><a href="page/portal/market/market.html">社区指南</a></li>
-            <li><a href="jie/index.html">建议意见</a></li>
-            <li><a href="jie/index.html">分享安利</a></li>
-            <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li>
-            <!--用户登入后显示-->
-            <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="user/index.html">我的贴子</a></li>
-            <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a
-                    href="user/index.html#collection">收藏</a>
-            </li>
-        </ul>
-        <div class="fly-column-right layui-hide-xs">
-            <span class="fly-search">
-                <i class="layui-icon"></i>
-            </span>
-            <a href="page/portal/topic/add.html" class="layui-btn">发表新帖</a>
-        </div>
-        <!--<div class="layui-hide-sm layui-show-xs-block"-->
-        <!--style="margin-top: -10px; padding-bottom: 10px; text-align: center;">-->
-        <!--<a href="jie/add.html" class="layui-btn">发表新帖</a>-->
-        <!--</div>-->
+    <div class="layui-container" id="guidebar">
+
     </div>
 </div>
 <div class="layui-container">
@@ -95,118 +71,8 @@
                     <a href="#signin" class="layui-hide-sm layui-show-xs-block fly-right" id="LAY_goSignin"
                        style="color: #FF5722;">去签到</a>
                 </div>
-                <ul class="fly-list">
-                    <li>
-                        <a href="user/home.html" class="fly-avatar">
-                            <img src="image/asuna.jpg"
-                                 alt="橙色薄荷°">
-                        </a>
-                        <h2>
-                            <a class="layui-badge">社区公告</a>
-                            <a href="page/portal/topic/detail.html">2019年3月水电费缴费通知</a>
-                        </h2>
-                        <div class="fly-list-info">
-                            <a href="user/home.html" link>
-                                <cite>橙色薄荷°</cite>
-                                <i class="iconfont icon-renzheng" title="认证信息：管理员"></i>
-                                <i class="layui-badge fly-badge-vip">管理员</i>
-                            </a>
-                            <span>刚刚</span>
-                            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
-                            <span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>
-                            <span class="fly-list-nums"><i class="iconfont icon-pinglun1" title="回复"></i> 66</span>
-                        </div>
-                        <div class="fly-list-badge">
-                            <!--
-                            <span class="layui-badge layui-bg-black">置顶</span>
-                            <span class="layui-badge layui-bg-red">精帖</span>
-                            -->
-                        </div>
-                    </li>
-                    <li>
-                        <a href="user/home.html" class="fly-avatar">
-                            <img src="image/asuna.jpg" alt="橙色薄荷°">
-                        </a>
-                        <h2>
-                            <a class="layui-badge">社区新闻</a>
-                            <a href="jie/detail.html">薄荷社区荣获“2018年山东省优秀社区”荣誉称号</a>
-                        </h2>
-                        <div class="fly-list-info">
-                            <a href="user/home.html" link>
-                                <cite>橙色薄荷°</cite>
-                                <!--
-                                <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
-                                <i class="layui-badge fly-badge-vip">管理员</i>
-                                -->
-                            </a>
-                            <span>2017-11-30</span>
-                            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
-                            <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
-                            <span class="fly-list-nums"><i class="iconfont icon-pinglun1" title="回答"></i> 66</span>
-                        </div>
-                        <div class="fly-list-badge">
-                            <!--
-                            <span class="layui-badge layui-bg-black">置顶</span>
-                            <span class="layui-badge layui-bg-red">精帖</span>
-                            -->
-                        </div>
-                    </li>
-                    <li>
-                        <a href="user/home.html" class="fly-avatar">
-                            <img src="image/asuna.jpg" alt="橙色薄荷°">
-                        </a>
-                        <h2>
-                            <a class="layui-badge">业主交流</a>
-                            <a href="jie/detail.html">附近的哪家幼儿园师资力量好啊？？</a>
-                        </h2>
-                        <div class="fly-list-info">
-                            <a href="user/home.html" link>
-                                <cite>橙色薄荷°</cite>
-                                <!--
-                                <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
-                                <i class="layui-badge fly-badge-vip">管理员</i>
-                                -->
-                            </a>
-                            <span>刚刚</span>
-                            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
-                            <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
-                            <span class="fly-list-nums"><i class="iconfont icon-pinglun1" title="回答"></i> 66</span>
-                        </div>
-                        <div class="fly-list-badge">
-                            <!--
-                            <span class="layui-badge layui-bg-black">置顶</span>
-                            <span class="layui-badge layui-bg-red">精帖</span>
-                            -->
-                        </div>
-                    </li>
-                    <li>
-                        <a href="user/home.html" class="fly-avatar">
-                            <img src="image/asuna.jpg" alt="橙色薄荷°">
-                        </a>
-                        <h2>
-                            <a class="layui-badge">活动发起</a>
-                            <a href="jie/detail.html">2019年3月社区旅游团开始报名啦！</a>
-                        </h2>
-                        <div class="fly-list-info">
-                            <a href="user/home.html" link>
-                                <cite>橙色薄荷°</cite>
-                                <!--
-                                <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
-                                <i class="layui-badge fly-badge-vip">管理员</i>
-                                -->
-                            </a>
-                            <span>刚刚</span>
-                            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
-                            <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
-                            <span class="fly-list-nums"><i class="iconfont icon-pinglun1" title="回答"></i> 66</span>
-                        </div>
-                        <div class="fly-list-badge">
-                            <!--
-                            <span class="layui-badge layui-bg-black">置顶</span>
-                            <span class="layui-badge layui-bg-red">精帖</span>
-                            -->
-                        </div>
-                    </li>
+                <ul class="fly-list" id="sticky">
+
                 </ul>
             </div>
 
@@ -610,29 +476,9 @@
         </div>
         <div class="layui-col-md4">
 
-            <div class="fly-panel">
-                <h3 class="fly-panel-title">社区公告</h3>
-                <ul class="fly-panel-main fly-list-static">
-                    <li>
-                        <a href="http://fly.layui.com/jie/4281/" target="_blank">2019年1月水电费收缴通知</a>
-                    </li>
-                    <li>
-                        <a href="http://fly.layui.com/jie/5366/" target="_blank">
-                            2019年2月水电费收缴通知
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://fly.layui.com/jie/4281/" target="_blank">小区公共区域禁停通知</a>
-                    </li>
-                    <li>
-                        <a href="http://fly.layui.com/jie/5366/" target="_blank">
-                            薄荷社区业务养狗管理办法（征求）
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://fly.layui.com/jie/4281/" target="_blank">薄荷社区第一次人口普查通知</a>
-                    </li>
-                </ul>
+            <div class="fly-panel" id="notice">
+
+
             </div>
 
 
@@ -878,10 +724,164 @@
     }).use('fly');
 </script>
 
-<script type="text/javascript">
-    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-    document.write(unescape("%3Cspan id='cnzz_stat_icon_30088308'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "w.cnzz.com/c.php%3Fid%3D30088308' type='text/javascript'%3E%3C/script%3E"));
-</script>
+<!--<script type="text/javascript">-->
+<!--var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");-->
+<!--document.write(unescape("%3Cspan id='cnzz_stat_icon_30088308'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "w.cnzz.com/c.php%3Fid%3D30088308' type='text/javascript'%3E%3C/script%3E"));-->
+<!--</script>-->
+
 
 </body>
+
+<!--用户中心模板-->
+<script id="m_center" type="text/html">
+    <cite class="layui-hide-xs">{{ d.nickname }}</cite>
+    {{#  if(d.role === 1){ }}
+    <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：管理员"></i>
+    <i class="layui-badge fly-badge-vip layui-hide-xs" title="积分 {{d.point}}">Lv.3</i>
+    {{#  } }}
+    <img src="{{ d.profile }}">
+</script>
+
+<script id="m_guidebar" type="text/html">
+    <ul class="layui-clear">
+        {{# layui.each(d, function(index, item){ }}
+        <!--<li class="layui-hide-xs layui-this"><a href="/">首页</a></li>-->
+        <!--<li><a href="page/portal/notice/notice.html">社区公告</a></li>-->
+        <!--<li><a href="jie/index.html">社区新闻</a></li>-->
+        <!--<li><a href="page/portal/topic/detail.html">业主交流</a></li>-->
+        <!--<li><a href="jie/index.html">活动发起</a></li>-->
+        <!--<li><a href="page/portal/market/market.html">社区指南</a></li>-->
+        <!--<li><a href="jie/index.html">建议意见</a></li>-->
+        <li><a href="/page/portal/section.html">{{item.sname}}</a></li>
+        {{# }); }}
+        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li>
+        <!--用户登入后显示-->
+        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="user/index.html">我的贴子</a></li>
+        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a
+                href="user/index.html#collection">收藏</a>
+        </li>
+    </ul>
+    <div class="fly-column-right layui-hide-xs">
+            <span class="fly-search">
+                <i class="layui-icon"></i>
+            </span>
+        <a href="page/portal/topic/add.html?section=123" class="layui-btn">发表新帖</a>
+    </div>
+    <!--<div class="layui-hide-sm layui-show-xs-block"-->
+    <!--style="margin-top: -10px; padding-bottom: 10px; text-align: center;">-->
+    <!--<a href="jie/add.html" class="layui-btn">发表新帖</a>-->
+    <!--</div>-->
+</script>
+
+<!--公告板模板-->
+<script id="m_notice" type="text/html">
+    <h3 class="fly-panel-title">社区公告</h3>
+    <ul class="fly-panel-main fly-list-static">
+        {{# layui.each(d, function(index, item){ }}
+        <li>
+            <a href="/page/portal/topic/detail.html?nid={{item.nid}}" target="_blank">{{ item.title }}</a>
+            <!--<span>{{ item.ptime }}</span>-->
+        </li>
+        {{# }); }}
+    </ul>
+</script>
+
+<script id="m_sticky" type="text/html">
+    <li>
+        <a href="user/home.html" class="fly-avatar">
+            <img src="image/asuna.jpg" alt="橙色薄荷°">
+        </a>
+        <h2>
+            <a class="layui-badge">社区公告</a>
+            <a href="page/portal/topic/detail.html">2019年3月水电费缴费通知</a>
+        </h2>
+        <div class="fly-list-info">
+            <a href="user/home.html" link>
+                <cite>橙色薄荷°</cite>
+                <i class="iconfont icon-renzheng" title="认证信息：管理员"></i>
+                <i class="layui-badge fly-badge-vip">管理员</i>
+            </a>
+            <span>刚刚</span>
+            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> 60</span>
+            <span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>
+            <span class="fly-list-nums"><i class="iconfont icon-pinglun1" title="回复"></i> 66</span>
+        </div>
+        <div class="fly-list-badge">
+            <span class="layui-badge layui-bg-black">置顶</span>
+            <span class="layui-badge layui-bg-red">精帖</span>
+        </div>
+    </li>
+</script>
+
+<!--获取数据，渲染模板-->
+<script type="text/javascript">
+
+    var user_info;
+    $.ajax({
+        type: 'post',
+        url: '/user/userCenter.do',
+        data: {},
+        dataType: 'json',
+        async: false,
+        success: function (data) {
+            user_info = data.data;
+        },
+        error: function (data) {
+            alert("获取公告板失败！");
+        }
+    })
+
+    var noticeBoard;
+    $.ajax({
+        type: 'post',
+        url: '/post/getNoticeBoard.do',
+        dataType: 'json',
+        async: false,
+        success: function (data) {
+            noticeBoard = data.data;
+        },
+        error: function (data) {
+        }
+    })
+
+    var guideBar;
+    $.ajax({
+        type: 'post',
+        url: '/section/getSection.do',
+        dataType: 'json',
+        async: false,
+        success: function (data) {
+            guideBar = data.data;
+        },
+        error: function (data) {
+            alert("获取论坛版块失败！");
+        }
+    })
+
+    layui.use('laytpl', function () {
+        laytpl = layui.laytpl;
+
+        // 用户中心渲染
+        var center_model = document.getElementById('m_center').innerHTML;
+        var center_view = document.getElementById('center');
+        laytpl(center_model).render(user_info, function (html) {
+            center_view.innerHTML = html;
+        });
+
+        // 社区公告板渲染
+        var notice_model = document.getElementById('m_notice').innerHTML;
+        var notice_view = document.getElementById('notice');
+        laytpl(notice_model).render(noticeBoard, function (html) {
+            notice_view.innerHTML = html;
+        });
+
+        // 板块导航渲染
+        var guidebar_model = document.getElementById('m_guidebar').innerHTML;
+        var guidebar_view = document.getElementById('guidebar');
+        laytpl(guidebar_model).render(guideBar, function (html) {
+            guidebar_view.innerHTML = html;
+        });
+
+    });
+</script>
 </html>

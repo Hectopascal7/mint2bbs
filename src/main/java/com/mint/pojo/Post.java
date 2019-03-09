@@ -2,7 +2,7 @@ package com.mint.pojo;
 
 import java.util.Date;
 
-public class Notice {
+public class Post {
     private String tid;
 
     private String uid;
@@ -21,7 +21,7 @@ public class Notice {
 
     private String content;
 
-    public Notice(String tid, String uid, String title, Date ptime, Integer acount, Integer rcount, Integer isbest, Integer issticky) {
+    public Post(String tid, String uid, String title, Date ptime, Integer acount, Integer rcount, Integer isbest, Integer issticky) {
         this.tid = tid;
         this.uid = uid;
         this.title = title;
@@ -32,7 +32,7 @@ public class Notice {
         this.issticky = issticky;
     }
 
-    public Notice(String tid, String uid, String title, Date ptime, Integer acount, Integer rcount, Integer isbest, Integer issticky, String content) {
+    public Post(String tid, String uid, String title, Date ptime, Integer acount, Integer rcount, Integer isbest, Integer issticky, String content) {
         this.tid = tid;
         this.uid = uid;
         this.title = title;
@@ -44,7 +44,7 @@ public class Notice {
         this.content = content;
     }
 
-    public Notice() {
+    public Post() {
         super();
     }
 

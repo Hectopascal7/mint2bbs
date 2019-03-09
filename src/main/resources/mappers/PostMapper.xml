@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mint.dao.GuideMapper">
-  <resultMap id="BaseResultMap" type="com.mint.pojo.Guide">
+<mapper namespace="com.mint.dao.PostMapper">
+  <resultMap id="BaseResultMap" type="com.mint.pojo.Post">
     <constructor>
       <idArg column="tid" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="uid" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -13,7 +13,7 @@
       <arg column="issticky" javaType="java.lang.Integer" jdbcType="INTEGER" />
     </constructor>
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.mint.pojo.Guide">
+  <resultMap id="ResultMapWithBLOBs" type="com.mint.pojo.Post">
     <constructor>
       <idArg column="tid" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="uid" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -37,15 +37,15 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from tb_guide
+    from tb_post
     where tid = #{tid,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from tb_guide
+    delete from tb_post
     where tid = #{tid,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.mint.pojo.Guide">
-    insert into tb_guide (tid, uid, title, 
+  <insert id="insert" parameterType="com.mint.pojo.Post">
+    insert into tb_post (tid, uid, title, 
       ptime, acount, rcount, 
       isbest, issticky, content
       )
@@ -54,8 +54,8 @@
       #{isbest,jdbcType=INTEGER}, #{issticky,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.mint.pojo.Guide">
-    insert into tb_guide
+  <insert id="insertSelective" parameterType="com.mint.pojo.Post">
+    insert into tb_post
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="tid != null">
         tid,
@@ -115,8 +115,8 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.mint.pojo.Guide">
-    update tb_guide
+  <update id="updateByPrimaryKeySelective" parameterType="com.mint.pojo.Post">
+    update tb_post
     <set>
       <if test="uid != null">
         uid = #{uid,jdbcType=VARCHAR},
@@ -145,8 +145,8 @@
     </set>
     where tid = #{tid,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mint.pojo.Guide">
-    update tb_guide
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mint.pojo.Post">
+    update tb_post
     set uid = #{uid,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
       ptime = #{ptime,jdbcType=TIMESTAMP},
@@ -157,8 +157,8 @@
       content = #{content,jdbcType=LONGVARCHAR}
     where tid = #{tid,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.mint.pojo.Guide">
-    update tb_guide
+  <update id="updateByPrimaryKey" parameterType="com.mint.pojo.Post">
+    update tb_post
     set uid = #{uid,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
       ptime = #{ptime,jdbcType=TIMESTAMP},

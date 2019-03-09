@@ -3,7 +3,7 @@
 <mapper namespace="com.mint.dao.NewsMapper">
   <resultMap id="BaseResultMap" type="com.mint.pojo.News">
     <constructor>
-      <idArg column="nid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <idArg column="tid" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="uid" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="title" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="ptime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
@@ -15,7 +15,7 @@
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.mint.pojo.News">
     <constructor>
-      <idArg column="nid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <idArg column="tid" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="uid" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="title" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="ptime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
@@ -27,7 +27,7 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    nid, uid, title, ptime, acount, rcount, isbest, issticky
+    tid, uid, title, ptime, acount, rcount, isbest, issticky
   </sql>
   <sql id="Blob_Column_List">
     content
@@ -38,18 +38,18 @@
     ,
     <include refid="Blob_Column_List" />
     from tb_news
-    where nid = #{nid,jdbcType=VARCHAR}
+    where tid = #{tid,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from tb_news
-    where nid = #{nid,jdbcType=VARCHAR}
+    where tid = #{tid,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.mint.pojo.News">
-    insert into tb_news (nid, uid, title, 
+    insert into tb_news (tid, uid, title, 
       ptime, acount, rcount, 
       isbest, issticky, content
       )
-    values (#{nid,jdbcType=VARCHAR}, #{uid,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+    values (#{tid,jdbcType=VARCHAR}, #{uid,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
       #{ptime,jdbcType=TIMESTAMP}, #{acount,jdbcType=INTEGER}, #{rcount,jdbcType=INTEGER}, 
       #{isbest,jdbcType=INTEGER}, #{issticky,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}
       )
@@ -57,8 +57,8 @@
   <insert id="insertSelective" parameterType="com.mint.pojo.News">
     insert into tb_news
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="nid != null">
-        nid,
+      <if test="tid != null">
+        tid,
       </if>
       <if test="uid != null">
         uid,
@@ -86,8 +86,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="nid != null">
-        #{nid,jdbcType=VARCHAR},
+      <if test="tid != null">
+        #{tid,jdbcType=VARCHAR},
       </if>
       <if test="uid != null">
         #{uid,jdbcType=VARCHAR},
@@ -143,7 +143,7 @@
         content = #{content,jdbcType=LONGVARCHAR},
       </if>
     </set>
-    where nid = #{nid,jdbcType=VARCHAR}
+    where tid = #{tid,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mint.pojo.News">
     update tb_news
@@ -155,7 +155,7 @@
       isbest = #{isbest,jdbcType=INTEGER},
       issticky = #{issticky,jdbcType=INTEGER},
       content = #{content,jdbcType=LONGVARCHAR}
-    where nid = #{nid,jdbcType=VARCHAR}
+    where tid = #{tid,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.mint.pojo.News">
     update tb_news
@@ -166,6 +166,6 @@
       rcount = #{rcount,jdbcType=INTEGER},
       isbest = #{isbest,jdbcType=INTEGER},
       issticky = #{issticky,jdbcType=INTEGER}
-    where nid = #{nid,jdbcType=VARCHAR}
+    where tid = #{tid,jdbcType=VARCHAR}
   </update>
 </mapper>

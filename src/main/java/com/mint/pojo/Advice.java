@@ -3,17 +3,17 @@ package com.mint.pojo;
 import java.util.Date;
 
 public class Advice {
-    private String nid;
+    private String tid;
 
     private String uid;
 
     private String title;
 
-    private Date publishtime;
+    private Date ptime;
 
-    private Integer accesscount;
+    private Integer acount;
 
-    private Integer replycount;
+    private Integer rcount;
 
     private Integer isbest;
 
@@ -21,24 +21,24 @@ public class Advice {
 
     private String content;
 
-    public Advice(String nid, String uid, String title, Date publishtime, Integer accesscount, Integer replycount, Integer isbest, Integer issticky) {
-        this.nid = nid;
+    public Advice(String tid, String uid, String title, Date ptime, Integer acount, Integer rcount, Integer isbest, Integer issticky) {
+        this.tid = tid;
         this.uid = uid;
         this.title = title;
-        this.publishtime = publishtime;
-        this.accesscount = accesscount;
-        this.replycount = replycount;
+        this.ptime = ptime;
+        this.acount = acount;
+        this.rcount = rcount;
         this.isbest = isbest;
         this.issticky = issticky;
     }
 
-    public Advice(String nid, String uid, String title, Date publishtime, Integer accesscount, Integer replycount, Integer isbest, Integer issticky, String content) {
-        this.nid = nid;
+    public Advice(String tid, String uid, String title, Date ptime, Integer acount, Integer rcount, Integer isbest, Integer issticky, String content) {
+        this.tid = tid;
         this.uid = uid;
         this.title = title;
-        this.publishtime = publishtime;
-        this.accesscount = accesscount;
-        this.replycount = replycount;
+        this.ptime = ptime;
+        this.acount = acount;
+        this.rcount = rcount;
         this.isbest = isbest;
         this.issticky = issticky;
         this.content = content;
@@ -48,12 +48,12 @@ public class Advice {
         super();
     }
 
-    public String getNid() {
-        return nid;
+    public String getTid() {
+        return tid;
     }
 
-    public void setNid(String nid) {
-        this.nid = nid == null ? null : nid.trim();
+    public void setTid(String tid) {
+        this.tid = tid == null ? null : tid.trim();
     }
 
     public String getUid() {
@@ -72,28 +72,28 @@ public class Advice {
         this.title = title == null ? null : title.trim();
     }
 
-    public Date getPublishtime() {
-        return publishtime;
+    public Date getPtime() {
+        return ptime;
     }
 
-    public void setPublishtime(Date publishtime) {
-        this.publishtime = publishtime;
+    public void setPtime(Date ptime) {
+        this.ptime = ptime;
     }
 
-    public Integer getAccesscount() {
-        return accesscount;
+    public Integer getAcount() {
+        return acount;
     }
 
-    public void setAccesscount(Integer accesscount) {
-        this.accesscount = accesscount;
+    public void setAcount(Integer acount) {
+        this.acount = acount;
     }
 
-    public Integer getReplycount() {
-        return replycount;
+    public Integer getRcount() {
+        return rcount;
     }
 
-    public void setReplycount(Integer replycount) {
-        this.replycount = replycount;
+    public void setRcount(Integer rcount) {
+        this.rcount = rcount;
     }
 
     public Integer getIsbest() {

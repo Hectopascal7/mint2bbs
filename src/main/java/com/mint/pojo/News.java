@@ -3,7 +3,7 @@ package com.mint.pojo;
 import java.util.Date;
 
 public class News {
-    private String nid;
+    private String tid;
 
     private String uid;
 
@@ -21,8 +21,8 @@ public class News {
 
     private String content;
 
-    public News(String nid, String uid, String title, Date ptime, Integer acount, Integer rcount, Integer isbest, Integer issticky) {
-        this.nid = nid;
+    public News(String tid, String uid, String title, Date ptime, Integer acount, Integer rcount, Integer isbest, Integer issticky) {
+        this.tid = tid;
         this.uid = uid;
         this.title = title;
         this.ptime = ptime;
@@ -32,8 +32,8 @@ public class News {
         this.issticky = issticky;
     }
 
-    public News(String nid, String uid, String title, Date ptime, Integer acount, Integer rcount, Integer isbest, Integer issticky, String content) {
-        this.nid = nid;
+    public News(String tid, String uid, String title, Date ptime, Integer acount, Integer rcount, Integer isbest, Integer issticky, String content) {
+        this.tid = tid;
         this.uid = uid;
         this.title = title;
         this.ptime = ptime;
@@ -48,12 +48,12 @@ public class News {
         super();
     }
 
-    public String getNid() {
-        return nid;
+    public String getTid() {
+        return tid;
     }
 
-    public void setNid(String nid) {
-        this.nid = nid == null ? null : nid.trim();
+    public void setTid(String tid) {
+        this.tid = tid == null ? null : tid.trim();
     }
 
     public String getUid() {

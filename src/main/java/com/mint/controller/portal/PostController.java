@@ -1,6 +1,7 @@
 package com.mint.controller.portal;
 
 import com.mint.common.ServerResponse;
+import com.mint.pojo.Notice;
 import com.mint.pojo.Topic;
 import com.mint.service.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * @Program: mint2bbs
@@ -35,6 +37,18 @@ public class PostController {
     @ResponseBody
     public ServerResponse<String> post(Topic topic, String partid, HttpSession session) {
         ServerResponse<String> response = iPostService.post(topic, partid, session);
+        return response;
+    }
+
+    /**
+     * @Description 获取社区公告板
+     * @Return ServerResponse<List<Notice>>
+     */
+    @RequestMapping(value = "getNoticeBoard.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<List<Notice>> getNoticeBoard() {
+        System.out.println(22222222);
+        ServerResponse<List<Notice>> response= iPostService.getNoticeBoard();
         return response;
     }
 }

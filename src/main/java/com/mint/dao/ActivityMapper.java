@@ -3,13 +3,13 @@ package com.mint.dao;
 import com.mint.pojo.Activity;
 
 public interface ActivityMapper {
-    int deleteByPrimaryKey(String title);
+    int deleteByPrimaryKey(String tid);
 
     int insert(Activity record);
 
     int insertSelective(Activity record);
 
-    Activity selectByPrimaryKey(String title);
+    Activity selectByPrimaryKey(String tid);
 
     int updateByPrimaryKeySelective(Activity record);
 

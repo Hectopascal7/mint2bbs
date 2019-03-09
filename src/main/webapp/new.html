@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>layui模板引擎</title>
+    <link rel="stylesheet" href="../src/css/layui.css">
+    <style>
+        body{margin: 10px;}
+        .demo-carousel{height: 200px; line-height: 200px; text-align: center;}
+    </style>
+</head>
+<body>
+
+<div id="view"></div>
+
+<script id="demo" type="text/html">
+    <<h3>{{ d.title }}</h3>
+    <ul>
+        {{#  layui.each(d.list, function(index, item){ }}
+        <li>
+            <span>{{ item.modname }}</span>
+            <span>{{ item.alias }}：</span>
+            <span>{{ item.site || '' }}</span>
+        </li>
+        {{#  }); }}
+
+        {{#  if(d.list.length === 0){ }}
+        无数据
+        {{#  } }}
+    </ul>
+
+
+    {{#  layui.each(d.list, function(index, item){ }}
+    <li>
+        <a href="user/home.html" class="fly-avatar">
+            <img src="image/asuna.jpg" alt="橙色薄荷°">
+        </a>
+        <h2>
+            <a class="layui-badge">活动发起</a>
+            <a href="jie/detail.html">{{ item.modname }}</a>
+        </h2>
+        <div class="fly-list-info">
+            <a href="user/home.html" link>
+                <cite>{{ item.alias }}：</cite>
+                <!--
+                <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
+                <i class="layui-badge fly-badge-vip">管理员</i>
+                -->
+            </a>
+            <span>刚刚</span>
+            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i>{{ item.site || '' }}</span>
+            <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
+            <span class="fly-list-nums"><i class="iconfont icon-pinglun1" title="回答"></i> 66</span>
+        </div>
+        <div class="fly-list-badge">
+            <!--
+            <span class="layui-badge layui-bg-black">置顶</span>
+            <span class="layui-badge layui-bg-red">精帖</span>
+            -->
+        </div>
+    </li>
+    {{#  }); }}
+</script>
+
+
+<script>
+    layui.use('laytpl', function(){
+        laytpl=layui.laytpl;
+        var data = {
+            "title": "Layui常用模块"
+            ,"list": [
+                {
+                    "modname": "题目"
+                    ,"alias": "发布人"
+                    ,"site": "浏览量"
+                }
+                ,{
+                    "modname": "表单"
+                    ,"alias": "form"
+                }
+                ,{
+                    "modname": "分页"
+                    ,"alias": "laypage"
+                }
+                ,{
+                    "modname": "日期"
+                    ,"alias": "laydate"
+                }
+                ,{
+                    "modname": "上传"
+                    ,"alias": "upload"
+                }
+            ]
+        }
+
+        var getTpl=document.getElementById('demo').innerHTML
+            ,view = document.getElementById('view');
+        laytpl(getTpl).render(data, function(html){
+            view.innerHTML = html;
+        });
+    });
+</script>
+</body>
+</html>

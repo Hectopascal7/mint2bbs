@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mint.dao.SectionMapper">
+    <resultMap id="BaseResultMap" type="com.mint.pojo.Section">
+        <constructor>
+            <idArg column="sid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="sorder" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="sname" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="address" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+    sid, sorder, sname, address
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_section
+        where sid = #{sid,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tb_section
+    where sid = #{sid,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.mint.pojo.Section">
+    insert into tb_section (sid, sorder, sname, 
+      address)
+    values (#{sid,jdbcType=VARCHAR}, #{sorder,jdbcType=INTEGER}, #{sname,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.mint.pojo.Section">
+        insert into tb_section
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sid != null">
+                sid,
+            </if>
+            <if test="sorder != null">
+                sorder,
+            </if>
+            <if test="sname != null">
+                sname,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="sid != null">
+                #{sid,jdbcType=VARCHAR},
+            </if>
+            <if test="sorder != null">
+                #{sorder,jdbcType=INTEGER},
+            </if>
+            <if test="sname != null">
+                #{sname,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.mint.pojo.Section">
+        update tb_section
+        <set>
+            <if test="sorder != null">
+                sorder = #{sorder,jdbcType=INTEGER},
+            </if>
+            <if test="sname != null">
+                sname = #{sname,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where sid = #{sid,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.mint.pojo.Section">
+    update tb_section
+    set sorder = #{sorder,jdbcType=INTEGER},
+      sname = #{sname,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR}
+    where sid = #{sid,jdbcType=VARCHAR}
+  </update>
+    <select id="getSection" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from tb_section
+        order by sorder
+    </select>
+</mapper>

@@ -29,17 +29,6 @@
         from tb_user
         where loginid = #{loginid,jdbcType=VARCHAR}
     </select>
-    <select id="checkLoginid" resultType="int" parameterType="string">
-        select count(1) from tb_user
-    where loginid = #{loginid}
-    </select>
-    <select id="checkUser" resultMap="BaseResultMap" parameterType="map">
-        SELECT
-        <include refid="Base_Column_List"/>
-        from tb_user
-        where loginid = #{loginid}
-        and password = #{password}
-    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from tb_user
     where loginid = #{loginid,jdbcType=VARCHAR}
@@ -209,4 +198,15 @@
       signature = #{signature,jdbcType=VARCHAR}
     where loginid = #{loginid,jdbcType=VARCHAR}
   </update>
+    <select id="checkLoginid" resultType="int" parameterType="string">
+        select count(1) from tb_user
+    where loginid = #{loginid}
+    </select>
+    <select id="checkUser" resultMap="BaseResultMap" parameterType="map">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from tb_user
+        where loginid = #{loginid}
+        and password = #{password}
+    </select>
 </mapper>

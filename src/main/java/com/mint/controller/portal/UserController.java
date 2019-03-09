@@ -67,4 +67,19 @@ public class UserController {
         }
     }
 
+    /**
+     * @Description 用户注册
+     * @Param user
+     * @Param resident
+     * @Param session
+     * @Return ServerResponse<String>
+     */
+    @RequestMapping(value = "userCenter.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<User> getUser(HttpSession session) {
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        return ServerResponse.createBySuccess(user);
+    }
+
+
 }

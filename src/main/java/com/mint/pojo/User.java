@@ -1,7 +1,5 @@
 package com.mint.pojo;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.util.Date;
 
 public class User {
@@ -17,7 +15,6 @@ public class User {
 
     private Integer sex;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
 
     private String license;
@@ -49,26 +46,6 @@ public class User {
         this.level = level;
         this.email = email;
         this.signature = signature;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "loginid='" + loginid + '\'' +
-                ", uid='" + uid + '\'' +
-                ", password='" + password + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", role=" + role +
-                ", sex=" + sex +
-                ", birthday=" + birthday +
-                ", license='" + license + '\'' +
-                ", profile='" + profile + '\'' +
-                ", point=" + point +
-                ", jointime=" + jointime +
-                ", level=" + level +
-                ", email='" + email + '\'' +
-                ", signature='" + signature + '\'' +
-                '}';
     }
 
     public User() {

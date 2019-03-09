@@ -3,9 +3,9 @@
 <mapper namespace="com.mint.dao.ActivityMapper">
   <resultMap id="BaseResultMap" type="com.mint.pojo.Activity">
     <constructor>
-      <idArg column="title" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="nid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <idArg column="tid" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="uid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="title" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="ptime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="acount" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="rcount" javaType="java.lang.Integer" jdbcType="INTEGER" />
@@ -15,9 +15,9 @@
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.mint.pojo.Activity">
     <constructor>
-      <idArg column="title" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="nid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <idArg column="tid" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="uid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="title" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="ptime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="acount" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="rcount" javaType="java.lang.Integer" jdbcType="INTEGER" />
@@ -27,7 +27,7 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    title, nid, uid, ptime, acount, rcount, isbest, issticky
+    tid, uid, title, ptime, acount, rcount, isbest, issticky
   </sql>
   <sql id="Blob_Column_List">
     content
@@ -38,18 +38,18 @@
     ,
     <include refid="Blob_Column_List" />
     from tb_activity
-    where title = #{title,jdbcType=VARCHAR}
+    where tid = #{tid,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from tb_activity
-    where title = #{title,jdbcType=VARCHAR}
+    where tid = #{tid,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.mint.pojo.Activity">
-    insert into tb_activity (title, nid, uid, 
+    insert into tb_activity (tid, uid, title, 
       ptime, acount, rcount, 
       isbest, issticky, content
       )
-    values (#{title,jdbcType=VARCHAR}, #{nid,jdbcType=VARCHAR}, #{uid,jdbcType=VARCHAR}, 
+    values (#{tid,jdbcType=VARCHAR}, #{uid,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
       #{ptime,jdbcType=TIMESTAMP}, #{acount,jdbcType=INTEGER}, #{rcount,jdbcType=INTEGER}, 
       #{isbest,jdbcType=INTEGER}, #{issticky,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}
       )
@@ -57,14 +57,14 @@
   <insert id="insertSelective" parameterType="com.mint.pojo.Activity">
     insert into tb_activity
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="title != null">
-        title,
-      </if>
-      <if test="nid != null">
-        nid,
+      <if test="tid != null">
+        tid,
       </if>
       <if test="uid != null">
         uid,
+      </if>
+      <if test="title != null">
+        title,
       </if>
       <if test="ptime != null">
         ptime,
@@ -86,14 +86,14 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="title != null">
-        #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="nid != null">
-        #{nid,jdbcType=VARCHAR},
+      <if test="tid != null">
+        #{tid,jdbcType=VARCHAR},
       </if>
       <if test="uid != null">
         #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
       </if>
       <if test="ptime != null">
         #{ptime,jdbcType=TIMESTAMP},
@@ -118,11 +118,11 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.mint.pojo.Activity">
     update tb_activity
     <set>
-      <if test="nid != null">
-        nid = #{nid,jdbcType=VARCHAR},
-      </if>
       <if test="uid != null">
         uid = #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
       </if>
       <if test="ptime != null">
         ptime = #{ptime,jdbcType=TIMESTAMP},
@@ -143,29 +143,29 @@
         content = #{content,jdbcType=LONGVARCHAR},
       </if>
     </set>
-    where title = #{title,jdbcType=VARCHAR}
+    where tid = #{tid,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mint.pojo.Activity">
     update tb_activity
-    set nid = #{nid,jdbcType=VARCHAR},
-      uid = #{uid,jdbcType=VARCHAR},
+    set uid = #{uid,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
       ptime = #{ptime,jdbcType=TIMESTAMP},
       acount = #{acount,jdbcType=INTEGER},
       rcount = #{rcount,jdbcType=INTEGER},
       isbest = #{isbest,jdbcType=INTEGER},
       issticky = #{issticky,jdbcType=INTEGER},
       content = #{content,jdbcType=LONGVARCHAR}
-    where title = #{title,jdbcType=VARCHAR}
+    where tid = #{tid,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.mint.pojo.Activity">
     update tb_activity
-    set nid = #{nid,jdbcType=VARCHAR},
-      uid = #{uid,jdbcType=VARCHAR},
+    set uid = #{uid,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
       ptime = #{ptime,jdbcType=TIMESTAMP},
       acount = #{acount,jdbcType=INTEGER},
       rcount = #{rcount,jdbcType=INTEGER},
       isbest = #{isbest,jdbcType=INTEGER},
       issticky = #{issticky,jdbcType=INTEGER}
-    where title = #{title,jdbcType=VARCHAR}
+    where tid = #{tid,jdbcType=VARCHAR}
   </update>
 </mapper>

@@ -3,11 +3,11 @@ package com.mint.pojo;
 import java.util.Date;
 
 public class Activity {
-    private String title;
-
-    private String nid;
+    private String tid;
 
     private String uid;
+
+    private String title;
 
     private Date ptime;
 
@@ -21,10 +21,10 @@ public class Activity {
 
     private String content;
 
-    public Activity(String title, String nid, String uid, Date ptime, Integer acount, Integer rcount, Integer isbest, Integer issticky) {
-        this.title = title;
-        this.nid = nid;
+    public Activity(String tid, String uid, String title, Date ptime, Integer acount, Integer rcount, Integer isbest, Integer issticky) {
+        this.tid = tid;
         this.uid = uid;
+        this.title = title;
         this.ptime = ptime;
         this.acount = acount;
         this.rcount = rcount;
@@ -32,10 +32,10 @@ public class Activity {
         this.issticky = issticky;
     }
 
-    public Activity(String title, String nid, String uid, Date ptime, Integer acount, Integer rcount, Integer isbest, Integer issticky, String content) {
-        this.title = title;
-        this.nid = nid;
+    public Activity(String tid, String uid, String title, Date ptime, Integer acount, Integer rcount, Integer isbest, Integer issticky, String content) {
+        this.tid = tid;
         this.uid = uid;
+        this.title = title;
         this.ptime = ptime;
         this.acount = acount;
         this.rcount = rcount;
@@ -48,20 +48,12 @@ public class Activity {
         super();
     }
 
-    public String getTitle() {
-        return title;
+    public String getTid() {
+        return tid;
     }
 
-    public void setTitle(String title) {
-        this.title = title == null ? null : title.trim();
-    }
-
-    public String getNid() {
-        return nid;
-    }
-
-    public void setNid(String nid) {
-        this.nid = nid == null ? null : nid.trim();
+    public void setTid(String tid) {
+        this.tid = tid == null ? null : tid.trim();
     }
 
     public String getUid() {
@@ -70,6 +62,14 @@ public class Activity {
 
     public void setUid(String uid) {
         this.uid = uid == null ? null : uid.trim();
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title == null ? null : title.trim();
     }
 
     public Date getPtime() {
