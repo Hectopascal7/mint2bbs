@@ -1,5 +1,7 @@
 package com.mint.pojo;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class Post {
@@ -11,6 +13,7 @@ public class Post {
 
     private String title;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date ptime;
 
     private Integer acount;

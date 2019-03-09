@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="keywords" content="薄荷社区">
     <meta name="description" content="薄荷社区,MintBBS,橙色薄荷°">
+    <link rel="icon" href="/image/favicon.ico">
     <link rel="stylesheet" href="/script/layui/css/layui.css">
     <link rel="stylesheet" href="/css/global.css">
     <script src="/script/jquery-3.3.1.min.js"></script>
@@ -81,10 +82,6 @@
                 <div class="fly-panel-title fly-filter">
                     <a href="" class="layui-this">综合</a>
                     <span class="fly-mid"></span>
-                    <a href="">未结</a>
-                    <span class="fly-mid"></span>
-                    <a href="">已结</a>
-                    <span class="fly-mid"></span>
                     <a href="">精华</a>
                     <span class="fly-filter-right layui-hide-xs">
                         <a href="" class="layui-this">按最新</a>
@@ -127,7 +124,7 @@
                 </ul>
                 <div style="text-align: center">
                     <div class="laypage-main">
-                        <a href="jie/index.html" class="laypage-next">更多求解</a>
+                        <a href="jie/index.html" class="laypage-next">更多帖子</a>
                     </div>
                 </div>
 
@@ -163,7 +160,7 @@
             </div>
 
             <div class="fly-panel fly-rank fly-rank-reply" id="LAY_replyRank">
-                <h3 class="fly-panel-title">回贴周榜</h3>
+                <h3 class="fly-panel-title">回帖榜</h3>
                 <dl>
                     <!--<i class="layui-icon fly-loading">&#xe63d;</i>-->
                     <dd>
@@ -462,7 +459,7 @@
             </a>
             <span>{{ JSON.parse(d[i].post).ptime}}</span>
             <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> {{ JSON.parse(d[i].post).acount}}</span>
-            <span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>
+            <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
             <span class="fly-list-nums"><i class="iconfont icon-pinglun1" title="回复"></i> {{ JSON.parse(d[i].post).rcount}}</span>
         </div>
         <div class="fly-list-badge">
