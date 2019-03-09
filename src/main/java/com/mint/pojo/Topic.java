@@ -7,6 +7,8 @@ public class Topic {
 
     private String uid;
 
+    private String sid;
+
     private String title;
 
     private Date ptime;
@@ -21,9 +23,10 @@ public class Topic {
 
     private String content;
 
-    public Topic(String tid, String uid, String title, Date ptime, Integer acount, Integer rcount, Integer isbest, Integer issticky) {
+    public Topic(String tid, String uid, String sid, String title, Date ptime, Integer acount, Integer rcount, Integer isbest, Integer issticky) {
         this.tid = tid;
         this.uid = uid;
+        this.sid = sid;
         this.title = title;
         this.ptime = ptime;
         this.acount = acount;
@@ -32,9 +35,10 @@ public class Topic {
         this.issticky = issticky;
     }
 
-    public Topic(String tid, String uid, String title, Date ptime, Integer acount, Integer rcount, Integer isbest, Integer issticky, String content) {
+    public Topic(String tid, String uid, String sid, String title, Date ptime, Integer acount, Integer rcount, Integer isbest, Integer issticky, String content) {
         this.tid = tid;
         this.uid = uid;
+        this.sid = sid;
         this.title = title;
         this.ptime = ptime;
         this.acount = acount;
@@ -62,6 +66,14 @@ public class Topic {
 
     public void setUid(String uid) {
         this.uid = uid == null ? null : uid.trim();
+    }
+
+    public String getSid() {
+        return sid;
+    }
+
+    public void setSid(String sid) {
+        this.sid = sid == null ? null : sid.trim();
     }
 
     public String getTitle() {

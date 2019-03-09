@@ -209,4 +209,12 @@
         where loginid = #{loginid}
         and password = #{password}
     </select>
+    <select id="getNicknameByUid" resultType="String" parameterType="string">
+        select nickname from tb_user
+    where uid = #{uid}
+    </select>
+    <select id="getRoleByUid" resultType="int" parameterType="string">
+        select role from tb_user
+    where uid = #{uid}
+    </select>
 </mapper>

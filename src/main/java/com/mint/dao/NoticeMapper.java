@@ -1,6 +1,7 @@
 package com.mint.dao;
 
 import com.mint.pojo.Notice;
+import com.mint.pojo.Post;
 
 import java.util.List;
 
@@ -20,4 +21,5 @@ public interface NoticeMapper {
     int updateByPrimaryKey(Notice record);
 
     List<Notice> getNoticeBoard();
+
 }

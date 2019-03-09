@@ -18,5 +18,9 @@ public interface UserMapper {
 
     int checkLoginid(String loginid);
 
-    User checkUser(@Param("loginid") String loginid,@Param("password") String password);
+    User checkUser(@Param("loginid") String loginid, @Param("password") String password);
+
+    String getNicknameByUid(String uid);
+
+    int getRoleByUid(String uid);
 }

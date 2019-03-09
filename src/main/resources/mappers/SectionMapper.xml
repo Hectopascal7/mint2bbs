@@ -87,4 +87,10 @@
         from tb_section
         order by sorder
     </select>
+    <select id="getSnameBySid" resultType="String">
+        SELECT
+        sname
+        from tb_section
+        where sid = #{sid}
+    </select>
 </mapper>

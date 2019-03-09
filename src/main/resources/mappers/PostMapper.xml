@@ -1,153 +1,226 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mint.dao.PostMapper">
-  <resultMap id="BaseResultMap" type="com.mint.pojo.Post">
-    <constructor>
-      <idArg column="tid" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="uid" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="title" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="ptime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-      <arg column="acount" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="rcount" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="isbest" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="issticky" javaType="java.lang.Integer" jdbcType="INTEGER" />
-    </constructor>
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.mint.pojo.Post">
-    <constructor>
-      <idArg column="tid" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="uid" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="title" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="ptime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-      <arg column="acount" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="rcount" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="isbest" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="issticky" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="content" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
-    </constructor>
-  </resultMap>
-  <sql id="Base_Column_List">
-    tid, uid, title, ptime, acount, rcount, isbest, issticky
+    <resultMap id="BaseResultMap" type="com.mint.pojo.Post">
+        <constructor>
+            <idArg column="tid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="uid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="sid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="title" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="ptime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="acount" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="rcount" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="isbest" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="issticky" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        </constructor>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.mint.pojo.Post">
+        <constructor>
+            <idArg column="tid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="uid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="sid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="title" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="ptime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="acount" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="rcount" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="isbest" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="issticky" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="content" javaType="java.lang.String" jdbcType="LONGVARCHAR"/>
+        </constructor>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    tid, uid, sid, title, ptime, acount, rcount, isbest, issticky
   </sql>
-  <sql id="Blob_Column_List">
+    <sql id="Blob_Column_List">
     content
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from tb_post
-    where tid = #{tid,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_post
+        where tid = #{tid,jdbcType=VARCHAR}
+    </select>
+
+
+    <select id="getAllSticky" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from
+        (
+
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_activity
+
+        union all
+
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_guide
+
+        union all
+
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_news
+
+        union all
+
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_notice
+
+        union all
+
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_topic
+
+        union all
+
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_advice
+
+        ) e
+        where e.issticky=1
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from tb_post
     where tid = #{tid,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.mint.pojo.Post">
-    insert into tb_post (tid, uid, title, 
-      ptime, acount, rcount, 
-      isbest, issticky, content
-      )
-    values (#{tid,jdbcType=VARCHAR}, #{uid,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
-      #{ptime,jdbcType=TIMESTAMP}, #{acount,jdbcType=INTEGER}, #{rcount,jdbcType=INTEGER}, 
-      #{isbest,jdbcType=INTEGER}, #{issticky,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}
-      )
+    <insert id="insert" parameterType="com.mint.pojo.Post">
+    insert into tb_post (tid, uid, sid, 
+      title, ptime, acount, 
+      rcount, isbest, issticky, 
+      content)
+    values (#{tid,jdbcType=VARCHAR}, #{uid,jdbcType=VARCHAR}, #{sid,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{ptime,jdbcType=TIMESTAMP}, #{acount,jdbcType=INTEGER}, 
+      #{rcount,jdbcType=INTEGER}, #{isbest,jdbcType=INTEGER}, #{issticky,jdbcType=INTEGER}, 
+      #{content,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.mint.pojo.Post">
-    insert into tb_post
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="tid != null">
-        tid,
-      </if>
-      <if test="uid != null">
-        uid,
-      </if>
-      <if test="title != null">
-        title,
-      </if>
-      <if test="ptime != null">
-        ptime,
-      </if>
-      <if test="acount != null">
-        acount,
-      </if>
-      <if test="rcount != null">
-        rcount,
-      </if>
-      <if test="isbest != null">
-        isbest,
-      </if>
-      <if test="issticky != null">
-        issticky,
-      </if>
-      <if test="content != null">
-        content,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="tid != null">
-        #{tid,jdbcType=VARCHAR},
-      </if>
-      <if test="uid != null">
-        #{uid,jdbcType=VARCHAR},
-      </if>
-      <if test="title != null">
-        #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="ptime != null">
-        #{ptime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="acount != null">
-        #{acount,jdbcType=INTEGER},
-      </if>
-      <if test="rcount != null">
-        #{rcount,jdbcType=INTEGER},
-      </if>
-      <if test="isbest != null">
-        #{isbest,jdbcType=INTEGER},
-      </if>
-      <if test="issticky != null">
-        #{issticky,jdbcType=INTEGER},
-      </if>
-      <if test="content != null">
-        #{content,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.mint.pojo.Post">
-    update tb_post
-    <set>
-      <if test="uid != null">
-        uid = #{uid,jdbcType=VARCHAR},
-      </if>
-      <if test="title != null">
-        title = #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="ptime != null">
-        ptime = #{ptime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="acount != null">
-        acount = #{acount,jdbcType=INTEGER},
-      </if>
-      <if test="rcount != null">
-        rcount = #{rcount,jdbcType=INTEGER},
-      </if>
-      <if test="isbest != null">
-        isbest = #{isbest,jdbcType=INTEGER},
-      </if>
-      <if test="issticky != null">
-        issticky = #{issticky,jdbcType=INTEGER},
-      </if>
-      <if test="content != null">
-        content = #{content,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where tid = #{tid,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mint.pojo.Post">
+    <insert id="insertSelective" parameterType="com.mint.pojo.Post">
+        insert into tb_post
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="tid != null">
+                tid,
+            </if>
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="sid != null">
+                sid,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="ptime != null">
+                ptime,
+            </if>
+            <if test="acount != null">
+                acount,
+            </if>
+            <if test="rcount != null">
+                rcount,
+            </if>
+            <if test="isbest != null">
+                isbest,
+            </if>
+            <if test="issticky != null">
+                issticky,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="tid != null">
+                #{tid,jdbcType=VARCHAR},
+            </if>
+            <if test="uid != null">
+                #{uid,jdbcType=VARCHAR},
+            </if>
+            <if test="sid != null">
+                #{sid,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="ptime != null">
+                #{ptime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="acount != null">
+                #{acount,jdbcType=INTEGER},
+            </if>
+            <if test="rcount != null">
+                #{rcount,jdbcType=INTEGER},
+            </if>
+            <if test="isbest != null">
+                #{isbest,jdbcType=INTEGER},
+            </if>
+            <if test="issticky != null">
+                #{issticky,jdbcType=INTEGER},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.mint.pojo.Post">
+        update tb_post
+        <set>
+            <if test="uid != null">
+                uid = #{uid,jdbcType=VARCHAR},
+            </if>
+            <if test="sid != null">
+                sid = #{sid,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="ptime != null">
+                ptime = #{ptime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="acount != null">
+                acount = #{acount,jdbcType=INTEGER},
+            </if>
+            <if test="rcount != null">
+                rcount = #{rcount,jdbcType=INTEGER},
+            </if>
+            <if test="isbest != null">
+                isbest = #{isbest,jdbcType=INTEGER},
+            </if>
+            <if test="issticky != null">
+                issticky = #{issticky,jdbcType=INTEGER},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where tid = #{tid,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mint.pojo.Post">
     update tb_post
     set uid = #{uid,jdbcType=VARCHAR},
+      sid = #{sid,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
       ptime = #{ptime,jdbcType=TIMESTAMP},
       acount = #{acount,jdbcType=INTEGER},
@@ -157,9 +230,10 @@
       content = #{content,jdbcType=LONGVARCHAR}
     where tid = #{tid,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.mint.pojo.Post">
+    <update id="updateByPrimaryKey" parameterType="com.mint.pojo.Post">
     update tb_post
     set uid = #{uid,jdbcType=VARCHAR},
+      sid = #{sid,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
       ptime = #{ptime,jdbcType=TIMESTAMP},
       acount = #{acount,jdbcType=INTEGER},

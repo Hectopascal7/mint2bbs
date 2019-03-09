@@ -2,9 +2,11 @@ package com.mint.service;
 
 import com.mint.common.ServerResponse;
 import com.mint.pojo.Notice;
+import com.mint.pojo.Post;
 import com.mint.pojo.Topic;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
 
 public interface IPostService {
@@ -23,4 +25,10 @@ public interface IPostService {
      * @Return ServerResponse<List<Notice>>
      */
     ServerResponse<List<Notice>> getNoticeBoard();
+
+    /**
+     * @Description 获取置顶模块
+     * @Return ServerResponse<List<Notice>>
+     */
+    ServerResponse<List<HashMap<String, String>>> getAllSticky();
 }

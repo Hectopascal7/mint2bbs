@@ -7,16 +7,16 @@ public class Good {
 
     private String title;
 
-    private Integer isnew;
+    private Integer isused;
 
     private Integer degree;
 
     private BigDecimal price;
 
-    public Good(String gid, String title, Integer isnew, Integer degree, BigDecimal price) {
+    public Good(String gid, String title, Integer isused, Integer degree, BigDecimal price) {
         this.gid = gid;
         this.title = title;
-        this.isnew = isnew;
+        this.isused = isused;
         this.degree = degree;
         this.price = price;
     }
@@ -41,12 +41,12 @@ public class Good {
         this.title = title == null ? null : title.trim();
     }
 
-    public Integer getIsnew() {
-        return isnew;
+    public Integer getIsused() {
+        return isused;
     }
 
-    public void setIsnew(Integer isnew) {
-        this.isnew = isnew;
+    public void setIsused(Integer isused) {
+        this.isused = isused;
     }
 
     public Integer getDegree() {

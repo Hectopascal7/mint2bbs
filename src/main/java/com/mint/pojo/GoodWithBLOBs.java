@@ -9,8 +9,8 @@ public class GoodWithBLOBs extends Good {
 
     private String picture;
 
-    public GoodWithBLOBs(String gid, String title, Integer isnew, Integer degree, BigDecimal price, String content, String cover, String picture) {
-        super(gid, title, isnew, degree, price);
+    public GoodWithBLOBs(String gid, String title, Integer isused, Integer degree, BigDecimal price, String content, String cover, String picture) {
+        super(gid, title, isused, degree, price);
         this.content = content;
         this.cover = cover;
         this.picture = picture;

@@ -1,7 +1,9 @@
 package com.mint.controller.portal;
 
+import com.alibaba.fastjson.JSON;
 import com.mint.common.ServerResponse;
 import com.mint.pojo.Notice;
+import com.mint.pojo.Post;
 import com.mint.pojo.Topic;
 import com.mint.service.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -47,8 +50,19 @@ public class PostController {
     @RequestMapping(value = "getNoticeBoard.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<List<Notice>> getNoticeBoard() {
-        System.out.println(22222222);
         ServerResponse<List<Notice>> response= iPostService.getNoticeBoard();
+        return response;
+    }
+
+    /**
+     * @Description 置顶模块
+     * @Return ServerResponse<List<Notice>>
+     */
+    @RequestMapping(value = "getAllSticky.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<List<HashMap<String, String>>> getAllSticky() {
+        ServerResponse<List<HashMap<String, String>>> response= iPostService.getAllSticky();
+        System.out.println(JSON.toJSONString(response));
         return response;
     }
 }

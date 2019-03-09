@@ -5,6 +5,7 @@
     <constructor>
       <idArg column="tid" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="uid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="sid" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="title" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="ptime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="acount" javaType="java.lang.Integer" jdbcType="INTEGER" />
@@ -17,6 +18,7 @@
     <constructor>
       <idArg column="tid" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="uid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="sid" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="title" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="ptime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="acount" javaType="java.lang.Integer" jdbcType="INTEGER" />
@@ -27,7 +29,7 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    tid, uid, title, ptime, acount, rcount, isbest, issticky
+    tid, uid, sid, title, ptime, acount, rcount, isbest, issticky
   </sql>
   <sql id="Blob_Column_List">
     content
@@ -45,14 +47,14 @@
     where tid = #{tid,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.mint.pojo.Advice">
-    insert into tb_advice (tid, uid, title, 
-      ptime, acount, rcount, 
-      isbest, issticky, content
-      )
-    values (#{tid,jdbcType=VARCHAR}, #{uid,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
-      #{ptime,jdbcType=TIMESTAMP}, #{acount,jdbcType=INTEGER}, #{rcount,jdbcType=INTEGER}, 
-      #{isbest,jdbcType=INTEGER}, #{issticky,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}
-      )
+    insert into tb_advice (tid, uid, sid, 
+      title, ptime, acount, 
+      rcount, isbest, issticky, 
+      content)
+    values (#{tid,jdbcType=VARCHAR}, #{uid,jdbcType=VARCHAR}, #{sid,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{ptime,jdbcType=TIMESTAMP}, #{acount,jdbcType=INTEGER}, 
+      #{rcount,jdbcType=INTEGER}, #{isbest,jdbcType=INTEGER}, #{issticky,jdbcType=INTEGER}, 
+      #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.mint.pojo.Advice">
     insert into tb_advice
@@ -62,6 +64,9 @@
       </if>
       <if test="uid != null">
         uid,
+      </if>
+      <if test="sid != null">
+        sid,
       </if>
       <if test="title != null">
         title,
@@ -92,6 +97,9 @@
       <if test="uid != null">
         #{uid,jdbcType=VARCHAR},
       </if>
+      <if test="sid != null">
+        #{sid,jdbcType=VARCHAR},
+      </if>
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
       </if>
@@ -121,6 +129,9 @@
       <if test="uid != null">
         uid = #{uid,jdbcType=VARCHAR},
       </if>
+      <if test="sid != null">
+        sid = #{sid,jdbcType=VARCHAR},
+      </if>
       <if test="title != null">
         title = #{title,jdbcType=VARCHAR},
       </if>
@@ -148,6 +159,7 @@
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mint.pojo.Advice">
     update tb_advice
     set uid = #{uid,jdbcType=VARCHAR},
+      sid = #{sid,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
       ptime = #{ptime,jdbcType=TIMESTAMP},
       acount = #{acount,jdbcType=INTEGER},
@@ -160,6 +172,7 @@
   <update id="updateByPrimaryKey" parameterType="com.mint.pojo.Advice">
     update tb_advice
     set uid = #{uid,jdbcType=VARCHAR},
+      sid = #{sid,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
       ptime = #{ptime,jdbcType=TIMESTAMP},
       acount = #{acount,jdbcType=INTEGER},

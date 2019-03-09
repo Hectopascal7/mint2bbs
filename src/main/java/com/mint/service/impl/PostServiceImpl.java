@@ -1,10 +1,11 @@
 package com.mint.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.mint.common.Const;
 import com.mint.common.ServerResponse;
-import com.mint.dao.NoticeMapper;
-import com.mint.dao.TopicMapper;
+import com.mint.dao.*;
 import com.mint.pojo.Notice;
+import com.mint.pojo.Post;
 import com.mint.pojo.Topic;
 import com.mint.pojo.User;
 import com.mint.service.IPostService;
@@ -12,8 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @Program: mint2bbs
@@ -28,6 +28,12 @@ public class PostServiceImpl implements IPostService {
     private TopicMapper topicMapper;
     @Autowired
     private NoticeMapper noticeMapper;
+    @Autowired
+    private PostMapper postMapper;
+    @Autowired
+    private UserMapper userMapper;
+    @Autowired
+    private SectionMapper sectionMapper;
 
     /**
      * @Description 发帖
@@ -56,5 +62,29 @@ public class PostServiceImpl implements IPostService {
     @Override
     public ServerResponse<List<Notice>> getNoticeBoard() {
         return ServerResponse.createBySuccess(noticeMapper.getNoticeBoard());
+    }
+
+    /**
+     * @Description 获取置顶模块
+     * @Return ServerResponse<List < Notice>>
+     */
+    @Override
+    public ServerResponse<List<HashMap<String, String>>> getAllSticky() {
+        List<Post> list = postMapper.getAllSticky();
+        List<HashMap<String, String>> postList = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            Post post = list.get(i);
+            String nickname = userMapper.getNicknameByUid(post.getUid());
+            int role = userMapper.getRoleByUid(post.getUid());
+            String sname = sectionMapper.getSnameBySid(post.getSid());
+//            User user=userMapper.selectByPrimaryKey();
+            HashMap<String, String> map = new HashMap<>();
+            map.put("nickname", nickname);
+            map.put("sname", sname);
+            map.put("role", String.valueOf(role));
+            map.put("post", JSON.toJSONString(post));
+            postList.add(map);
+        }
+        return ServerResponse.createBySuccess(postList);
     }
 }

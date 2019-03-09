@@ -5,7 +5,7 @@
     <constructor>
       <idArg column="gid" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="title" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="isnew" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="isused" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="degree" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="price" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
     </constructor>
@@ -14,7 +14,7 @@
     <constructor>
       <idArg column="gid" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="title" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="isnew" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="isused" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="degree" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="price" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
       <arg column="content" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
@@ -23,7 +23,7 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    gid, title, isnew, degree, price
+    gid, title, isused, degree, price
   </sql>
   <sql id="Blob_Column_List">
     content, cover, picture
@@ -41,10 +41,10 @@
     where gid = #{gid,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.mint.pojo.GoodWithBLOBs">
-    insert into tb_good (gid, title, isnew, 
+    insert into tb_good (gid, title, isused, 
       degree, price, content, 
       cover, picture)
-    values (#{gid,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{isnew,jdbcType=INTEGER}, 
+    values (#{gid,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{isused,jdbcType=INTEGER}, 
       #{degree,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, #{content,jdbcType=LONGVARCHAR}, 
       #{cover,jdbcType=LONGVARCHAR}, #{picture,jdbcType=LONGVARCHAR})
   </insert>
@@ -57,8 +57,8 @@
       <if test="title != null">
         title,
       </if>
-      <if test="isnew != null">
-        isnew,
+      <if test="isused != null">
+        isused,
       </if>
       <if test="degree != null">
         degree,
@@ -83,8 +83,8 @@
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
       </if>
-      <if test="isnew != null">
-        #{isnew,jdbcType=INTEGER},
+      <if test="isused != null">
+        #{isused,jdbcType=INTEGER},
       </if>
       <if test="degree != null">
         #{degree,jdbcType=INTEGER},
@@ -109,8 +109,8 @@
       <if test="title != null">
         title = #{title,jdbcType=VARCHAR},
       </if>
-      <if test="isnew != null">
-        isnew = #{isnew,jdbcType=INTEGER},
+      <if test="isused != null">
+        isused = #{isused,jdbcType=INTEGER},
       </if>
       <if test="degree != null">
         degree = #{degree,jdbcType=INTEGER},
@@ -133,7 +133,7 @@
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mint.pojo.GoodWithBLOBs">
     update tb_good
     set title = #{title,jdbcType=VARCHAR},
-      isnew = #{isnew,jdbcType=INTEGER},
+      isused = #{isused,jdbcType=INTEGER},
       degree = #{degree,jdbcType=INTEGER},
       price = #{price,jdbcType=DECIMAL},
       content = #{content,jdbcType=LONGVARCHAR},
@@ -144,7 +144,7 @@
   <update id="updateByPrimaryKey" parameterType="com.mint.pojo.Good">
     update tb_good
     set title = #{title,jdbcType=VARCHAR},
-      isnew = #{isnew,jdbcType=INTEGER},
+      isused = #{isused,jdbcType=INTEGER},
       degree = #{degree,jdbcType=INTEGER},
       price = #{price,jdbcType=DECIMAL}
     where gid = #{gid,jdbcType=VARCHAR}

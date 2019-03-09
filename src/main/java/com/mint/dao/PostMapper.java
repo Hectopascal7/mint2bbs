@@ -2,6 +2,8 @@ package com.mint.dao;
 
 import com.mint.pojo.Post;
 
+import java.util.List;
+
 public interface PostMapper {
     int deleteByPrimaryKey(String tid);
 
@@ -16,4 +18,6 @@ public interface PostMapper {
     int updateByPrimaryKeyWithBLOBs(Post record);
 
     int updateByPrimaryKey(Post record);
+
+    List<Post> getAllSticky();
 }
