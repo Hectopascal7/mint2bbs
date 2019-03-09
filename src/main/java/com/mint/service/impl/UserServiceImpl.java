@@ -11,6 +11,9 @@ import com.mint.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.List;
+
 /**
  * @Program: mint2bbs
  * @Description: IUserService的实现类
@@ -75,11 +78,11 @@ public class UserServiceImpl implements IUserService {
                     countMapper.insert(count);
                     // 所有操作完毕，执行成功
                     return ServerResponse.createBySuccessMessage("注册成功！");
-                // 存储失败，注册失败
+                    // 存储失败，注册失败
                 } else {
                     return ServerResponse.createByErrorMessage("注册失败！");
                 }
-            // 登录id已存在，无法进行注册
+                // 登录id已存在，无法进行注册
             } else {
                 return ServerResponse.createByErrorMessage("注册账号已存在，请重新输入。");
             }
@@ -99,7 +102,7 @@ public class UserServiceImpl implements IUserService {
         // 用户存在
         if (null != result && resident.equals(result)) {
             return true;
-        // 用户不存在
+            // 用户不存在
         } else {
             return false;
         }

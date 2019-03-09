@@ -4,10 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.mint.common.Const;
 import com.mint.common.ServerResponse;
 import com.mint.dao.*;
-import com.mint.pojo.Notice;
-import com.mint.pojo.Post;
-import com.mint.pojo.Topic;
-import com.mint.pojo.User;
+import com.mint.pojo.*;
 import com.mint.service.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -83,6 +80,41 @@ public class PostServiceImpl implements IPostService {
             map.put("sname", sname);
             map.put("role", String.valueOf(role));
             map.put("post", JSON.toJSONString(post));
+            postList.add(map);
+        }
+        return ServerResponse.createBySuccess(postList);
+    }
+
+    /**
+     * @Description 获取热门帖子
+     * @Return ServerResponse<List < Notice>>
+     */
+    @Override
+    public ServerResponse<List<Post>> getHotPost() {
+        List<Post> list=postMapper.getHotPost();
+        return ServerResponse.createBySuccess(list);
+    }
+
+    /**
+     * @param page
+     * @Description 获取帖子列表
+     * @Return ServerResponse<List < Notice>>
+     */
+    @Override
+    public ServerResponse<List<HashMap<String, Object>>> getPostByPtime(int page) {
+        List<Post> list = postMapper.getPostByPtime(page*2);
+        List<HashMap<String, Object>> postList = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            Post post = list.get(i);
+            User user = userMapper.selectByPrimaryKey(post.getUid());
+//            String sname = sectionMapper.getSnameBySid(post.getSid());
+            Section section = sectionMapper.selectByPrimaryKey(post.getSid());
+//            User user=userMapper.selectByPrimaryKey();
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("user", user);
+            map.put("section", section);
+            map.put("post", post);
+//            map.put("post", JSON.toJSONString(post));
             postList.add(map);
         }
         return ServerResponse.createBySuccess(postList);

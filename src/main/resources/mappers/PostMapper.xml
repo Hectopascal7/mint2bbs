@@ -43,8 +43,6 @@
         from tb_post
         where tid = #{tid,jdbcType=VARCHAR}
     </select>
-
-
     <select id="getAllSticky" resultMap="ResultMapWithBLOBs">
         select
         <include refid="Base_Column_List"/>
@@ -101,6 +99,124 @@
 
         ) e
         where e.issticky=1
+    </select>
+
+    <select id="getHotPost" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from
+        (
+
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_activity
+
+        union all
+
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_guide
+
+        union all
+
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_news
+
+        union all
+
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_notice
+
+        union all
+
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_topic
+
+        union all
+
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_advice
+
+        ) e
+        order by (e.acount+e.rcount) desc
+        limit 10
+    </select>
+
+    <select id="getPostByPtime" resultMap="BaseResultMap" parameterType="int">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from
+        (
+
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_activity
+
+        union all
+
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_guide
+
+        union all
+
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_news
+
+        union all
+
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_notice
+
+        union all
+
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_topic
+
+        union all
+
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_advice
+
+        ) e
+        order by e.ptime
+        limit #{tcount}
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">

@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.management.ObjectName;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
@@ -45,24 +47,47 @@ public class PostController {
 
     /**
      * @Description 获取社区公告板
-     * @Return ServerResponse<List<Notice>>
+     * @Return ServerResponse<List < Notice>>
      */
     @RequestMapping(value = "getNoticeBoard.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<List<Notice>> getNoticeBoard() {
-        ServerResponse<List<Notice>> response= iPostService.getNoticeBoard();
+        ServerResponse<List<Notice>> response = iPostService.getNoticeBoard();
         return response;
     }
 
     /**
      * @Description 置顶模块
-     * @Return ServerResponse<List<Notice>>
+     * @Return ServerResponse<List < Notice>>
      */
     @RequestMapping(value = "getAllSticky.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<List<HashMap<String, String>>> getAllSticky() {
-        ServerResponse<List<HashMap<String, String>>> response= iPostService.getAllSticky();
+        ServerResponse<List<HashMap<String, String>>> response = iPostService.getAllSticky();
         System.out.println(JSON.toJSONString(response));
+        return response;
+    }
+
+    /**
+     * @Description 置顶模块
+     * @Return ServerResponse<List < Notice>>
+     */
+    @RequestMapping(value = "getHotPost.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<List<Post>> getHotPost() {
+        ServerResponse<List<Post>> response = iPostService.getHotPost();
+        return response;
+    }
+
+    /**
+     * @Description 帖子模块
+     * @Return ServerResponse<List < Notice>>
+     */
+    @RequestMapping(value = "getPostByPtime.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<List<HashMap<String, Object>>> getPostByPtime(@RequestParam("page") int page) {
+        ServerResponse<List<HashMap<String, Object>>> response = iPostService.getPostByPtime(page);
+        System.out.println("123456"+JSON.toJSONString(response));
         return response;
     }
 }

@@ -31,4 +31,16 @@ public interface IPostService {
      * @Return ServerResponse<List<Notice>>
      */
     ServerResponse<List<HashMap<String, String>>> getAllSticky();
+
+    /**
+     * @Description 获取热门帖子
+     * @Return ServerResponse<List<Notice>>
+     */
+    ServerResponse<List<Post>> getHotPost();
+
+    /**
+     * @Description 获取帖子列表
+     * @Return ServerResponse<List<Notice>>
+     */
+    ServerResponse<List<HashMap<String, Object>>> getPostByPtime(int page);
 }

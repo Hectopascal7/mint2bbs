@@ -3,9 +3,9 @@ package com.mint.pojo;
 import java.util.Date;
 
 public class User {
-    private String loginid;
-
     private String uid;
+
+    private String loginid;
 
     private String password;
 
@@ -31,9 +31,9 @@ public class User {
 
     private String signature;
 
-    public User(String loginid, String uid, String password, String nickname, Integer role, Integer sex, Date birthday, String license, String profile, Integer point, Date jointime, Integer level, String email, String signature) {
-        this.loginid = loginid;
+    public User(String uid, String loginid, String password, String nickname, Integer role, Integer sex, Date birthday, String license, String profile, Integer point, Date jointime, Integer level, String email, String signature) {
         this.uid = uid;
+        this.loginid = loginid;
         this.password = password;
         this.nickname = nickname;
         this.role = role;
@@ -52,20 +52,20 @@ public class User {
         super();
     }
 
-    public String getLoginid() {
-        return loginid;
-    }
-
-    public void setLoginid(String loginid) {
-        this.loginid = loginid == null ? null : loginid.trim();
-    }
-
     public String getUid() {
         return uid;
     }
 
     public void setUid(String uid) {
         this.uid = uid == null ? null : uid.trim();
+    }
+
+    public String getLoginid() {
+        return loginid;
+    }
+
+    public void setLoginid(String loginid) {
+        this.loginid = loginid == null ? null : loginid.trim();
     }
 
     public String getPassword() {

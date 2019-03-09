@@ -3,14 +3,17 @@ package com.mint.dao;
 import com.mint.pojo.User;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.HashMap;
+import java.util.List;
+
 public interface UserMapper {
-    int deleteByPrimaryKey(String loginid);
+    int deleteByPrimaryKey(String uid);
 
     int insert(User record);
 
     int insertSelective(User record);
 
-    User selectByPrimaryKey(String loginid);
+    User selectByPrimaryKey(String uid);
 
     int updateByPrimaryKeySelective(User record);
 
@@ -23,4 +26,5 @@ public interface UserMapper {
     String getNicknameByUid(String uid);
 
     int getRoleByUid(String uid);
+
 }

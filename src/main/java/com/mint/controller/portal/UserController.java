@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @Program: mint2bbs
@@ -80,6 +82,5 @@ public class UserController {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         return ServerResponse.createBySuccess(user);
     }
-
 
 }

@@ -2,6 +2,8 @@ package com.mint.dao;
 
 import com.mint.pojo.Count;
 
+import java.util.List;
+
 public interface CountMapper {
     int deleteByPrimaryKey(String uid);
 
@@ -14,4 +16,6 @@ public interface CountMapper {
     int updateByPrimaryKeySelective(Count record);
 
     int updateByPrimaryKey(Count record);
+
+    List<Count> getActiveUser();
 }

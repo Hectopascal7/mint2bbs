@@ -4,6 +4,9 @@ import com.mint.common.ServerResponse;
 import com.mint.pojo.Resident;
 import com.mint.pojo.User;
 
+import java.util.HashMap;
+import java.util.List;
+
 /**
  * @Program: mint2bbs
  * @Description: 用户Service接口

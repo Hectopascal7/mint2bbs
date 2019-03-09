@@ -3,8 +3,8 @@
 <mapper namespace="com.mint.dao.UserMapper">
     <resultMap id="BaseResultMap" type="com.mint.pojo.User">
         <constructor>
-            <idArg column="loginid" javaType="java.lang.String" jdbcType="VARCHAR"/>
-            <arg column="uid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <idArg column="uid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="loginid" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="password" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="nickname" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="role" javaType="java.lang.Integer" jdbcType="INTEGER"/>
@@ -20,26 +20,26 @@
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">
-    loginid, uid, password, nickname, role, sex, birthday, license, profile, point, jointime, 
+    uid, loginid, password, nickname, role, sex, birthday, license, profile, point, jointime, 
     level, email, signature
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from tb_user
-        where loginid = #{loginid,jdbcType=VARCHAR}
+        where uid = #{uid,jdbcType=VARCHAR}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from tb_user
-    where loginid = #{loginid,jdbcType=VARCHAR}
+    where uid = #{uid,jdbcType=VARCHAR}
   </delete>
     <insert id="insert" parameterType="com.mint.pojo.User">
-    insert into tb_user (loginid, uid, password, 
+    insert into tb_user (uid, loginid, password, 
       nickname, role, sex, 
       birthday, license, profile, 
       point, jointime, level, 
       email, signature)
-    values (#{loginid,jdbcType=VARCHAR}, #{uid,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+    values (#{uid,jdbcType=VARCHAR}, #{loginid,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{nickname,jdbcType=VARCHAR}, #{role,jdbcType=INTEGER}, #{sex,jdbcType=INTEGER}, 
       #{birthday,jdbcType=DATE}, #{license,jdbcType=VARCHAR}, #{profile,jdbcType=VARCHAR}, 
       #{point,jdbcType=INTEGER}, #{jointime,jdbcType=TIMESTAMP}, #{level,jdbcType=INTEGER}, 
@@ -48,11 +48,11 @@
     <insert id="insertSelective" parameterType="com.mint.pojo.User">
         insert into tb_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="loginid != null">
-                loginid,
-            </if>
             <if test="uid != null">
                 uid,
+            </if>
+            <if test="loginid != null">
+                loginid,
             </if>
             <if test="password != null">
                 password,
@@ -92,11 +92,11 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="loginid != null">
-                #{loginid,jdbcType=VARCHAR},
-            </if>
             <if test="uid != null">
                 #{uid,jdbcType=VARCHAR},
+            </if>
+            <if test="loginid != null">
+                #{loginid,jdbcType=VARCHAR},
             </if>
             <if test="password != null">
                 #{password,jdbcType=VARCHAR},
@@ -139,8 +139,8 @@
     <update id="updateByPrimaryKeySelective" parameterType="com.mint.pojo.User">
         update tb_user
         <set>
-            <if test="uid != null">
-                uid = #{uid,jdbcType=VARCHAR},
+            <if test="loginid != null">
+                loginid = #{loginid,jdbcType=VARCHAR},
             </if>
             <if test="password != null">
                 password = #{password,jdbcType=VARCHAR},
@@ -179,11 +179,11 @@
                 signature = #{signature,jdbcType=VARCHAR},
             </if>
         </set>
-        where loginid = #{loginid,jdbcType=VARCHAR}
+        where uid = #{uid,jdbcType=VARCHAR}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.mint.pojo.User">
     update tb_user
-    set uid = #{uid,jdbcType=VARCHAR},
+    set loginid = #{loginid,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       nickname = #{nickname,jdbcType=VARCHAR},
       role = #{role,jdbcType=INTEGER},
@@ -196,7 +196,7 @@
       level = #{level,jdbcType=INTEGER},
       email = #{email,jdbcType=VARCHAR},
       signature = #{signature,jdbcType=VARCHAR}
-    where loginid = #{loginid,jdbcType=VARCHAR}
+    where uid = #{uid,jdbcType=VARCHAR}
   </update>
     <select id="checkLoginid" resultType="int" parameterType="string">
         select count(1) from tb_user
