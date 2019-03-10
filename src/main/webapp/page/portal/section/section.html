@@ -2,12 +2,14 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>基于 layui 的极简社区页面模版</title>
+    <title>薄荷社区</title>
+    <link rel="icon" href="/image/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="keywords" content="fly,layui,前端社区">
     <meta name="description" content="Fly社区是模块化前端UI框架Layui的官网社区，致力于为web开发提供强劲动力">
     <link rel="stylesheet" href="../../../script/layui/css/layui.css">
     <link rel="stylesheet" href="../../../css/global.css">
+    <script src="/script/jquery-3.3.1.min.js"></script>
 </head>
 <body>
 
@@ -32,12 +34,8 @@
         <ul class="layui-nav fly-nav-user">
             <!-- 登入后的状态 -->
             <li class="layui-nav-item">
-                <a class="fly-nav-avatar" href="javascript:;">
-                    <cite class="layui-hide-xs">橙色薄荷°</cite>
-                    <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：管理员"></i>
-                    <i class="layui-badge fly-badge-vip layui-hide-xs">管理员</i>
-                    <img src="../../../image/asuna.jpg">
-                </a>
+                <!--个人中心-->
+                <a class="fly-nav-avatar" href="javascript:;" id="center"></a>
                 <dl class="layui-nav-child">
                     <dd>
                         <a href="../user/home.html"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
@@ -57,33 +55,8 @@
 </div>
 
 <div class="fly-panel fly-column">
-    <div class="layui-container">
-        <ul class="layui-clear">
-            <li><a href="/">首页</a></li>
-            <li class="layui-hide-xs layui-this"><a href="notice.html">社区公告</a></li>
-            <li><a href="jie/index.html">社区新闻</a></li>
-            <li><a href="jie/index.html">业主交流</a></li>
-            <li><a href="jie/index.html">活动发起</a></li>
-            <li><a href="page/portal/market/market.html">社区指南</a></li>
-            <li><a href="jie/index.html">建议意见</a></li>
-            <li><a href="jie/index.html">分享安利</a></li>
-            <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li>
-            <!--用户登入后显示-->
-            <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="user/index.html">我的贴子</a></li>
-            <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a
-                    href="user/index.html#collection">收藏</a>
-            </li>
-        </ul>
-
-        <div class="fly-column-right layui-hide-xs">
-            <span class="fly-search"><i class="layui-icon"></i></span>
-            <a href="../topic/add.html" class="layui-btn">发表新帖</a>
-        </div>
-        <div class="layui-hide-sm layui-show-xs-block"
-             style="margin-top: -10px; padding-bottom: 10px; text-align: center;">
-            <a href="../topic/add.html" class="layui-btn">发表新帖</a>
-        </div>
-    </div>
+    <!--板块导航及帖子模块功能区-->
+    <div class="layui-container" id="guide_bar"></div>
 </div>
 
 <div class="layui-container">
@@ -93,10 +66,6 @@
 
                 <div class="fly-panel-title fly-filter">
                     <a href="" class="layui-this">综合</a>
-                    <span class="fly-mid"></span>
-                    <a href="">未结</a>
-                    <span class="fly-mid"></span>
-                    <a href="">已结</a>
                     <span class="fly-mid"></span>
                     <a href="">精华</a>
                     <span class="fly-filter-right layui-hide-xs">
@@ -108,7 +77,7 @@
 
                 <ul class="fly-list">
                     <li>
-                        <a href="user/home.html" class="fly-avatar">
+                        <a href="../user/home.html" class="fly-avatar">
                             <img src="../../../image/asuna.jpg"
                                  alt="橙色薄荷°">
                         </a>
@@ -117,7 +86,7 @@
                             <a href="../forum/detail.html">基于 layui 的极简社区页面模版</a>
                         </h2>
                         <div class="fly-list-info">
-                            <a href="user/home.html" link>
+                            <a href="../user/home.html" link>
                                 <cite>橙色薄荷°</cite>
                                 <!--
                                 <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
@@ -138,7 +107,7 @@
                         </div>
                     </li>
                     <li>
-                        <a href="user/home.html" class="fly-avatar">
+                        <a href="../user/home.html" class="fly-avatar">
                             <img src="../../../image/asuna.jpg"
                                  alt="橙色薄荷°">
                         </a>
@@ -147,7 +116,7 @@
                             <a href="../forum/detail.html">基于 layui 的极简社区页面模版</a>
                         </h2>
                         <div class="fly-list-info">
-                            <a href="user/home.html" link>
+                            <a href="../user/home.html" link>
                                 <cite>橙色薄荷°</cite>
                                 <!--<i class="iconfont icon-renzheng" title="认证信息：XXX"></i>-->
                                 <i class="layui-badge fly-badge-vip">管理员</i>
@@ -165,7 +134,7 @@
                         </div>
                     </li>
                     <li>
-                        <a href="user/home.html" class="fly-avatar">
+                        <a href="../user/home.html" class="fly-avatar">
                             <img src="../../../image/asuna.jpg"
                                  alt="橙色薄荷°">
                         </a>
@@ -174,7 +143,7 @@
                             <a href="../forum/detail.html">基于 layui 的极简社区页面模版</a>
                         </h2>
                         <div class="fly-list-info">
-                            <a href="user/home.html" link>
+                            <a href="../user/home.html" link>
                                 <cite>橙色薄荷°</cite>
                                 <!--
                                 <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
@@ -194,7 +163,7 @@
                         </div>
                     </li>
                     <li>
-                        <a href="user/home.html" class="fly-avatar">
+                        <a href="../user/home.html" class="fly-avatar">
                             <img src="../../../image/asuna.jpg"
                                  alt="橙色薄荷°">
                         </a>
@@ -203,7 +172,7 @@
                             <a href="../forum/detail.html">基于 layui 的极简社区页面模版</a>
                         </h2>
                         <div class="fly-list-info">
-                            <a href="user/home.html" link>
+                            <a href="../user/home.html" link>
                                 <cite>橙色薄荷°</cite>
                                 <!--
                                 <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
@@ -223,7 +192,7 @@
                         </div>
                     </li>
                     <li>
-                        <a href="user/home.html" class="fly-avatar">
+                        <a href="../user/home.html" class="fly-avatar">
                             <img src="../../../image/asuna.jpg"
                                  alt="橙色薄荷°">
                         </a>
@@ -232,7 +201,7 @@
                             <a href="../forum/detail.html">基于 layui 的极简社区页面模版</a>
                         </h2>
                         <div class="fly-list-info">
-                            <a href="user/home.html" link>
+                            <a href="../user/home.html" link>
                                 <cite>橙色薄荷°</cite>
                                 <!--
                                 <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
@@ -252,7 +221,7 @@
                         </div>
                     </li>
                     <li>
-                        <a href="user/home.html" class="fly-avatar">
+                        <a href="../user/home.html" class="fly-avatar">
                             <img src="../../../image/asuna.jpg"
                                  alt="橙色薄荷°">
                         </a>
@@ -261,7 +230,7 @@
                             <a href="../forum/detail.html">基于 layui 的极简社区页面模版</a>
                         </h2>
                         <div class="fly-list-info">
-                            <a href="user/home.html" link>
+                            <a href="../user/home.html" link>
                                 <cite>橙色薄荷°</cite>
                                 <!--
                                 <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
@@ -281,7 +250,7 @@
                         </div>
                     </li>
                     <li>
-                        <a href="user/home.html" class="fly-avatar">
+                        <a href="../user/home.html" class="fly-avatar">
                             <img src="../../../image/asuna.jpg"
                                  alt="橙色薄荷°">
                         </a>
@@ -290,7 +259,7 @@
                             <a href="../forum/detail.html">基于 layui 的极简社区页面模版</a>
                         </h2>
                         <div class="fly-list-info">
-                            <a href="user/home.html" link>
+                            <a href="../user/home.html" link>
                                 <cite>橙色薄荷°</cite>
                                 <!--
                                 <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
@@ -310,7 +279,7 @@
                         </div>
                     </li>
                     <li>
-                        <a href="user/home.html" class="fly-avatar">
+                        <a href="../user/home.html" class="fly-avatar">
                             <img src="../../../image/asuna.jpg"
                                  alt="橙色薄荷°">
                         </a>
@@ -319,7 +288,7 @@
                             <a href="../forum/detail.html">基于 layui 的极简社区页面模版</a>
                         </h2>
                         <div class="fly-list-info">
-                            <a href="user/home.html" link>
+                            <a href="../user/home.html" link>
                                 <cite>橙色薄荷°</cite>
                                 <!--
                                 <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
@@ -403,12 +372,14 @@
                 -->
             </dl>
 
+            <!--社区工具栏模块-->
             <div class="fly-panel">
                 <div class="fly-panel-title">
-                    这里可作为广告区域
+                    社区工具栏
                 </div>
                 <div class="fly-panel-main">
-                    <a href="" target="_blank" class="fly-zanzhu" style="background-color: #393D49;">虚席以待</a>
+                    <a href="" target="_blank" class="fly-zanzhu"
+                       time-limit="2017.09.25-2099.01.01" style="background-color: #5FB878;">车牌号查询</a>
                 </div>
             </div>
 
@@ -459,6 +430,111 @@
         fly: 'index'
     }).use('fly');
 </script>
+<!--导航栏模板-->
+<script id="m_guide_bar" type="text/html">
+    <ul class="layui-clear">
+        {{# layui.each(d, function(index, item){ }}
+        {{# if(item.sid === section && section==='index'){ }}
+        <li class="layui-hide-xs layui-this">
+            <a href="/index.html">{{item.sname}}</a>
+        </li>
+        {{#} else if(item.sid === 'index'){}}
+        <li class="layui-hide-xs">
+            <a href="/index.html">{{item.sname}}</a>
+        </li>
+        {{#} else if(item.sid === section){}}
+        <li class="layui-hide-xs layui-this">
+            <a href="/page/portal/section/section.html?sid={{item.sid}}">{{item.sname}}</a>
+        </li>
+        {{#} else {}}
+        <li><a href="/page/portal/section/section.html?sid={{item.sid}}">{{item.sname}}</a></li>
+        {{# } }}
+        {{# }); }}
+        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li>
+        <!--用户登入后显示-->
+        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="user/index.html">我的贴子</a></li>
+        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a
+                href="user/index.html#collection">收藏</a>
+        </li>
+    </ul>
+    <div class="fly-column-right layui-hide-xs">
+            <span class="fly-search">
+                <i class="layui-icon"></i>
+            </span>
+        <a href="page/portal/topic/add.html?section=123" class="layui-btn">发表新帖</a>
+    </div>
+    <!--<div class="layui-hide-sm layui-show-xs-block"-->
+    <!--style="margin-top: -10px; padding-bottom: 10px; text-align: center;">-->
+    <!--<a href="jie/add.html" class="layui-btn">发表新帖</a>-->
+    <!--</div>-->
+</script>
 
+<!--用户中心模板-->
+<script id="m_center" type="text/html">
+    <cite class="layui-hide-xs">{{ d.nickname }}</cite>
+    {{#  if(d.role === 1){ }}
+    <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：管理员"></i>
+    <i class="layui-badge fly-badge-vip layui-hide-xs" title="积分 {{d.point}}">Lv.3</i>
+    {{#  } }}
+    <img src="{{ d.profile }}">
+</script>
+
+<!--获取数据，渲染模板-->
+<script type="text/javascript">
+
+    function getQueryParameter(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+
+    var section = getQueryParameter("sid");
+
+    var user_info;
+    $.ajax({
+        type: 'post',
+        url: '/user/userCenter.do',
+        data: {},
+        dataType: 'json',
+        async: false,
+        success: function (data) {
+            user_info = data.data;
+        },
+        error: function (data) {
+            alert("获取公告板失败！");
+        }
+    })
+
+    var guide_bar;
+    $.ajax({
+        type: 'post',
+        url: '/section/getSection.do',
+        dataType: 'json',
+        async: false,
+        success: function (data) {
+            guide_bar = data.data;
+        },
+        error: function (data) {
+            alert("获取论坛版块失败！");
+        }
+    })
+
+    layui.use('laytpl', function () {
+        laytpl = layui.laytpl;
+        // 板块导航渲染
+        var guide_bar_model = document.getElementById('m_guide_bar').innerHTML;
+        var guide_bar_view = document.getElementById('guide_bar');
+        laytpl(guide_bar_model).render(guide_bar, function (html) {
+            guide_bar_view.innerHTML = html;
+        });
+        // 用户中心渲染
+        var center_model = document.getElementById('m_center').innerHTML;
+        var center_view = document.getElementById('center');
+        laytpl(center_model).render(user_info, function (html) {
+            center_view.innerHTML = html;
+        });
+    });
+</script>
 </body>
 </html>

@@ -58,11 +58,12 @@
         </ul>
     </div>
 </div>
-<div class="fly-panel fly-column">
-    <div class="layui-container" id="guidebar">
 
-    </div>
+<div class="fly-panel fly-column">
+    <!--板块导航及帖子模块功能区-->
+    <div class="layui-container" id="guide_bar"></div>
 </div>
+
 <div class="layui-container">
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md8">
@@ -76,7 +77,6 @@
 
                 </ul>
             </div>
-
             <!--第二板块：回帖-->
             <div class="fly-panel" style="margin-bottom: 0;">
                 <div class="fly-panel-title fly-filter">
@@ -140,12 +140,12 @@
                 <div class="fly-panel-main">
                     <a href="" target="_blank" class="fly-zanzhu"
                        time-limit="2017.09.25-2099.01.01" style="background-color: #5FB878;">车牌号查询</a>
+                    <a href="" target="_blank" class="fly-zanzhu"
+                       time-limit="2017.09.25-2099.01.01" style="background-color: #5FB878;">社区选举投票</a>
                 </div>
             </div>
 
             <div class="fly-panel fly-list-one">
-
-
                 <dt class="fly-panel-title">社区管理组</dt>
                 <dl class="fly-panel-main">
                     <table>
@@ -255,10 +255,21 @@
     <img src="{{ d.profile }}">
 </script>
 
-<script id="m_guidebar" type="text/html">
+<!--导航栏模板-->
+<script id="m_guide_bar" type="text/html">
     <ul class="layui-clear">
         {{# layui.each(d, function(index, item){ }}
-        <li><a href="/page/portal/section.html">{{item.sname}}</a></li>
+        {{# if(item.sid === section && section==='index'){ }}
+        <li class="layui-hide-xs layui-this">
+            <a href="/index.html">{{item.sname}}</a>
+        </li>
+        {{#} else if(item.sid === section){}}
+        <li class="layui-hide-xs layui-this">
+            <a href="/page/portal/section/section.html?sid={{item.sid}}">{{item.sname}}</a>
+        </li>
+        {{#} else {}}
+        <li><a href="/page/portal/section/section.html?sid={{item.sid}}">{{item.sname}}</a></li>
+        {{# } }}
         {{# }); }}
         <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li>
         <!--用户登入后显示-->
@@ -433,14 +444,14 @@
         }
     })
 
-    var guideBar;
+    var guide_bar;
     $.ajax({
         type: 'post',
         url: '/section/getSection.do',
         dataType: 'json',
         async: false,
         success: function (data) {
-            guideBar = data.data;
+            guide_bar = data.data;
         },
         error: function (data) {
             alert("获取论坛版块失败！");
@@ -508,7 +519,7 @@
         }
     })
 
-    function getMore(){
+    function getMore() {
         $.ajax({
             type: 'post',
             url: '/post/getPostByPtime.do',
@@ -557,10 +568,10 @@
         });
 
         // 板块导航渲染
-        var guidebar_model = document.getElementById('m_guidebar').innerHTML;
-        var guidebar_view = document.getElementById('guidebar');
-        laytpl(guidebar_model).render(guideBar, function (html) {
-            guidebar_view.innerHTML = html;
+        var guide_bar_model = document.getElementById('m_guide_bar').innerHTML;
+        var guide_bar_view = document.getElementById('guide_bar');
+        laytpl(guide_bar_model).render(guide_bar, function (html) {
+            guide_bar_view.innerHTML = html;
         });
 
         // 置顶渲染
@@ -592,4 +603,17 @@
         });
     });
 </script>
+<script>
+
+    var section = 'index';
+
+    function GetQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+
+</script>
+
 </html>
