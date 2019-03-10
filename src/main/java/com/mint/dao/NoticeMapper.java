@@ -21,5 +21,4 @@ public interface NoticeMapper {
     int updateByPrimaryKey(Notice record);
 
     List<Notice> getNoticeBoard();
-
 }

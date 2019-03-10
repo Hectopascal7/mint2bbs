@@ -160,6 +160,16 @@
         limit 10
     </select>
 
+    <select id="getSectionHotPost" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from ${tb_name}
+        order by (acount+rcount) desc
+        limit 10
+    </select>
+
     <select id="getPostByPtime" resultMap="BaseResultMap" parameterType="int">
         select
         <include refid="Base_Column_List"/>

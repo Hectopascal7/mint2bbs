@@ -322,55 +322,11 @@
 
             </div>
         </div>
-        <div class="layui-col-md4">
-            <dl class="fly-panel fly-list-one">
-                <dt class="fly-panel-title">本周热议</dt>
-                <dd>
-                    <a href="">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
 
-                <!-- 无数据时 -->
-                <!--
-                <div class="fly-none">没有相关数据</div>
-                -->
-            </dl>
+        <div class="layui-col-md4">
+
+            <!--热门帖子模块-->
+            <dl class="fly-panel fly-list-one" id="hot_post"></dl>
 
             <!--社区工具栏模块-->
             <div class="fly-panel">
@@ -419,13 +375,13 @@
     layui.cache.user = {
         username: '游客',
         uid: -1,
-        avatar: '../../res/images/avatar/00.jpg',
+        avatar: '/image/avatar/00.jpg',
         experience: 83,
         sex: '男'
     };
     layui.config({
         version: "3.0.0"
-        , base: '../../res/mods/'
+        , base: '/script/mods/'
     }).extend({
         fly: 'index'
     }).use('fly');
@@ -479,6 +435,25 @@
     <img src="{{ d.profile }}">
 </script>
 
+<!--热门帖子模板-->
+<script type="text/html" id="m_hot_post">
+    <dt class="fly-panel-title">本周热议</dt>
+    <dl class="fly-panel-main">
+        {{# if(d.length>0){ }}
+        {{# for(var i = 0 ; i < d.length; i++){ }}
+        <dd>
+            <a href="jie/detail.html">{{ d[i].title }}</a>
+            <span><i class="iconfont icon-pinglun1"></i> {{ d[i].acount+d[i].rcount }}</span>
+        </dd>
+        {{# } }}
+        {{# } }}
+    </dl>
+    {{# if(d.length===0){ }}
+    <!-- 无数据时 -->
+    <div class="fly-none">没有相关数据</div>
+    {{# } }}
+</script>
+
 <!--获取数据，渲染模板-->
 <script type="text/javascript">
 
@@ -520,6 +495,23 @@
         }
     })
 
+    var hot_post;
+    $.ajax({
+        type: 'post',
+        url: '/post/getSectionHotPost.do',
+        dataType: 'json',
+        data:{
+            section:section,
+        },
+        async: false,
+        success: function (data) {
+            hot_post = data.data;
+        },
+        error: function (data) {
+            alert("获取热门模块失败！");
+        }
+    })
+
     layui.use('laytpl', function () {
         laytpl = layui.laytpl;
         // 板块导航渲染
@@ -533,6 +525,12 @@
         var center_view = document.getElementById('center');
         laytpl(center_model).render(user_info, function (html) {
             center_view.innerHTML = html;
+        });
+        // 热门帖子渲染
+        var hot_post_model = document.getElementById('m_hot_post').innerHTML;
+        var hot_post_view = document.getElementById('hot_post');
+        laytpl(hot_post_model).render(hot_post, function (html) {
+            hot_post_view.innerHTML = html;
         });
     });
 </script>

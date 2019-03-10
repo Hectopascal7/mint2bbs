@@ -91,7 +91,7 @@ public class PostServiceImpl implements IPostService {
      */
     @Override
     public ServerResponse<List<Post>> getHotPost() {
-        List<Post> list=postMapper.getHotPost();
+        List<Post> list = postMapper.getHotPost();
         return ServerResponse.createBySuccess(list);
     }
 
@@ -102,7 +102,7 @@ public class PostServiceImpl implements IPostService {
      */
     @Override
     public ServerResponse<List<HashMap<String, Object>>> getPostByPtime(int page) {
-        List<Post> list = postMapper.getPostByPtime(page*2);
+        List<Post> list = postMapper.getPostByPtime(page * 2);
         List<HashMap<String, Object>> postList = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             Post post = list.get(i);
@@ -118,5 +118,18 @@ public class PostServiceImpl implements IPostService {
             postList.add(map);
         }
         return ServerResponse.createBySuccess(postList);
+    }
+
+    /**
+     * @param sid
+     * @Description 获取主页热门帖子
+     * @Param sid
+     * @Return ServerResponse<List < Notice>>
+     */
+    @Override
+    public ServerResponse<List<Post>> getSectionHotPost(String sid) {
+        String tb_name="tb_"+sid;
+        List<Post> list = postMapper.getSectionHotPost(tb_name);
+        return ServerResponse.createBySuccess(list);
     }
 }

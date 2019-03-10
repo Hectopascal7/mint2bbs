@@ -69,13 +69,26 @@ public class PostController {
     }
 
     /**
-     * @Description 置顶模块
+     * @Description 获取主页热门帖子
      * @Return ServerResponse<List < Notice>>
      */
     @RequestMapping(value = "getHotPost.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<List<Post>> getHotPost() {
         ServerResponse<List<Post>> response = iPostService.getHotPost();
+        return response;
+    }
+
+    /**
+     * @Description 获取主页热门帖子
+     * @Param sid
+     * @Return ServerResponse<List < Notice>>
+     */
+    @RequestMapping(value = "getSectionHotPost.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<List<Post>> getSectionHotPost(String section) {
+        System.out.println("通了通了");
+        ServerResponse<List<Post>> response = iPostService.getSectionHotPost(section);
         return response;
     }
 

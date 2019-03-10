@@ -25,4 +25,6 @@ public interface PostMapper {
     List<Post> getHotPost();
 
     List<Post> getPostByPtime(int tcount);
+
+    List<Post> getSectionHotPost(@Param("tb_name") String tb_name);
 }

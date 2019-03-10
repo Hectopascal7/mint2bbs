@@ -43,4 +43,11 @@ public interface IPostService {
      * @Return ServerResponse<List<Notice>>
      */
     ServerResponse<List<HashMap<String, Object>>> getPostByPtime(int page);
+
+    /**
+     * @Description 获取主页热门帖子
+     * @Param sid
+     * @Return ServerResponse<List < Notice>>
+     */
+    ServerResponse<List<Post>> getSectionHotPost(String sid);
 }
