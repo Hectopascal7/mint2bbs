@@ -193,4 +193,12 @@ public class PostServiceImpl implements IPostService {
         return ServerResponse.createBySuccess(rlist);
     }
 
+//    @Override
+//    public ServerResponse<List<PostEntity>> getSectionPostWithPage1(String section, String kind, String order, int page, int limit) {
+//        int start = (page - 1) * limit;
+//        List<PostEntity> list = new ArrayList<>();
+//        list = postMapper.getSectionPostWithPage1();
+//        return ServerResponse.createBySuccess(list);
+//    }
+
 }

@@ -1,8 +1,10 @@
 package com.mint.dao;
 
 import com.mint.pojo.Post;
+import com.mint.pojo.PostEntity;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface PostMapper {
@@ -27,4 +29,6 @@ public interface PostMapper {
     List<Post> getPostByPtime(int tcount);
 
     List<Post> getSectionHotPost(@Param("tb_name") String tb_name);
+
+//    List<PostEntity> getSectionPostWithPage1();
 }

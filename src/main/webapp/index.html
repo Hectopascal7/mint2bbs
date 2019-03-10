@@ -371,7 +371,10 @@
         </a>
         <h2>
             <a class="layui-badge">{{ d[i].section.sname }}</a>
-            <a href="jie/detail.html">{{ d[i].post.title }}</a>
+            <a href="jie/detail.html">{{ d[i].post.title }}
+                    <span class="layui-badge layui-bg-blue">hot</span>
+            </span>
+            </a>
         </h2>
         <div class="fly-list-info">
             <a href="user/home.html" link>
@@ -383,7 +386,10 @@
             </a>
             <span>{{ d[i].post.ptime }}</span>
             <span class="layui-hide-xs" title="浏览"><i
-                    class="iconfont icon-liulanyanjing"></i> {{ d[i].post.acount }}</span>
+                    class="iconfont icon-liulanyanjing"></i> {{ d[i].post.acount }}
+            </span>
+            <span class="layui-hide-xs" title="浏览"><i
+                    class="iconfont icon-zan"></i> {{ d[i].post.acount }}
             <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
             <span class="fly-list-nums">
                 <i class="iconfont icon-pinglun1" title="回答"></i> {{ d[i].post.rcount }}

@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.mint.common.ServerResponse;
 import com.mint.pojo.Notice;
 import com.mint.pojo.Post;
+import com.mint.pojo.PostEntity;
 import com.mint.pojo.Topic;
 import com.mint.service.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,8 +117,22 @@ public class PostController {
             String kind, @RequestParam("order") String order,
      @RequestParam("page") int page, @RequestParam("limit") int limit) {
         ServerResponse<List<HashMap<String, Object>>> response = iPostService.getSectionPostWithPage(section, kind, order, page, limit);
-        System.out.println(JSON.toJSONString(response));
         return response;
     }
+
+//    /**
+//     * @Description 获取板块内帖子列表
+//     * @Return ServerResponse<List < Notice>>
+//     */
+//    @RequestMapping(value = "getSectionPostWithPage1.do", method = RequestMethod.POST)
+//    @ResponseBody
+//    public ServerResponse<List<PostEntity>> getSectionPostWithPage1
+//    (@RequestParam("section") String section, @RequestParam("kind")
+//            String kind, @RequestParam("order") String order,
+//     @RequestParam("page") int page, @RequestParam("limit") int limit) {
+//        ServerResponse<List<PostEntity>> response = iPostService.getSectionPostWithPage1(section, kind, order, page, limit);
+//        System.out.println(JSON.toJSONString(response));
+//        return null;
+//    }
 
 }

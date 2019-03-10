@@ -3,6 +3,7 @@ package com.mint.service;
 import com.mint.common.ServerResponse;
 import com.mint.pojo.Notice;
 import com.mint.pojo.Post;
+import com.mint.pojo.PostEntity;
 import com.mint.pojo.Topic;
 
 import javax.servlet.http.HttpSession;
@@ -61,4 +62,7 @@ public interface IPostService {
      * @Return ServerResponse<List < Notice>>
      */
     ServerResponse<List<HashMap<String, Object>>> getSectionPostWithPage(String section, String kind, String order, int page, int limit);
+
+//    ServerResponse<List<PostEntity>> getSectionPostWithPage1(String section, String kind, String order, int page, int limit);
+
 }

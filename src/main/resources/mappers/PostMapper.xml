@@ -15,6 +15,22 @@
             <arg column="pcount" javaType="java.lang.Integer" jdbcType="INTEGER"/>
         </constructor>
     </resultMap>
+    <resultMap id="BaseResultMap11" type="com.mint.pojo.PostEntity">
+        <constructor>
+            <idArg column="tid" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="uname" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="sname" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="title" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="ptime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+            <arg column="acount" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="rcount" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="isbest" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="issticky" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="pcount" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="role" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="ulevel" javaType="java.lang.Integer" jdbcType="INTEGER" />
+        </constructor>
+    </resultMap>
     <resultMap id="ResultMapWithBLOBs" type="com.mint.pojo.Post">
         <constructor>
             <idArg column="tid" javaType="java.lang.String" jdbcType="VARCHAR"/>
@@ -379,4 +395,10 @@
         order by e.ptime
         limit #{tcount}
     </select>
+    <!--<select id="getPostWithPage1" resultType="java.util.HashMap">-->
+        <!--select-->
+        <!--tn.tid,tu.role-->
+        <!--from tb_news tn,tb_user tu-->
+        <!--where tn.uid=tu.uid-->
+    <!--</select>-->
 </mapper>
