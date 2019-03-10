@@ -14,6 +14,8 @@ public interface UserMapper {
 
     int updateByPrimaryKeySelective(User record);
 
+    int updateByPrimaryKeyWithBLOBs(User record);
+
     int updateByPrimaryKey(User record);
 
     int checkLoginid(String loginid);
@@ -23,4 +25,6 @@ public interface UserMapper {
     String getNicknameByUid(String uid);
 
     int getRoleByUid(String uid);
+
+    User getInfoByUid(String uid);
 }

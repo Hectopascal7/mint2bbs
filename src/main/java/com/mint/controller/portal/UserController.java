@@ -80,6 +80,7 @@ public class UserController {
     @ResponseBody
     public ServerResponse<User> getUser(HttpSession session) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
+        System.out.println("aaaaaaaaaaa"+user);
         return ServerResponse.createBySuccess(user);
     }
 

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import javax.swing.text.html.parser.Entity;
 import java.util.*;
 
 /**
@@ -156,7 +157,7 @@ public class PostServiceImpl implements IPostService {
      * @Return ServerResponse<List < Notice>>
      */
     @Override
-    public ServerResponse<List<HashMap<String, Object>>> getSectionPostWithPage(String section, String kind, String order, int page, int limit) {
+    public ServerResponse<List<PostEntity>> getSectionPostWithPage(String section, String kind, String order, int page, int limit) {
         int start = (page - 1) * limit;
         List list = new ArrayList<>();
         switch (section) {
@@ -179,16 +180,15 @@ public class PostServiceImpl implements IPostService {
                 list = adviceMapper.getPostWithPage(kind, order, start, limit);
                 break;
         }
-        List<HashMap<String, Object>> rlist = new ArrayList<>();
+        List<PostEntity> rlist = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             Post post = (Post) list.get(i);
-            HashMap<String, Object> map = new HashMap<>();
-            String nickname = userMapper.getNicknameByUid(post.getUid());
-            String sname = sectionMapper.getSnameBySid(post.getSid());
-            map.put("post", post);
-            map.put("nickname", nickname);
-            map.put("sname", sname);
-            rlist.add(map);
+            User user = userMapper.getInfoByUid(post.getUid());
+            PostEntity entity = new PostEntity(post.getTid(), user.getNickname(), user.getNickname(),
+                    post.getTitle(), post.getPtime(), post.getAcount(),
+                    post.getAcount(), post.getIsbest(), post.getIssticky(),
+                    post.getPcount(), user.getRole(), user.getUlevel());
+            rlist.add(entity);
         }
         return ServerResponse.createBySuccess(rlist);
     }

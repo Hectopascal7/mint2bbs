@@ -5,7 +5,7 @@ import java.util.Date;
 public class PostEntity {
     private String tid;
 
-    private String uname;
+    private String nickname;
 
     private String sname;
 
@@ -29,9 +29,9 @@ public class PostEntity {
 
     private String profile;
 
-    public PostEntity(String tid, String uname, String sname, String title, Date ptime, Integer acount, Integer rcount, Integer isbest, Integer issticky, Integer pcount, Integer role, Integer ulevel) {
+    public PostEntity(String tid, String nickname, String sname, String title, Date ptime, Integer acount, Integer rcount, Integer isbest, Integer issticky, Integer pcount, Integer role, Integer ulevel) {
         this.tid = tid;
-        this.uname = uname;
+        this.nickname = nickname;
         this.sname = sname;
         this.title = title;
         this.ptime = ptime;
@@ -44,9 +44,9 @@ public class PostEntity {
         this.ulevel = ulevel;
     }
 
-    public PostEntity(String tid, String uname, String sname, String title, Date ptime, Integer acount, Integer rcount, Integer isbest, Integer issticky, Integer pcount, Integer role, Integer ulevel, String profile) {
+    public PostEntity(String tid, String nickname, String sname, String title, Date ptime, Integer acount, Integer rcount, Integer isbest, Integer issticky, Integer pcount, Integer role, Integer ulevel, String profile) {
         this.tid = tid;
-        this.uname = uname;
+        this.nickname = nickname;
         this.sname = sname;
         this.title = title;
         this.ptime = ptime;
@@ -72,12 +72,12 @@ public class PostEntity {
         this.tid = tid == null ? null : tid.trim();
     }
 
-    public String getUname() {
-        return uname;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setUname(String uname) {
-        this.uname = uname == null ? null : uname.trim();
+    public void setNickname(String nickname) {
+        this.nickname = nickname == null ? null : nickname.trim();
     }
 
     public String getSname() {

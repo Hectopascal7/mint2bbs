@@ -1,10 +1,8 @@
 package com.mint.dao;
 
 import com.mint.pojo.Post;
-import com.mint.pojo.PostEntity;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.HashMap;
 import java.util.List;
 
 public interface PostMapper {

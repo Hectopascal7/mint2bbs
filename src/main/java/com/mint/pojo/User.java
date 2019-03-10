@@ -20,13 +20,11 @@ public class User {
 
     private String license;
 
-    private String profile;
-
     private Integer point;
 
     private Date jointime;
 
-    private Integer level;
+    private Integer ulevel;
 
     private String email;
 
@@ -34,7 +32,9 @@ public class User {
 
     private Integer status;
 
-    public User(String uid, String loginid, String password, String nickname, Integer role, Integer sex, Date birthday, String license, String profile, Integer point, Date jointime, Integer level, String email, String signature, Integer status) {
+    private String profile;
+
+    public User(String uid, String loginid, String password, String nickname, Integer role, Integer sex, Date birthday, String license, Integer point, Date jointime, Integer ulevel, String email, String signature, Integer status) {
         this.uid = uid;
         this.loginid = loginid;
         this.password = password;
@@ -43,13 +43,37 @@ public class User {
         this.sex = sex;
         this.birthday = birthday;
         this.license = license;
-        this.profile = profile;
         this.point = point;
         this.jointime = jointime;
-        this.level = level;
+        this.ulevel = ulevel;
         this.email = email;
         this.signature = signature;
         this.status = status;
+    }
+
+    public User(String uid, String loginid, String password, String nickname, Integer role, Integer sex, Date birthday, String license, Integer point, Date jointime, Integer ulevel, String email, String signature, Integer status, String profile) {
+        this.uid = uid;
+        this.loginid = loginid;
+        this.password = password;
+        this.nickname = nickname;
+        this.role = role;
+        this.sex = sex;
+        this.birthday = birthday;
+        this.license = license;
+        this.point = point;
+        this.jointime = jointime;
+        this.ulevel = ulevel;
+        this.email = email;
+        this.signature = signature;
+        this.status = status;
+        this.profile = profile;
+    }
+
+    public User(String nickname, Integer role, String profile, Integer ulevel) {
+        this.nickname = nickname;
+        this.role = role;
+        this.ulevel = ulevel;
+        this.profile = profile;
     }
 
     @Override
@@ -63,13 +87,13 @@ public class User {
                 ", sex=" + sex +
                 ", birthday=" + birthday +
                 ", license='" + license + '\'' +
-                ", profile='" + profile + '\'' +
                 ", point=" + point +
                 ", jointime=" + jointime +
-                ", level=" + level +
+                ", ulevel=" + ulevel +
                 ", email='" + email + '\'' +
                 ", signature='" + signature + '\'' +
                 ", status=" + status +
+                ", profile='" + profile + '\'' +
                 '}';
     }
 
@@ -86,18 +110,18 @@ public class User {
                 Objects.equals(sex, user.sex) &&
                 Objects.equals(birthday, user.birthday) &&
                 Objects.equals(license, user.license) &&
-                Objects.equals(profile, user.profile) &&
                 Objects.equals(point, user.point) &&
                 Objects.equals(jointime, user.jointime) &&
-                Objects.equals(level, user.level) &&
+                Objects.equals(ulevel, user.ulevel) &&
                 Objects.equals(email, user.email) &&
                 Objects.equals(signature, user.signature) &&
-                Objects.equals(status, user.status);
+                Objects.equals(status, user.status) &&
+                Objects.equals(profile, user.profile);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(uid, loginid, password, nickname, role, sex, birthday, license, profile, point, jointime, level, email, signature, status);
+        return Objects.hash(uid, loginid, password, nickname, role, sex, birthday, license, point, jointime, ulevel, email, signature, status, profile);
     }
 
     public User() {
@@ -168,14 +192,6 @@ public class User {
         this.license = license == null ? null : license.trim();
     }
 
-    public String getProfile() {
-        return profile;
-    }
-
-    public void setProfile(String profile) {
-        this.profile = profile == null ? null : profile.trim();
-    }
-
     public Integer getPoint() {
         return point;
     }
@@ -192,12 +208,12 @@ public class User {
         this.jointime = jointime;
     }
 
-    public Integer getLevel() {
-        return level;
+    public Integer getUlevel() {
+        return ulevel;
     }
 
-    public void setLevel(Integer level) {
-        this.level = level;
+    public void setUlevel(Integer ulevel) {
+        this.ulevel = ulevel;
     }
 
     public String getEmail() {
@@ -222,5 +238,13 @@ public class User {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile == null ? null : profile.trim();
     }
 }

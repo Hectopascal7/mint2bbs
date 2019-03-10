@@ -61,8 +61,6 @@ public interface IPostService {
      * @Param limit
      * @Return ServerResponse<List < Notice>>
      */
-    ServerResponse<List<HashMap<String, Object>>> getSectionPostWithPage(String section, String kind, String order, int page, int limit);
-
-//    ServerResponse<List<PostEntity>> getSectionPostWithPage1(String section, String kind, String order, int page, int limit);
+    ServerResponse<List<PostEntity>> getSectionPostWithPage(String section, String kind, String order, int page, int limit);
 
 }

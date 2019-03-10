@@ -1,7 +1,6 @@
 package com.mint.controller.portal;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.mint.common.ServerResponse;
 import com.mint.pojo.Notice;
 import com.mint.pojo.Post;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.management.ObjectName;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
@@ -112,11 +110,12 @@ public class PostController {
      */
     @RequestMapping(value = "getSectionPostWithPage.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<List<HashMap<String, Object>>> getSectionPostWithPage
+    public ServerResponse<List<PostEntity>> getSectionPostWithPage
     (@RequestParam("section") String section, @RequestParam("kind")
             String kind, @RequestParam("order") String order,
      @RequestParam("page") int page, @RequestParam("limit") int limit) {
-        ServerResponse<List<HashMap<String, Object>>> response = iPostService.getSectionPostWithPage(section, kind, order, page, limit);
+        ServerResponse<List<PostEntity>> response = iPostService.getSectionPostWithPage(section, kind, order, page, limit);
+        System.out.println(JSON.toJSONString(response));
         return response;
     }
 
