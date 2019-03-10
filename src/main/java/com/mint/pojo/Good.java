@@ -1,6 +1,7 @@
 package com.mint.pojo;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class Good {
     private String gid;
@@ -9,16 +10,22 @@ public class Good {
 
     private Integer isused;
 
-    private Integer degree;
+    private Integer ndegree;
 
     private BigDecimal price;
 
-    public Good(String gid, String title, Integer isused, Integer degree, BigDecimal price) {
+    private Date ptime;
+
+    private Integer pcount;
+
+    public Good(String gid, String title, Integer isused, Integer ndegree, BigDecimal price, Date ptime, Integer pcount) {
         this.gid = gid;
         this.title = title;
         this.isused = isused;
-        this.degree = degree;
+        this.ndegree = ndegree;
         this.price = price;
+        this.ptime = ptime;
+        this.pcount = pcount;
     }
 
     public Good() {
@@ -49,12 +56,12 @@ public class Good {
         this.isused = isused;
     }
 
-    public Integer getDegree() {
-        return degree;
+    public Integer getNdegree() {
+        return ndegree;
     }
 
-    public void setDegree(Integer degree) {
-        this.degree = degree;
+    public void setNdegree(Integer ndegree) {
+        this.ndegree = ndegree;
     }
 
     public BigDecimal getPrice() {
@@ -63,5 +70,21 @@ public class Good {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public Date getPtime() {
+        return ptime;
+    }
+
+    public void setPtime(Date ptime) {
+        this.ptime = ptime;
+    }
+
+    public Integer getPcount() {
+        return pcount;
+    }
+
+    public void setPcount(Integer pcount) {
+        this.pcount = pcount;
     }
 }

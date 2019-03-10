@@ -1,8 +1,7 @@
 package com.mint.pojo;
 
-import com.alibaba.fastjson.annotation.JSONField;
-
 import java.util.Date;
+import java.util.Objects;
 
 public class User {
     private String uid;
@@ -25,7 +24,6 @@ public class User {
 
     private Integer point;
 
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date jointime;
 
     private Integer level;
@@ -34,7 +32,9 @@ public class User {
 
     private String signature;
 
-    public User(String uid, String loginid, String password, String nickname, Integer role, Integer sex, Date birthday, String license, String profile, Integer point, Date jointime, Integer level, String email, String signature) {
+    private Integer status;
+
+    public User(String uid, String loginid, String password, String nickname, Integer role, Integer sex, Date birthday, String license, String profile, Integer point, Date jointime, Integer level, String email, String signature, Integer status) {
         this.uid = uid;
         this.loginid = loginid;
         this.password = password;
@@ -49,6 +49,55 @@ public class User {
         this.level = level;
         this.email = email;
         this.signature = signature;
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "uid='" + uid + '\'' +
+                ", loginid='" + loginid + '\'' +
+                ", password='" + password + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", role=" + role +
+                ", sex=" + sex +
+                ", birthday=" + birthday +
+                ", license='" + license + '\'' +
+                ", profile='" + profile + '\'' +
+                ", point=" + point +
+                ", jointime=" + jointime +
+                ", level=" + level +
+                ", email='" + email + '\'' +
+                ", signature='" + signature + '\'' +
+                ", status=" + status +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(uid, user.uid) &&
+                Objects.equals(loginid, user.loginid) &&
+                Objects.equals(password, user.password) &&
+                Objects.equals(nickname, user.nickname) &&
+                Objects.equals(role, user.role) &&
+                Objects.equals(sex, user.sex) &&
+                Objects.equals(birthday, user.birthday) &&
+                Objects.equals(license, user.license) &&
+                Objects.equals(profile, user.profile) &&
+                Objects.equals(point, user.point) &&
+                Objects.equals(jointime, user.jointime) &&
+                Objects.equals(level, user.level) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(signature, user.signature) &&
+                Objects.equals(status, user.status);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(uid, loginid, password, nickname, role, sex, birthday, license, profile, point, jointime, level, email, signature, status);
     }
 
     public User() {
@@ -165,5 +214,13 @@ public class User {
 
     public void setSignature(String signature) {
         this.signature = signature == null ? null : signature.trim();
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

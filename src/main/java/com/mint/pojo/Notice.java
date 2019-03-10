@@ -1,7 +1,5 @@
 package com.mint.pojo;
 
-import com.alibaba.fastjson.annotation.JSONField;
-
 import java.util.Date;
 
 public class Notice extends Post{
@@ -13,7 +11,6 @@ public class Notice extends Post{
 
     private String title;
 
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date ptime;
 
     private Integer acount;
@@ -24,9 +21,11 @@ public class Notice extends Post{
 
     private Integer issticky;
 
+    private Integer pcount;
+
     private String content;
 
-    public Notice(String tid, String uid, String sid, String title, Date ptime, Integer acount, Integer rcount, Integer isbest, Integer issticky) {
+    public Notice(String tid, String uid, String sid, String title, Date ptime, Integer acount, Integer rcount, Integer isbest, Integer issticky, Integer pcount) {
         this.tid = tid;
         this.uid = uid;
         this.sid = sid;
@@ -36,9 +35,10 @@ public class Notice extends Post{
         this.rcount = rcount;
         this.isbest = isbest;
         this.issticky = issticky;
+        this.pcount = pcount;
     }
 
-    public Notice(String tid, String uid, String sid, String title, Date ptime, Integer acount, Integer rcount, Integer isbest, Integer issticky, String content) {
+    public Notice(String tid, String uid, String sid, String title, Date ptime, Integer acount, Integer rcount, Integer isbest, Integer issticky, Integer pcount, String content) {
         this.tid = tid;
         this.uid = uid;
         this.sid = sid;
@@ -48,6 +48,7 @@ public class Notice extends Post{
         this.rcount = rcount;
         this.isbest = isbest;
         this.issticky = issticky;
+        this.pcount = pcount;
         this.content = content;
     }
 
@@ -125,6 +126,14 @@ public class Notice extends Post{
 
     public void setIssticky(Integer issticky) {
         this.issticky = issticky;
+    }
+
+    public Integer getPcount() {
+        return pcount;
+    }
+
+    public void setPcount(Integer pcount) {
+        this.pcount = pcount;
     }
 
     public String getContent() {

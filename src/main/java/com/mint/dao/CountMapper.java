@@ -17,5 +17,9 @@ public interface CountMapper {
 
     int updateByPrimaryKey(Count record);
 
+    /**
+     * @Description 获取活跃用户榜单
+     * @Return ServerResponse<String>
+     */
     List<Count> getActiveUser();
 }

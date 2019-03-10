@@ -1,6 +1,5 @@
 package com.mint.dao;
 
-import com.mint.pojo.Post;
 import com.mint.pojo.Topic;
 import org.apache.ibatis.annotations.Param;
 

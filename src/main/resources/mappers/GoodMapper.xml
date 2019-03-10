@@ -6,8 +6,10 @@
       <idArg column="gid" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="title" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="isused" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="degree" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="ndegree" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="price" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="ptime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="pcount" javaType="java.lang.Integer" jdbcType="INTEGER" />
     </constructor>
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.mint.pojo.GoodWithBLOBs">
@@ -15,15 +17,17 @@
       <idArg column="gid" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="title" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="isused" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="degree" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="ndegree" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="price" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="ptime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="pcount" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="content" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
       <arg column="cover" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
       <arg column="picture" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    gid, title, isused, degree, price
+    gid, title, isused, ndegree, price, ptime, pcount
   </sql>
   <sql id="Blob_Column_List">
     content, cover, picture
@@ -42,11 +46,13 @@
   </delete>
   <insert id="insert" parameterType="com.mint.pojo.GoodWithBLOBs">
     insert into tb_good (gid, title, isused, 
-      degree, price, content, 
-      cover, picture)
+      ndegree, price, ptime, 
+      pcount, content, cover, 
+      picture)
     values (#{gid,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{isused,jdbcType=INTEGER}, 
-      #{degree,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, #{content,jdbcType=LONGVARCHAR}, 
-      #{cover,jdbcType=LONGVARCHAR}, #{picture,jdbcType=LONGVARCHAR})
+      #{ndegree,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, #{ptime,jdbcType=TIMESTAMP}, 
+      #{pcount,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}, #{cover,jdbcType=LONGVARCHAR}, 
+      #{picture,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.mint.pojo.GoodWithBLOBs">
     insert into tb_good
@@ -60,11 +66,17 @@
       <if test="isused != null">
         isused,
       </if>
-      <if test="degree != null">
-        degree,
+      <if test="ndegree != null">
+        ndegree,
       </if>
       <if test="price != null">
         price,
+      </if>
+      <if test="ptime != null">
+        ptime,
+      </if>
+      <if test="pcount != null">
+        pcount,
       </if>
       <if test="content != null">
         content,
@@ -86,11 +98,17 @@
       <if test="isused != null">
         #{isused,jdbcType=INTEGER},
       </if>
-      <if test="degree != null">
-        #{degree,jdbcType=INTEGER},
+      <if test="ndegree != null">
+        #{ndegree,jdbcType=INTEGER},
       </if>
       <if test="price != null">
         #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="ptime != null">
+        #{ptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pcount != null">
+        #{pcount,jdbcType=INTEGER},
       </if>
       <if test="content != null">
         #{content,jdbcType=LONGVARCHAR},
@@ -112,11 +130,17 @@
       <if test="isused != null">
         isused = #{isused,jdbcType=INTEGER},
       </if>
-      <if test="degree != null">
-        degree = #{degree,jdbcType=INTEGER},
+      <if test="ndegree != null">
+        ndegree = #{ndegree,jdbcType=INTEGER},
       </if>
       <if test="price != null">
         price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="ptime != null">
+        ptime = #{ptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pcount != null">
+        pcount = #{pcount,jdbcType=INTEGER},
       </if>
       <if test="content != null">
         content = #{content,jdbcType=LONGVARCHAR},
@@ -134,8 +158,10 @@
     update tb_good
     set title = #{title,jdbcType=VARCHAR},
       isused = #{isused,jdbcType=INTEGER},
-      degree = #{degree,jdbcType=INTEGER},
+      ndegree = #{ndegree,jdbcType=INTEGER},
       price = #{price,jdbcType=DECIMAL},
+      ptime = #{ptime,jdbcType=TIMESTAMP},
+      pcount = #{pcount,jdbcType=INTEGER},
       content = #{content,jdbcType=LONGVARCHAR},
       cover = #{cover,jdbcType=LONGVARCHAR},
       picture = #{picture,jdbcType=LONGVARCHAR}
@@ -145,8 +171,10 @@
     update tb_good
     set title = #{title,jdbcType=VARCHAR},
       isused = #{isused,jdbcType=INTEGER},
-      degree = #{degree,jdbcType=INTEGER},
-      price = #{price,jdbcType=DECIMAL}
+      ndegree = #{ndegree,jdbcType=INTEGER},
+      price = #{price,jdbcType=DECIMAL},
+      ptime = #{ptime,jdbcType=TIMESTAMP},
+      pcount = #{pcount,jdbcType=INTEGER}
     where gid = #{gid,jdbcType=VARCHAR}
   </update>
 </mapper>

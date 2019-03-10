@@ -1,7 +1,5 @@
 package com.mint.pojo;
 
-import java.util.Objects;
-
 public class Resident {
     private String uid;
 
@@ -25,25 +23,6 @@ public class Resident {
         this.room = room;
         this.phone = phone;
         this.idcnum = idcnum;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Resident resident = (Resident) o;
-        return Objects.equals(uid, resident.uid) &&
-                Objects.equals(name, resident.name) &&
-                Objects.equals(building, resident.building) &&
-                Objects.equals(unit, resident.unit) &&
-                Objects.equals(room, resident.room) &&
-                Objects.equals(phone, resident.phone) &&
-                Objects.equals(idcnum, resident.idcnum);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(uid, name, building, unit, room, phone, idcnum);
     }
 
     public Resident() {

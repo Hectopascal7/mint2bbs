@@ -1,6 +1,7 @@
 package com.mint.pojo;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class GoodWithBLOBs extends Good {
     private String content;
@@ -9,8 +10,8 @@ public class GoodWithBLOBs extends Good {
 
     private String picture;
 
-    public GoodWithBLOBs(String gid, String title, Integer isused, Integer degree, BigDecimal price, String content, String cover, String picture) {
-        super(gid, title, isused, degree, price);
+    public GoodWithBLOBs(String gid, String title, Integer isused, Integer ndegree, BigDecimal price, Date ptime, Integer pcount, String content, String cover, String picture) {
+        super(gid, title, isused, ndegree, price, ptime, pcount);
         this.content = content;
         this.cover = cover;
         this.picture = picture;

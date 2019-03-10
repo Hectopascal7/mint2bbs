@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mint.dao.BanMapper">
+  <resultMap id="BaseResultMap" type="com.mint.pojo.Ban">
+    <constructor>
+      <idArg column="bid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="uid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="btime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.mint.pojo.Ban">
+    <constructor>
+      <idArg column="bid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="uid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="btime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="note" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    bid, uid, btime
+  </sql>
+  <sql id="Blob_Column_List">
+    note
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tb_ban
+    where bid = #{bid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tb_ban
+    where bid = #{bid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.mint.pojo.Ban">
+    insert into tb_ban (bid, uid, btime, 
+      note)
+    values (#{bid,jdbcType=VARCHAR}, #{uid,jdbcType=VARCHAR}, #{btime,jdbcType=TIMESTAMP}, 
+      #{note,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mint.pojo.Ban">
+    insert into tb_ban
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bid != null">
+        bid,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="btime != null">
+        btime,
+      </if>
+      <if test="note != null">
+        note,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bid != null">
+        #{bid,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="btime != null">
+        #{btime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="note != null">
+        #{note,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mint.pojo.Ban">
+    update tb_ban
+    <set>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="btime != null">
+        btime = #{btime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="note != null">
+        note = #{note,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where bid = #{bid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mint.pojo.Ban">
+    update tb_ban
+    set uid = #{uid,jdbcType=VARCHAR},
+      btime = #{btime,jdbcType=TIMESTAMP},
+      note = #{note,jdbcType=LONGVARCHAR}
+    where bid = #{bid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mint.pojo.Ban">
+    update tb_ban
+    set uid = #{uid,jdbcType=VARCHAR},
+      btime = #{btime,jdbcType=TIMESTAMP}
+    where bid = #{bid,jdbcType=VARCHAR}
+  </update>
+</mapper>

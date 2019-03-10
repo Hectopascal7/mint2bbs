@@ -12,6 +12,7 @@
             <arg column="rcount" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="isbest" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="issticky" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="pcount" javaType="java.lang.Integer" jdbcType="INTEGER"/>
         </constructor>
     </resultMap>
     <resultMap id="ResultMapWithBLOBs" type="com.mint.pojo.Topic">
@@ -25,11 +26,12 @@
             <arg column="rcount" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="isbest" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="issticky" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="pcount" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="content" javaType="java.lang.String" jdbcType="LONGVARCHAR"/>
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">
-    tid, uid, sid, title, ptime, acount, rcount, isbest, issticky
+    tid, uid, sid, title, ptime, acount, rcount, isbest, issticky, pcount
   </sql>
     <sql id="Blob_Column_List">
     content
@@ -50,11 +52,11 @@
     insert into tb_topic (tid, uid, sid, 
       title, ptime, acount, 
       rcount, isbest, issticky, 
-      content)
+      pcount, content)
     values (#{tid,jdbcType=VARCHAR}, #{uid,jdbcType=VARCHAR}, #{sid,jdbcType=VARCHAR}, 
       #{title,jdbcType=VARCHAR}, #{ptime,jdbcType=TIMESTAMP}, #{acount,jdbcType=INTEGER}, 
       #{rcount,jdbcType=INTEGER}, #{isbest,jdbcType=INTEGER}, #{issticky,jdbcType=INTEGER}, 
-      #{content,jdbcType=LONGVARCHAR})
+      #{pcount,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR})
   </insert>
     <insert id="insertSelective" parameterType="com.mint.pojo.Topic">
         insert into tb_topic
@@ -85,6 +87,9 @@
             </if>
             <if test="issticky != null">
                 issticky,
+            </if>
+            <if test="pcount != null">
+                pcount,
             </if>
             <if test="content != null">
                 content,
@@ -118,6 +123,9 @@
             <if test="issticky != null">
                 #{issticky,jdbcType=INTEGER},
             </if>
+            <if test="pcount != null">
+                #{pcount,jdbcType=INTEGER},
+            </if>
             <if test="content != null">
                 #{content,jdbcType=LONGVARCHAR},
             </if>
@@ -150,6 +158,9 @@
             <if test="issticky != null">
                 issticky = #{issticky,jdbcType=INTEGER},
             </if>
+            <if test="pcount != null">
+                pcount = #{pcount,jdbcType=INTEGER},
+            </if>
             <if test="content != null">
                 content = #{content,jdbcType=LONGVARCHAR},
             </if>
@@ -166,6 +177,7 @@
       rcount = #{rcount,jdbcType=INTEGER},
       isbest = #{isbest,jdbcType=INTEGER},
       issticky = #{issticky,jdbcType=INTEGER},
+      pcount = #{pcount,jdbcType=INTEGER},
       content = #{content,jdbcType=LONGVARCHAR}
     where tid = #{tid,jdbcType=VARCHAR}
   </update>
@@ -178,7 +190,8 @@
       acount = #{acount,jdbcType=INTEGER},
       rcount = #{rcount,jdbcType=INTEGER},
       isbest = #{isbest,jdbcType=INTEGER},
-      issticky = #{issticky,jdbcType=INTEGER}
+      issticky = #{issticky,jdbcType=INTEGER},
+      pcount = #{pcount,jdbcType=INTEGER}
     where tid = #{tid,jdbcType=VARCHAR}
   </update>
     <select id="getPostWithPage" resultMap="BaseResultMap">
