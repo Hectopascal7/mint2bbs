@@ -1,6 +1,9 @@
 package com.mint.dao;
 
 import com.mint.pojo.Guide;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface GuideMapper {
     int deleteByPrimaryKey(String tid);
@@ -16,4 +19,6 @@ public interface GuideMapper {
     int updateByPrimaryKeyWithBLOBs(Guide record);
 
     int updateByPrimaryKey(Guide record);
+
+    List<Guide> getPostWithPage(@Param("skind") String skind, @Param("sorder") String sorder, @Param("start") int start, @Param("slimit") int slimit);
 }

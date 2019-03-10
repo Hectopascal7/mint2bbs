@@ -39,7 +39,6 @@
     <mvc:resources mapping="/css/**" location="/css/"></mvc:resources>
     <mvc:resources mapping="/js/**" location="/script/"></mvc:resources>
     <mvc:resources mapping="/images/**" location="/image/"></mvc:resources>
-    <mvc:resources mapping="/fonts/**" location="/font/"></mvc:resources>
 
     <!-- 配置annotation类型的处理映射器 -->
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"></bean>

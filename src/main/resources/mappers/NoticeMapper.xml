@@ -188,4 +188,16 @@
         order by ptime
         limit 5
     </select>
+    <select id="getPostWithPage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_notice
+        <if test='skind != "all" and skind=="isbest"'>
+            where isbest= 1
+        </if>
+        <if test='sorder == "ptime" or sorder=="rcount"'>
+            order by ${sorder}
+        </if>
+        limit #{start},#{slimit}
+    </select>
 </mapper>

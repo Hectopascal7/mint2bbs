@@ -2,6 +2,7 @@ package com.mint.dao;
 
 import com.mint.pojo.Notice;
 import com.mint.pojo.Post;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -21,4 +22,6 @@ public interface NoticeMapper {
     int updateByPrimaryKey(Notice record);
 
     List<Notice> getNoticeBoard();
+
+    List<Notice> getPostWithPage(@Param("skind") String skind, @Param("sorder") String sorder, @Param("start") int start, @Param("slimit") int slimit);
 }

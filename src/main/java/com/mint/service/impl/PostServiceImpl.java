@@ -30,6 +30,14 @@ public class PostServiceImpl implements IPostService {
     @Autowired
     private UserMapper userMapper;
     @Autowired
+    private NewsMapper newsMapper;
+    @Autowired
+    private AdviceMapper adviceMapper;
+    @Autowired
+    private ActivityMapper activityMapper;
+    @Autowired
+    private GuideMapper guideMapper;
+    @Autowired
     private SectionMapper sectionMapper;
 
     /**
@@ -128,8 +136,61 @@ public class PostServiceImpl implements IPostService {
      */
     @Override
     public ServerResponse<List<Post>> getSectionHotPost(String sid) {
-        String tb_name="tb_"+sid;
+        String tb_name = "tb_" + sid;
         List<Post> list = postMapper.getSectionHotPost(tb_name);
         return ServerResponse.createBySuccess(list);
     }
+
+    /**
+     * @param section
+     * @param kind
+     * @param order
+     * @param page
+     * @param limit
+     * @Description 获取板块内帖子列表
+     * @Param section
+     * @Param kind
+     * @Param order
+     * @Param page
+     * @Param limit
+     * @Return ServerResponse<List < Notice>>
+     */
+    @Override
+    public ServerResponse<List<HashMap<String, Object>>> getSectionPostWithPage(String section, String kind, String order, int page, int limit) {
+        int start = (page - 1) * limit;
+        List list = new ArrayList<>();
+        switch (section) {
+            case "topic":
+                list = topicMapper.getPostWithPage(kind, order, start, limit);
+                break;
+            case "guide":
+                list = guideMapper.getPostWithPage(kind, order, start, limit);
+                break;
+            case "activity":
+                list = activityMapper.getPostWithPage(kind, order, start, limit);
+                break;
+            case "news":
+                list = newsMapper.getPostWithPage(kind, order, start, limit);
+                break;
+            case "notice":
+                list = noticeMapper.getPostWithPage(kind, order, start, limit);
+                break;
+            case "advice":
+                list = adviceMapper.getPostWithPage(kind, order, start, limit);
+                break;
+        }
+        List<HashMap<String, Object>> rlist = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            Post post = (Post) list.get(i);
+            HashMap<String, Object> map = new HashMap<>();
+            String nickname = userMapper.getNicknameByUid(post.getUid());
+            String sname = sectionMapper.getSnameBySid(post.getSid());
+            map.put("post", post);
+            map.put("nickname", nickname);
+            map.put("sname", sname);
+            rlist.add(map);
+        }
+        return ServerResponse.createBySuccess(rlist);
+    }
+
 }

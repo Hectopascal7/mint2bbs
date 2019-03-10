@@ -1,5 +1,7 @@
 package com.mint.pojo;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.util.Date;
 
 public class User {
@@ -23,6 +25,7 @@ public class User {
 
     private Integer point;
 
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date jointime;
 
     private Integer level;

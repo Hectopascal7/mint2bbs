@@ -1,6 +1,7 @@
 package com.mint.controller.portal;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.mint.common.ServerResponse;
 import com.mint.pojo.Notice;
 import com.mint.pojo.Post;
@@ -100,7 +101,23 @@ public class PostController {
     @ResponseBody
     public ServerResponse<List<HashMap<String, Object>>> getPostByPtime(@RequestParam("page") int page) {
         ServerResponse<List<HashMap<String, Object>>> response = iPostService.getPostByPtime(page);
-        System.out.println("123456"+JSON.toJSONString(response));
+        System.out.println("123456" + JSON.toJSONString(response));
         return response;
     }
+
+    /**
+     * @Description 获取板块内帖子列表
+     * @Return ServerResponse<List < Notice>>
+     */
+    @RequestMapping(value = "getSectionPostWithPage.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<List<HashMap<String, Object>>> getSectionPostWithPage
+    (@RequestParam("section") String section, @RequestParam("kind")
+            String kind, @RequestParam("order") String order,
+     @RequestParam("page") int page, @RequestParam("limit") int limit) {
+        ServerResponse<List<HashMap<String, Object>>> response = iPostService.getSectionPostWithPage(section, kind, order, page, limit);
+        System.out.println(JSON.toJSONString(response));
+        return response;
+    }
+
 }

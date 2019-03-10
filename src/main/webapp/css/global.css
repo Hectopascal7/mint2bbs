@@ -875,9 +875,9 @@ pre {
     border-bottom: 1px dotted #e2e2e2;
 }
 
-.fly-list li:last-child {
-    border-bottom: none;
-}
+/*.fly-list li:last-child {*/
+    /*border-bottom: none;*/
+/*}*/
 
 .fly-list li h2,
 .fly-list li h2 a,

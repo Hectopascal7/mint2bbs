@@ -1,13 +1,14 @@
 package com.mint.common;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.io.Serializable;
 
-//@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
-//保证序列化json的时候,如果是null的对象,key也会消失
-@JsonSerialize
+////@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+////保证序列化json的时候,如果是null的对象,key也会消失
+//@JsonSerialize
 public class ServerResponse<T> implements Serializable {
 
     private int status;
@@ -35,7 +36,7 @@ public class ServerResponse<T> implements Serializable {
     }
 
     // 使之不在json序列化结果当中
-    @JsonIgnore
+    @JSONField(serialize = false)
     public boolean isSuccess() {
         return this.status == ResponseCode.SUCCESS.getCode();
     }

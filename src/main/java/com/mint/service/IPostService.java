@@ -50,4 +50,15 @@ public interface IPostService {
      * @Return ServerResponse<List < Notice>>
      */
     ServerResponse<List<Post>> getSectionHotPost(String sid);
+
+    /**
+     * @Description 获取板块内帖子列表
+     * @Param section
+     * @Param kind
+     * @Param order
+     * @Param page
+     * @Param limit
+     * @Return ServerResponse<List < Notice>>
+     */
+    ServerResponse<List<HashMap<String, Object>>> getSectionPostWithPage(String section, String kind, String order, int page, int limit);
 }
