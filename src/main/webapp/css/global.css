@@ -395,6 +395,14 @@ pre {
     border-radius: 2px;
 }
 
+.fly-badge-level {
+    height: 16px;
+    line-height: 16px;
+    padding: 0 5px !important;
+    background-color: lightskyblue;
+    border-radius: 2px;
+}
+
 /* 赞助商 */
 .fly-zanzhu {
     display: block;

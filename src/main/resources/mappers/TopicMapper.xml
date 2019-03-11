@@ -202,7 +202,7 @@
             where isbest= 1
         </if>
         <if test='sorder == "ptime" or sorder=="rcount"'>
-            order by ${sorder}
+            order by ${sorder} desc
         </if>
         limit #{start},#{slimit}
     </select>

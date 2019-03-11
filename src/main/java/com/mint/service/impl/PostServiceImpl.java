@@ -111,7 +111,7 @@ public class PostServiceImpl implements IPostService {
      */
     @Override
     public ServerResponse<List<HashMap<String, Object>>> getPostByPtime(int page) {
-        List<Post> list = postMapper.getPostByPtime(page * 2);
+        List<Post> list = postMapper.getPostByPtime(page * 10);
         List<HashMap<String, Object>> postList = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             Post post = list.get(i);
@@ -184,10 +184,7 @@ public class PostServiceImpl implements IPostService {
         for (int i = 0; i < list.size(); i++) {
             Post post = (Post) list.get(i);
             User user = userMapper.getInfoByUid(post.getUid());
-            PostEntity entity = new PostEntity(post.getTid(), user.getNickname(), user.getNickname(),
-                    post.getTitle(), post.getPtime(), post.getAcount(),
-                    post.getAcount(), post.getIsbest(), post.getIssticky(),
-                    post.getPcount(), user.getRole(), user.getUlevel());
+            PostEntity entity = new PostEntity(post.getTid(), user.getNickname(),sectionMapper.getSnameBySid(post.getSid()), post.getTitle(), post.getPtime(), post.getAcount(), post.getRcount(), post.getIsbest(), post.getIssticky(), post.getPcount(), user.getRole(), user.getUlevel(),user.getProfile());
             rlist.add(entity);
         }
         return ServerResponse.createBySuccess(rlist);
