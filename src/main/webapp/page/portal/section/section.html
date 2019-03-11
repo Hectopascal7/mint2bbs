@@ -80,16 +80,6 @@
                 <!-- <div class="fly-none">没有相关数据</div> -->
 
                 <div style="text-align: center">
-                    <!--<div class="layui-laypage">-->
-                    <!--<span class="laypage-curr">1</span>-->
-                    <!--<a href="/jie/page/2/">2</a>-->
-                    <!--<a href="/jie/page/3/">3</a>-->
-                    <!--<a href="/jie/page/4/">4</a>-->
-                    <!--<a href="/jie/page/5/">5</a>-->
-                    <!--<span>…</span>-->
-                    <!--<a href="/jie/page/148/" class="laypage-last" title="尾页">尾页</a>-->
-                    <!--<a href="/jie/page/2/" class="laypage-next">下一页</a>-->
-                    <!--</div>-->
                     <div id="page"></div>
                 </div>
 
@@ -479,7 +469,8 @@
 
     function getPageData() {
         layui.use(['laypage', 'layer'], function () {
-            var laypage = layui.laypage, layer = layui.layer;
+            var laypage = layui.laypage;
+            var layer = layui.layer;
             //自定义每页条数的选择项
             laypage.render({
                 elem: 'page',
@@ -517,7 +508,6 @@
                         laytpl(post_model).render(data_list, function (html) {
                             post_view.innerHTML = html;
                         });
-
                     });
                 }
             });
