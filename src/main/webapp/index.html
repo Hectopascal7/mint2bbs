@@ -80,13 +80,13 @@
             <!--第二板块：回帖-->
             <div class="fly-panel" style="margin-bottom: 0;">
                 <div class="fly-panel-title fly-filter">
-                    <a href="" class="layui-this">综合</a>
+                    <a href="javascript:getAllPost()" id="total" class="layui-this">综合</a>
                     <span class="fly-mid"></span>
-                    <a href="">精华</a>
+                    <a href="javascript:getBestPost()" id="best">精华</a>
                     <span class="fly-filter-right layui-hide-xs">
-                        <a href="" class="layui-this">按最新</a>
+                        <a href="javascript:getPostByPtime()" class="layui-this" id="new">最新</a>
                         <span class="fly-mid"></span>
-                        <a href="">按热议</a>
+                        <a href="javascript:getPostByRcount()" id="hot">热议</a>
                     </span>
                 </div>
 
@@ -149,46 +149,46 @@
                 <dt class="fly-panel-title">社区管理组</dt>
                 <dl class="fly-panel-main">
                     <!--<table>-->
-                        <!--<tr>-->
-                            <!--<td>-->
-                                <!--<dd>-->
-                                    <!--居委会：-->
-                                <!--</dd>-->
-                            <!--</td>-->
-                            <!--<td>-->
-                                <!--<dd>橙色薄荷°——17863909380</dd>-->
-                            <!--</td>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<td>-->
-                                <!--<dd>-->
-                                    <!--物业：-->
-                                <!--</dd>-->
-                            <!--</td>-->
-                            <!--<td>-->
-                                <!--<dd>橙色薄荷°——17863909380</dd>-->
-                            <!--</td>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<td>-->
-                                <!--<dd>-->
-                                    <!--保卫处：-->
-                                <!--</dd>-->
-                            <!--</td>-->
-                            <!--<td>-->
-                                <!--<dd>橙色薄荷°——17863909380</dd>-->
-                            <!--</td>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<td>-->
-                                <!--<dd>-->
-                                    <!--值班室：-->
-                                <!--</dd>-->
-                            <!--</td>-->
-                            <!--<td>-->
-                                <!--<dd>橙色薄荷°——17863909380</dd>-->
-                            <!--</td>-->
-                        <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>-->
+                    <!--<dd>-->
+                    <!--居委会：-->
+                    <!--</dd>-->
+                    <!--</td>-->
+                    <!--<td>-->
+                    <!--<dd>橙色薄荷°——17863909380</dd>-->
+                    <!--</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>-->
+                    <!--<dd>-->
+                    <!--物业：-->
+                    <!--</dd>-->
+                    <!--</td>-->
+                    <!--<td>-->
+                    <!--<dd>橙色薄荷°——17863909380</dd>-->
+                    <!--</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>-->
+                    <!--<dd>-->
+                    <!--保卫处：-->
+                    <!--</dd>-->
+                    <!--</td>-->
+                    <!--<td>-->
+                    <!--<dd>橙色薄荷°——17863909380</dd>-->
+                    <!--</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>-->
+                    <!--<dd>-->
+                    <!--值班室：-->
+                    <!--</dd>-->
+                    <!--</td>-->
+                    <!--<td>-->
+                    <!--<dd>橙色薄荷°——17863909380</dd>-->
+                    <!--</td>-->
+                    <!--</tr>-->
                     <!--</table>-->
                     <dd>
                         <a href="http://layim.layui.com/" target="_blank">居委会：橙色薄荷°—17863909380</a>
@@ -305,44 +305,47 @@
     </ul>
 </script>
 
-<!--置顶区模板-->
-<script id="m_sticky" type="text/html">
-    {{# for(var i = 0 ; i < d.length; i++){ }}
+<!-- 模板引擎帖子渲染模板 -->
+<script id="m_post" type="text/html">
+    {{# layui.each(d, function(index, item){ }}
     <li>
-        <a href="user/home.html" class="fly-avatar">
-            <img src="image/asuna.jpg" alt="橙色薄荷°">
+        <a href="../user/home.html" class="fly-avatar">
+            <img src="{{item.profile}}"
+                 alt="{{item.nickname}}">
         </a>
         <h2>
-            <a class="layui-badge">{{ d[i].sname }}</a>
-            <a href="page/portal/topic/detail.html?tid={{ JSON.parse(d[i].post).tid}}&sid={{ JSON.parse(d[i].post).sid}}">{{
-                JSON.parse(d[i].post).title}}</a>
+            <a class="layui-badge">{{item.sname}}</a>
+            <a href="../forum/detail.html">{{item.title}}</a>
         </h2>
         <div class="fly-list-info">
-            <a href="user/home.html" link>
-                <cite>{{ d[i].nickname }}</cite>
-                {{# if(d[i].role == 1){ }}
+            <a href="../user/home.html" link>
+                <cite>{{item.nickname}}</cite>
+                {{# if(item.role===1){ }}
                 <i class="iconfont icon-renzheng" title="认证信息：管理员"></i>
-                <i class="layui-badge fly-badge-vip">管理员</i>
                 {{# } }}
-                {{# if(d[i].role == 0){ }}
-                <i class="layui-badge fly-badge-vip">LV3</i>
-                {{# } }}
+                <i class="layui-badge fly-badge-level">Lv {{item.ulevel}}</i>
             </a>
-            <span>{{ JSON.parse(d[i].post).ptime}}</span>
-            <span class="layui-hide-xs" title="浏览"><i class="iconfont icon-liulanyanjing"></i> {{ JSON.parse(d[i].post).acount}}</span>
-            <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
-            <span class="fly-list-nums"><i class="iconfont icon-pinglun1" title="回复"></i> {{ JSON.parse(d[i].post).rcount}}</span>
+            <span>{{item.ptime}}</span>
+
+            <span class="layui-hide-xs" title="浏览">
+                <i class="iconfont icon-liulanyanjing"></i> {{item.acount}}
+            </span>
+            <span class="fly-list-nums">
+                <i class="iconfont icon-zan"></i> {{item.pcount}}
+                <i class="iconfont icon-pinglun1" title="回复"></i> {{item.rcount}}
+            </span>
         </div>
         <div class="fly-list-badge">
-            {{# if(JSON.parse(d[i].post).isbest===1){ }}
-            <span class="layui-badge layui-bg-red">精帖</span>
-            {{# } }}
-            {{# if(JSON.parse(d[i].post).issticky===1){ }}
+
+            {{# if(item.issticky===1){ }}
             <span class="layui-badge layui-bg-black">置顶</span>
+            {{# } }}
+            {{# if(item.isbest===1){ }}
+            <span class="layui-badge layui-bg-red">精帖</span>
             {{# } }}
         </div>
     </li>
-    {{# } }}
+    {{# }); }}
 </script>
 
 <!--热门帖子模板-->
@@ -364,50 +367,6 @@
     {{# } }}
 </script>
 
-<!--帖子列表区模板-->
-<script type="text/html" id="m_post">
-    {{# for(var i = 0 ; i < d.length; i++){ }}
-    <li>
-        <a href="user/home.html" class="fly-avatar">
-            <img src="/image/asuna.jpg" alt="橙色薄荷°">
-        </a>
-        <h2>
-            <a class="layui-badge">{{ d[i].section.sname }}</a>
-            <a href="jie/detail.html">{{ d[i].post.title }}
-                    <span class="layui-badge layui-bg-blue">hot</span>
-            </span>
-            </a>
-        </h2>
-        <div class="fly-list-info">
-            <a href="user/home.html" link>
-                <cite>{{ d[i].user.nickname }}</cite>
-                {{# if(d[i].user.role===1){ }}
-                <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
-                <i class="layui-badge fly-badge-vip">管理员</i>
-                {{# } }}
-            </a>
-            <span>{{ d[i].post.ptime }}</span>
-            <span class="layui-hide-xs" title="浏览"><i
-                    class="iconfont icon-liulanyanjing"></i> {{ d[i].post.acount }}
-            </span>
-            <span class="layui-hide-xs" title="浏览"><i
-                    class="iconfont icon-zan"></i> {{ d[i].post.acount }}
-            <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
-            <span class="fly-list-nums">
-                <i class="iconfont icon-pinglun1" title="回答"></i> {{ d[i].post.rcount }}
-            </span>
-        </div>
-        <div class="fly-list-badge">
-            {{# if(d[i].post.isbest===1){ }}
-            <span class="layui-badge layui-bg-red">精帖</span>
-            {{# } }}
-            {{# if(d[i].post.issticky===1){ }}
-            <span class="layui-badge layui-bg-black">置顶</span>
-            {{# } }}
-        </div>
-    </li>
-    {{# } }}
-</script>
 
 <!--活跃用户榜单-->
 <script type="text/html" id="m_active_user">
@@ -419,6 +378,44 @@
         </a>
     </dd>
     {{# }); }}
+</script>
+
+<script>
+
+    // 根据发帖时间获取帖子列表
+    var order = 'ptime';
+    // 获取本板块全部类型的帖子
+    var kind = 'all';
+
+    function getAllPost() {
+        kind = "all";
+        $("#total").addClass("layui-this");
+        $("#best").removeClass("layui-this");
+        firstGetData();
+    }
+
+    function getBestPost() {
+        kind = "isbest";
+        $("#best").addClass("layui-this");
+        $("#total").removeClass("layui-this");
+        firstGetData();
+    }
+
+    function getPostByPtime() {
+        order = "ptime";
+        $("#new").addClass("layui-this");
+        $("#hot").removeClass("layui-this");
+        firstGetData();
+    }
+
+    function getPostByRcount() {
+        order = "rcount";
+        $("#hot").addClass("layui-this");
+        $("#new").removeClass("layui-this");
+        layer.msg(order);
+        firstGetData();
+    }
+
 </script>
 
 <!--获取数据，渲染模板-->
@@ -435,7 +432,7 @@
             user_info = data.data;
         },
         error: function (data) {
-            alert("获取公告板失败！");
+            layer.msg("获取公告板失败！");
         }
     })
 
@@ -495,13 +492,17 @@
     })
 
     var page = 1;
+
     var post;
+
     $.ajax({
         type: 'post',
         url: '/post/getPostByPtime.do',
         dataType: 'json',
         data: {
-            page: page
+            page: page,
+            kind: kind,
+            order: order
         },
         async: false,
         success: function (data) {
@@ -509,9 +510,46 @@
             page++;
         },
         error: function (data) {
-            alert("获取热门模块失败！");
+            // layer.msg("获取帖子列表失败！");
         }
     })
+
+    function firstGetData() {
+        page = 1;
+        $.ajax({
+            type: 'post',
+            url: '/post/getPostByPtime.do',
+            dataType: 'json',
+            data: {
+                page: page,
+                kind: kind,
+                order: order
+            },
+            async: false,
+            success: function (data) {
+                post = data.data;
+                layer.msg("123456789");
+                page++;
+            },
+            error: function (data) {
+                // layer.msg("获取帖子列表失败！");
+            }
+        })
+        layui.use('laytpl', function () {
+            laytpl = layui.laytpl;
+            // 帖子列表渲染
+            var post_model = document.getElementById('m_post').innerHTML;
+            var post_view = document.getElementById('post');
+            laytpl(post_model).render(post, function (html) {
+                // 当前只写了获取之前当前页所有数据的方法，是否使用追加有待商讨
+                // 更新innerHTML，获取数据量越来越大，需要获取当前页之前所有数据，适用于实时更新
+                post_view.innerHTML = html;
+                // 追加innerHTML，获取数据量小，只用获取新页面的数据，适用于不实时更新
+                // post_view.innerHTML += html;
+            });
+
+        });
+    }
 
     var active_user;
     $.ajax({
@@ -533,6 +571,8 @@
             url: '/post/getPostByPtime.do',
             dataType: 'json',
             data: {
+                kind: kind,
+                order: order,
                 page: page
             },
             async: false,
@@ -541,18 +581,21 @@
                 page++;
             },
             error: function (data) {
-                alert("获取热门模块失败！");
+                alert("获取帖子失败！");
             }
         })
 
         layui.use('laytpl', function () {
             laytpl = layui.laytpl;
-
             // 帖子列表渲染
             var post_model = document.getElementById('m_post').innerHTML;
             var post_view = document.getElementById('post');
             laytpl(post_model).render(post, function (html) {
+                // 当前只写了获取之前当前页所有数据的方法，是否使用追加有待商讨
+                // 更新innerHTML，获取数据量越来越大，需要获取当前页之前所有数据，适用于实时更新
                 post_view.innerHTML = html;
+                // 追加innerHTML，获取数据量小，只用获取新页面的数据，适用于不实时更新
+                // post_view.innerHTML += html;
             });
 
         });
@@ -583,7 +626,7 @@
         });
 
         // 置顶渲染
-        var sticky_model = document.getElementById('m_sticky').innerHTML;
+        var sticky_model = document.getElementById('m_post').innerHTML;
         var sticky_view = document.getElementById('sticky');
         laytpl(sticky_model).render(sticky, function (html) {
             sticky_view.innerHTML = html;
@@ -600,7 +643,11 @@
         var post_model = document.getElementById('m_post').innerHTML;
         var post_view = document.getElementById('post');
         laytpl(post_model).render(post, function (html) {
+            // 当前只写了获取之前当前页所有数据的方法，是否使用追加有待商讨
+            // 更新innerHTML，获取数据量越来越大，需要获取当前页之前所有数据，适用于实时更新
             post_view.innerHTML = html;
+            // 追加innerHTML，获取数据量小，只用获取新页面的数据，适用于不实时更新
+            // post_view.innerHTML += html;
         });
 
         // 活跃用户榜单
@@ -611,10 +658,11 @@
         });
     });
 </script>
+
 <script>
 
+    // 通过地址栏获取当前板块唯一标识
     var section = 'index';
-
     function GetQueryString(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
         var r = window.location.search.substr(1).match(reg);

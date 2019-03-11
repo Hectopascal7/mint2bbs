@@ -75,23 +75,25 @@ public class PostServiceImpl implements IPostService {
      * @Return ServerResponse<List < Notice>>
      */
     @Override
-    public ServerResponse<List<HashMap<String, String>>> getAllSticky() {
+    public ServerResponse<List<PostEntity>> getAllSticky() {
         List<Post> list = postMapper.getAllSticky();
-        List<HashMap<String, String>> postList = new ArrayList<>();
+        List<PostEntity> t_list = matchUser(list);
+        return ServerResponse.createBySuccess(t_list);
+    }
+
+    /**
+     * @Description 帖子列表Post实体匹配到用户，生成前端对应帖子实体列表List<PostEntity>
+     * @Return ServerResponse<List < Notice>>
+     */
+    public List<PostEntity> matchUser(List<Post> list) {
+        List<PostEntity> t_list = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             Post post = list.get(i);
-            String nickname = userMapper.getNicknameByUid(post.getUid());
-            int role = userMapper.getRoleByUid(post.getUid());
-            String sname = sectionMapper.getSnameBySid(post.getSid());
-//            User user=userMapper.selectByPrimaryKey();
-            HashMap<String, String> map = new HashMap<>();
-            map.put("nickname", nickname);
-            map.put("sname", sname);
-            map.put("role", String.valueOf(role));
-            map.put("post", JSON.toJSONString(post));
-            postList.add(map);
+            User user = userMapper.getInfoByUid(post.getUid());
+            PostEntity entity = new PostEntity(post.getTid(), user.getNickname(), sectionMapper.getSnameBySid(post.getSid()), post.getTitle(), post.getPtime(), post.getAcount(), post.getRcount(), post.getIsbest(), post.getIssticky(), post.getPcount(), user.getRole(), user.getUlevel(), user.getProfile());
+            t_list.add(entity);
         }
-        return ServerResponse.createBySuccess(postList);
+        return t_list;
     }
 
     /**
@@ -110,23 +112,10 @@ public class PostServiceImpl implements IPostService {
      * @Return ServerResponse<List < Notice>>
      */
     @Override
-    public ServerResponse<List<HashMap<String, Object>>> getPostByPtime(int page) {
-        List<Post> list = postMapper.getPostByPtime(page * 10);
-        List<HashMap<String, Object>> postList = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            Post post = list.get(i);
-            User user = userMapper.selectByPrimaryKey(post.getUid());
-//            String sname = sectionMapper.getSnameBySid(post.getSid());
-            Section section = sectionMapper.selectByPrimaryKey(post.getSid());
-//            User user=userMapper.selectByPrimaryKey();
-            HashMap<String, Object> map = new HashMap<>();
-            map.put("user", user);
-            map.put("section", section);
-            map.put("post", post);
-//            map.put("post", JSON.toJSONString(post));
-            postList.add(map);
-        }
-        return ServerResponse.createBySuccess(postList);
+    public ServerResponse<List<PostEntity>> getPostByPtime(int page, String kind, String order) {
+        List<Post> list = postMapper.getPostByPtime(kind, order, page * 10);
+        List<PostEntity> t_list = matchUser(list);
+        return ServerResponse.createBySuccess(t_list);
     }
 
     /**
@@ -180,22 +169,8 @@ public class PostServiceImpl implements IPostService {
                 list = adviceMapper.getPostWithPage(kind, order, start, limit);
                 break;
         }
-        List<PostEntity> rlist = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            Post post = (Post) list.get(i);
-            User user = userMapper.getInfoByUid(post.getUid());
-            PostEntity entity = new PostEntity(post.getTid(), user.getNickname(),sectionMapper.getSnameBySid(post.getSid()), post.getTitle(), post.getPtime(), post.getAcount(), post.getRcount(), post.getIsbest(), post.getIssticky(), post.getPcount(), user.getRole(), user.getUlevel(),user.getProfile());
-            rlist.add(entity);
-        }
+        List<PostEntity> rlist = matchUser(list);
         return ServerResponse.createBySuccess(rlist);
     }
-
-//    @Override
-//    public ServerResponse<List<PostEntity>> getSectionPostWithPage1(String section, String kind, String order, int page, int limit) {
-//        int start = (page - 1) * limit;
-//        List<PostEntity> list = new ArrayList<>();
-//        list = postMapper.getSectionPostWithPage1();
-//        return ServerResponse.createBySuccess(list);
-//    }
 
 }

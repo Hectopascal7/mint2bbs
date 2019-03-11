@@ -62,9 +62,8 @@ public class PostController {
      */
     @RequestMapping(value = "getAllSticky.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<List<HashMap<String, String>>> getAllSticky() {
-        ServerResponse<List<HashMap<String, String>>> response = iPostService.getAllSticky();
-        System.out.println(JSON.toJSONString(response));
+    public ServerResponse<List<PostEntity>> getAllSticky() {
+        ServerResponse<List<PostEntity>> response = iPostService.getAllSticky();
         return response;
     }
 
@@ -87,7 +86,6 @@ public class PostController {
     @RequestMapping(value = "getSectionHotPost.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<List<Post>> getSectionHotPost(String section) {
-        System.out.println("通了通了");
         ServerResponse<List<Post>> response = iPostService.getSectionHotPost(section);
         return response;
     }
@@ -98,9 +96,8 @@ public class PostController {
      */
     @RequestMapping(value = "getPostByPtime.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<List<HashMap<String, Object>>> getPostByPtime(@RequestParam("page") int page) {
-        ServerResponse<List<HashMap<String, Object>>> response = iPostService.getPostByPtime(page);
-        System.out.println("123456" + JSON.toJSONString(response));
+    public ServerResponse<List<PostEntity>> getPostByPtime(@RequestParam("page") int page, @RequestParam("kind") String kind, @RequestParam("order") String order) {
+        ServerResponse<List<PostEntity>> response = iPostService.getPostByPtime(page, kind, order);
         return response;
     }
 

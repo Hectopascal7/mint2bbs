@@ -393,7 +393,12 @@
         from tb_advice
 
         ) e
-        order by e.ptime
+        <if test='skind != "all" and skind=="isbest"'>
+            where isbest= 1
+        </if>
+        <if test='sorder == "ptime" or sorder=="rcount"'>
+            order by ${sorder} desc
+        </if>
         limit #{tcount}
     </select>
     <!--<select id="getPostWithPage1" resultType="java.util.HashMap">-->

@@ -23,27 +23,27 @@ public interface IPostService {
 
     /**
      * @Description 获取社区公告板
-     * @Return ServerResponse<List<Notice>>
+     * @Return ServerResponse<List < Notice>>
      */
     ServerResponse<List<Notice>> getNoticeBoard();
 
     /**
      * @Description 获取置顶模块
-     * @Return ServerResponse<List<Notice>>
+     * @Return ServerResponse<List < Notice>>
      */
-    ServerResponse<List<HashMap<String, String>>> getAllSticky();
+    ServerResponse<List<PostEntity>> getAllSticky();
 
     /**
      * @Description 获取热门帖子
-     * @Return ServerResponse<List<Notice>>
+     * @Return ServerResponse<List < Notice>>
      */
     ServerResponse<List<Post>> getHotPost();
 
     /**
      * @Description 获取帖子列表
-     * @Return ServerResponse<List<Notice>>
+     * @Return ServerResponse<List < Notice>>
      */
-    ServerResponse<List<HashMap<String, Object>>> getPostByPtime(int page);
+    ServerResponse<List<PostEntity>> getPostByPtime(int page, String kind, String order);
 
     /**
      * @Description 获取主页热门帖子
