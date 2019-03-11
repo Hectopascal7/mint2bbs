@@ -210,10 +210,10 @@
         </li>
         {{#} else if(item.sid === section){}}
         <li class="layui-hide-xs layui-this">
-            <a href="/page/portal/section/section.html?sid={{item.sid}}">{{item.sname}}</a>
+            <a href="/page/portal/section/section.html?section={{item.sid}}">{{item.sname}}</a>
         </li>
         {{#} else {}}
-        <li><a href="/page/portal/section/section.html?sid={{item.sid}}">{{item.sname}}</a></li>
+        <li><a href="/page/portal/section/section.html?section={{item.sid}}">{{item.sname}}</a></li>
         {{# } }}
         {{# }); }}
         <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li>
@@ -227,7 +227,7 @@
             <span class="fly-search">
                 <i class="layui-icon"></i>
             </span>
-        <a href="page/portal/topic/add.html?section=123" class="layui-btn">发表新帖</a>
+        <a href="/page/portal/topic/add.html?section={{section}}" class="layui-btn">发表新帖</a>
     </div>
     <!--<div class="layui-hide-sm layui-show-xs-block"-->
     <!--style="margin-top: -10px; padding-bottom: 10px; text-align: center;">-->
@@ -357,7 +357,7 @@
         return null;
     }
 
-    var section = getQueryParameter("sid");
+    var section = getQueryParameter("section");
 
     var user_info;
     $.ajax({
@@ -370,7 +370,7 @@
             user_info = data.data;
         },
         error: function (data) {
-            alert("获取公告板失败！");
+            alert("获取用户信息失败！");
         }
     })
 

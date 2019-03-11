@@ -259,16 +259,12 @@
 <script id="m_guide_bar" type="text/html">
     <ul class="layui-clear">
         {{# layui.each(d, function(index, item){ }}
-        {{# if(item.sid === section && section==='index'){ }}
+        {{# if(item.sid ==='index'){ }}
         <li class="layui-hide-xs layui-this">
             <a href="/index.html">{{item.sname}}</a>
         </li>
-        {{#} else if(item.sid === section){}}
-        <li class="layui-hide-xs layui-this">
-            <a href="/page/portal/section/section.html?sid={{item.sid}}">{{item.sname}}</a>
-        </li>
         {{#} else {}}
-        <li><a href="/page/portal/section/section.html?sid={{item.sid}}">{{item.sname}}</a></li>
+        <li><a href="/page/portal/section/section.html?section={{item.sid}}">{{item.sname}}</a></li>
         {{# } }}
         {{# }); }}
         <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li>
@@ -282,7 +278,7 @@
             <span class="fly-search">
                 <i class="layui-icon"></i>
             </span>
-        <a href="page/portal/topic/add.html?section=123" class="layui-btn">发表新帖</a>
+        <a href="page/portal/topic/add.html?section=index" class="layui-btn">发表新帖</a>
     </div>
     <!--<div class="layui-hide-sm layui-show-xs-block"-->
     <!--style="margin-top: -10px; padding-bottom: 10px; text-align: center;">-->
@@ -313,7 +309,7 @@
         </a>
         <h2>
             <a class="layui-badge">{{item.sname}}</a>
-            <a href="../forum/detail.html">{{item.title}}</a>
+            <a href="/page/portal/topic/detail.html?tid={{item.tid}}&pid={{item.pid}}">{{item.title}}</a>
         </h2>
         <div class="fly-list-info">
             <a href="../user/home.html" link>
@@ -488,37 +484,47 @@
     }
 
     // 通过地址栏获取当前板块唯一标识
+    // 主页唯一标识
     var section = 'index';
 
+    // 通过地址栏获取当前板块唯一标识
     function GetQueryString(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
         var r = window.location.search.substr(1).match(reg);
         if (r != null) return unescape(r[2]);
         return null;
     }
+
 </script>
 
 <!--获取数据，渲染模板-->
 <script type="text/javascript">
 
     layui.use('layer', function () {
+
+        // ajax交互，JS中以定义的layer无法获取（猜测），手动定义一个
+        // 定义layer，用于打印提示信息
         var layer = layui.layer;
+
+        // 用户活跃榜数据
         var active_user;
+        // ajax-用户活跃榜数据获取
         $.ajax({
             type: 'post',
             url: '/count/getActiveUser.do',
             dataType: 'json',
             async: false,
             success: function (data) {
-                layer.msg("活跃用户");
                 active_user = data.data;
             },
             error: function (data) {
-                alert("获取活跃用户榜单失败！");
+                layer.msg("获取用户活跃榜失败！");
             }
         })
 
+        // 用户中心数据
         var user_info;
+        // ajax-用户数据中心数据获取
         $.ajax({
             type: 'post',
             url: '/user/userCenter.do',
@@ -529,11 +535,13 @@
                 user_info = data.data;
             },
             error: function (data) {
-                layer.msg("获取公告板失败！");
+                layer.msg("获取用户中心数据失败！");
             }
         })
 
+        // 右侧公告板数据
         var noticeBoard;
+        // ajax-右侧公告板数据获取
         $.ajax({
             type: 'post',
             url: '/post/getNoticeBoard.do',
@@ -543,10 +551,13 @@
                 noticeBoard = data.data;
             },
             error: function (data) {
+                layer.msg("获取公告板数据失败！");
             }
         })
 
+        // 导航栏数据
         var guide_bar;
+        // ajax-导航栏数据获取
         $.ajax({
             type: 'post',
             url: '/section/getSection.do',
@@ -556,11 +567,13 @@
                 guide_bar = data.data;
             },
             error: function (data) {
-                alert("获取论坛版块失败！");
+                layer.msg("获取板块信息失败！");
             }
         })
 
+        // 置顶帖数据
         var sticky;
+        // ajax-置顶帖数据获取
         $.ajax({
             type: 'post',
             url: '/post/getAllSticky.do',
@@ -570,11 +583,13 @@
                 sticky = data.data;
             },
             error: function (data) {
-                alert("获取置顶模块失败！");
+                layer.msg("获取置顶帖失败！");
             }
         })
 
+        // 热门帖数据
         var hot_post;
+        // ajax-获取热门帖数据
         $.ajax({
             type: 'post',
             url: '/post/getHotPost.do',
@@ -584,12 +599,13 @@
                 hot_post = data.data;
             },
             error: function (data) {
-                alert("获取热门模块失败！");
+                layer.msg("获取热门帖失败！");
             }
         })
 
+        // 帖子列表数据
         var post;
-
+        // ajax-获取帖子列表
         $.ajax({
             type: 'post',
             url: '/post/getPostByPtime.do',
@@ -605,12 +621,13 @@
                 page++;
             },
             error: function (data) {
-                // layer.msg("获取帖子列表失败！");
+                layer.msg("获取帖子列表失败！");
             }
         })
 
-
+        // 模板引擎渲染
         layui.use('laytpl', function () {
+            // 定义一个模板引擎
             laytpl = layui.laytpl;
 
             // 用户中心渲染
@@ -665,8 +682,11 @@
             laytpl(active_user_model).render(active_user, function (html) {
                 active_user_view.innerHTML = html;
             });
+
         });
+
     })
+
 </script>
 
 </html>

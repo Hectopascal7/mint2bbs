@@ -38,7 +38,7 @@ public class CountService implements ICountService {
             Count count=list.get(i);
             int tcount=count.getTcount()+count.getPcount()+count.getRcount();
             String nickname=userMapper.getNicknameByUid(count.getUid());
-//            String profile
+//            String profile=userMapper.getProfileByUid(count.getUid());
             HashMap<String,String> map=new HashMap<>();
             map.put("count",String.valueOf(tcount));
             map.put("nickname",nickname);

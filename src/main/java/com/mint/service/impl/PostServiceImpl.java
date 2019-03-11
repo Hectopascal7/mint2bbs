@@ -42,23 +42,50 @@ public class PostServiceImpl implements IPostService {
     private SectionMapper sectionMapper;
 
     /**
+     * @param sid
+     * @param title
+     * @param content
+     * @param session
      * @Description 发帖
-     * @Param loginid
-     * @Param password
-     * @Param session
      * @Return ServerResponse<User>
      */
     @Override
-    public ServerResponse<String> post(Topic topic, String partid, HttpSession session) {
-        if ("001".equals(partid)) {
-            User user = (User) session.getAttribute(Const.CURRENT_USER);
-            topic.setUid(user.getUid());
-            topic.setTid(UUID.randomUUID().toString());
-            System.out.println(topic.getTid());
+    public ServerResponse<String> post(String sid, String title, String content, HttpSession session) {
+        int result = 0;
+        String tid = UUID.randomUUID().toString();
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        String uid = user.getUid();
+        switch (sid) {
+            case "topic":
+                Topic topic = new Topic(tid, uid, sid, title, new Date(System.currentTimeMillis()), content);
+                result = topicMapper.insertSelective(topic);
+                break;
+            case "activity":
+                Activity activity = new Activity(tid, uid, sid, title, new Date(System.currentTimeMillis()), content);
+                result = activityMapper.insertSelective(activity);
+                break;
+            case "notice":
+                Notice notice = new Notice(tid, uid, sid, title, new Date(System.currentTimeMillis()), content);
+                result = noticeMapper.insertSelective(notice);
+                break;
+            case "news":
+                News news = new News(tid, uid, sid, title, new Date(System.currentTimeMillis()), content);
+                result = newsMapper.insertSelective(news);
+                break;
+            case "guide":
+                Guide guide = new Guide(tid, uid, sid, title, new Date(System.currentTimeMillis()), content);
+                result = guideMapper.insertSelective(guide);
+                break;
+            case "advice":
+                Advice advice = new Advice(tid, uid, sid, title, new Date(System.currentTimeMillis()), content);
+                result = adviceMapper.insertSelective(advice);
+                break;
         }
-        System.out.println(topic);
-        topicMapper.insertSelective(topic);
-        return ServerResponse.createBySuccessMessage("12");
+        if (result == 1) {
+            return ServerResponse.createBySuccessMessage("发帖成功！");
+        } else {
+            return ServerResponse.createByErrorMessage("发帖失败！");
+        }
     }
 
     /**

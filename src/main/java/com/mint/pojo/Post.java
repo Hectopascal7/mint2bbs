@@ -52,6 +52,15 @@ public class Post {
         this.content = content;
     }
 
+    public Post(String tid, String uid, String sid, String title, Date ptime, String content) {
+        this.tid = tid;
+        this.uid = uid;
+        this.sid = sid;
+        this.title = title;
+        this.ptime = ptime;
+        this.content = content;
+    }
+
     public Post() {
         super();
     }

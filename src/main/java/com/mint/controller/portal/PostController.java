@@ -40,8 +40,8 @@ public class PostController {
      */
     @RequestMapping(value = "post.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<String> post(Topic topic, String partid, HttpSession session) {
-        ServerResponse<String> response = iPostService.post(topic, partid, session);
+    public ServerResponse<String> post(String sid, String title, String content, HttpSession session) {
+        ServerResponse<String> response = iPostService.post(sid, title, content, session);
         return response;
     }
 

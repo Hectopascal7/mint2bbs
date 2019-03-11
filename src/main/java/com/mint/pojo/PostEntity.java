@@ -1,7 +1,5 @@
 package com.mint.pojo;
 
-import com.alibaba.fastjson.annotation.JSONField;
-
 import java.util.Date;
 
 public class PostEntity {
@@ -13,7 +11,6 @@ public class PostEntity {
 
     private String title;
 
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date ptime;
 
     private Integer acount;

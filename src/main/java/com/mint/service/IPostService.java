@@ -19,7 +19,7 @@ public interface IPostService {
      * @Param session
      * @Return ServerResponse<User>
      */
-    ServerResponse<String> post(Topic topic, String partid, HttpSession session);
+    ServerResponse<String> post(String sid, String title, String content, HttpSession session);
 
     /**
      * @Description 获取社区公告板

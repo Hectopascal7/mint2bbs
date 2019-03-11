@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="keywords" content="fly,layui,前端社区">
     <meta name="description" content="Fly社区是模块化前端UI框架Layui的官网社区，致力于为web开发提供强劲动力">
-    <link rel="stylesheet" href="../../../script/layui/css/layui.css">
-    <link rel="stylesheet" href="../../../css/global.css">
+    <link rel="stylesheet" href="/script/layui/css/layui.css">
+    <link rel="stylesheet" href="/css/global.css">
+    <script src="/script/jquery-3.3.1.min.js"></script>
 </head>
 <body>
 
@@ -31,12 +32,7 @@
         <ul class="layui-nav fly-nav-user">
             <!-- 登入后的状态 -->
             <li class="layui-nav-item">
-                <a class="fly-nav-avatar" href="javascript:;">
-                    <cite class="layui-hide-xs">橙色薄荷°</cite>
-                    <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：layui 作者"></i>
-                    <i class="layui-badge fly-badge-vip layui-hide-xs">管理员</i>
-                    <img src="../../../image/asuna.jpg">
-                </a>
+                <a class="fly-nav-avatar" href="javascript:;" id="center"></a>
                 <dl class="layui-nav-child">
                     <dd><a href="../user/setting.html"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
                     <dd><a href="../user/message.html"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a>
@@ -61,21 +57,11 @@
                 </ul>
                 <div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;">
                     <div class="layui-tab-item layui-show">
-                        <form action="/post/post.do" method="post">
+                        <form method="post">
                             <div class="layui-row layui-col-space15 layui-form-item">
                                 <div class="layui-col-md3">
                                     <label class="layui-form-label">所在专栏</label>
-                                    <div class="layui-input-block">
-                                        <select lay-verify="required" name="partid" lay-filter="column">
-                                            <option></option>
-                                            <option value="001">业主交流</option>
-                                            <option value="002">活动发起</option>
-                                            <option value="003">社区公告</option>
-                                            <option value="004">社区新闻</option>
-                                            <option value="005">社区指南</option>
-                                            <option value="006">薄荷市场</option>
-                                        </select>
-                                    </div>
+                                    <div class="layui-input-block" id="section"></div>
                                 </div>
                                 <div class="layui-col-md9">
                                     <label for="L_title" class="layui-form-label">标题</label>
@@ -148,7 +134,8 @@
                                 </div>
                             </div>
                             <div class="layui-form-item">
-                                <button class="layui-btn" lay-filter="*" lay-submit>立即发布</button>
+                                <button class="layui-btn" lay-filter="*" onclick="postAPost()">立即发布
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -168,23 +155,128 @@
     </p>
 </div>
 
-<script src="../../../script/layui/layui.js"></script>
+<script src="/script/layui/layui.js"></script>
 <script>
     layui.cache.page = 'jie';
     layui.cache.user = {
         username: '游客'
         , uid: -1
-        , avatar: '../../../image/avatar/00.jpg'
+        , avatar: '/image/avatar/00.jpg'
         , experience: 83
         , sex: '男'
     };
     layui.config({
         version: "3.0.0"
-        , base: '../../../script/mods/'
+        , base: '/script/mods/'
     }).extend({
         fly: 'index'
     }).use('fly');
+
+    function postAPost() {
+        var sid = $("select[name='sid']").val();
+        var title = $("input[name='title']").val();
+        var content = $("textarea[name='content']").val();
+        // alert(sid);
+        $.ajax({
+            type: 'post',
+            url: '/post/post.do',
+            dataType: 'json',
+            data: {
+                sid: sid,
+                title: title,
+                content: content
+            },
+            async: false,
+            success: function (data) {
+                layer.alert("发帖成功！");
+            },
+            error: function (data) {
+                layer.alert("发帖失败！");
+            }
+        })
+    }
 </script>
 
+<script type="text/html" id="m_section">
+    <select lay-verify="required" name="sid" lay-filter="column">
+        <option></option>
+        {{# layui.each(d, function(index, item){ }}
+        {{# if(item.sid!=='index'){ }}
+        <option value="{{item.sid}}">{{item.sname}}</option>
+        {{# } }}
+        {{# }); }}
+    </select>
+</script>
+
+<!--用户中心模板-->
+<script id="m_center" type="text/html">
+    <cite class="layui-hide-xs">{{ d.nickname }}</cite>
+    {{#  if(d.role === 1){ }}
+    <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：管理员"></i>
+    <i class="layui-badge fly-badge-vip layui-hide-xs" title="积分 {{d.point}}">Lv.3</i>
+    {{#  } }}
+    <img src="{{ d.profile }}">
+</script>
+
+<script>
+    // 通过地址栏获取当前板块唯一标识
+    // 主页唯一标识
+    var section = GetQueryString("section");
+
+    // 通过地址栏获取当前板块唯一标识
+    function GetQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+
+    var section_list;
+    $.ajax({
+        type: 'post',
+        url: '/section/getSection.do',
+        dataType: 'json',
+        async: false,
+        success: function (data) {
+            section_list = data.data;
+        },
+        error: function (data) {
+            layer.msg("获取板块信息失败！");
+        }
+    })
+
+    var user_info;
+    $.ajax({
+        type: 'post',
+        url: '/user/userCenter.do',
+        data: {},
+        dataType: 'json',
+        async: false,
+        success: function (data) {
+            user_info = data.data;
+        },
+        error: function (data) {
+            alert("获取用户信息失败！");
+        }
+    })
+
+    layui.use('laytpl', function () {
+        laytpl = layui.laytpl;
+
+        // 板块列表渲染
+        var section_model = document.getElementById('m_section').innerHTML;
+        var section_view = document.getElementById('section');
+        laytpl(section_model).render(section_list, function (html) {
+            section_view.innerHTML = html;
+        });
+
+        // 用户中心渲染
+        var center_model = document.getElementById('m_center').innerHTML;
+        var center_view = document.getElementById('center');
+        laytpl(center_model).render(user_info, function (html) {
+            center_view.innerHTML = html;
+        });
+    });
+</script>
 </body>
 </html>

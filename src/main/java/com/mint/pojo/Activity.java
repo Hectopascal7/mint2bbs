@@ -56,6 +56,16 @@ public class Activity extends Post {
         super();
     }
 
+    public Activity(String tid, String uid, String sid, String title, Date ptime, String content) {
+        super(tid, uid, sid, title, ptime, content);
+        this.tid = tid;
+        this.uid = uid;
+        this.sid = sid;
+        this.title = title;
+        this.ptime = ptime;
+        this.content = content;
+    }
+
     public String getTid() {
         return tid;
     }

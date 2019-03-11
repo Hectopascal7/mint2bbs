@@ -76,25 +76,8 @@ public class User {
         this.profile = profile;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "uid='" + uid + '\'' +
-                ", loginid='" + loginid + '\'' +
-                ", password='" + password + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", role=" + role +
-                ", sex=" + sex +
-                ", birthday=" + birthday +
-                ", license='" + license + '\'' +
-                ", point=" + point +
-                ", jointime=" + jointime +
-                ", ulevel=" + ulevel +
-                ", email='" + email + '\'' +
-                ", signature='" + signature + '\'' +
-                ", status=" + status +
-                ", profile='" + profile + '\'' +
-                '}';
+    public User() {
+        super();
     }
 
     @Override
@@ -120,12 +103,29 @@ public class User {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(uid, loginid, password, nickname, role, sex, birthday, license, point, jointime, ulevel, email, signature, status, profile);
+    public String toString() {
+        return "User{" +
+                "uid='" + uid + '\'' +
+                ", loginid='" + loginid + '\'' +
+                ", password='" + password + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", role=" + role +
+                ", sex=" + sex +
+                ", birthday=" + birthday +
+                ", license='" + license + '\'' +
+                ", point=" + point +
+                ", jointime=" + jointime +
+                ", ulevel=" + ulevel +
+                ", email='" + email + '\'' +
+                ", signature='" + signature + '\'' +
+                ", status=" + status +
+                ", profile='" + profile + '\'' +
+                '}';
     }
 
-    public User() {
-        super();
+    @Override
+    public int hashCode() {
+        return Objects.hash(uid, loginid, password, nickname, role, sex, birthday, license, point, jointime, ulevel, email, signature, status, profile);
     }
 
     public String getUid() {
