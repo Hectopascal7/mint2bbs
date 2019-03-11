@@ -17,18 +17,18 @@
     </resultMap>
     <resultMap id="BaseResultMap11" type="com.mint.pojo.PostEntity">
         <constructor>
-            <idArg column="tid" javaType="java.lang.String" jdbcType="VARCHAR" />
-            <arg column="uname" javaType="java.lang.String" jdbcType="VARCHAR" />
-            <arg column="sname" javaType="java.lang.String" jdbcType="VARCHAR" />
-            <arg column="title" javaType="java.lang.String" jdbcType="VARCHAR" />
-            <arg column="ptime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-            <arg column="acount" javaType="java.lang.Integer" jdbcType="INTEGER" />
-            <arg column="rcount" javaType="java.lang.Integer" jdbcType="INTEGER" />
-            <arg column="isbest" javaType="java.lang.Integer" jdbcType="INTEGER" />
-            <arg column="issticky" javaType="java.lang.Integer" jdbcType="INTEGER" />
-            <arg column="pcount" javaType="java.lang.Integer" jdbcType="INTEGER" />
-            <arg column="role" javaType="java.lang.Integer" jdbcType="INTEGER" />
-            <arg column="ulevel" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <idArg column="tid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="uname" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="sname" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="title" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="ptime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="acount" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="rcount" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="isbest" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="issticky" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="pcount" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="role" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="ulevel" javaType="java.lang.Integer" jdbcType="INTEGER"/>
         </constructor>
     </resultMap>
     <resultMap id="ResultMapWithBLOBs" type="com.mint.pojo.Post">
@@ -266,6 +266,7 @@
 
         ) e
         where e.issticky=1
+        limit 5
     </select>
 
     <select id="getHotPost" resultMap="ResultMapWithBLOBs">
