@@ -1,5 +1,8 @@
 package com.mint.pojo;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class PostEntity {
@@ -15,6 +18,8 @@ public class PostEntity {
 
     private String title;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+    @JSONField(format = "MM-dd HH:mm")
     private Date ptime;
 
     private Integer acount;

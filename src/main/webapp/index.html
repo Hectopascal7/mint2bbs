@@ -293,7 +293,7 @@
 <script id="m_notice" type="text/html">
     {{# layui.each(d, function(index, item){ }}
     <li>
-        <a href="/page/portal/topic/detail.html?nid={{item.nid}}" target="_blank">{{ item.title }}</a>
+        <a href="/page/portal/topic/detail.html?post={{item.tid}}&section=notice" target="_blank">{{ item.title }}</a>
         <span>{{ item.ptime }}</span>
     </li>
     {{# }); }}

@@ -46,7 +46,6 @@ public class UserServiceImpl implements IUserService {
         }
         // 登录id存在，校验账号密码是否匹配
         User user = userMapper.checkUser(loginid, password);
-        System.out.println("时间"+user.getJointime());
         // 登录id和密码匹配不到用户，登录失败
         if (user == null) {
             return ServerResponse.createByErrorMessage("密码错误!");

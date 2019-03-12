@@ -1,5 +1,8 @@
 package com.mint.pojo;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 import java.util.Objects;
 
@@ -22,6 +25,8 @@ public class User {
 
     private Integer point;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JSONField(format = "yyyy-MM-dd HH-mm:ss")
     private Date jointime;
 
     private Integer ulevel;

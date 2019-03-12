@@ -1,8 +1,10 @@
 package com.mint.pojo;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.util.Date;
 
-public class Notice extends Post{
+public class Notice extends Post {
     private String tid;
 
     private String uid;
@@ -11,6 +13,7 @@ public class Notice extends Post{
 
     private String title;
 
+    @JSONField(format = "MM-dd")
     private Date ptime;
 
     private Integer acount;

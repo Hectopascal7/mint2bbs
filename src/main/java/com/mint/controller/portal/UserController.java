@@ -1,5 +1,6 @@
 package com.mint.controller.portal;
 
+import com.alibaba.fastjson.JSON;
 import com.mint.common.Const;
 import com.mint.common.ServerResponse;
 import com.mint.pojo.Resident;
@@ -46,6 +47,7 @@ public class UserController {
             // 账号密码校验成功，将当前用户信息写入session，登录成功
             session.setAttribute(Const.CURRENT_USER, response.getData());
         }
+        System.out.println(JSON.toJSONString(response));
         return response;
     }
 
