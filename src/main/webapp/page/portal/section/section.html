@@ -264,16 +264,17 @@
     {{# } }}
 </script>
 
+<!--帖子模板-->
 <script type="text/html" id="m_post">
     {{# layui.each(d, function(index, item){ }}
     <li>
-        <a href="../user/home.html" class="fly-avatar">
+        <a href="/page/portal/user/home.html?user={{item.uid}}" class="fly-avatar">
             <img src="{{item.profile}}"
                  alt="{{item.nickname}}">
         </a>
         <h2>
             <a class="layui-badge">{{item.sname}}</a>
-            <a href="../forum/detail.html">{{item.title}}</a>
+            <a href="/page/portal/topic/detail.html?post={{item.tid}}&section={{item.sid}}">{{item.title}}</a>
         </h2>
         <div class="fly-list-info">
             <a href="../user/home.html" link>

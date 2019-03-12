@@ -116,19 +116,16 @@ public class PostController {
         return response;
     }
 
-//    /**
-//     * @Description 获取板块内帖子列表
-//     * @Return ServerResponse<List < Notice>>
-//     */
-//    @RequestMapping(value = "getSectionPostWithPage1.do", method = RequestMethod.POST)
-//    @ResponseBody
-//    public ServerResponse<List<PostEntity>> getSectionPostWithPage1
-//    (@RequestParam("section") String section, @RequestParam("kind")
-//            String kind, @RequestParam("order") String order,
-//     @RequestParam("page") int page, @RequestParam("limit") int limit) {
-//        ServerResponse<List<PostEntity>> response = iPostService.getSectionPostWithPage1(section, kind, order, page, limit);
-//        System.out.println(JSON.toJSONString(response));
-//        return null;
-//    }
+    /**
+     * @Description 获取板块内帖子列表
+     * @Param tid
+     * @Param section
+     * @Return ServerResponse<HashMap < String, Object>>
+     */
+    @RequestMapping(value = "getPostDetail.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<HashMap<String, Object>> getPostDetail(String tid, String section) {
+        return iPostService.getPostDetail(tid, section);
+    }
 
 }

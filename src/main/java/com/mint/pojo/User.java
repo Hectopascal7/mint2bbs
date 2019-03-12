@@ -80,6 +80,16 @@ public class User {
         super();
     }
 
+    public User(String uid, String nickname, Integer role, Integer ulevel, String signature, Integer status, String profile) {
+        this.uid = uid;
+        this.nickname = nickname;
+        this.role = role;
+        this.ulevel = ulevel;
+        this.signature = signature;
+        this.status = status;
+        this.profile = profile;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

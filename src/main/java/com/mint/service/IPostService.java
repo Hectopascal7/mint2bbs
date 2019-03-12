@@ -63,4 +63,11 @@ public interface IPostService {
      */
     ServerResponse<List<PostEntity>> getSectionPostWithPage(String section, String kind, String order, int page, int limit);
 
+    /**
+     * @Description 获取板块内帖子列表
+     * @Param tid
+     * @Param section
+     * @Return ServerResponse<HashMap<String, Object>>
+     */
+    ServerResponse<HashMap<String, Object>> getPostDetail(String tid, String section);
 }

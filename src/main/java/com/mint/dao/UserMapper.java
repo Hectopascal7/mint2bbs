@@ -24,6 +24,8 @@ public interface UserMapper {
 
     String getNicknameByUid(String uid);
 
+    User getUserOnPostDetail(String uid);
+
     int getRoleByUid(String uid);
 
     User getInfoByUid(String uid);

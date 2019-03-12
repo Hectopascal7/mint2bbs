@@ -117,7 +117,7 @@ public class PostServiceImpl implements IPostService {
         for (int i = 0; i < list.size(); i++) {
             Post post = list.get(i);
             User user = userMapper.getInfoByUid(post.getUid());
-            PostEntity entity = new PostEntity(post.getTid(), post.getSid(), user.getUid(), user.getNickname(), sectionMapper.getSnameBySid(post.getSid()), post.getTitle(), post.getPtime(), post.getAcount(), post.getRcount(), post.getIsbest(), post.getIssticky(), post.getPcount(), user.getRole(), user.getUlevel(), user.getProfile());
+            PostEntity entity = new PostEntity(post.getTid(), post.getSid(), post.getUid(), user.getNickname(), sectionMapper.getSnameBySid(post.getSid()), post.getTitle(), post.getPtime(), post.getAcount(), post.getRcount(), post.getIsbest(), post.getIssticky(), post.getPcount(), user.getRole(), user.getUlevel(), user.getProfile());
             t_list.add(entity);
         }
         return t_list;
@@ -198,6 +198,42 @@ public class PostServiceImpl implements IPostService {
         }
         List<PostEntity> rlist = matchUser(list);
         return ServerResponse.createBySuccess(rlist);
+    }
+
+    /**
+     * @Description 获取板块内帖子列表
+     * @Param tid
+     * @Param section
+     * @Return ServerResponse<HashMap < String, Object>>
+     */
+    @Override
+    public ServerResponse<HashMap<String, Object>> getPostDetail(String tid, String section) {
+        Post post = new Post();
+        switch (section) {
+            case "topic":
+                post = topicMapper.selectByPrimaryKey(tid);
+                break;
+            case "guide":
+                post = guideMapper.selectByPrimaryKey(tid);
+                break;
+            case "activity":
+                post = activityMapper.selectByPrimaryKey(tid);
+                break;
+            case "news":
+                post = newsMapper.selectByPrimaryKey(tid);
+                break;
+            case "notice":
+                post = noticeMapper.selectByPrimaryKey(tid);
+                break;
+            case "advice":
+                post = adviceMapper.selectByPrimaryKey(tid);
+                break;
+        }
+        User user = userMapper.getUserOnPostDetail(post.getUid());
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("post", post);
+        map.put("user", user);
+        return ServerResponse.createBySuccess(map);
     }
 
 }

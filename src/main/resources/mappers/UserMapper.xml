@@ -46,6 +46,17 @@
             <arg column="ulevel" javaType="java.lang.Integer" jdbcType="INTEGER"/>
         </constructor>
     </resultMap>
+    <resultMap id="DetailUserInfo" type="com.mint.pojo.User">
+        <constructor>
+            <idArg column="uid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="nickname" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="role" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="ulevel" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="signature" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="profile" javaType="java.lang.String" jdbcType="LONGVARCHAR"/>
+        </constructor>
+    </resultMap>
     <sql id="Base_Column_List">
     uid, loginid, password, nickname, role, sex, birthday, license, point, jointime, 
     ulevel, email, signature, status
@@ -283,6 +294,13 @@
         where uid = #{uid}
     </select>
     <select id="getInfoByUid" resultMap="InfoMap" parameterType="string">
+        select
+        nickname,profile,role,ulevel
+        from
+        tb_user
+    where uid = #{uid}
+    </select>
+    <select id="getUserOnPostDetail" resultMap="InfoMap" parameterType="string">
         select
         nickname,profile,role,ulevel
         from
