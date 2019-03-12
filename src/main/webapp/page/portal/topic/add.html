@@ -53,14 +53,14 @@
         <div class="layui-form layui-form-pane">
             <div class="layui-tab layui-tab-brief" lay-filter="user">
                 <ul class="layui-tab-title">
-                    <li class="layui-this">发表新帖<!-- 编辑帖子 --></li>
+                    <li class="layui-this">发表帖子</li>
                 </ul>
                 <div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;">
                     <div class="layui-tab-item layui-show">
                         <form method="post">
                             <div class="layui-row layui-col-space15 layui-form-item">
                                 <div class="layui-col-md3">
-                                    <label class="layui-form-label">所在专栏</label>
+                                    <label class="layui-form-label">发帖板块</label>
                                     <div class="layui-input-block" id="section"></div>
                                 </div>
                                 <div class="layui-col-md9">
@@ -72,35 +72,38 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="layui-row layui-col-space15 layui-form-item layui-hide" id="LAY_quiz">
-                                <div class="layui-col-md3">
-                                    <label class="layui-form-label">新旧程度</label>
-                                    <div class="layui-input-block">
-                                        <select name="project">
-                                            <option></option>
-                                            <option value="layui">9成新</option>
-                                            <option value="独立版layer">8成新</option>
-                                            <option value="独立版layDate">6成新</option>
-                                            <option value="LayIM">5成新</option>
-                                            <option value="Fly社区模板">5成以下</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="layui-col-md3">
-                                    <label class="layui-form-label" for="L_version">理想价格</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" id="L_version" value="" name="version" autocomplete="off"
-                                               class="layui-input">
-                                    </div>
-                                </div>
-                                <div class="layui-col-md6">
-                                    <label class="layui-form-label" for="L_browser">浏览器</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" id="L_browser" value="" name="browser"
-                                               placeholder="浏览器名称及版本，如：IE 11" autocomplete="off" class="layui-input">
-                                    </div>
-                                </div>
-                            </div>
+
+                            <!--商品发布选项，后期改造为商品发布页面可能会用到-->
+                            <!--<div class="layui-row layui-col-space15 layui-form-item layui-hide" id="LAY_quiz">-->
+                            <!--<div class="layui-col-md3">-->
+                            <!--<label class="layui-form-label">新旧程度</label>-->
+                            <!--<div class="layui-input-block">-->
+                            <!--<select name="project">-->
+                            <!--<option></option>-->
+                            <!--<option value="layui">9成新</option>-->
+                            <!--<option value="独立版layer">8成新</option>-->
+                            <!--<option value="独立版layDate">6成新</option>-->
+                            <!--<option value="LayIM">5成新</option>-->
+                            <!--<option value="Fly社区模板">5成以下</option>-->
+                            <!--</select>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="layui-col-md3">-->
+                            <!--<label class="layui-form-label" for="L_version">理想价格</label>-->
+                            <!--<div class="layui-input-block">-->
+                            <!--<input type="text" id="L_version" value="" name="version" autocomplete="off"-->
+                            <!--class="layui-input">-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="layui-col-md6">-->
+                            <!--<label class="layui-form-label" for="L_browser">浏览器</label>-->
+                            <!--<div class="layui-input-block">-->
+                            <!--<input type="text" id="L_browser" value="" name="browser"-->
+                            <!--placeholder="浏览器名称及版本，如：IE 11" autocomplete="off" class="layui-input">-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--</div>-->
+
                             <div class="layui-form-item layui-form-text">
                                 <div class="layui-input-block">
                                     <textarea id="L_content" name="content" required lay-verify="required"
@@ -124,7 +127,7 @@
                                 </div>
                             </div>
                             <div class="layui-form-item">
-                                <label for="L_vercode" class="layui-form-label">人类验证</label>
+                                <label for="L_vercode" class="layui-form-label">验证码</label>
                                 <div class="layui-input-inline">
                                     <input type="text" id="L_vercode" name="vercode" required lay-verify="required"
                                            placeholder="请回答后面的问题" autocomplete="off" class="layui-input">
@@ -157,7 +160,9 @@
 
 <script src="/script/layui/layui.js"></script>
 <script>
+
     layui.cache.page = 'jie';
+
     layui.cache.user = {
         username: '游客'
         , uid: -1
@@ -172,6 +177,19 @@
         fly: 'index'
     }).use('fly');
 
+    // 通过地址栏获取用户是在哪个板块发起的发表帖子功能
+    // section——板块唯一标识，通过url?section=xxx传递过来
+    var section = GetQueryString("section");
+
+    // 通过地址栏获取当前板块唯一标识
+    function GetQueryString(section) {
+        var reg = new RegExp("(^|&)" + section + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+
+    // 发表帖子
     function postAPost() {
         var sid = $("select[name='sid']").val();
         var title = $("input[name='title']").val();
@@ -195,13 +213,18 @@
             }
         })
     }
+
 </script>
 
+<!--发帖所在板块模板 -->
 <script type="text/html" id="m_section">
     <select lay-verify="required" name="sid" lay-filter="column">
         <option></option>
         {{# layui.each(d, function(index, item){ }}
-        {{# if(item.sid!=='index'){ }}
+        {{# if(item.sid==='index'){ }}
+        {{#} else if(item.sid===section){ }}
+        <option value="{{item.sid}}" selected="">{{item.sname}}</option>
+        {{#} else { }}
         <option value="{{item.sid}}">{{item.sname}}</option>
         {{# } }}
         {{# }); }}
@@ -219,17 +242,6 @@
 </script>
 
 <script>
-    // 通过地址栏获取当前板块唯一标识
-    // 主页唯一标识
-    var section = GetQueryString("section");
-
-    // 通过地址栏获取当前板块唯一标识
-    function GetQueryString(name) {
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-        var r = window.location.search.substr(1).match(reg);
-        if (r != null) return unescape(r[2]);
-        return null;
-    }
 
     var section_list;
     $.ajax({
