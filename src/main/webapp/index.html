@@ -21,13 +21,13 @@
         <!-- 论坛主标题区 -->
         <ul class="layui-nav fly-nav layui-hide-xs">
             <li class="layui-nav-item layui-this">
-                <a href="/"><i class="iconfont icon-jiaoliu"></i>业主论坛</a>
+                <a href="/"><i class="iconfont icon-jiaoliu"></i>论坛</a>
             </li>
             <li class="layui-nav-item">
-                <a href="/page/portal/market/market.html"><i class="iconfont icon-iconmingxinganli"></i>交易市场</a>
+                <a href="/page/portal/market/market.html"><i class="iconfont icon-iconmingxinganli"></i>市场</a>
             </li>
             <li class="layui-nav-item">
-                <a href="http://www.layui.com/" target="_blank"><i class="iconfont icon-ui"></i>吐槽区</a>
+                <a href="http://www.layui.com/" target="_blank"><i class="iconfont icon-ui"></i>微博</a>
             </li>
         </ul>
         <!-- 用户个人中心功能区 -->
@@ -103,7 +103,10 @@
         </div>
         <div class="layui-col-md4">
 
-            <div class="fly-panel" id="notice"></div>
+            <div class="fly-panel">
+                <h3 class="fly-panel-title">社区公告</h3>
+                <ul class="fly-panel-main fly-list-static" id="notice"></ul>
+            </div>
 
             <div class="fly-panel fly-signin">
                 <div class="fly-panel-title">
@@ -276,27 +279,24 @@
     </ul>
     <div class="fly-column-right layui-hide-xs">
             <span class="fly-search">
-                <i class="layui-icon"></i>
+                <i class="layui-icon layui-icon-search"></i>
             </span>
         <a href="page/portal/topic/add.html?section=index" class="layui-btn">发表新帖</a>
     </div>
-    <!--<div class="layui-hide-sm layui-show-xs-block"-->
-    <!--style="margin-top: -10px; padding-bottom: 10px; text-align: center;">-->
-    <!--<a href="jie/add.html" class="layui-btn">发表新帖</a>-->
-    <!--</div>-->
+    <div class="layui-hide-sm layui-show-xs-block"
+         style="margin-top: -10px; padding-bottom: 10px; text-align: center;">
+        <a href="page/portal/topic/add.html?section=index" class="layui-btn">发表新帖</a>
+    </div>
 </script>
 
 <!--公告板模板-->
 <script id="m_notice" type="text/html">
-    <h3 class="fly-panel-title">社区公告</h3>
-    <ul class="fly-panel-main fly-list-static">
-        {{# layui.each(d, function(index, item){ }}
-        <li>
-            <a href="/page/portal/topic/detail.html?nid={{item.nid}}" target="_blank">{{ item.title }}</a>
-            <!--<span>{{ item.ptime }}</span>-->
-        </li>
-        {{# }); }}
-    </ul>
+    {{# layui.each(d, function(index, item){ }}
+    <li>
+        <a href="/page/portal/topic/detail.html?nid={{item.nid}}" target="_blank">{{ item.title }}</a>
+        <span>{{ item.ptime }}</span>
+    </li>
+    {{# }); }}
 </script>
 
 <!-- 帖子模板 -->
@@ -335,7 +335,7 @@
             <span class="layui-badge layui-bg-black">置顶</span>
             {{# } }}
             {{# if(item.isbest===1){ }}
-            <span class="layui-badge layui-bg-red">精帖</span>
+            <span class="layui-badge layui-bg-red">精华</span>
             {{# } }}
         </div>
     </li>
