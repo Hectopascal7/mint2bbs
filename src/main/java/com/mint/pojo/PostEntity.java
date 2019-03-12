@@ -5,6 +5,10 @@ import java.util.Date;
 public class PostEntity {
     private String tid;
 
+    private String sid;
+
+    private String uid;
+
     private String nickname;
 
     private String sname;
@@ -29,8 +33,10 @@ public class PostEntity {
 
     private String profile;
 
-    public PostEntity(String tid, String nickname, String sname, String title, Date ptime, Integer acount, Integer rcount, Integer isbest, Integer issticky, Integer pcount, Integer role, Integer ulevel) {
+    public PostEntity(String tid, String sid, String uid, String nickname, String sname, String title, Date ptime, Integer acount, Integer rcount, Integer isbest, Integer issticky, Integer pcount, Integer role, Integer ulevel) {
         this.tid = tid;
+        this.sid = sid;
+        this.uid = uid;
         this.nickname = nickname;
         this.sname = sname;
         this.title = title;
@@ -44,8 +50,10 @@ public class PostEntity {
         this.ulevel = ulevel;
     }
 
-    public PostEntity(String tid, String nickname, String sname, String title, Date ptime, Integer acount, Integer rcount, Integer isbest, Integer issticky, Integer pcount, Integer role, Integer ulevel, String profile) {
+    public PostEntity(String tid, String sid, String uid, String nickname, String sname, String title, Date ptime, Integer acount, Integer rcount, Integer isbest, Integer issticky, Integer pcount, Integer role, Integer ulevel, String profile) {
         this.tid = tid;
+        this.sid = sid;
+        this.uid = uid;
         this.nickname = nickname;
         this.sname = sname;
         this.title = title;
@@ -70,6 +78,22 @@ public class PostEntity {
 
     public void setTid(String tid) {
         this.tid = tid == null ? null : tid.trim();
+    }
+
+    public String getSid() {
+        return sid;
+    }
+
+    public void setSid(String sid) {
+        this.sid = sid == null ? null : sid.trim();
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid == null ? null : uid.trim();
     }
 
     public String getNickname() {

@@ -117,7 +117,7 @@ public class PostServiceImpl implements IPostService {
         for (int i = 0; i < list.size(); i++) {
             Post post = list.get(i);
             User user = userMapper.getInfoByUid(post.getUid());
-            PostEntity entity = new PostEntity(post.getTid(), user.getNickname(), sectionMapper.getSnameBySid(post.getSid()), post.getTitle(), post.getPtime(), post.getAcount(), post.getRcount(), post.getIsbest(), post.getIssticky(), post.getPcount(), user.getRole(), user.getUlevel(), user.getProfile());
+            PostEntity entity = new PostEntity(post.getTid(), post.getSid(), user.getUid(), user.getNickname(), sectionMapper.getSnameBySid(post.getSid()), post.getTitle(), post.getPtime(), post.getAcount(), post.getRcount(), post.getIsbest(), post.getIssticky(), post.getPcount(), user.getRole(), user.getUlevel(), user.getProfile());
             t_list.add(entity);
         }
         return t_list;
