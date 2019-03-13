@@ -1,10 +1,7 @@
 package com.mint.service;
 
 import com.mint.common.ServerResponse;
-import com.mint.pojo.Notice;
-import com.mint.pojo.Post;
-import com.mint.pojo.PostEntity;
-import com.mint.pojo.Topic;
+import com.mint.pojo.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -67,7 +64,9 @@ public interface IPostService {
      * @Description 获取板块内帖子列表
      * @Param tid
      * @Param section
-     * @Return ServerResponse<HashMap<String, Object>>
+     * @Return ServerResponse<HashMap < String, Object>>
      */
     ServerResponse<HashMap<String, Object>> getPostDetail(String tid, String section);
+
+    ServerResponse<List<List<Reply>>> getReplies(String tid);
 }

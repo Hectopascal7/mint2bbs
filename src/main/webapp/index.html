@@ -250,10 +250,10 @@
 
 <!--用户中心模板-->
 <script id="m_center" type="text/html">
-    <cite class="layui-hide-md">{{ d.nickname }}</cite>
+    <cite class="layui-hide-sm">{{ d.nickname }}</cite>
     {{#  if(d.role === 1){ }}
-    <i class="iconfont icon-renzheng layui-hide-md" title="认证信息：管理员"></i>
-    <i class="layui-badge fly-badge-vip layui-hide-md" title="积分 {{d.point}}">Lv.3</i>
+    <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：管理员"></i>
+    <i class="layui-badge fly-badge-vip layui-hide-xs" title="积分 {{d.point}}">Lv.3</i>
     {{#  } }}
     <img src="{{d.profile}}">
 </script>
@@ -325,7 +325,7 @@
                 <i class="iconfont icon-liulanyanjing"></i> {{item.acount}}
             </span>
             <span class="fly-list-nums">
-                <i class="iconfont icon-zan"></i> {{item.pcount}}
+                <i class="iconfont icon-zan layui-hide-xs" title="赞"></i> {{item.pcount}}
                 <i class="iconfont icon-pinglun1" title="回复"></i> {{item.rcount}}
             </span>
         </div>

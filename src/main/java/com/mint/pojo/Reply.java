@@ -7,6 +7,8 @@ public class Reply {
 
     private String tid;
 
+    private String rrid;
+
     private String uid;
 
     private Date rtime;
@@ -15,17 +17,19 @@ public class Reply {
 
     private String content;
 
-    public Reply(String rid, String tid, String uid, Date rtime, Integer pcount) {
+    public Reply(String rid, String tid, String rrid, String uid, Date rtime, Integer pcount) {
         this.rid = rid;
         this.tid = tid;
+        this.rrid = rrid;
         this.uid = uid;
         this.rtime = rtime;
         this.pcount = pcount;
     }
 
-    public Reply(String rid, String tid, String uid, Date rtime, Integer pcount, String content) {
+    public Reply(String rid, String tid, String rrid, String uid, Date rtime, Integer pcount, String content) {
         this.rid = rid;
         this.tid = tid;
+        this.rrid = rrid;
         this.uid = uid;
         this.rtime = rtime;
         this.pcount = pcount;
@@ -50,6 +54,14 @@ public class Reply {
 
     public void setTid(String tid) {
         this.tid = tid == null ? null : tid.trim();
+    }
+
+    public String getRrid() {
+        return rrid;
+    }
+
+    public void setRrid(String rrid) {
+        this.rrid = rrid == null ? null : rrid.trim();
     }
 
     public String getUid() {

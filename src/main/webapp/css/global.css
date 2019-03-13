@@ -1522,18 +1522,18 @@ body .layui-edit-face .layui-layer-content {
     top: 0;
 }
 
-.jieda-body {
+.reply-body {
     margin: 25px 0 20px;
     min-height: 0;
     line-height: 24px;
     font-size: 14px;
 }
 
-.jieda-body p {
+.reply-body p {
     margin-bottom: 10px;
 }
 
-.jieda-body a {
+.reply-body a {
     color: #4f99cf
 }
 

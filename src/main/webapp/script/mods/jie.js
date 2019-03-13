@@ -53,7 +53,7 @@ layui.define('fly', function (exports) {
           <span>刚刚</span>\
         </div>\
       </div>\
-      <div class="detail-body jieda-body photos">\
+      <div class="detail-body reply-body photos">\
         {{ d.content}}\
       </div>\
     </li>'

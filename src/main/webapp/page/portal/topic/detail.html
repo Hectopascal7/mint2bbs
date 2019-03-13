@@ -83,97 +83,12 @@
                     <legend>回帖</legend>
                 </fieldset>
 
-                <ul class="jieda" id="jieda">
-                    <li data-id="111" class="jieda-daan">
-                        <a name="item-1111111111"></a>
-                        <div class="detail-about detail-about-reply">
-                            <a class="fly-avatar" href="">
-                                <img src="../../../image/asuna.jpg"
-                                     alt=" ">
-                            </a>
-                            <div class="fly-detail-user">
-                                <a href="" class="fly-link">
-                                    <cite>橙色薄荷°</cite>
-                                    <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
-                                    <i class="layui-badge fly-badge-vip">管理员</i>
-                                </a>
+                <ul class="jieda" id="reply">
 
-                                <span>(楼主)</span>
-                                <!--
-                                <span style="color:#5FB878">(管理员)</span>
-                                <span style="color:#FF9E3F">（社区之光）</span>
-                                <span style="color:#999">（该号已被封）</span>
-                                -->
-                            </div>
-
-                            <div class="detail-hits">
-                                <span>2017-11-30</span>
-                            </div>
-
-                            <i class="iconfont icon-caina" title="最佳答案"></i>
-                        </div>
-                        <div class="detail-body jieda-body photos">
-                            <p>香菇那个蓝瘦，这是一条被采纳的回帖</p>
-                        </div>
-                        <div class="jieda-reply">
-              <span class="jieda-zan zanok" type="zan">
-                <i class="iconfont icon-zan"></i>
-                <em>66</em>
-              </span>
-                            <span type="reply">
-                <i class="iconfont icon-svgmoban53"></i>
-                回复
-              </span>
-                            <div class="jieda-admin">
-                                <span type="edit">编辑</span>
-                                <span type="del">删除</span>
-                                <!-- <span class="jieda-accept" type="accept">采纳</span> -->
-                            </div>
-                        </div>
-                    </li>
-
-                    <li data-id="111">
-                        <a name="item-1111111111"></a>
-                        <div class="detail-about detail-about-reply">
-                            <a class="fly-avatar" href="">
-                                <img src="../../../image/asuna.jpg"
-                                     alt=" ">
-                            </a>
-                            <div class="fly-detail-user">
-                                <a href="" class="fly-link">
-                                    <cite>橙色薄荷°</cite>
-                                </a>
-                            </div>
-                            <div class="detail-hits">
-                                <span>2017-11-30</span>
-                            </div>
-                        </div>
-                        <div class="detail-body jieda-body photos">
-                            <p>蓝瘦那个香菇，这是一条没被采纳的回帖</p>
-                        </div>
-                        <div class="jieda-reply">
-              <span class="jieda-zan" type="zan">
-                <i class="iconfont icon-zan"></i>
-                <em>0</em>
-              </span>
-                            <span type="reply">
-                <i class="iconfont icon-svgmoban53"></i>
-                回复
-              </span>
-                            <div class="jieda-admin">
-                                <span type="edit">编辑</span>
-                                <span type="del">删除</span>
-                                <span class="jieda-accept" type="accept">采纳</span>
-                            </div>
-                        </div>
-                    </li>
-
-                    <!-- 无数据时 -->
-                    <!-- <li class="fly-none">消灭零回复</li> -->
                 </ul>
 
                 <div class="layui-form layui-form-pane">
-                    <form action="/jie/reply/" method="post">
+                    <form method="post">
                         <div class="layui-form-item layui-form-text">
                             <a name="comment"></a>
                             <div class="layui-input-block">
@@ -184,7 +99,7 @@
                         </div>
                         <div class="layui-form-item" style="text-align: center">
                             <input type="hidden" name="jid" value="123">
-                            <button class="layui-btn" lay-filter="*" lay-submit>提交回复</button>
+                            <button class="layui-btn" lay-filter="*" lay-submit onsubmit="replyAPost()">提交回复</button>
                         </div>
                     </form>
                 </div>
@@ -428,7 +343,71 @@
     <div class="detail-body photos" style="border: 1px dashed lightblue;padding: 10px">
         {{d.post.content}}
     </div>
+    <fieldset class="layui-elem-field layui-field-title" style="text-align: center">
+        <legend>
+            <button class="layui-btn layui-btn-sm layui-btn-primary">
+                收藏 <i class="layui-icon layui-icon-praise" style="font-size: 30px; color: black;"></i>
+            </button>
+            <button class="layui-btn layui-btn-sm layui-btn-primary">
+                点赞 <i class="layui-icon layui-icon-rate" style="font-size: 30px; color: black;"></i>
+            </button>
+        </legend>
+    </fieldset>
+</script>
 
+<script type="text/html" id="m_reply">
+    {{# layui.each(d, function(index, item){ }}
+    {{# if(item.length!==2){ }}
+    <li data-id="111" class="jieda-daan">
+
+        <a name="item-1111111111"></a>
+        <div class="detail-about detail-about-reply">
+            <a class="fly-avatar" href="">
+                <img src="../../../image/asuna.jpg"
+                     alt=" ">
+            </a>
+            <div class="fly-detail-user">
+                <a href="" class="fly-link">
+                    <cite>橙色薄荷°</cite>
+                    <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
+                    <i class="layui-badge fly-badge-vip">管理员</i>
+                </a>
+
+                <span>(楼主)</span>
+                <!--
+                <span style="color:#5FB878">(管理员)</span>
+                <span style="color:#FF9E3F">（社区之光）</span>
+            <span style="color:#999">（该号已被封）</span>
+            -->
+            </div>
+
+            <div class="detail-hits">
+                <span>{{item[0].rtime}}</span>
+            </div>
+            <!--<i class="iconfont icon-logo" title="最佳答案"></i>-->
+        </div>
+        <div class="detail-body reply-body photos">{{item[0].content}}</div>
+        <div class="jieda-reply">
+            <span class="jieda-zan zanok" type="zan">
+                <i class="iconfont icon-zan"></i>
+                <em>{{item[0].pcount}}</em>
+            </span>
+            <span type="reply">
+                <i class="iconfont icon-svgmoban53"></i>回复
+            </span>
+            <div class="jieda-admin">
+                <span type="edit">编辑</span>
+                <span type="del">删除</span>
+                <!-- <span class="jieda-accept" type="accept">采纳</span> -->
+            </div>
+        </div>
+    </li>
+    {{# } }}
+    {{# }); }}
+    {{# if(d.length===0){ }}
+    <!-- 无数据时 -->
+    <li class="fly-none">消灭零回复</li>
+    {{# } }}
 </script>
 
 <!--参数获取，数据渲染-->
@@ -443,6 +422,10 @@
 
     var section = getQueryParameter("section");
     var tid = getQueryParameter("post");
+
+    function replyAPost() {
+
+    }
 
     layui.use('layer', function () {
         var layer = layui.layer;
@@ -516,6 +499,24 @@
             }
         })
 
+        // 帖子回复数据
+        var replies;
+        $.ajax({
+            type: 'post',
+            url: '/post/getReplies.do',
+            data: {
+                tid: tid
+            },
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                replies = data.data;
+            },
+            error: function (data) {
+                layer.msg("获取帖子回复数据失败！");
+            }
+        })
+
         // 模板引擎渲染
         layui.use('laytpl', function () {
             // 定义一个模板引擎
@@ -547,6 +548,13 @@
             var detail_view = document.getElementById('detail');
             laytpl(detail_model).render(detail, function (html) {
                 detail_view.innerHTML = html;
+            });
+
+            // 回复渲染
+            var reply_model = document.getElementById('m_reply').innerHTML;
+            var reply_view = document.getElementById('reply');
+            laytpl(reply_model).render(replies, function (html) {
+                reply_view.innerHTML = html;
             });
 
         });

@@ -1,6 +1,7 @@
 package com.mint.dao;
 
 import com.mint.pojo.Activity;
+import com.mint.pojo.Reply;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -21,4 +22,6 @@ public interface ActivityMapper {
     int updateByPrimaryKey(Activity record);
 
     List<Activity> getPostWithPage(@Param("skind") String skind, @Param("sorder") String sorder, @Param("start") int start, @Param("slimit") int slimit);
+
+    List<Reply> getReplyList(String tid);
 }

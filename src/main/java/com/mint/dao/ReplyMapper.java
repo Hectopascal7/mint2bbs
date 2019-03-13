@@ -2,6 +2,8 @@ package com.mint.dao;
 
 import com.mint.pojo.Reply;
 
+import java.util.List;
+
 public interface ReplyMapper {
     int deleteByPrimaryKey(String rid);
 
@@ -16,4 +18,6 @@ public interface ReplyMapper {
     int updateByPrimaryKeyWithBLOBs(Reply record);
 
     int updateByPrimaryKey(Reply record);
+
+    List<Reply> getMainReplies(String tid);
 }

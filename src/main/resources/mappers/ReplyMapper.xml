@@ -1,130 +1,152 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mint.dao.ReplyMapper">
-  <resultMap id="BaseResultMap" type="com.mint.pojo.Reply">
-    <constructor>
-      <idArg column="rid" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="tid" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="uid" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="rtime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-      <arg column="pcount" javaType="java.lang.Integer" jdbcType="INTEGER" />
-    </constructor>
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.mint.pojo.Reply">
-    <constructor>
-      <idArg column="rid" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="tid" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="uid" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="rtime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-      <arg column="pcount" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="content" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
-    </constructor>
-  </resultMap>
-  <sql id="Base_Column_List">
-    rid, tid, uid, rtime, pcount
+    <resultMap id="BaseResultMap" type="com.mint.pojo.Reply">
+        <constructor>
+            <idArg column="rid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="tid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="rrid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="uid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="rtime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="pcount" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        </constructor>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.mint.pojo.Reply">
+        <constructor>
+            <idArg column="rid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="tid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="rrid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="uid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="rtime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="pcount" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="content" javaType="java.lang.String" jdbcType="LONGVARCHAR"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+    rid, tid, rrid, uid, rtime, pcount
   </sql>
-  <sql id="Blob_Column_List">
+    <sql id="Blob_Column_List">
     content
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from tb_reply
-    where rid = #{rid,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_reply
+        where rid = #{rid,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from tb_reply
     where rid = #{rid,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.mint.pojo.Reply">
-    insert into tb_reply (rid, tid, uid, 
-      rtime, pcount, content
-      )
-    values (#{rid,jdbcType=VARCHAR}, #{tid,jdbcType=VARCHAR}, #{uid,jdbcType=VARCHAR}, 
-      #{rtime,jdbcType=TIMESTAMP}, #{pcount,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}
-      )
+    <insert id="insert" parameterType="com.mint.pojo.Reply">
+    insert into tb_reply (rid, tid, rrid, 
+      uid, rtime, pcount, 
+      content)
+    values (#{rid,jdbcType=VARCHAR}, #{tid,jdbcType=VARCHAR}, #{rrid,jdbcType=VARCHAR}, 
+      #{uid,jdbcType=VARCHAR}, #{rtime,jdbcType=TIMESTAMP}, #{pcount,jdbcType=INTEGER}, 
+      #{content,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.mint.pojo.Reply">
-    insert into tb_reply
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="rid != null">
-        rid,
-      </if>
-      <if test="tid != null">
-        tid,
-      </if>
-      <if test="uid != null">
-        uid,
-      </if>
-      <if test="rtime != null">
-        rtime,
-      </if>
-      <if test="pcount != null">
-        pcount,
-      </if>
-      <if test="content != null">
-        content,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="rid != null">
-        #{rid,jdbcType=VARCHAR},
-      </if>
-      <if test="tid != null">
-        #{tid,jdbcType=VARCHAR},
-      </if>
-      <if test="uid != null">
-        #{uid,jdbcType=VARCHAR},
-      </if>
-      <if test="rtime != null">
-        #{rtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="pcount != null">
-        #{pcount,jdbcType=INTEGER},
-      </if>
-      <if test="content != null">
-        #{content,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.mint.pojo.Reply">
-    update tb_reply
-    <set>
-      <if test="tid != null">
-        tid = #{tid,jdbcType=VARCHAR},
-      </if>
-      <if test="uid != null">
-        uid = #{uid,jdbcType=VARCHAR},
-      </if>
-      <if test="rtime != null">
-        rtime = #{rtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="pcount != null">
-        pcount = #{pcount,jdbcType=INTEGER},
-      </if>
-      <if test="content != null">
-        content = #{content,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where rid = #{rid,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mint.pojo.Reply">
+    <insert id="insertSelective" parameterType="com.mint.pojo.Reply">
+        insert into tb_reply
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="rid != null">
+                rid,
+            </if>
+            <if test="tid != null">
+                tid,
+            </if>
+            <if test="rrid != null">
+                rrid,
+            </if>
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="rtime != null">
+                rtime,
+            </if>
+            <if test="pcount != null">
+                pcount,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="rid != null">
+                #{rid,jdbcType=VARCHAR},
+            </if>
+            <if test="tid != null">
+                #{tid,jdbcType=VARCHAR},
+            </if>
+            <if test="rrid != null">
+                #{rrid,jdbcType=VARCHAR},
+            </if>
+            <if test="uid != null">
+                #{uid,jdbcType=VARCHAR},
+            </if>
+            <if test="rtime != null">
+                #{rtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="pcount != null">
+                #{pcount,jdbcType=INTEGER},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.mint.pojo.Reply">
+        update tb_reply
+        <set>
+            <if test="tid != null">
+                tid = #{tid,jdbcType=VARCHAR},
+            </if>
+            <if test="rrid != null">
+                rrid = #{rrid,jdbcType=VARCHAR},
+            </if>
+            <if test="uid != null">
+                uid = #{uid,jdbcType=VARCHAR},
+            </if>
+            <if test="rtime != null">
+                rtime = #{rtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="pcount != null">
+                pcount = #{pcount,jdbcType=INTEGER},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where rid = #{rid,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mint.pojo.Reply">
     update tb_reply
     set tid = #{tid,jdbcType=VARCHAR},
+      rrid = #{rrid,jdbcType=VARCHAR},
       uid = #{uid,jdbcType=VARCHAR},
       rtime = #{rtime,jdbcType=TIMESTAMP},
       pcount = #{pcount,jdbcType=INTEGER},
       content = #{content,jdbcType=LONGVARCHAR}
     where rid = #{rid,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.mint.pojo.Reply">
+    <update id="updateByPrimaryKey" parameterType="com.mint.pojo.Reply">
     update tb_reply
     set tid = #{tid,jdbcType=VARCHAR},
+      rrid = #{rrid,jdbcType=VARCHAR},
       uid = #{uid,jdbcType=VARCHAR},
       rtime = #{rtime,jdbcType=TIMESTAMP},
       pcount = #{pcount,jdbcType=INTEGER}
     where rid = #{rid,jdbcType=VARCHAR}
   </update>
+    <select id="getMainReplies" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_reply
+        where tid = #{tid,jdbcType=VARCHAR}
+        order by rtime
+    </select>
 </mapper>

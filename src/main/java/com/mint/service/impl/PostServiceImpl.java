@@ -40,6 +40,8 @@ public class PostServiceImpl implements IPostService {
     private GuideMapper guideMapper;
     @Autowired
     private SectionMapper sectionMapper;
+    @Autowired
+    private ReplyMapper replyMapper;
 
     /**
      * @param sid
@@ -234,6 +236,24 @@ public class PostServiceImpl implements IPostService {
         map.put("post", post);
         map.put("user", user);
         return ServerResponse.createBySuccess(map);
+    }
+
+    @Override
+    public ServerResponse<List<List<Reply>>> getReplies(String tid) {
+        List<Reply> list = replyMapper.getMainReplies(tid);
+        List<List<Reply>> replyList = new ArrayList<>();
+        for (Reply reply : list) {
+            String rrid = reply.getRrid();
+            List<Reply> rlist = new ArrayList<>();
+            rlist.add(reply);
+            Reply rreply = null;
+            if (!("".equals(rrid)) && !(null == rrid)) {
+                rreply = replyMapper.selectByPrimaryKey(rrid);
+                rlist.add(rreply);
+            }
+            replyList.add(rlist);
+        }
+        return ServerResponse.createBySuccess(replyList);
     }
 
 }

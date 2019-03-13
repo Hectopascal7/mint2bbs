@@ -2,10 +2,7 @@ package com.mint.controller.portal;
 
 import com.alibaba.fastjson.JSON;
 import com.mint.common.ServerResponse;
-import com.mint.pojo.Notice;
-import com.mint.pojo.Post;
-import com.mint.pojo.PostEntity;
-import com.mint.pojo.Topic;
+import com.mint.pojo.*;
 import com.mint.service.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -126,6 +123,20 @@ public class PostController {
     @ResponseBody
     public ServerResponse<HashMap<String, Object>> getPostDetail(String tid, String section) {
         return iPostService.getPostDetail(tid, section);
+    }
+
+    /**
+     * @Description 获取帖子回复
+     * @Param tid
+     * @Param section
+     * @Return ServerResponse<HashMap < String, Object>>
+     */
+    @RequestMapping(value = "getReplies.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<List<List<Reply>>> getReplies(String tid) {
+        ServerResponse serverResponse = iPostService.getReplies(tid);
+        System.out.println(JSON.toJSONString(serverResponse));
+        return iPostService.getReplies(tid);
     }
 
 }
