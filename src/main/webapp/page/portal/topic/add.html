@@ -3,9 +3,11 @@
 <head>
     <meta charset="utf-8">
     <title>薄荷社区-发帖</title>
+    <link rel="icon" href="/image/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="keywords" content="fly,layui,前端社区">
-    <meta name="description" content="Fly社区是模块化前端UI框架Layui的官网社区，致力于为web开发提供强劲动力">
+    <meta name="description"
+          content="Fly社区是模块化前端UI框架Layui的官网社区，致力于为web开发提供强劲动力">
     <link rel="stylesheet" href="/script/layui/css/layui.css">
     <link rel="stylesheet" href="/css/global.css">
     <script src="/script/jquery-3.3.1.min.js"></script>
@@ -19,28 +21,45 @@
         </a>
         <ul class="layui-nav fly-nav layui-hide-xs">
             <li class="layui-nav-item layui-this">
-                <a href="/"><i class="iconfont icon-jiaoliu"></i>业主论坛</a>
+                <a href="/">
+                    <i class="iconfont icon-jiaoliu"></i>业主论坛
+                </a>
             </li>
             <li class="layui-nav-item">
-                <a href="/page/portal/market/market.html"><i class="iconfont icon-iconmingxinganli"></i>交易市场</a>
+                <a href="/page/portal/market/market.html">
+                    <i class="iconfont icon-iconmingxinganli"></i>交易市场
+                </a>
             </li>
             <li class="layui-nav-item">
-                <a href="http://www.layui.com/" target="_blank"><i class="iconfont icon-ui"></i>吐槽区</a>
+                <a href="http://www.layui.com/" target="_blank">
+                    <i class="iconfont icon-ui"></i>吐槽区
+                </a>
             </li>
         </ul>
-
         <ul class="layui-nav fly-nav-user">
             <!-- 登入后的状态 -->
             <li class="layui-nav-item">
                 <a class="fly-nav-avatar" href="javascript:;" id="center"></a>
                 <dl class="layui-nav-child">
-                    <dd><a href="../user/setting.html"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
-                    <dd><a href="../user/message.html"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a>
+                    <dd>
+                        <a href="../user/setting.html"><i class="layui-icon">
+                            &#xe620;</i>基本设置
+                        </a>
                     </dd>
-                    <dd><a href="../user/home.html"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
+                    <dd>
+                        <a href="../user/message.html">
+                            <i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息
+                        </a>
+                    </dd>
+                    <dd>
+                        <a href="../user/home.html">
+                            <i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页
+                        </a>
                     </dd>
                     <hr style="margin: 5px 0;">
-                    <dd><a href="" style="text-align: center;">退出</a></dd>
+                    <dd>
+                        <a href="" style="text-align: center;">退出</a>
+                    </dd>
                 </dl>
             </li>
         </ul>
@@ -68,7 +87,7 @@
                                     <div class="layui-input-block">
                                         <input type="text" id="L_title" name="title" required lay-verify="required"
                                                autocomplete="off" class="layui-input">
-                                        <!-- <input type="hidden" name="id" value="{{d.edit.id}}"> -->
+                                        <!--<input type="hidden" name="id" value="{{d.edit.id}}"> -->
                                     </div>
                                 </div>
                             </div>
@@ -111,33 +130,34 @@
                                               style="height: 260px;"></textarea>
                                 </div>
                             </div>
+                            <!--<div class="layui-form-item">-->
+                            <!--<div class="layui-inline">-->
+                            <!--<label class="layui-form-label">悬赏飞吻</label>-->
+                            <!--<div class="layui-input-inline" style="width: 190px;">-->
+                            <!--<select name="experience">-->
+                            <!--<option value="20">20</option>-->
+                            <!--<option value="30">30</option>-->
+                            <!--<option value="50">50</option>-->
+                            <!--<option value="60">60</option>-->
+                            <!--<option value="80">80</option>-->
+                            <!--</select>-->
+                            <!--</div>-->
+                            <!--<div class="layui-form-mid layui-word-aux">发表后无法更改飞吻</div>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="layui-form-item">-->
+                            <!--<label for="L_vercode" class="layui-form-label">验证码</label>-->
+                            <!--<div class="layui-input-inline">-->
+                            <!--<input type="text" id="L_vercode" name="vercode" required lay-verify="required"-->
+                            <!--placeholder="请回答后面的问题" autocomplete="off" class="layui-input">-->
+                            <!--</div>-->
+                            <!--<div class="layui-form-mid">-->
+                            <!--<span style="color: #c00;">1+1=?</span>-->
+                            <!--</div>-->
+                            <!--</div>-->
                             <div class="layui-form-item">
-                                <div class="layui-inline">
-                                    <label class="layui-form-label">悬赏飞吻</label>
-                                    <div class="layui-input-inline" style="width: 190px;">
-                                        <select name="experience">
-                                            <option value="20">20</option>
-                                            <option value="30">30</option>
-                                            <option value="50">50</option>
-                                            <option value="60">60</option>
-                                            <option value="80">80</option>
-                                        </select>
-                                    </div>
-                                    <div class="layui-form-mid layui-word-aux">发表后无法更改飞吻</div>
-                                </div>
-                            </div>
-                            <div class="layui-form-item">
-                                <label for="L_vercode" class="layui-form-label">验证码</label>
-                                <div class="layui-input-inline">
-                                    <input type="text" id="L_vercode" name="vercode" required lay-verify="required"
-                                           placeholder="请回答后面的问题" autocomplete="off" class="layui-input">
-                                </div>
-                                <div class="layui-form-mid">
-                                    <span style="color: #c00;">1+1=?</span>
-                                </div>
-                            </div>
-                            <div class="layui-form-item">
-                                <button class="layui-btn" lay-filter="*" onclick="postAPost()">立即发布
+                                <button class="layui-btn" lay-filter="*" lay-submit>
+                                    立即发布
                                 </button>
                             </div>
                         </form>
@@ -154,7 +174,9 @@
         <a href="http://www.layui.com/" target="_blank">橙色薄荷° 出品</a>
     </p>
     <p>
-        <a href="http://fly.layui.com/jie/3147/" target="_blank">Copyright &copy; 2019 橙色薄荷° All Rights Reserved.</a>
+        <a href="http://fly.layui.com/jie/3147/" target="_blank">
+            Copyright &copy; 2019 橙色薄荷° All Rights Reserved.
+        </a>
     </p>
 </div>
 
@@ -189,30 +211,31 @@
         return null;
     }
 
-    // 发表帖子
-    function postAPost() {
-        var sid = $("select[name='sid']").val();
-        var title = $("input[name='title']").val();
-        var content = $("textarea[name='content']").val();
-        // alert(sid);
-        $.ajax({
-            type: 'post',
-            url: '/post/post.do',
-            dataType: 'json',
-            data: {
-                sid: sid,
-                title: title,
-                content: content
-            },
-            async: false,
-            success: function (data) {
-                layer.alert("发帖成功！");
-            },
-            error: function (data) {
-                layer.alert("发帖失败！");
-            }
-        })
-    }
+    // 表单提交
+    layui.use(['form', 'layer'], function () {
+        var form = layui.form;
+        var layer = layui.layer;
+        //监听提交
+        form.on('submit(*)', function (data) {
+            $.ajax({
+                type: 'post',
+                url: '/post/post.do',
+                dataType: 'json',
+                data: data.field,
+                async: false,
+                success: function (data) {
+                    layer.alert(data.msg, function () {
+                        // 发帖成功，返回对应板块
+                        location.href = "/page/portal/section/section.html?section=" + section;
+                    });
+                },
+                error: function (data) {
+                    layer.alert(data.msg);
+                }
+            })
+            return false;
+        });
+    });
 
 </script>
 
@@ -289,6 +312,7 @@
             center_view.innerHTML = html;
         });
     });
+
 </script>
 </body>
 </html>

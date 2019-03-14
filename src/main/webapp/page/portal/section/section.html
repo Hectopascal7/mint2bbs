@@ -20,13 +20,13 @@
         </a>
         <ul class="layui-nav fly-nav layui-hide-xs">
             <li class="layui-nav-item layui-this">
-                <a href="/"><i class="iconfont icon-jiaoliu"></i>业主论坛</a>
+                <a href="/"><i class="iconfont icon-jiaoliu"></i>论坛</a>
             </li>
             <li class="layui-nav-item">
-                <a href="/page/portal/market/market.html"><i class="iconfont icon-iconmingxinganli"></i>交易市场</a>
+                <a href="/page/portal/market/market.html"><i class="iconfont icon-iconmingxinganli"></i>市场</a>
             </li>
             <li class="layui-nav-item">
-                <a href="http://www.layui.com/" target="_blank"><i class="iconfont icon-ui"></i>吐槽区</a>
+                <a href="http://www.layui.com/" target="_blank"><i class="iconfont icon-ui"></i>留言板</a>
             </li>
         </ul>
 
@@ -204,12 +204,12 @@
         <li class="layui-hide-xs layui-this">
             <a href="/index.html">{{item.sname}}</a>
         </li>
-        {{#} else if(item.sid === 'index'){}}
+        {{#} else if(item.sid === 'index'&&section!=='index'){}}
         <li class="layui-hide-xs">
             <a href="/index.html">{{item.sname}}</a>
         </li>
         {{#} else if(item.sid === section){}}
-        <li class="layui-hide-xs layui-this">
+        <li class=" layui-this">
             <a href="/page/portal/section/section.html?section={{item.sid}}">{{item.sname}}</a>
         </li>
         {{#} else {}}
@@ -229,15 +229,15 @@
             </span>
         <a href="/page/portal/topic/add.html?section={{section}}" class="layui-btn">发表新帖</a>
     </div>
-    <!--<div class="layui-hide-sm layui-show-xs-block"-->
-    <!--style="margin-top: -10px; padding-bottom: 10px; text-align: center;">-->
-    <!--<a href="jie/add.html" class="layui-btn">发表新帖</a>-->
-    <!--</div>-->
+    <div class="layui-hide-sm layui-show-xs-block"
+         style="margin-top: -10px; padding-bottom: 10px; text-align: center;">
+        <a href="/page/portal/topic/add.html?section={{section}}" class="layui-btn">发表新帖</a>
+    </div>
 </script>
 
 <!--用户中心模板-->
 <script id="m_center" type="text/html">
-    <cite class="layui-hide-xs">{{ d.nickname }}</cite>
+    <cite>{{ d.nickname }}</cite>
     {{#  if(d.role === 1){ }}
     <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：管理员"></i>
     <i class="layui-badge fly-badge-vip layui-hide-xs" title="积分 {{d.point}}">Lv.3</i>

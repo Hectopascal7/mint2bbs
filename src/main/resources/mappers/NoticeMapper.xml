@@ -198,7 +198,7 @@
         SELECT
         <include refid="Base_Column_List"/>
         from tb_notice
-        order by ptime
+        order by ptime desc
         limit 5
     </select>
     <select id="getPostWithPage" resultMap="BaseResultMap">
@@ -209,7 +209,7 @@
             where isbest= 1
         </if>
         <if test='sorder == "ptime" or sorder=="rcount"'>
-            order by ${sorder}
+            order by ${sorder} desc
         </if>
         limit #{start},#{slimit}
     </select>
