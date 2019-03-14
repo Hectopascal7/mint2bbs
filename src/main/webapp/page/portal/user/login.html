@@ -55,7 +55,7 @@
             <div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;">
                 <div class="layui-tab-item layui-show">
                     <div class="layui-form layui-form-pane" style="text-align: center;margin: 0 auto; width: 310px">
-                        <form method="post" action="/user/login.do">
+                        <form method="post">
                             <div class="layui-form-item">
                                 <label for="loginid" class="layui-form-label">账号</label>
                                 <div class="layui-input-inline">
@@ -83,7 +83,7 @@
                                 <!--</div>-->
                             </div>
                             <div class="layui-form-item">
-                                <button class="layui-btn" lay-filter="*" lay-submit onclick="login()">
+                                <button class="layui-btn" lay-filter="*" lay-submit>
                                     立即登录
                                 </button>
                                 <span style="padding-left:20px;">
@@ -132,26 +132,53 @@
         fly: 'index'
     }).use('fly');
 
-    function login() {
-        var loginid = $("#loginid").val();
-        var password = $("#password").val();
-        $.ajax({
-            type: 'post',
-            url: '/user/login.do',
-            dataType: 'json',
-            data: {
-                loginid: loginid,
-                password: password
-            },
-            async: false,
-            success: function (data) {
-                layer.msg(data.msg);
-            },
-            error: function (data) {
-                layer.msg(data.msg);
-            }
-        })
-    }
+    // function login() {
+    //     var loginid = $("#loginid").val();
+    //     var password = $("#password").val();
+    //     $.ajax({
+    //         type: 'post',
+    //         url: '/user/login.do',
+    //         dataType: 'json',
+    //         data: {
+    //             loginid: loginid,
+    //             password: password
+    //         },
+    //         async: false,
+    //         success: function (data) {
+    //             layer.msg(data.msg);
+    //         },
+    //         error: function (data) {
+    //             layer.msg(data.msg);
+    //         }
+    //     })
+    // }
+
+    // 表单提交
+    layui.use(['form', 'layer'], function () {
+        var form = layui.form;
+        var layer = layui.layer;
+        //监听提交
+        form.on('submit(*)', function (data) {
+            alert(JSON.stringify(data.field));
+            $.ajax({
+                type: 'post',
+                url: '/user/login.do',
+                dataType: 'json',
+                data: data.field,
+                async: false,
+                success: function (data) {
+                    layer.msg(data.msg, function () {
+                        // 发帖成功，返回对应板块
+                        location.href = "/index.html";
+                    });
+                },
+                error: function (data) {
+                    layer.msg(data.msg);
+                }
+            })
+            return false;
+        });
+    });
 
 </script>
 
