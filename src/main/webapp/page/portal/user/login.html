@@ -9,6 +9,7 @@
     <meta name="description" content="Fly社区是模块化前端UI框架Layui的官网社区，致力于为web开发提供强劲动力">
     <link rel="stylesheet" href="/script/layui/css/layui.css">
     <link rel="stylesheet" href="/css/global.css">
+    <script src="/script/jquery-3.3.1.min.js"></script>
 </head>
 <body>
 
@@ -82,9 +83,13 @@
                                 <!--</div>-->
                             </div>
                             <div class="layui-form-item">
-                                <button class="layui-btn" lay-filter="*" lay-submit>立即登录</button>
+                                <button class="layui-btn" lay-filter="*" lay-submit onclick="login()">
+                                    立即登录
+                                </button>
                                 <span style="padding-left:20px;">
-                                    <a href="forget.html">忘记密码？</a>
+                                    <a href="forget.html">
+                                        忘记密码？
+                                    </a>
                                 </span>
                             </div>
                             <!--<div class="layui-form-item fly-form-app">-->
@@ -126,6 +131,28 @@
     }).extend({
         fly: 'index'
     }).use('fly');
+
+    function login() {
+        var loginid = $("#loginid").val();
+        var password = $("#password").val();
+        $.ajax({
+            type: 'post',
+            url: '/user/login.do',
+            dataType: 'json',
+            data: {
+                loginid: loginid,
+                password: password
+            },
+            async: false,
+            success: function (data) {
+                layer.msg(data.msg);
+            },
+            error: function (data) {
+                layer.msg(data.msg);
+            }
+        })
+    }
+
 </script>
 
 </body>
