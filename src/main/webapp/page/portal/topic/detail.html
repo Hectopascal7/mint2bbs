@@ -330,7 +330,7 @@
                 {{# if(d.user.signature===null){ }}
                 Ta还没有设置签名呢！
                 {{#}else {}}
-                人生何处不相逢。人生何处不相逢。人生何处不相逢。人生何处不相逢。
+                {{d.user.signature}}
                 {{# } }}
             </span>
             <!--<span class="layui-btn layui-btn-xs jie-admin" type="edit">-->
@@ -345,12 +345,7 @@
     </div>
     <fieldset class="layui-elem-field layui-field-title" style="text-align: center">
         <legend>
-            <button class="layui-btn layui-btn-sm layui-btn-primary">
-                收藏 <i class="layui-icon layui-icon-praise" style="font-size: 30px; color: black;"></i>
-            </button>
-            <button class="layui-btn layui-btn-sm layui-btn-primary">
-                点赞 <i class="layui-icon layui-icon-rate" style="font-size: 30px; color: black;"></i>
-            </button>
+            <button class="layui-btn layui-btn-sm layui-btn-primary">收藏<i class="layui-icon layui-icon-praise" style="font-size: 30px; color: black;"></i></button><button class="layui-btn layui-btn-sm layui-btn-primary">点赞<i class="layui-icon layui-icon-rate" style="font-size: 30px; color: black;"></i></button>
         </legend>
     </fieldset>
 </script>
@@ -359,7 +354,6 @@
     {{# layui.each(d, function(index, item){ }}
     {{# if(item.length!==2){ }}
     <li data-id="111" class="jieda-daan">
-
         <a name="item-1111111111"></a>
         <div class="detail-about detail-about-reply">
             <a class="fly-avatar" href="">
@@ -387,6 +381,50 @@
             <!--<i class="iconfont icon-logo" title="最佳答案"></i>-->
         </div>
         <div class="detail-body reply-body photos">{{item[0].content}}</div>
+        <div class="jieda-reply">
+            <span class="jieda-zan zanok" type="zan">
+                <i class="iconfont icon-zan"></i>
+                <em>{{item[0].pcount}}</em>
+            </span>
+            <span type="reply">
+                <i class="iconfont icon-svgmoban53"></i>回复
+            </span>
+            <div class="jieda-admin">
+                <span type="edit">编辑</span>
+                <span type="del">删除</span>
+                <!-- <span class="jieda-accept" type="accept">采纳</span> -->
+            </div>
+        </div>
+    </li>
+    {{#} else{ }}
+    <li data-id="111" class="jieda-daan">
+        <a name="item-1111111111"></a>
+        <div class="detail-about detail-about-reply">
+            <a class="fly-avatar" href="">
+                <img src="../../../image/asuna.jpg"
+                     alt=" ">
+            </a>
+            <div class="fly-detail-user">
+                <a href="" class="fly-link">
+                    <cite>橙色薄荷°</cite>
+                    <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
+                    <i class="layui-badge fly-badge-vip">管理员</i>
+                </a>
+
+                <span>(楼主)</span>
+                <!--
+                <span style="color:#5FB878">(管理员)</span>
+                <span style="color:#FF9E3F">（社区之光）</span>
+            <span style="color:#999">（该号已被封）</span>
+            -->
+            </div>
+
+            <div class="detail-hits">
+                <span>{{item[1].rtime}}</span>
+            </div>
+            <!--<i class="iconfont icon-logo" title="最佳答案"></i>-->
+        </div>
+        <div class="detail-body reply-body photos">{{item[1].content}}</div>
         <div class="jieda-reply">
             <span class="jieda-zan zanok" type="zan">
                 <i class="iconfont icon-zan"></i>

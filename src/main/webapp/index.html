@@ -250,7 +250,7 @@
 
 <!--用户中心模板-->
 <script id="m_center" type="text/html">
-    <cite class="layui-hide-sm">{{ d.nickname }}</cite>
+    <cite>{{ d.nickname }}</cite>
     {{#  if(d.role === 1){ }}
     <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：管理员"></i>
     <i class="layui-badge fly-badge-vip layui-hide-xs" title="积分 {{d.point}}">Lv.3</i>
@@ -307,9 +307,27 @@
             <img src="{{item.profile}}"
                  alt="{{item.nickname}}">
         </a>
+        <!--<h2 class="layui-hide-sm layui-show-xs-block">-->
+            <!--<a class="layui-badge">{{item.sname}}</a>-->
+            <!--{{# if(item.issticky===1&&item.isbest===1){ }}-->
+            <!--<a href="/page/portal/topic/detail.html?post={{item.tid}}&section={{item.sid}}" style="max-width: 50%">-->
+                <!--{{item.title}}-->
+            <!--</a>-->
+            <!--{{#} else if((item.issticky===1&&item.isbest!==1)||(item.issticky!==1&&item.isbest===1)){ }}-->
+            <!--<a href="/page/portal/topic/detail.html?post={{item.tid}}&section={{item.sid}}" style="max-width: 65%">-->
+                <!--{{item.title}}-->
+            <!--</a>-->
+            <!--{{#} else { }}-->
+            <!--<a href="/page/portal/topic/detail.html?post={{item.tid}}&section={{item.sid}}">-->
+                <!--{{item.title}}-->
+            <!--</a>-->
+            <!--{{# } }}-->
+        <!--</h2>-->
         <h2>
             <a class="layui-badge">{{item.sname}}</a>
-            <a href="/page/portal/topic/detail.html?post={{item.tid}}&section={{item.sid}}">{{item.title}}</a>
+            <a href="/page/portal/topic/detail.html?post={{item.tid}}&section={{item.sid}}">
+                {{item.title}}
+            </a>
         </h2>
         <div class="fly-list-info">
             <a href="../user/home.html" link>

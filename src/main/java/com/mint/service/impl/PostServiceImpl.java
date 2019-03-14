@@ -232,6 +232,7 @@ public class PostServiceImpl implements IPostService {
                 break;
         }
         User user = userMapper.getUserOnPostDetail(post.getUid());
+        System.out.println(user);
         HashMap<String, Object> map = new HashMap<>();
         map.put("post", post);
         map.put("user", user);

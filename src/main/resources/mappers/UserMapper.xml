@@ -64,6 +64,9 @@
     <sql id="Blob_Column_List">
     profile
   </sql>
+    <sql id="User_On_PostDetail">
+    uid,nickname,role,ulevel,signature,status,profile
+  </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
         select
         <include refid="Base_Column_List"/>
@@ -300,11 +303,11 @@
         tb_user
     where uid = #{uid}
     </select>
-    <select id="getUserOnPostDetail" resultMap="InfoMap" parameterType="string">
+    <select id="getUserOnPostDetail" resultMap="DetailUserInfo" parameterType="string">
         select
-        nickname,profile,role,ulevel
+        <include refid="User_On_PostDetail"/>
         from
         tb_user
-    where uid = #{uid}
+        where uid = #{uid}
     </select>
 </mapper>
