@@ -159,7 +159,6 @@
         var layer = layui.layer;
         //监听提交
         form.on('submit(*)', function (data) {
-            alert(JSON.stringify(data.field));
             $.ajax({
                 type: 'post',
                 url: '/user/login.do',
