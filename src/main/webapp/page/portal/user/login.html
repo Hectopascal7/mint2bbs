@@ -159,6 +159,7 @@
         var layer = layui.layer;
         //监听提交
         form.on('submit(*)', function (data) {
+            layer.msg("登录中，请稍侯...");
             $.ajax({
                 type: 'post',
                 url: '/user/login.do',

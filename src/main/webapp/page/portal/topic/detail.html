@@ -345,7 +345,7 @@
     </div>
     <fieldset class="layui-elem-field layui-field-title" style="text-align: center">
         <legend>
-            <button class="layui-btn layui-btn-sm layui-btn-primary">收藏<i class="layui-icon layui-icon-praise" style="font-size: 30px; color: black;"></i></button><button class="layui-btn layui-btn-sm layui-btn-primary" onclick="praise()">点赞<i class="layui-icon layui-icon-rate" style="font-size: 30px; color: black;"></i></button>
+            <button class="layui-btn layui-btn-sm layui-btn-primary" onclick="collect()">收藏<i class="layui-icon layui-icon-praise" style="font-size: 30px; color: black;"></i></button><button class="layui-btn layui-btn-sm layui-btn-primary" onclick="praise()">点赞<i class="layui-icon layui-icon-rate" style="font-size: 30px; color: black;"></i></button>
         </legend>
     </fieldset>
 </script>
@@ -479,6 +479,24 @@
             },
             error: function (data) {
                 layer.msg("点赞失败！");
+            }
+        })
+    }
+
+    function collect(){
+        $.ajax({
+            type: 'post',
+            url: '/collection/collect.do',
+            data: {
+                tid:tid
+            },
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                layer.msg("收藏成功！");
+            },
+            error: function (data) {
+                layer.msg("收藏失败！");
             }
         })
     }
