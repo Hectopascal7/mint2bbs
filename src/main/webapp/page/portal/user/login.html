@@ -29,19 +29,6 @@
                 <a href="http://www.layui.com/" target="_blank"><i class="iconfont icon-ui"></i>吐槽区</a>
             </li>
         </ul>
-
-        <ul class="layui-nav fly-nav-user">
-            <!-- 未登入的状态 -->
-            <li class="layui-nav-item">
-                <a class="iconfont icon-touxiang layui-hide-xs" href="user/login.html"></a>
-            </li>
-            <li class="layui-nav-item">
-                <a href="login.html">登录</a>
-            </li>
-            <li class="layui-nav-item">
-                <a href="register.html">注册</a>
-            </li>
-        </ul>
     </div>
 </div>
 
@@ -50,7 +37,7 @@
         <div class="layui-tab layui-tab-brief" lay-filter="user">
             <ul class="layui-tab-title">
                 <li class="layui-this">登录</li>
-                <li><a href="register.html">注册</a></li>
+                <li><a href="/page/portal/user/register.html">注册</a></li>
             </ul>
             <div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;">
                 <div class="layui-tab-item layui-show">
@@ -159,7 +146,6 @@
         var layer = layui.layer;
         //监听提交
         form.on('submit(*)', function (data) {
-            layer.msg("登录中，请稍侯...");
             $.ajax({
                 type: 'post',
                 url: '/user/login.do',
@@ -167,10 +153,15 @@
                 data: data.field,
                 async: false,
                 success: function (data) {
-                    layer.msg(data.msg, function () {
-                        // 发帖成功，返回对应板块
-                        location.href = "/index.html";
-                    });
+                    if (data.status === 0) {
+                        layer.msg(data.msg, {shift: 0}, function () {
+                            // 发帖成功，返回对应板块
+                            location.href = "/index.html";
+                        });
+                    } else {
+                        layer.msg(data.msg);
+                    }
+
                 },
                 error: function (data) {
                     layer.msg(data.msg);

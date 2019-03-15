@@ -42,17 +42,17 @@ public class UserServiceImpl implements IUserService {
         int resultCount = userMapper.checkLoginid(loginid);
         // 登录id不存在
         if (resultCount == 0) {
-            return ServerResponse.createByErrorMessage("账号不存在,请检查后重新输入。");
+            return ServerResponse.createByErrorMessage("账号不存在,请检查后重新输入...");
         }
         // 登录id存在，校验账号密码是否匹配
         User user = userMapper.checkUser(loginid, password);
         // 登录id和密码匹配不到用户，登录失败
         if (user == null) {
-            return ServerResponse.createByErrorMessage("密码错误!");
+            return ServerResponse.createByErrorMessage("密码输入错误!");
         }
         // 登录id和密码匹配，保障账户安全，将用户实体密码置为空
         user.setPassword(org.apache.commons.lang3.StringUtils.EMPTY);
-        return ServerResponse.createBySuccess("登录成功!", user);
+        return ServerResponse.createBySuccess("登录成功，正在跳转...", user);
     }
 
     /**
