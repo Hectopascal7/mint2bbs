@@ -293,10 +293,16 @@
 <script id="m_notice" type="text/html">
     {{# layui.each(d, function(index, item){ }}
     <li>
+
         <a href="/page/portal/topic/detail.html?post={{item.tid}}&section=notice" target="_blank">{{ item.title }}</a>
         <!--<span>{{ item.ptime }}</span>-->
+
     </li>
     {{# }); }}
+    {{# if(d.length===0){ }}
+    <!-- 无数据时 -->
+    <li><a>暂无相关数据</a></li>
+    {{# } }}
 </script>
 
 <!-- 帖子模板 -->
@@ -308,20 +314,20 @@
                  alt="{{item.nickname}}">
         </a>
         <!--<h2 class="layui-hide-sm layui-show-xs-block">-->
-            <!--<a class="layui-badge">{{item.sname}}</a>-->
-            <!--{{# if(item.issticky===1&&item.isbest===1){ }}-->
-            <!--<a href="/page/portal/topic/detail.html?post={{item.tid}}&section={{item.sid}}" style="max-width: 50%">-->
-                <!--{{item.title}}-->
-            <!--</a>-->
-            <!--{{#} else if((item.issticky===1&&item.isbest!==1)||(item.issticky!==1&&item.isbest===1)){ }}-->
-            <!--<a href="/page/portal/topic/detail.html?post={{item.tid}}&section={{item.sid}}" style="max-width: 65%">-->
-                <!--{{item.title}}-->
-            <!--</a>-->
-            <!--{{#} else { }}-->
-            <!--<a href="/page/portal/topic/detail.html?post={{item.tid}}&section={{item.sid}}">-->
-                <!--{{item.title}}-->
-            <!--</a>-->
-            <!--{{# } }}-->
+        <!--<a class="layui-badge">{{item.sname}}</a>-->
+        <!--{{# if(item.issticky===1&&item.isbest===1){ }}-->
+        <!--<a href="/page/portal/topic/detail.html?post={{item.tid}}&section={{item.sid}}" style="max-width: 50%">-->
+        <!--{{item.title}}-->
+        <!--</a>-->
+        <!--{{#} else if((item.issticky===1&&item.isbest!==1)||(item.issticky!==1&&item.isbest===1)){ }}-->
+        <!--<a href="/page/portal/topic/detail.html?post={{item.tid}}&section={{item.sid}}" style="max-width: 65%">-->
+        <!--{{item.title}}-->
+        <!--</a>-->
+        <!--{{#} else { }}-->
+        <!--<a href="/page/portal/topic/detail.html?post={{item.tid}}&section={{item.sid}}">-->
+        <!--{{item.title}}-->
+        <!--</a>-->
+        <!--{{# } }}-->
         <!--</h2>-->
         <h2>
             <a class="layui-badge">{{item.sname}}</a>
@@ -358,6 +364,12 @@
         </div>
     </li>
     {{# }); }}
+    {{# if(d.length===0){ }}
+    <!-- 无数据时 -->
+    <li>
+        暂无相关数据
+    </li>
+    {{# } }}
 </script>
 
 <!--热门帖子模板-->
@@ -381,14 +393,17 @@
 
 <!--活跃用户榜单模板-->
 <script type="text/html" id="m_active_user">
-    <!--<i class="layui-icon fly-loading">&#xe63d;</i>-->
-    {{# layui.each(d, function(index, item){ }}
     <dd>
+        {{# layui.each(d, function(index, item){ }}
         <a href="user/home.html">
             <img src="image/asuna.jpg"><cite>{{item.nickname}}</cite><i>活跃度 {{item.count}}</i>
         </a>
+        {{# }); }}
+        {{# if(d.length===0){ }}
+        <!-- 无数据时 -->
+        <div class="fly-none">暂无数据</div>
+        {{# } }}
     </dd>
-    {{# }); }}
 </script>
 
 <script>
@@ -423,7 +438,6 @@
         order = "rcount";
         $("#hot").addClass("layui-this");
         $("#new").removeClass("layui-this");
-        layer.msg(order);
         firstGetData();
     }
 
