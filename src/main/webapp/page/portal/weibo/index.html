@@ -20,13 +20,13 @@
         </a>
         <!-- 论坛主标题区 -->
         <ul class="layui-nav fly-nav layui-hide-xs">
-            <li class="layui-nav-item layui-this">
+            <li class="layui-nav-item">
                 <a href="/"><i class="iconfont icon-jiaoliu"></i>论坛</a>
             </li>
             <li class="layui-nav-item">
                 <a href="/page/portal/market/market.html"><i class="iconfont icon-iconmingxinganli"></i>市场</a>
             </li>
-            <li class="layui-nav-item">
+            <li class="layui-nav-item layui-this">
                 <a href="/page/portal/weibo/index.html"><i class="iconfont icon-ui"></i>微博</a>
             </li>
         </ul>
@@ -268,9 +268,9 @@
         {{# }); }}
         <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li>
         <!--用户登入后显示-->
-        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="/page/portal/user/index.html#index">我的贴子</a></li>
+        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="user/index.html">我的贴子</a></li>
         <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a
-                href="/page/portal/user/index.html#collection">收藏</a>
+                href="user/index.html#collection">收藏</a>
         </li>
     </ul>
     <div class="fly-column-right layui-hide-xs">
@@ -392,7 +392,7 @@
     <dd>
         {{# layui.each(d, function(index, item){ }}
         <a href="user/home.html">
-            <img src="{{item.profile}}"><cite>{{item.nickname}}</cite><i>活跃度 {{item.count}}</i>
+            <img src="image/asuna.jpg"><cite>{{item.nickname}}</cite><i>活跃度 {{item.count}}</i>
         </a>
         {{# }); }}
         {{# if(d.length===0){ }}

@@ -139,4 +139,16 @@ public class PostController {
         return iPostService.getReplies(tid);
     }
 
+    /**
+     * @Description 获取帖子回复
+     * @Param tid
+     * @Param section
+     * @Return ServerResponse<HashMap < String, Object>>
+     */
+    @RequestMapping(value = "getUserLatestTopic.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<List<Post>> getUserLatestTopic(String uid) {
+        ServerResponse<List<Post>> response = iPostService.getUserLatestTopic(uid);
+        return response;
+    }
 }

@@ -91,6 +91,11 @@ public class UserServiceImpl implements IUserService {
         }
     }
 
+    @Override
+    public User getIndexUserInfo(String uid) {
+        return userMapper.selectByPrimaryKey(uid);
+    }
+
     /**
      * @Description 检查住户信息是否正确
      * @Param resident

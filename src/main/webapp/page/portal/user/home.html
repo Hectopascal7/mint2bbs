@@ -8,6 +8,7 @@
     <meta name="description" content="Fly社区是模块化前端UI框架Layui的官网社区，致力于为web开发提供强劲动力">
     <link rel="stylesheet" href="../../../script/layui/css/layui.css">
     <link rel="stylesheet" href="../../../css/global.css">
+    <script src="/script/jquery-3.3.1.min.js"></script>
 </head>
 <body style="margin-top: 65px;">
 <div class="fly-header layui-bg-black">
@@ -15,113 +16,34 @@
         <a class="fly-logo" href="/">
             <img src="../../../image/logo.png" alt="layui">
         </a>
+        <!-- 论坛主标题区 -->
         <ul class="layui-nav fly-nav layui-hide-xs">
-            <li class="layui-nav-item layui-this">
-                <a href="/"><i class="iconfont icon-jiaoliu"></i>业主论坛</a>
+            <li class="layui-nav-item">
+                <a href="/"><i class="iconfont icon-jiaoliu"></i>论坛</a>
             </li>
             <li class="layui-nav-item">
-                <a href="/page/portal/market/market.html"><i class="iconfont icon-iconmingxinganli"></i>交易市场</a>
+                <a href="/page/portal/market/market.html"><i class="iconfont icon-iconmingxinganli"></i>市场</a>
             </li>
             <li class="layui-nav-item">
-                <a href="http://www.layui.com/" target="_blank"><i class="iconfont icon-ui"></i>吐槽区</a>
+                <a href="/page/portal/weibo/index.html" target="_blank"><i class="iconfont icon-ui"></i>微博</a>
             </li>
         </ul>
         <!-- 用户个人中心功能区 -->
         <ul class="layui-nav fly-nav-user">
             <!-- 登入后的状态 -->
-            <li class="layui-nav-item">
-                <a class="fly-nav-avatar" href="javascript:;">
-                    <cite class="layui-hide-xs">橙色薄荷°</cite>
-                    <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：管理员"></i>
-                    <i class="layui-badge fly-badge-vip layui-hide-xs">管理员</i>
-                    <img src="../../../image/asuna.jpg">
-                </a>
-                <dl class="layui-nav-child">
-                    <dd>
-                        <a href="../user/home.html"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
-                    </dd>
-                    <dd>
-                        <a href="../user/message.html"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a>
-                    </dd>
-                    <dd>
-                        <a href="../user/setting.html"><i class="layui-icon">&#xe620;</i>基本设置</a>
-                    </dd>
-                    <hr style="margin: 5px 0;">
-                    <dd><a href="" style="text-align: center;">退出</a></dd>
-                </dl>
+            <li class="layui-nav-item" id="center">
             </li>
         </ul>
     </div>
 </div>
-<div class="fly-home fly-panel" style="">
-    <img src="../../../image/asuna.jpg" alt="橙色薄荷°">
-    <i class="iconfont icon-renzheng" title="Fly社区认证"></i>
-    <h1>
-        橙色薄荷°
-        <i class="iconfont icon-nan"></i>
-        <!-- <i class="iconfont icon-nv"></i>  -->
-        <i class="layui-badge fly-badge-vip">管理员</i>
-        <!--
-        <span style="color:#c00;">（管理员）</span>
-        <span style="color:#5FB878;">（社区之光）</span>
-        <span>（该号已被封）</span>
-        -->
-    </h1>
-    <p style="padding: 10px 0; color: #5FB878;">认证信息：layui 作者</p>
-    <p class="fly-home-info">
-        <i class="iconfont icon-kiss" title="飞吻"></i><span style="color: #FF7200;">66666 飞吻</span>
-        <i class="iconfont icon-shijian"></i><span>2015-6-17 加入</span>
-        <i class="iconfont icon-chengshi"></i><span>来自杭州</span>
-    </p>
-    <p class="fly-home-sign">（人生仿若一场修行）</p>
+<div class="fly-home fly-panel" style="background-image: url('/image/bg.jpg')" id="user">
+
 </div>
 
 <div class="layui-container">
     <div class="layui-row layui-col-space15">
-        <div class="layui-col-md6 fly-home-jie">
-            <div class="fly-panel">
-                <h3 class="fly-panel-title">橙色薄荷° 最近的帖子</h3>
-                <ul class="jie-row">
-                    <li>
-                        <span class="fly-jing">精</span>
-                        <a href="" class="jie-title"> 基于 layui 的极简社区页面模版</a>
-                        <i>刚刚</i>
-                        <em class="layui-hide-xs">1136阅/27答</em>
-                    </li>
-                    <li>
-                        <a href="" class="jie-title"> 基于 layui 的极简社区页面模版</a>
-                        <i>1天前</i>
-                        <em class="layui-hide-xs">1136阅/27答</em>
-                    </li>
-                    <li>
-                        <a href="" class="jie-title"> 基于 layui 的极简社区页面模版</a>
-                        <i>2017-10-30</i>
-                        <em class="layui-hide-xs">1136阅/27答</em>
-                    </li>
-                    <li>
-                        <a href="" class="jie-title"> 基于 layui 的极简社区页面模版</a>
-                        <i>1天前</i>
-                        <em class="layui-hide-xs">1136阅/27答</em>
-                    </li>
-                    <li>
-                        <a href="" class="jie-title"> 基于 layui 的极简社区页面模版</a>
-                        <i>1天前</i>
-                        <em class="layui-hide-xs">1136阅/27答</em>
-                    </li>
-                    <li>
-                        <a href="" class="jie-title"> 基于 layui 的极简社区页面模版</a>
-                        <i>1天前</i>
-                        <em class="layui-hide-xs">1136阅/27答</em>
-                    </li>
-                    <li>
-                        <a href="" class="jie-title"> 基于 layui 的极简社区页面模版</a>
-                        <i>1天前</i>
-                        <em class="layui-hide-xs">1136阅/27答</em>
-                    </li>
-                    <!-- <div class="fly-none" style="min-height: 50px; padding:30px 0; height:auto;"><i style="font-size:14px;">没有发表任何求解</i></div> -->
-                </ul>
-            </div>
-        </div>
+        <!-- 最近的帖子 -->
+        <div class="layui-col-md6 fly-home-jie" id="latest_topic"></div>
 
         <div class="layui-col-md6 fly-home-da">
             <div class="fly-panel">
@@ -135,7 +57,7 @@
                         <div class="home-dacontent">
                             尝试给layer.photos加上这个属性试试：
                             <pre>
-full: true         
+full: true
 </pre>
                             文档没有提及
                         </div>
@@ -167,6 +89,95 @@ full: true
     </p>
 </div>
 
+<!--最近的帖子模板-->
+<script type="text/html" id="m_latest_topic">
+    <div class="fly-panel">
+        <h3 class="fly-panel-title">橙色薄荷° 最近的帖子</h3>
+        <ul class="jie-row">
+            {{# layui.each(d, function(index, item){ }}
+            <li>
+                <span class="fly-jing">精</span>
+                <a href="" class="jie-title">{{item.title}}</a>
+                <i>{{item.ptime}}</i>
+                <em class="layui-hide-xs">{{item.rcount}}阅/{{item.pcount}}赞</em>
+            </li>
+            {{# }); }}
+            {{# if(d.length===0){ }}
+            <!-- 无数据时 -->
+
+            <div class="fly-none" style="min-height: 50px; padding:30px 0; height:auto;"><i style="font-size:14px;">Ta还没有发表任何帖子呢...</i>
+            </div>
+
+            {{# } }}
+            <div style="text-align: center">
+                <div class="laypage-main">
+                    <a class="laypage-next" href="javascript:getMore()">查看全部</a>
+                </div>
+            </div>
+        </ul>
+    </div>
+</script>
+
+<!--用户中心模板-->
+<script id="m_center" type="text/html">
+    <a class="fly-nav-avatar" href="javascript:;">
+        <cite>{{ d.nickname }}</cite>
+        {{# if(d.role === 1){ }}
+        <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：管理员"></i>
+        <i class="layui-badge fly-badge-vip layui-hide-xs" title="积分 {{d.point}}">Lv.3</i>
+        {{# } }}
+        <img src="{{d.profile}}">
+    </a>
+    <dl class="layui-nav-child">
+        <dd>
+            <a href="/page/portal/user/home.html?user={{d.uid}}"><i class="layui-icon"
+                                                                    style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
+        </dd>
+        <dd>
+            <a href="/page/portal/user/message.html"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a>
+        </dd>
+        <dd>
+            <a href="/page/portal/user/setting.html"><i class="layui-icon">&#xe620;</i>基本设置</a>
+        </dd>
+        <hr style="margin: 5px 0;">
+        <dd><a href="" style="text-align: center;">退出</a></dd>
+    </dl>
+</script>
+
+<script id="m_user" type="text/html">
+    <img src="{{d.profile}}" alt="橙色薄荷°">
+    <i class="iconfont icon-renzheng" title="Fly社区认证"></i>
+    <h1>
+        {{ d.nickname }}
+        {{# if(d.sex === 0){ }}
+        <i class="iconfont icon-nan"></i>
+        {{#} else {}}
+        <i class="iconfont icon-nv"></i>
+        {{# } }}
+        <!-- <i class="iconfont icon-nv"></i>  -->
+        {{# if(d.role !== 1){ }}
+        <i class="layui-badge fly-badge-vip">管理员</i>
+        {{# } }}
+
+        <!--
+        <span style="color:#c00;">（管理员）</span>
+    <span style="color:#5FB878;">（社区之光）</span>
+    <span>（该号已被封）</span>
+    -->
+    </h1>
+    {{# if(d.role !== 1){ }}
+    <p style="padding: 10px 0; color: black;">认证信息：layui 作者</p>
+    {{# } }}
+
+    <p class="fly-home-info">
+        <i class="iconfont icon-kiss" title="飞吻"></i>
+        <span style="color: black;">66666 飞吻</span>
+        <i class="iconfont icon-shijian"></i><span>{{d.jointime}}加入</span>
+        <i class="iconfont icon-chengshi"></i><span>来自杭州</span>
+    </p>
+    <p class="fly-home-sign">个性签名：{{d.signature}}</p>
+</script>
+
 <script src="../../../script/layui/layui.js"></script>
 <script>
     layui.cache.page = 'user';
@@ -185,5 +196,107 @@ full: true
     }).use('fly');
 </script>
 
+<script>
+
+    function getQueryParameter(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+
+    var uid = getQueryParameter("user");
+
+    layui.use('layer', function () {
+
+        // ajax交互，JS中以定义的layer无法获取（猜测），手动定义一个
+        // 定义layer，用于打印提示信息
+        var layer = layui.layer;
+        // 最近帖子数据
+        var latest_topic;
+        // ajax-用户活跃榜数据获取
+        $.ajax({
+            type: 'post',
+            url: '/post/getUserLatestTopic.do',
+            dataType: 'json',
+            data: {
+                uid: uid
+            },
+            async: false,
+            success: function (data) {
+                latest_topic = data.data;
+            },
+            error: function (data) {
+                layer.msg("获取用户最近帖子失败！");
+            }
+        })
+
+        // 用户中心数据
+        var user_info;
+        // ajax-用户数据中心数据获取
+        $.ajax({
+            type: 'post',
+            url: '/user/userCenter.do',
+            data: {},
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                user_info = data.data;
+            },
+            error: function (data) {
+                layer.msg("获取用户中心数据失败！");
+            }
+        })
+
+        // 主页用户资料数据
+        var index_user_info;
+        // ajax-用户数据中心数据获取
+        $.ajax({
+            type: 'post',
+            url: '/user/getIndexUserInfo.do',
+            data: {},
+            dataType: 'json',
+            data: {
+                uid: uid
+            },
+            async: false,
+            success: function (data) {
+                index_user_info = data.data;
+            },
+            error: function (data) {
+                layer.msg("获取用户中心数据失败！");
+            }
+        })
+
+        // 模板引擎渲染
+        layui.use('laytpl', function () {
+            // 定义一个模板引擎
+            laytpl = layui.laytpl;
+
+            // 用户中心渲染
+            var center_model = document.getElementById('m_center').innerHTML;
+            var center_view = document.getElementById('center');
+            laytpl(center_model).render(user_info, function (html) {
+                center_view.innerHTML = html;
+            });
+
+            // 用户信息渲染
+            var user_model = document.getElementById('m_user').innerHTML;
+            var user_view = document.getElementById('user');
+            laytpl(user_model).render(index_user_info, function (html) {
+                user_view.innerHTML = html;
+            });
+
+            // 最近帖子渲染
+            var latest_topic_model = document.getElementById('m_latest_topic').innerHTML;
+            var latest_topic_view = document.getElementById('latest_topic');
+            laytpl(latest_topic_model).render(latest_topic, function (html) {
+                latest_topic_view.innerHTML = html;
+            });
+
+        });
+
+    })
+</script>
 </body>
 </html>

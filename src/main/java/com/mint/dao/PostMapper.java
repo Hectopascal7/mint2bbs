@@ -28,5 +28,7 @@ public interface PostMapper {
 
     List<Post> getSectionHotPost(@Param("tb_name") String tb_name);
 
+    List<Post> getUserLatestTopic(String uid);
+
 //    List<PostEntity> getSectionPostWithPage1();
 }

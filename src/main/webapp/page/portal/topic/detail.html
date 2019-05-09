@@ -18,21 +18,16 @@
         <a class="fly-logo" href="/">
             <img src="/image/logo.png" alt="layui">
         </a>
+        <!-- 论坛主标题区 -->
         <ul class="layui-nav fly-nav layui-hide-xs">
             <li class="layui-nav-item layui-this">
-                <a href="/">
-                    <i class="iconfont icon-jiaoliu"></i>业主论坛
-                </a>
+                <a href="/"><i class="iconfont icon-jiaoliu"></i>论坛</a>
             </li>
             <li class="layui-nav-item">
-                <a href="/page/portal/market/market.html">
-                    <i class="iconfont icon-iconmingxinganli"></i>交易市场
-                </a>
+                <a href="/page/portal/market/market.html"><i class="iconfont icon-iconmingxinganli"></i>市场</a>
             </li>
             <li class="layui-nav-item">
-                <a href="http://www.layui.com/" target="_blank">
-                    <i class="iconfont icon-ui"></i>吐槽区
-                </a>
+                <a href="/page/portal/weibo/index.html" target="_blank"><i class="iconfont icon-ui"></i>微博</a>
             </li>
         </ul>
 
@@ -345,7 +340,10 @@
     </div>
     <fieldset class="layui-elem-field layui-field-title" style="text-align: center">
         <legend>
-            <button class="layui-btn layui-btn-sm layui-btn-primary" onclick="collect()">收藏<i class="layui-icon layui-icon-praise" style="font-size: 30px; color: black;"></i></button><button class="layui-btn layui-btn-sm layui-btn-primary" onclick="praise()">点赞<i class="layui-icon layui-icon-rate" style="font-size: 30px; color: black;"></i></button>
+            <button class="layui-btn layui-btn-sm layui-btn-primary" onclick="collect()">收藏<i
+                    class="layui-icon layui-icon-praise" style="font-size: 30px; color: black;"></i></button>
+            <button class="layui-btn layui-btn-sm layui-btn-primary" onclick="praise()">点赞<i
+                    class="layui-icon layui-icon-rate" style="font-size: 30px; color: black;"></i></button>
         </legend>
     </fieldset>
 </script>
@@ -465,12 +463,12 @@
 
     }
 
-    function praise(){
+    function praise() {
         $.ajax({
             type: 'post',
             url: '/praise/praise.do',
             data: {
-                section:tid
+                section: tid
             },
             dataType: 'json',
             async: false,
@@ -483,12 +481,12 @@
         })
     }
 
-    function collect(){
+    function collect() {
         $.ajax({
             type: 'post',
             url: '/collection/collect.do',
             data: {
-                tid:tid
+                tid: tid
             },
             dataType: 'json',
             async: false,

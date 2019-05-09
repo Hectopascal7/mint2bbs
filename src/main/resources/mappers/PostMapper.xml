@@ -407,4 +407,63 @@
     <!--from tb_news tn,tb_user tu-->
     <!--where tn.uid=tu.uid-->
     <!--</select>-->
+    <select id="getUserLatestTopic" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from
+        (
+
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_activity
+
+        union all
+
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_guide
+
+        union all
+
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_news
+
+        union all
+
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_notice
+
+        union all
+
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_topic
+
+        union all
+
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_advice
+
+        ) e
+        where
+        uid = #{uid}
+        limit 10
+    </select>
 </mapper>

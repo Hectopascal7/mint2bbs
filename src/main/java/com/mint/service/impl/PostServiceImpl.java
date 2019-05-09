@@ -257,4 +257,10 @@ public class PostServiceImpl implements IPostService {
         return ServerResponse.createBySuccess(replyList);
     }
 
+    @Override
+    public ServerResponse<List<Post>> getUserLatestTopic(String uid) {
+        List<Post> list = postMapper.getUserLatestTopic(uid);
+        return ServerResponse.createBySuccess(list);
+    }
+
 }

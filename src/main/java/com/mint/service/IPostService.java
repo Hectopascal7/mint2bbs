@@ -69,4 +69,12 @@ public interface IPostService {
     ServerResponse<HashMap<String, Object>> getPostDetail(String tid, String section);
 
     ServerResponse<List<List<Reply>>> getReplies(String tid);
+
+    /**
+     * @Description 获取板块内帖子列表
+     * @Param tid
+     * @Param section
+     * @Return ServerResponse<HashMap < String, Object>>
+     */
+    ServerResponse<List<Post>> getUserLatestTopic(String uid);
 }

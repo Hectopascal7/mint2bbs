@@ -4,6 +4,7 @@ import com.mint.common.ServerResponse;
 import com.mint.dao.CountMapper;
 import com.mint.dao.UserMapper;
 import com.mint.pojo.Count;
+import com.mint.pojo.User;
 import com.mint.service.ICountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,12 +38,18 @@ public class CountService implements ICountService {
         for(int i=0;i<list.size();i++){
             Count count=list.get(i);
             int tcount=count.getTcount()+count.getPcount()+count.getRcount();
-            String nickname=userMapper.getNicknameByUid(count.getUid());
+
+
+            User user=userMapper.selectByPrimaryKey(count.getUid());
+
+//            String nickname=userMapper.getNicknameByUid(count.getUid());
+            // 获取用户头像
 //            String profile=userMapper.getProfileByUid(count.getUid());
+
             HashMap<String,String> map=new HashMap<>();
             map.put("count",String.valueOf(tcount));
-            map.put("nickname",nickname);
-//            map.put("")
+            map.put("nickname",user.getNickname());
+            map.put("profile",user.getProfile());
             rlist.add(map);
         }
         return ServerResponse.createBySuccess(rlist);

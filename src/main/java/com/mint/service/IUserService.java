@@ -31,4 +31,5 @@ public interface IUserService {
      */
     ServerResponse<String> register(User user, Resident resident);
 
+    User getIndexUserInfo(String uid);
 }

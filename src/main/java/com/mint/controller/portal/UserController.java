@@ -85,4 +85,18 @@ public class UserController {
         return ServerResponse.createBySuccess(user);
     }
 
+    /**
+     * @Description 获取用户主页资料
+     * @Param user
+     * @Param resident
+     * @Param session
+     * @Return ServerResponse<String>
+     */
+    @RequestMapping(value = "getIndexUserInfo.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<User> getIndexUserInfo(String uid) {
+        User user = iUserService.getIndexUserInfo(uid);
+        return ServerResponse.createBySuccess(user);
+    }
+
 }

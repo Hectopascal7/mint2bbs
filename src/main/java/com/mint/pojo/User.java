@@ -26,7 +26,7 @@ public class User {
     private Integer point;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JSONField(format = "yyyy-MM-dd HH-mm:ss")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date jointime;
 
     private Integer ulevel;
