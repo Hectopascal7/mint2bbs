@@ -1,0 +1,27 @@
+package com.mint.dao;
+
+import com.mint.pojo.Reply;
+
+import java.util.List;
+
+public interface ReplyMapper {
+    int deleteByPrimaryKey(String rid);
+
+    int insert(Reply record);
+
+    int insertSelective(Reply record);
+
+    Reply selectByPrimaryKey(String rid);
+
+    int updateByPrimaryKeySelective(Reply record);
+
+    int updateByPrimaryKeyWithBLOBs(Reply record);
+
+    int updateByPrimaryKey(Reply record);
+
+    List<Reply> getMainReplies(String tid);
+
+    List<Reply> getUserLatestReply(String uid);
+
+    List<Reply> getHomeMoreReply(String uid);
+}
