@@ -17,15 +17,16 @@
         <a class="fly-logo" href="/">
             <img src="../../../image/logo.png" alt="layui">
         </a>
+        <!-- 论坛主标题区 -->
         <ul class="layui-nav fly-nav layui-hide-xs">
             <li class="layui-nav-item layui-this">
-                <a href="/"><i class="iconfont icon-jiaoliu"></i>交流</a>
+                <a href="/"><i class="iconfont icon-jiaoliu"></i>论坛</a>
             </li>
             <li class="layui-nav-item">
-                <a href="../case/case.html"><i class="iconfont icon-iconmingxinganli"></i>案例</a>
+                <a href="/page/portal/market/market.html"><i class="iconfont icon-iconmingxinganli"></i>市场</a>
             </li>
             <li class="layui-nav-item">
-                <a href="http://www.layui.com/" target="_blank"><i class="iconfont icon-ui"></i>框架</a>
+                <a href="/page/portal/weibo/index.html" target="_blank"><i class="iconfont icon-ui"></i>微博</a>
             </li>
         </ul>
 
@@ -205,7 +206,7 @@
             <label for="loginid" class="layui-form-label">登录账号</label>
             <div class="layui-input-inline">
                 <input type="text" id="loginid" name="email" required lay-verify="email"
-                       autocomplete="off" value="{{d.loginid}}" class="layui-input">
+                       autocomplete="off" value="{{d.loginid}}" class="layui-input" disabled>
             </div>
         </div>
         <div class="layui-form-item">
@@ -218,9 +219,9 @@
         <div class="layui-form-item">
             <label class="layui-form-label">用户角色</label>
             <div class="layui-input-inline">
-                {{# if(d.role !== 1){ }}
+                {{# if(d.role === 1){ }}
                 <input type="text" name="email" required lay-verify="email"
-                       autocomplete="off" value="管理员" class="layui-input">
+                       autocomplete="off" value="管理员" class="layui-input" disabled>
                 {{#} else {}}
                 <input type="text" name="email" required lay-verify="email"
                        autocomplete="off" value="业主用户" class="layui-input">
@@ -231,14 +232,14 @@
             <label for="ulevel" class="layui-form-label">用户等级</label>
             <div class="layui-input-inline">
                 <input type="text" id="ulevel" name="email" required lay-verify="email"
-                       autocomplete="off" value="{{d.ulevel}}" class="layui-input">
+                       autocomplete="off" value="{{d.ulevel}}" class="layui-input" disabled>
             </div>
         </div>
         <div class="layui-form-item">
             <label for="point" class="layui-form-label">用户积分</label>
             <div class="layui-input-inline">
                 <input type="text" id="point" name="city" autocomplete="off" value="{{d.point}}"
-                       class="layui-input">
+                       class="layui-input" disabled>
             </div>
         </div>
         <div class="layui-form-item">

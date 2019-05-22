@@ -8,6 +8,7 @@
     <meta name="description" content="Fly社区是模块化前端UI框架Layui的官网社区，致力于为web开发提供强劲动力">
     <link rel="stylesheet" href="../../../script/layui/css/layui.css">
     <link rel="stylesheet" href="../../../css/global.css">
+    <script src="/script/jquery-3.3.1.min.js"></script>
 </head>
 <body>
 
@@ -16,36 +17,21 @@
         <a class="fly-logo" href="/">
             <img src="../../../image/logo.png" alt="layui">
         </a>
+        <!-- 论坛主标题区 -->
         <ul class="layui-nav fly-nav layui-hide-xs">
-            <li class="layui-nav-item layui-this">
-                <a href="/"><i class="iconfont icon-jiaoliu"></i>业主论坛</a>
+            <li class="layui-nav-item">
+                <a href="/"><i class="iconfont icon-jiaoliu"></i>论坛</a>
             </li>
             <li class="layui-nav-item">
-                <a href="/page/portal/market/market.html"><i class="iconfont icon-iconmingxinganli"></i>交易市场</a>
+                <a href="/page/portal/market/market.html"><i class="iconfont icon-iconmingxinganli"></i>市场</a>
             </li>
             <li class="layui-nav-item">
-                <a href="http://www.layui.com/" target="_blank"><i class="iconfont icon-ui"></i>吐槽区</a>
+                <a href="/page/portal/weibo/index.html" target="_blank"><i class="iconfont icon-ui"></i>微博</a>
             </li>
         </ul>
-
         <ul class="layui-nav fly-nav-user">
             <!-- 登入后的状态 -->
-            <li class="layui-nav-item">
-                <a class="fly-nav-avatar" href="javascript:;">
-                    <cite class="layui-hide-xs">橙色薄荷°</cite>
-                    <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：layui 作者"></i>
-                    <i class="layui-badge fly-badge-vip layui-hide-xs">管理员</i>
-                    <img src="../../../image/asuna.jpg">
-                </a>
-                <dl class="layui-nav-child">
-                    <dd><a href="setting.html"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
-                    <dd><a href="message.html"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a>
-                    </dd>
-                    <dd><a href="home.html"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
-                    </dd>
-                    <hr style="margin: 5px 0;">
-                    <dd><a href="" style="text-align: center;">退出</a></dd>
-                </dl>
+            <li class="layui-nav-item" id="center">
             </li>
         </ul>
     </div>
@@ -122,8 +108,52 @@
                             <a class="mine-edit" href="/jie/edit/8116">编辑</a>
                             <em>661阅/10答</em>
                         </li>
+                        <li>
+                            <a class="jie-title" href="../jie/detail.html" target="_blank">基于 layui 的极简社区页面模版</a>
+                            <i>2017/3/14 上午8:30:00</i>
+                            <a class="mine-edit" href="/jie/edit/8116">编辑</a>
+                            <em>661阅/10答</em>
+                        </li>
+                        <li>
+                            <a class="jie-title" href="../jie/detail.html" target="_blank">基于 layui 的极简社区页面模版</a>
+                            <i>2017/3/14 上午8:30:00</i>
+                            <a class="mine-edit" href="/jie/edit/8116">编辑</a>
+                            <em>661阅/10答</em>
+                        </li>
+                        <li>
+                            <a class="jie-title" href="../jie/detail.html" target="_blank">基于 layui 的极简社区页面模版</a>
+                            <i>2017/3/14 上午8:30:00</i>
+                            <a class="mine-edit" href="/jie/edit/8116">编辑</a>
+                            <em>661阅/10答</em>
+                        </li>
+                        <li>
+                            <a class="jie-title" href="../jie/detail.html" target="_blank">基于 layui 的极简社区页面模版</a>
+                            <i>2017/3/14 上午8:30:00</i>
+                            <a class="mine-edit" href="/jie/edit/8116">编辑</a>
+                            <em>661阅/10答</em>
+                        </li>
+                        <li>
+                            <a class="jie-title" href="../jie/detail.html" target="_blank">基于 layui 的极简社区页面模版</a>
+                            <i>2017/3/14 上午8:30:00</i>
+                            <a class="mine-edit" href="/jie/edit/8116">编辑</a>
+                            <em>661阅/10答</em>
+                        </li>
+                        <li>
+                            <a class="jie-title" href="../jie/detail.html" target="_blank">基于 layui 的极简社区页面模版</a>
+                            <i>2017/3/14 上午8:30:00</i>
+                            <a class="mine-edit" href="/jie/edit/8116">编辑</a>
+                            <em>661阅/10答</em>
+                        </li>
+                        <li>
+                            <a class="jie-title" href="../jie/detail.html" target="_blank">基于 layui 的极简社区页面模版</a>
+                            <i>2017/3/14 上午8:30:00</i>
+                            <a class="mine-edit" href="/jie/edit/8116">编辑</a>
+                            <em>661阅/10答</em>
+                        </li>
                     </ul>
-                    <div id="LAY_page"></div>
+                    <div style="text-align: center">
+                        <div id="topic_page"></div>
+                    </div>
                 </div>
                 <div class="layui-tab-item">
                     <ul class="mine-view jie-row">
@@ -131,7 +161,9 @@
                             <a class="jie-title" href="../jie/detail.html" target="_blank">基于 layui 的极简社区页面模版</a>
                             <i>收藏于23小时前</i></li>
                     </ul>
-                    <div id="LAY_page1"></div>
+                    <div style="text-align: center">
+                        <div id="collection_page"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -149,6 +181,7 @@
 </div>
 
 <script src="../../../script/layui/layui.js"></script>
+<script src="/script/data.js"></script>
 <script>
     layui.cache.page = 'user';
     layui.cache.user = {
@@ -165,6 +198,127 @@
         fly: 'index'
     }).use('fly');
 </script>
+
+<!--用户中心模板-->
+<script id="m_center" type="text/html">
+    <a class="fly-nav-avatar" href="javascript:;">
+        <cite>{{ d.nickname }}</cite>
+        {{# if(d.role === 1){ }}
+        <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：管理员"></i>
+        <i class="layui-badge fly-badge-vip layui-hide-xs" title="积分 {{d.point}}">Lv.3</i>
+        {{# } }}
+        <img src="{{d.profile}}">
+    </a>
+    <dl class="layui-nav-child">
+        <dd>
+            <a href="/page/portal/user/home.html?user={{d.uid}}"><i class="layui-icon"
+                                                                    style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
+        </dd>
+        <dd>
+            <a href="/page/portal/user/message.html"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a>
+        </dd>
+        <dd>
+            <a href="/page/portal/user/setting.html"><i class="layui-icon">&#xe620;</i>基本设置</a>
+        </dd>
+        <hr style="margin: 5px 0;">
+        <dd><a href="" style="text-align: center;">退出</a></dd>
+    </dl>
+</script>
+
+<script>
+    layui.use(['laypage', 'layer'], function () {
+        var laypage = layui.laypage;
+        var layer = layui.layer;
+        //自定义每页条数的选择项
+        laypage.render({
+            elem: 'topic_page',
+            count: 100,
+            limit: 10,
+            limits: [10, 20, 50],
+            layout: ['prev', 'page', 'next', 'limit', 'refresh', 'skip'],
+            // theme: 'main',
+            jump: function (obj, first) {
+                var data_list;
+                $.ajax({
+                    type: 'post',
+                    url: '/post/getSectionPostWithPage.do',
+                    dataType: 'json',
+                    data: {
+                        section: section,
+                        kind: kind,
+                        order: order,
+                        page: obj.curr,
+                        limit: obj.limit,
+                    },
+                    async: false,
+                    success: function (data) {
+                        data_list = data.data;
+                    },
+                    error: function (data) {
+                        layer.msg("获取帖子失败！");
+                    }
+                })
+                layui.use('laytpl', function () {
+                    laytpl = layui.laytpl;
+                    // 帖子模块渲染
+                    var post_model = document.getElementById('m_post').innerHTML;
+                    var post_view = document.getElementById('post');
+                    laytpl(post_model).render(data_list, function (html) {
+                        post_view.innerHTML = html;
+                    });
+                });
+            }
+        });
+    })
+</script>
+
+<script>
+    layui.use(['laypage', 'layer'], function () {
+        var laypage = layui.laypage;
+        var layer = layui.layer;
+        //自定义每页条数的选择项
+        laypage.render({
+            elem: 'collection_page',
+            count: 100,
+            limit: 10,
+            limits: [10, 20, 50],
+            layout: ['prev', 'page', 'next', 'limit', 'refresh', 'skip'],
+            // theme: 'main',
+            jump: function (obj, first) {
+                var data_list;
+                $.ajax({
+                    type: 'post',
+                    url: '/post/getSectionPostWithPage.do',
+                    dataType: 'json',
+                    data: {
+                        section: section,
+                        kind: kind,
+                        order: order,
+                        page: obj.curr,
+                        limit: obj.limit,
+                    },
+                    async: false,
+                    success: function (data) {
+                        data_list = data.data;
+                    },
+                    error: function (data) {
+                        layer.msg("获取帖子失败！");
+                    }
+                })
+                layui.use('laytpl', function () {
+                    laytpl = layui.laytpl;
+                    // 帖子模块渲染
+                    var post_model = document.getElementById('m_post').innerHTML;
+                    var post_view = document.getElementById('post');
+                    laytpl(post_model).render(data_list, function (html) {
+                        post_view.innerHTML = html;
+                    });
+                });
+            }
+        });
+    })
+</script>
+
 
 </body>
 </html>

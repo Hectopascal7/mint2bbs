@@ -94,7 +94,7 @@
                     <i class="fly-mid"></i>
                     <a href="javascript:;" class="fly-link" id="LAY_signinHelp">说明</a>
                     <i class="fly-mid"></i>
-                    <a href="javascript:;" class="fly-link" id="LAY_signinTop">活跃榜<span class="layui-badge-dot"></span></a>
+
                     <span class="fly-signin-days">已连续签到<cite>16</cite>天</span>
                 </div>
                 <div class="fly-panel-main fly-signin-main">
@@ -116,14 +116,27 @@
 
             <dl class="fly-panel fly-list-one" id="hot_post"></dl>
 
+            <!--            <div class="fly-panel">-->
+            <!--                <div class="fly-panel-title">-->
+            <!--                    社区工具栏-->
+            <!--                </div>-->
+            <!--                <div class="fly-panel-main">-->
+            <!--                    <a href="" target="_blank" class="fly-zanzhu"-->
+            <!--                       time-limit="2017.09.25-2099.01.01" style="background-color: #5FB878;">车牌号查询</a>-->
+            <!--                    <a href="" target="_blank" class="fly-zanzhu"-->
+            <!--                       time-limit="2017.09.25-2099.01.01" style="background-color: #5FB878;">社区选举投票</a>-->
+            <!--                </div>-->
+            <!--            </div>-->
             <div class="fly-panel">
                 <div class="fly-panel-title">
                     社区工具栏
                 </div>
                 <div class="fly-panel-main">
-                    <a href="" target="_blank" class="fly-zanzhu"
-                       time-limit="2017.09.25-2099.01.01" style="background-color: #5FB878;">车牌号查询</a>
-                    <a href="" target="_blank" class="fly-zanzhu"
+                    <button class="fly-zanzhu tool" data-method="offset"
+                            time-limit="2017.09.25-2099.01.01" style="background-color: #5FB878;width: 100%;border: 0">
+                        车牌号查询
+                    </button>
+                    <a class="fly-zanzhu tool" data-method="offset" href=""
                        time-limit="2017.09.25-2099.01.01" style="background-color: #5FB878;">社区选举投票</a>
                 </div>
             </div>
@@ -241,7 +254,7 @@
     <dl class="layui-nav-child">
         <dd>
             <a href="/page/portal/user/home.html?user={{d.uid}}"><i class="layui-icon"
-                                                               style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
+                                                                    style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
         </dd>
         <dd>
             <a href="/page/portal/user/message.html"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a>
@@ -268,7 +281,8 @@
         {{# }); }}
         <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li>
         <!--用户登入后显示-->
-        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="/page/portal/user/index.html#index">我的贴子</a></li>
+        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="/page/portal/user/index.html#index">我的贴子</a>
+        </li>
         <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a
                 href="/page/portal/user/index.html#collection">收藏</a>
         </li>
@@ -389,17 +403,19 @@
 
 <!--活跃用户榜单模板-->
 <script type="text/html" id="m_active_user">
+    {{# if(d.length===0){ }}
     <dd>
-        {{# layui.each(d, function(index, item){ }}
+        <!-- 无数据时 -->
+        <div class="fly-none">暂无数据</div>
+    </dd>
+    {{# } }}
+    {{# layui.each(d, function(index, item){ }}
+    <dd>
         <a href="user/home.html">
             <img src="{{item.profile}}"><cite>{{item.nickname}}</cite><i>活跃度 {{item.count}}</i>
         </a>
-        {{# }); }}
-        {{# if(d.length===0){ }}
-        <!-- 无数据时 -->
-        <div class="fly-none">暂无数据</div>
-        {{# } }}
     </dd>
+    {{# }); }}
 </script>
 
 <script>
@@ -427,6 +443,8 @@
         order = "ptime";
         $("#new").addClass("layui-this");
         $("#hot").removeClass("layui-this");
+        9
+
         firstGetData();
     }
 
@@ -715,6 +733,52 @@
 
     })
 
+</script>
+
+<!--社区工具栏-->
+<script>
+    layui.use('layer', function () { //独立版的layer无需执行这一句
+        var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
+        //触发事件
+        var active = {
+            offset: function (othis) {
+                var type = othis.data('type');
+                var text = '<input type="text" id="license" lay-verify="title" autocomplete="off" placeholder="请输入车牌号..." class="layui-input">';
+                layer.open({
+                    type: 1
+                    , offset: type //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+                    , id: 'layerDemo' + type //防止重复弹出
+                    , content: '<div style="padding: 20px 100px;">' + text + '</div>'
+                    , btn: '查询'
+                    , btnAlign: 'c' //按钮居中
+                    , shade: 0 //不显示遮罩
+                    , yes: function () {
+                        var license = $("#license").val();
+                        $.ajax({
+                            type: 'post',
+                            url: '/user/getUserByLicense.do',
+                            dataType: 'json',
+                            data: {
+                                license: license
+                            },
+                            success: function (data) {
+                                layer.alert(data.data.name + data.data.phone);
+                            },
+                            error: function (data) {
+                                layer.msg("查询失败！");
+                            }
+                        })
+                        // layer.closeAll();
+                    }
+                });
+            }
+        };
+        $('.tool').on('click', function () {
+            var othis = $(this), method = othis.data('method');
+            active[method] ? active[method].call(this, othis) : '';
+        });
+
+    });
 </script>
 
 </html>

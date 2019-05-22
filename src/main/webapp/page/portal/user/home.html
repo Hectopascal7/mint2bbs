@@ -11,7 +11,7 @@
     <script src="/script/jquery-3.3.1.min.js"></script>
 </head>
 <body style="margin-top: 65px;">
-<div class="fly-header layui-bg-black">
+<div class="fly-header layui-bg-blue">
     <div class="layui-container">
         <a class="fly-logo" href="/">
             <img src="../../../image/logo.png" alt="layui">
@@ -22,7 +22,7 @@
                 <a href="/"><i class="iconfont icon-jiaoliu"></i>论坛</a>
             </li>
             <li class="layui-nav-item">
-                <a href="/page/portal/market/market.html"><i class="iconfont icon-iconmingxinganli"></i>市场</a>
+                <a href="/page/portal/market/market.html"><i class="iconfont icon-option"></i>市场</a>
             </li>
             <li class="layui-nav-item">
                 <a href="/page/portal/weibo/index.html" target="_blank"><i class="iconfont icon-ui"></i>微博</a>
@@ -44,41 +44,12 @@
     <div class="layui-row layui-col-space15">
         <!-- 最近的帖子 -->
         <div class="layui-col-md6 fly-home-jie" id="latest_topic"></div>
-
-        <div class="layui-col-md6 fly-home-da">
-            <div class="fly-panel">
-                <h3 class="fly-panel-title">橙色薄荷° 最近的回复</h3>
-                <ul class="home-jieda">
-                    <li>
-                        <p>
-                            <span>1分钟前</span>
-                            在<a href="" target="_blank">tips能同时渲染多个吗?</a>中回答：
-                        </p>
-                        <div class="home-dacontent">
-                            尝试给layer.photos加上这个属性试试：
-                            <pre>
-full: true
-</pre>
-                            文档没有提及
-                        </div>
-                    </li>
-                    <li>
-                        <p>
-                            <span>5分钟前</span>
-                            在<a href="" target="_blank">在Fly社区用的是什么系统啊?</a>中回答：
-                        </p>
-                        <div class="home-dacontent">
-                            Fly社区采用的是NodeJS。分享出来的只是前端模版
-                        </div>
-                    </li>
-
-                    <!-- <div class="fly-none" style="min-height: 50px; padding:30px 0; height:auto;"><span>没有回答任何问题</span></div> -->
-                </ul>
-            </div>
-        </div>
+        <!-- 最近的回复 -->
+        <div class="layui-col-md6 fly-home-da" id="latest_reply"></div>
     </div>
 </div>
 
+<!-- 网页尾部 -->
 <div class="fly-footer">
     <p>
         <a href="http://fly.layui.com/" target="_blank">薄荷社区</a> 2019 &copy;
@@ -89,10 +60,17 @@ full: true
     </p>
 </div>
 
-<!--最近的帖子模板-->
+<!-- 最近的帖子模板-简略模式 -->
 <script type="text/html" id="m_latest_topic">
     <div class="fly-panel">
-        <h3 class="fly-panel-title">橙色薄荷° 最近的帖子</h3>
+        <h3 class="fly-panel-title">Ta 最近的帖子</h3>
+        {{# if(d.length===0){ }}
+        <ul class="jie-row">
+            <!-- 无数据时 -->
+            <div class="fly-none" style="min-height: 50px; padding:30px 0; height:auto;"><i style="font-size:14px;">Ta还没有发表任何帖子呢...</i>
+            </div>
+        </ul>
+        {{#} else {}}
         <ul class="jie-row">
             {{# layui.each(d, function(index, item){ }}
             <li>
@@ -102,23 +80,109 @@ full: true
                 <em class="layui-hide-xs">{{item.rcount}}阅/{{item.pcount}}赞</em>
             </li>
             {{# }); }}
+            <div style="text-align: center">
+                <div class="laypage-main">
+                    <a class="laypage-next" href="javascript:getHomeMoreTopic()">查看全部</a>
+                </div>
+            </div>
+        </ul>
+        {{# } }}
+    </div>
+
+</script>
+
+<!-- 最近的帖子模板-全部模式 -->
+<script type="text/html" id="m_more_topic">
+    <div class="fly-panel">
+        <h3 class="fly-panel-title">Ta 最近的帖子</h3>
+        <ul class="jie-row">
+            {{# layui.each(d, function(index, item){ }}
+            <li>
+                {{# if(item.isbest===1){ }}
+                <span class="fly-jing">精</span>
+                {{#} else {}}
+                <span class="fly-jing">帖</span>
+                {{# } }}
+                <a href="" class="jie-title">{{item.title}}</a>
+                <i>{{item.ptime}}</i>
+                <em class="layui-hide-xs">{{item.rcount}}阅/{{item.pcount}}赞</em>
+            </li>
+            {{# }); }}
             {{# if(d.length===0){ }}
             <!-- 无数据时 -->
-
             <div class="fly-none" style="min-height: 50px; padding:30px 0; height:auto;"><i style="font-size:14px;">Ta还没有发表任何帖子呢...</i>
             </div>
-
             {{# } }}
             <div style="text-align: center">
                 <div class="laypage-main">
-                    <a class="laypage-next" href="javascript:getMore()">查看全部</a>
+                    <a class="laypage-next" href="javascript:getHomePartTopic()">收起...</a>
                 </div>
             </div>
         </ul>
     </div>
 </script>
 
-<!--用户中心模板-->
+<!-- 最近的回复模板-简略模式 -->
+<script type="text/html" id="m_latest_reply">
+    <div class="fly-panel">
+        <h3 class="fly-panel-title">Ta 最近的回复</h3>
+        {{# if(d.length===0){ }}
+        <!-- 无数据时 -->
+        <div class="fly-none" style="min-height: 50px; padding:30px 0; height:auto;">
+            <span>Ta还没有回复任何帖子</span>
+        </div>
+        {{#} else {}}
+        <ul class="home-jieda">
+            {{# layui.each(d, function(index, item){ }}
+            <li>
+                <p>
+                    <span>{{item.ptime}}</span>
+                    在<a href="/page/portal/topic/detail.html?post={{item.tid}}&section={{item.sid}}" target="_blank">{{item.title}}</a>中回答：
+                </p>
+                <div class="home-dacontent">{{item.content}}</div>
+            </li>
+            {{# }); }}
+            <div style="text-align: center">
+                <div class="laypage-main">
+                    <a class="laypage-next" href="javascript:getHomeMoreReply()">查看全部</a>
+                </div>
+            </div>
+        </ul>
+        {{# } }}
+    </div>
+</script>
+
+<!-- 最近的回复模板-全部模式 -->
+<script type="text/html" id="m_more_reply">
+    <div class="fly-panel">
+        <h3 class="fly-panel-title">Ta 最近的回复</h3>
+        {{# if(d.length===0){ }}
+        <!-- 无数据时 -->
+        <div class="fly-none" style="min-height: 50px; padding:30px 0; height:auto;">
+            <span>Ta还没有回复任何帖子</span>
+        </div>
+        {{#} else {}}
+        <ul class="home-jieda">
+            {{# layui.each(d, function(index, item){ }}
+            <li>
+                <p>
+                    <span>{{item.ptime}}</span>
+                    在<a href="/page/portal/topic/detail.html?post={{item.tid}}&section={{item.sid}}" target="_blank">{{item.title}}</a>中回答：
+                </p>
+                <div class="home-dacontent">{{item.content}}</div>
+            </li>
+            {{# }); }}
+            <div style="text-align: center">
+                <div class="laypage-main">
+                    <a class="laypage-next" href="javascript:getHomePartReply()">收起...</a>
+                </div>
+            </div>
+        </ul>
+        {{# } }}
+    </div>
+</script>
+
+<!-- 用户中心模板 -->
 <script id="m_center" type="text/html">
     <a class="fly-nav-avatar" href="javascript:;">
         <cite>{{ d.nickname }}</cite>
@@ -144,6 +208,7 @@ full: true
     </dl>
 </script>
 
+<!-- 用户信息模板 -->
 <script id="m_user" type="text/html">
     <img src="{{d.profile}}" alt="橙色薄荷°">
     <i class="iconfont icon-renzheng" title="Fly社区认证"></i>
@@ -158,27 +223,26 @@ full: true
         {{# if(d.role !== 1){ }}
         <i class="layui-badge fly-badge-vip">管理员</i>
         {{# } }}
-
-        <!--
-        <span style="color:#c00;">（管理员）</span>
-    <span style="color:#5FB878;">（社区之光）</span>
-    <span>（该号已被封）</span>
-    -->
+<!--        <span style="color:#c00;">（管理员）</span>-->
+<!--        <span style="color:#5FB878;">（社区之光）</span>-->
+<!--        <span>（该号已被封）</span>-->
     </h1>
-    {{# if(d.role !== 1){ }}
-    <p style="padding: 10px 0; color: black;">认证信息：layui 作者</p>
+    {{# if(d.role === 1){ }}
+    <p style="padding: 10px 0; color: black;">认证信息：薄荷社区管理员</p>
+    {{#} else {}}
+    <p style="padding: 10px 0; color: black;"><b>欢迎光临我的主页！</b></p>
     {{# } }}
-
-    <p class="fly-home-info">
-        <i class="iconfont icon-kiss" title="飞吻"></i>
-        <span style="color: black;">66666 飞吻</span>
-        <i class="iconfont icon-shijian"></i><span>{{d.jointime}}加入</span>
-        <i class="iconfont icon-chengshi"></i><span>来自杭州</span>
+    <p class="fly-home-info" >
+<!--        <i class="iconfont icon-kiss" title="飞吻"></i>-->
+<!--        <span style="color: black;">66666 飞吻</span>-->
+        <i class="iconfont icon-shijian"  style="color: black"></i><span style="color: black"><b>{{d.jointime}}加入</b></span>
+<!--        <i class="iconfont icon-chengshi"></i><span>来自杭州</span>-->
     </p>
-    <p class="fly-home-sign">个性签名：{{d.signature}}</p>
+    <p class="fly-home-sign"><b>{{d.signature}}</b></p>
 </script>
 
 <script src="../../../script/layui/layui.js"></script>
+
 <script>
     layui.cache.page = 'user';
     layui.cache.user = {
@@ -198,6 +262,7 @@ full: true
 
 <script>
 
+    // 获取地址栏参数方法
     function getQueryParameter(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
         var r = window.location.search.substr(1).match(reg);
@@ -228,6 +293,25 @@ full: true
             },
             error: function (data) {
                 layer.msg("获取用户最近帖子失败！");
+            }
+        })
+
+        // 最近回复数据
+        var latest_reply;
+        // ajax-用户最近回复获取
+        $.ajax({
+            type: 'post',
+            url: '/reply/getUserLatestReply.do',
+            dataType: 'json',
+            data: {
+                uid: uid
+            },
+            async: false,
+            success: function (data) {
+                latest_reply = data.data;
+            },
+            error: function (data) {
+                layer.msg("获取用户最近回复失败！");
             }
         })
 
@@ -294,9 +378,127 @@ full: true
                 latest_topic_view.innerHTML = html;
             });
 
+            // 最近回复渲染
+            var latest_reply_model = document.getElementById('m_latest_reply').innerHTML;
+            var latest_reply_view = document.getElementById('latest_reply');
+            laytpl(latest_reply_model).render(latest_reply, function (html) {
+                latest_reply_view.innerHTML = html;
+            });
+
         });
 
     })
+
+
+    function getHomeMoreTopic() {
+        var more_topic;
+        $.ajax({
+            type: 'post',
+            url: '/post/getHomeMoreTopic.do',
+            dataType: 'json',
+            data: {
+                uid: uid
+            },
+            async: false,
+            success: function (data) {
+                more_topic = data.data;
+            },
+            error: function (data) {
+                layer.msg("获取用户最近帖子失败！");
+            }
+        })
+        // 模板引擎渲染
+        layui.use('laytpl', function () {
+            // 最近帖子渲染
+            var more_topic_model = document.getElementById('m_more_topic').innerHTML;
+            var more_topic_view = document.getElementById('latest_topic');
+            laytpl(more_topic_model).render(more_topic, function (html) {
+                more_topic_view.innerHTML = html;
+            });
+        });
+    }
+
+    function getHomePartTopic() {
+        // 最近帖子数据
+        var latest_topic;
+        // ajax-用户活跃榜数据获取
+        $.ajax({
+            type: 'post',
+            url: '/post/getUserLatestTopic.do',
+            dataType: 'json',
+            data: {
+                uid: uid
+            },
+            async: false,
+            success: function (data) {
+                latest_topic = data.data;
+            },
+            error: function (data) {
+                layer.msg("获取用户最近帖子失败！");
+            }
+        })
+        // 最近帖子渲染
+        var latest_topic_model = document.getElementById('m_latest_topic').innerHTML;
+        var latest_topic_view = document.getElementById('latest_topic');
+        laytpl(latest_topic_model).render(latest_topic, function (html) {
+            latest_topic_view.innerHTML = html;
+        });
+    }
+
+    function getHomeMoreReply() {
+        var more_topic;
+        $.ajax({
+            type: 'post',
+            url: '/reply/getHomeMoreReply.do',
+            dataType: 'json',
+            data: {
+                uid: uid
+            },
+            async: false,
+            success: function (data) {
+                more_reply = data.data;
+            },
+            error: function (data) {
+                layer.msg("获取用户最近帖子失败！");
+            }
+        })
+        // 模板引擎渲染
+        layui.use('laytpl', function () {
+            // 最近帖子渲染
+            var more_reply_model = document.getElementById('m_more_reply').innerHTML;
+            var more_reply_view = document.getElementById('latest_reply');
+            laytpl(more_reply_model).render(more_reply, function (html) {
+                more_reply_view.innerHTML = html;
+            });
+        });
+    }
+    function getHomePartReply() {
+        var latest_reply;
+        $.ajax({
+            type: 'post',
+            url: '/reply/getUserLatestReply.do',
+            dataType: 'json',
+            data: {
+                uid: uid
+            },
+            async: false,
+            success: function (data) {
+                latest_reply = data.data;
+            },
+            error: function (data) {
+                layer.msg("获取用户最近帖子失败！");
+            }
+        })
+        // 模板引擎渲染
+        layui.use('laytpl', function () {
+            // 最近回复渲染
+            var latest_reply_model = document.getElementById('m_latest_reply').innerHTML;
+            var latest_reply_view = document.getElementById('latest_reply');
+            laytpl(latest_reply_model).render(latest_reply, function (html) {
+                latest_reply_view.innerHTML = html;
+            });
+        });
+    }
 </script>
 </body>
 </html>

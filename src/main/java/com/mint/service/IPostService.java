@@ -77,4 +77,6 @@ public interface IPostService {
      * @Return ServerResponse<HashMap < String, Object>>
      */
     ServerResponse<List<Post>> getUserLatestTopic(String uid);
+
+    ServerResponse<List<Post>> getHomeMoreTopic(String uid);
 }

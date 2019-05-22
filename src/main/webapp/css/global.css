@@ -58,7 +58,7 @@ i {
     content: "\e61d"
 }
 
-.icon-shezhi:before {
+.icon-option:before {
     content: "\e607"
 }
 
@@ -884,7 +884,7 @@ pre {
 }
 
 /*.fly-list li:last-child {*/
-    /*border-bottom: none;*/
+/*border-bottom: none;*/
 /*}*/
 
 .fly-list li h2,
@@ -1985,7 +1985,7 @@ body .fly-user-main {
     position: absolute;
     bottom: 20px;
     left: 50%;
-    margin-left: -29px;
+    margin-left: -41px;
 }
 
 .fly-case-img:hover .layui-btn {

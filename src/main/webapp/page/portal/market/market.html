@@ -7,9 +7,11 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>发现 Layui 2017 年度最佳案例</title>
+    <title>薄荷市场</title>
+    <link rel="icon" href="/image/favicon.ico">
     <link rel="stylesheet" href="../../../script/layui/css/layui.css">
     <link rel="stylesheet" href="../../../css/global.css">
+    <script src="/script/jquery-3.3.1.min.js"></script>
     <style>
         .header {
             border-bottom: 1px solid #404553;
@@ -65,10 +67,10 @@
 </div>
 
 <div class="fly-case-header">
-    <p class="fly-case-year">薄荷社区</p>
-    <a href="/case/{{ year }}/">
-        <img class="fly-case-banner" src="../../../image/case.png" alt="发现 Layui 年度最佳案例">
-    </a>
+    <p class="fly-case-year">薄荷市场欢迎您！</p>
+    <!--    <a href="/case/{{ year }}/">-->
+    <!--        <img class="fly-case-banner" src="../../../image/case.png" alt="发现 Layui 年度最佳案例">-->
+    <!--    </a>-->
     <div class="fly-case-btn">
         <a href="javascript:;" class="layui-btn layui-btn-big fly-case-active" data-type="push">发布商品</a>
         <a href="" class="layui-btn layui-btn-primary layui-btn-big">我的商品</a>
@@ -81,166 +83,22 @@
 
     <div class="fly-tab-border fly-case-tab">
     <span>
-      <a href="" class="tab-this">二手商品</a>
-      <a href="">新商品</a>
+      <a class="tab-this" href="javascript:getOldGoodList()" id="getOldGoodList">二手商品</a>
+      <a href="javascript:getNewGoodList()" id="getNewGoodList">崭新商品</a>
     </span>
     </div>
     <div class="layui-tab layui-tab-brief">
         <ul class="layui-tab-title">
-            <li class="layui-this"><a href="">按提交时间</a></li>
-            <li><a href="">按价格排行</a></li>
+            <li class="layui-this" onclick="getGoodListByPtime()" id="getGoodListByPtime">按提交时间</li>
+            <li onclick="getGoodListByPrice()" id="getGoodListByPrice">按价格排行</li>
         </ul>
+
     </div>
-
-    <ul class="fly-case-list">
-        <li data-id="123">
-            <a class="fly-case-img" href="http://fly.layui.com/" target="_blank">
-                <img src="../../../image/asuna.jpg" alt="Fly社区">
-                <cite class="layui-btn layui-btn-primary layui-btn-small">去围观</cite>
-            </a>
-            <h2><a href="http://fly.layui.com/" target="_blank">Fly社区</a></h2>
-            <p class="fly-case-desc">Fly 社区是 layui 的官方社区，全站的前端层面基于 Layui 风格编写，轻量而简洁，并且模版已经开源，可用于极简社区模板。</p>
-            <div class="fly-case-info">
-                <a href="../user/home.html" class="fly-case-user" target="_blank"><img
-                        src="../../../image/asuna.jpg"></a>
-                <p class="layui-elip" style="font-size: 12px;"><span style="color: #666;">橙色薄荷橙</span></p>
-                <p><a class="fly-case-nums fly-case-active" href="javascript:;" data-type="showPraise"
-                      style=" padding:0 0px; color: #01AAED;">2019年3月7日</a></p>
-                <button class="layui-btn layui-btn-primary fly-case-active" data-type="praise">已出售</button>
-                <!-- <button class="layui-btn  fly-case-active" data-type="praise">已赞</button> -->
-            </div>
-        </li>
-        <li data-id="123">
-            <a class="fly-case-img" href="http://fly.layui.com/" target="_blank">
-                <img src="../../../image/asuna.jpg" alt="Fly社区">
-                <cite class="layui-btn layui-btn-primary layui-btn-small">去围观</cite>
-            </a>
-            <h2><a href="http://fly.layui.com/" target="_blank">Fly社区</a></h2>
-            <p class="fly-case-desc">Fly 社区是 layui 的官方社区，全站的前端层面基于 Layui 风格编写，轻量而简洁，并且模版已经开源，可用于极简社区模板。</p>
-            <div class="fly-case-info">
-                <a href="../user/home.html" class="fly-case-user" target="_blank"><img
-                        src="../../../image/asuna.jpg"></a>
-                <p class="layui-elip" style="font-size: 12px;"><span style="color: #666;">橙色薄荷°</span></p>
-                <p>获得<a class="fly-case-nums fly-case-active" href="javascript:;" data-type="showPraise"
-                        style=" padding:0 5px; color: #01AAED;">666</a>个赞</p>
-                <button class="layui-btn" data-type="praise">￥1999</button>
-            </div>
-        </li>
-        <li data-id="123">
-            <a class="fly-case-img" href="http://fly.layui.com/" target="_blank">
-                <img src="../../../image/asuna.jpg" alt="Fly社区">
-                <cite class="layui-btn layui-btn-primary layui-btn-small">去围观</cite>
-            </a>
-            <h2><a href="http://fly.layui.com/" target="_blank">Fly社区</a></h2>
-            <p class="fly-case-desc">Fly 社区是 layui 的官方社区，全站的前端层面基于 Layui 风格编写，轻量而简洁，并且模版已经开源，可用于极简社区模板。</p>
-            <div class="fly-case-info">
-                <a href="../user/home.html" class="fly-case-user" target="_blank"><img
-                        src="../../../image/asuna.jpg"></a>
-                <p class="layui-elip" style="font-size: 12px;"><span style="color: #666;">橙色薄荷°</span></p>
-                <p>获得<a class="fly-case-nums fly-case-active" href="javascript:;" data-type="showPraise"
-                        style=" padding:0 5px; color: #01AAED;">666</a>个赞</p>
-                <button class="layui-btn layui-btn-primary fly-case-active" data-type="praise">￥1888</button>
-                <!-- <button class="layui-btn  fly-case-active" data-type="praise">已赞</button> -->
-            </div>
-        </li>
-        <li data-id="123">
-            <a class="fly-case-img" href="http://fly.layui.com/" target="_blank">
-                <img src="../../../image/asuna.jpg" alt="Fly社区">
-                <cite class="layui-btn layui-btn-primary layui-btn-small">去围观</cite>
-            </a>
-            <h2><a href="http://fly.layui.com/" target="_blank">Fly社区</a></h2>
-            <p class="fly-case-desc">Fly 社区是 layui 的官方社区，全站的前端层面基于 Layui 风格编写，轻量而简洁，并且模版已经开源，可用于极简社区模板。</p>
-            <div class="fly-case-info">
-                <a href="../user/home.html" class="fly-case-user" target="_blank"><img
-                        src="../../../image/asuna.jpg"></a>
-                <p class="layui-elip" style="font-size: 12px;"><span style="color: #666;">橙色薄荷°</span></p>
-                <p>获得<a class="fly-case-nums fly-case-active" href="javascript:;" data-type="showPraise"
-                        style=" padding:0 5px; color: #01AAED;">666</a>个赞</p>
-                <button class="layui-btn layui-btn-primary fly-case-active" data-type="praise">￥1888</button>
-                <!-- <button class="layui-btn  fly-case-active" data-type="praise">已赞</button> -->
-            </div>
-        </li>
-        <li data-id="123">
-            <a class="fly-case-img" href="http://fly.layui.com/" target="_blank">
-                <img src="../../../image/asuna.jpg" alt="Fly社区">
-                <cite class="layui-btn layui-btn-primary layui-btn-small">去围观</cite>
-            </a>
-            <h2><a href="http://fly.layui.com/" target="_blank">Fly社区</a></h2>
-            <p class="fly-case-desc">Fly 社区是 layui 的官方社区，全站的前端层面基于 Layui 风格编写，轻量而简洁，并且模版已经开源，可用于极简社区模板。</p>
-            <div class="fly-case-info">
-                <a href="../user/home.html" class="fly-case-user" target="_blank"><img
-                        src="../../../image/asuna.jpg"></a>
-                <p class="layui-elip" style="font-size: 12px;"><span style="color: #666;">橙色薄荷°</span></p>
-                <p>获得<a class="fly-case-nums fly-case-active" href="javascript:;" data-type="showPraise"
-                        style=" padding:0 5px; color: #01AAED;">666</a>个赞</p>
-                <button class="layui-btn layui-btn-primary fly-case-active" data-type="praise">￥1888</button>
-                <!-- <button class="layui-btn  fly-case-active" data-type="praise">已赞</button> -->
-            </div>
-        </li>
-        <li data-id="123">
-            <a class="fly-case-img" href="http://fly.layui.com/" target="_blank">
-                <img src="../../../image/asuna.jpg" alt="Fly社区">
-                <cite class="layui-btn layui-btn-primary layui-btn-small">去围观</cite>
-            </a>
-            <h2><a href="http://fly.layui.com/" target="_blank">Fly社区</a></h2>
-            <p class="fly-case-desc">Fly 社区是 layui 的官方社区，全站的前端层面基于 Layui 风格编写，轻量而简洁，并且模版已经开源，可用于极简社区模板。</p>
-            <div class="fly-case-info">
-                <a href="../user/home.html" class="fly-case-user" target="_blank"><img
-                        src="../../../image/asuna.jpg"></a>
-                <p class="layui-elip" style="font-size: 12px;"><span style="color: #666;">橙色薄荷°</span></p>
-                <p>获得<a class="fly-case-nums fly-case-active" href="javascript:;" data-type="showPraise"
-                        style=" padding:0 5px; color: #01AAED;">666</a>个赞</p>
-                <button class="layui-btn layui-btn-primary fly-case-active" data-type="praise">￥1888</button>
-                <!-- <button class="layui-btn  fly-case-active" data-type="praise">已赞</button> -->
-            </div>
-        </li>
-        <li data-id="123">
-            <a class="fly-case-img" href="http://fly.layui.com/" target="_blank">
-                <img src="../../../image/asuna.jpg" alt="Fly社区">
-                <cite class="layui-btn layui-btn-primary layui-btn-small">去围观</cite>
-            </a>
-            <h2><a href="http://fly.layui.com/" target="_blank">Fly社区</a></h2>
-            <p class="fly-case-desc">Fly 社区是 layui 的官方社区，全站的前端层面基于 Layui 风格编写，轻量而简洁，并且模版已经开源，可用于极简社区模板。</p>
-            <div class="fly-case-info">
-                <a href="../user/home.html" class="fly-case-user" target="_blank"><img
-                        src="../../../image/asuna.jpg"></a>
-                <p class="layui-elip" style="font-size: 12px;"><span style="color: #666;">橙色薄荷°</span></p>
-                <p>获得<a class="fly-case-nums fly-case-active" href="javascript:;" data-type="showPraise"
-                        style=" padding:0 5px; color: #01AAED;">666</a>个赞</p>
-                <button class="layui-btn layui-btn-primary fly-case-active" data-type="praise">￥1888</button>
-                <!-- <button class="layui-btn  fly-case-active" data-type="praise">已赞</button> -->
-            </div>
-        </li>
-        <li data-id="123">
-            <a class="fly-case-img" href="http://fly.layui.com/" target="_blank">
-                <img src="../../../image/asuna.jpg" alt="Fly社区">
-                <cite class="layui-btn layui-btn-primary layui-btn-small">去围观</cite>
-            </a>
-            <h2><a href="http://fly.layui.com/" target="_blank">Fly社区</a></h2>
-            <p class="fly-case-desc">Fly 社区是 layui 的官方社区，全站的前端层面基于 Layui 风格编写，轻量而简洁，并且模版已经开源，可用于极简社区模板。</p>
-            <div class="fly-case-info">
-                <a href="../user/home.html" class="fly-case-user" target="_blank"><img
-                        src="../../../image/asuna.jpg"></a>
-                <p class="layui-elip" style="font-size: 12px;"><span style="color: #666;">橙色薄荷°</span></p>
-                <p>获得<a class="fly-case-nums fly-case-active" href="javascript:;" data-type="showPraise"
-                        style=" padding:0 5px; color: #01AAED;">666</a>个赞</p>
-                <button class="layui-btn layui-btn-primary fly-case-active" data-type="praise">￥1888</button>
-                <!-- <button class="layui-btn  fly-case-active" data-type="praise">已赞</button> -->
-            </div>
-        </li>
-    </ul>
-
+    <ul class="fly-case-list" id="good_list"></ul>
     <!-- <blockquote class="layui-elem-quote layui-quote-nm">暂无数据</blockquote> -->
-
-    <div style="text-align: center;">
+    <div style="text-align: center">
         <div class="laypage-main">
-            <span class="laypage-curr">1</span>
-            <a href="">2</a><a href="">3</a>
-            <a href="">4</a>
-            <a href="">5</a>
-            <span>…</span>
-            <a href="" class="laypage-last" title="尾页">尾页</a>
-            <a href="" class="laypage-next">下一页</a>
+            <a class="laypage-next" href="javascript:getMore()">查看更多商品信息</a>
         </div>
     </div>
 
@@ -273,5 +131,178 @@
         fly: 'index'
     }).use('fly');
 </script>
+
+<script type="text/html" id="m_good_list">
+    {{# layui.each(d, function(index, item){ }}
+    <li data-id="123">
+        <a class="fly-case-img" href="http://fly.layui.com/" target="_blank">
+            <img src="{{item.cover}}" alt="商品封面">
+            <cite class="layui-btn layui-btn-primary layui-btn-small">看一看</cite>
+        </a>
+        <h2><a href="/page/">[{{item.ndegree}}]{{item.title}}</a></h2>
+        <p class="fly-case-desc">{{item.content}}</p>
+        <div class="fly-case-info">
+            <a href="../user/home.html" class="fly-case-user" target="_blank"><img
+                    src="{{item.profile}}"></a>
+            <p class="layui-elip" style="font-size: 16px;"><span style="color: #666;">{{item.nickname}}</span></p>
+            <p><a class="fly-case-nums fly-case-active" href="javascript:;" data-type="showPraise"
+                  style=" padding:0 0px; color: #01AAED;">{{item.ptime}}</a></p>
+            {{# if(item.issaled === '1'){ }}
+            <button class="layui-btn layui-btn-primary fly-case-active" data-type="praise">已出售</button>
+            {{#} else {}}
+            <button class="layui-btn" data-type="praise">{{item.price}}元</button>
+            {{# } }}
+            <!-- <button class="layui-btn  fly-case-active" data-type="praise">已赞</button> -->
+        </div>
+    </li>
+    <!--    <li data-id="123">-->
+    <!--        <a class="fly-case-img" href="http://fly.layui.com/" target="_blank">-->
+    <!--            <img src="../../../image/asuna.jpg" alt="Fly社区">-->
+    <!--            <cite class="layui-btn layui-btn-primary layui-btn-small">去围观</cite>-->
+    <!--        </a>-->
+    <!--        <h2><a href="http://fly.layui.com/" target="_blank">Fly社区</a></h2>-->
+    <!--        <p class="fly-case-desc">Fly 社区是 layui 的官方社区，全站的前端层面基于 Layui 风格编写，轻量而简洁，并且模版已经开源，可用于极简社区模板。</p>-->
+    <!--        <div class="fly-case-info">-->
+    <!--            <a href="../user/home.html" class="fly-case-user" target="_blank"><img-->
+    <!--                    src="../../../image/asuna.jpg"></a>-->
+    <!--            <p class="layui-elip" style="font-size: 12px;"><span style="color: #666;">橙色薄荷°</span></p>-->
+    <!--            <p>获得<a class="fly-case-nums fly-case-active" href="javascript:;" data-type="showPraise"-->
+    <!--                    style=" padding:0 5px; color: #01AAED;">666</a>个赞</p>-->
+    <!--            <button class="layui-btn" data-type="praise">￥1999</button>-->
+    <!--        </div>-->
+    <!--    </li>-->
+    {{# }); }}
+</script>
+
+<!--获取数据，渲染模板-->
+<script type="text/javascript">
+
+    var page = 1;
+    var order = "ptime";
+    var isused = 1;
+
+    getGoodList();
+
+    function getGoodListByPtime() {
+        $("#getGoodListByPtime").addClass("layui-this");
+        $("#getGoodListByPrice").removeClass("layui-this");
+        order = "ptime";
+        page = 1;
+        getGoodList()
+    }
+
+    function getGoodListByPrice() {
+        $("#getGoodListByPrice").addClass("layui-this");
+        $("#getGoodListByPtime").removeClass("layui-this");
+        order = "price";
+        page = 1;
+        getGoodList()
+    }
+
+    function getOldGoodList() {
+        $("#getOldGoodList").addClass("tab-this");
+        $("#getNewGoodList").removeClass("tab-this");
+        isused = 1;
+        page = 1;
+        getGoodList()
+    }
+
+    function getNewGoodList() {
+        $("#getNewGoodList").addClass("tab-this");
+        $("#getOldGoodList").removeClass("tab-this");
+        isused = 0;
+        page = 1;
+        getGoodList();
+
+    }
+
+    function getGoodList() {
+        layui.use('layer', function () {
+            // ajax交互，JS中以定义的layer无法获取（猜测），手动定义一个
+            // 定义layer，用于打印提示信息
+            var layer = layui.layer;
+            // 商品列表数据
+            var good;
+            // ajax-获取帖子列表
+            $.ajax({
+                type: 'post',
+                url: '/good/getGoodListWithPage.do',
+                dataType: 'json',
+                data: {
+                    page: page,
+                    isused: isused,
+                    order: order
+                },
+                async: false,
+                success: function (data) {
+                    good = data.data;
+                },
+                error: function (data) {
+                    layer.msg("获取商品列表失败！");
+                }
+            })
+            // 模板引擎渲染
+            layui.use('laytpl', function () {
+                // 定义一个模板引擎
+                laytpl = layui.laytpl;
+                // 帖子列表渲染
+                var good_list_model = document.getElementById('m_good_list').innerHTML;
+                var good_list_view = document.getElementById('good_list');
+                laytpl(good_list_model).render(good, function (html) {
+                    // 当前只写了获取之前当前页所有数据的方法，是否使用追加有待商讨
+                    // 更新innerHTML，获取数据量越来越大，需要获取当前页之前所有数据，适用于实时更新
+                    good_list_view.innerHTML = html;
+                    // 追加innerHTML，获取数据量小，只用获取新页面的数据，适用于不实时更新
+                    // post_view.innerHTML += html;
+                });
+            });
+        })
+    }
+
+    function getMore() {
+        page += 1;
+        // 商品列表数据
+        var good;
+        // ajax-获取帖子列表
+        $.ajax({
+            type: 'post',
+            url: '/good/getGoodListWithPage.do',
+            dataType: 'json',
+            data: {
+                page: page,
+                isused: isused,
+                order: order,
+                limit: 1
+            },
+            async: false,
+            success: function (data) {
+                good = data.data;
+            },
+            error: function (data) {
+                layer.msg("获取商品列表失败！");
+            }
+        })
+
+        // 模板引擎渲染
+        layui.use('laytpl', function () {
+            // 定义一个模板引擎
+            laytpl = layui.laytpl;
+
+            // 帖子列表渲染
+            var good_list_model = document.getElementById('m_good_list').innerHTML;
+            var good_list_view = document.getElementById('good_list');
+            laytpl(good_list_model).render(good, function (html) {
+                // 当前只写了获取之前当前页所有数据的方法，是否使用追加有待商讨
+                // 更新innerHTML，获取数据量越来越大，需要获取当前页之前所有数据，适用于实时更新
+                good_list_view.innerHTML = html;
+                // 追加innerHTML，获取数据量小，只用获取新页面的数据，适用于不实时更新
+                // post_view.innerHTML += html;
+            });
+
+        });
+    }
+
+</script>
+
 </body>
 </html>

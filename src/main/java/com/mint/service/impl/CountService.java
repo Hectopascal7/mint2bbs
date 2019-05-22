@@ -19,7 +19,7 @@ import java.util.List;
  * @Author: Jeanne d'Arc
  * @Create: 2019-03-09 21:43:28
  **/
-@Service("countService")
+@Service("iCountService")
 public class CountService implements ICountService {
 
     @Autowired

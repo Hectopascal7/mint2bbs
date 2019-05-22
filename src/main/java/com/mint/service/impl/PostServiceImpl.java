@@ -263,4 +263,10 @@ public class PostServiceImpl implements IPostService {
         return ServerResponse.createBySuccess(list);
     }
 
+    @Override
+    public ServerResponse<List<Post>> getHomeMoreTopic(String uid) {
+        List<Post> list = postMapper.getHomeMoreTopic(uid);
+        return ServerResponse.createBySuccess(list);
+    }
+
 }

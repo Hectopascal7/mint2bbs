@@ -49,7 +49,7 @@
         <div class="layui-col-md8">
             <div class="fly-panel">
                 <div class="fly-panel-title fly-filter">
-                    <a>置顶</a>
+                    <a>版规</a>
                     <a href="#signin" class="layui-hide-sm layui-show-xs-block fly-right" id="LAY_goSignin"
                        style="color: #FF5722;">去签到</a>
                 </div>
@@ -121,9 +121,9 @@
                     社区工具栏
                 </div>
                 <div class="fly-panel-main">
-                    <a href="" target="_blank" class="fly-zanzhu"
-                       time-limit="2017.09.25-2099.01.01" style="background-color: #5FB878;">车牌号查询</a>
-                    <a href="" target="_blank" class="fly-zanzhu"
+                    <button class="fly-zanzhu tool" data-method="offset"
+                       time-limit="2017.09.25-2099.01.01" style="background-color: #5FB878;width: 100%;border: 0">车牌号查询</button>
+                    <a class="fly-zanzhu tool" data-method="offset" href=""
                        time-limit="2017.09.25-2099.01.01" style="background-color: #5FB878;">社区选举投票</a>
                 </div>
             </div>
@@ -131,48 +131,6 @@
             <div class="fly-panel fly-list-one">
                 <dt class="fly-panel-title">社区管理组</dt>
                 <dl class="fly-panel-main">
-                    <!--<table>-->
-                    <!--<tr>-->
-                    <!--<td>-->
-                    <!--<dd>-->
-                    <!--居委会：-->
-                    <!--</dd>-->
-                    <!--</td>-->
-                    <!--<td>-->
-                    <!--<dd>橙色薄荷°——17863909380</dd>-->
-                    <!--</td>-->
-                    <!--</tr>-->
-                    <!--<tr>-->
-                    <!--<td>-->
-                    <!--<dd>-->
-                    <!--物业：-->
-                    <!--</dd>-->
-                    <!--</td>-->
-                    <!--<td>-->
-                    <!--<dd>橙色薄荷°——17863909380</dd>-->
-                    <!--</td>-->
-                    <!--</tr>-->
-                    <!--<tr>-->
-                    <!--<td>-->
-                    <!--<dd>-->
-                    <!--保卫处：-->
-                    <!--</dd>-->
-                    <!--</td>-->
-                    <!--<td>-->
-                    <!--<dd>橙色薄荷°——17863909380</dd>-->
-                    <!--</td>-->
-                    <!--</tr>-->
-                    <!--<tr>-->
-                    <!--<td>-->
-                    <!--<dd>-->
-                    <!--值班室：-->
-                    <!--</dd>-->
-                    <!--</td>-->
-                    <!--<td>-->
-                    <!--<dd>橙色薄荷°——17863909380</dd>-->
-                    <!--</td>-->
-                    <!--</tr>-->
-                    <!--</table>-->
                     <dd>
                         <a href="http://layim.layui.com/" target="_blank">居委会：橙色薄荷°—17863909380</a>
                     </dd>
@@ -187,6 +145,7 @@
                     </dd>
                     <dd>
                         <a href="mailto:amamiya7@163.com">商务洽谈：邮件—amamiya7@163.com</a>
+                        <input type="text" style="text-align: center">
                     </dd>
                 </dl>
             </div>
@@ -222,6 +181,52 @@
     }).use('fly');
 </script>
 
+<!--社区工具栏-->
+<script>
+    layui.use('layer', function () { //独立版的layer无需执行这一句
+        var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
+        //触发事件
+        var active = {
+            offset: function (othis) {
+                var type = othis.data('type');
+                var text='<input type="text" id="license" lay-verify="title" autocomplete="off" placeholder="请输入车牌号..." class="layui-input">';
+                layer.open({
+                    type: 1
+                    , offset: type //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+                    , id: 'layerDemo' + type //防止重复弹出
+                    , content: '<div style="padding: 20px 100px;">' + text + '</div>'
+                    , btn: '查询'
+                    , btnAlign: 'c' //按钮居中
+                    , shade: 0 //不显示遮罩
+                    , yes: function () {
+                        var license=$("#license").val();
+                        $.ajax({
+                            type: 'post',
+                            url: '/user/getUserByLicense.do',
+                            dataType: 'json',
+                            data: {
+                                license:license
+                            },
+                            success: function (data) {
+                                layer.alert(data.data.name+data.data.phone);
+                            },
+                            error: function (data) {
+                                layer.msg("查询失败！");
+                            }
+                        })
+                        // layer.closeAll();
+                    }
+                });
+            }
+        };
+        $('.tool').on('click', function () {
+            var othis = $(this), method = othis.data('method');
+            active[method] ? active[method].call(this, othis) : '';
+        });
+
+    });
+</script>
+
 <!--<script type="text/javascript">-->
 <!--var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");-->
 <!--document.write(unescape("%3Cspan id='cnzz_stat_icon_30088308'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "w.cnzz.com/c.php%3Fid%3D30088308' type='text/javascript'%3E%3C/script%3E"));-->
@@ -241,7 +246,7 @@
     <dl class="layui-nav-child">
         <dd>
             <a href="/page/portal/user/home.html?user={{d.uid}}"><i class="layui-icon"
-                                                               style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
+                                                                    style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
         </dd>
         <dd>
             <a href="/page/portal/user/message.html"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a>
@@ -326,37 +331,13 @@
         <!--{{# } }}-->
         <!--</h2>-->
         <h2>
-            <a class="layui-badge">{{item.sname}}</a>
+            <a class="layui-badge">Ta说</a>
             <a href="/page/portal/topic/detail.html?post={{item.tid}}&section={{item.sid}}">
-                {{item.title}}
+                Ta说
             </a>
         </h2>
         <div class="fly-list-info">
-            <a href="../user/home.html" link>
-                <cite>{{item.nickname}}</cite>
-                {{# if(item.role===1){ }}
-                <i class="iconfont icon-renzheng" title="认证信息：管理员"></i>
-                {{# } }}
-                <i class="layui-badge fly-badge-level">Lv {{item.ulevel}}</i>
-            </a>
             <span>{{item.ptime}}</span>
-
-            <span class="layui-hide-xs" title="浏览">
-                <i class="iconfont icon-liulanyanjing"></i> {{item.acount}}
-            </span>
-            <span class="fly-list-nums">
-                <i class="iconfont icon-zan layui-hide-xs" title="赞"></i> {{item.pcount}}
-                <i class="iconfont icon-pinglun1" title="回复"></i> {{item.rcount}}
-            </span>
-        </div>
-        <div class="fly-list-badge">
-
-            {{# if(item.issticky===1){ }}
-            <span class="layui-badge layui-bg-black">置顶</span>
-            {{# } }}
-            {{# if(item.isbest===1){ }}
-            <span class="layui-badge layui-bg-red">精华</span>
-            {{# } }}
         </div>
     </li>
     {{# }); }}
@@ -392,7 +373,7 @@
     <dd>
         {{# layui.each(d, function(index, item){ }}
         <a href="user/home.html">
-            <img src="image/asuna.jpg"><cite>{{item.nickname}}</cite><i>活跃度 {{item.count}}</i>
+            <img src="{{item.profile}}"><cite>{{item.nickname}}</cite><i>活跃度 {{item.count}}</i>
         </a>
         {{# }); }}
         {{# if(d.length===0){ }}

@@ -39,6 +39,21 @@ public class User {
 
     private String profile;
 
+    public User(String uid, String loginid, String password, String nickname, Integer role, Integer sex, Date birthday, Integer point, Date jointime, Integer ulevel, Integer status, String profile) {
+        this.uid = uid;
+        this.loginid = loginid;
+        this.password = password;
+        this.nickname = nickname;
+        this.role = role;
+        this.sex = sex;
+        this.birthday = birthday;
+        this.point = point;
+        this.jointime = jointime;
+        this.ulevel = ulevel;
+        this.status = status;
+        this.profile = profile;
+    }
+
     public User(String uid, String loginid, String password, String nickname, Integer role, Integer sex, Date birthday, String license, Integer point, Date jointime, Integer ulevel, String email, String signature, Integer status) {
         this.uid = uid;
         this.loginid = loginid;

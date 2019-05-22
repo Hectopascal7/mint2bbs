@@ -3,43 +3,45 @@
 <head>
     <meta charset="utf-8">
     <title>薄荷社区-用户注册</title>
+    <link rel="icon" href="/image/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="keywords" content="薄荷社区">
     <meta name="description" content="薄荷社区,MintBBS,橙色薄荷°">
     <link rel="stylesheet" href="../../../script/layui/css/layui.css">
     <link rel="stylesheet" href="../../../css/global.css">
+    <script src="/script/jquery-3.3.1.min.js"></script>
 </head>
 <body>
 <!--头部区域-->
 <div class="fly-header layui-bg-black">
     <div class="layui-container">
         <!--logo图片-->
-        <a class="fly-logo" href="/">
-            <img src="../../..//image/logo.png" alt="layui">
+        <a class="fly-logo">
+            <img src="/image/logo.png" alt="薄荷社区">
         </a>
         <!--板块按钮-->
         <ul class="layui-nav fly-nav layui-hide-xs">
-            <li class="layui-nav-item layui-this">
-                <a href="/"><i class="iconfont icon-jiaoliu"></i>业主论坛</a>
+            <li class="layui-nav-item">
+                <a href="javascript:loginTip()"><i class="iconfont icon-jiaoliu"></i>论坛</a>
             </li>
             <li class="layui-nav-item">
-                <a href="/page/portal/market/market.html"><i class="iconfont icon-iconmingxinganli"></i>交易市场</a>
+                <a href="javascript:loginTip()"><i class="iconfont icon-iconmingxinganli"></i>市场</a>
             </li>
             <li class="layui-nav-item">
-                <a href="http://www.layui.com/" target="_blank"><i class="iconfont icon-ui"></i>吐槽区</a>
+                <a href="javascript:loginTip()"><i class="iconfont icon-ui"></i>微博</a>
             </li>
         </ul>
         <!--用户模块-->
         <ul class="layui-nav fly-nav-user">
             <!-- 未登入的状态 -->
             <li class="layui-nav-item">
-                <a class="iconfont icon-touxiang layui-hide-xs" href="user/login.html"></a>
+                <a class="iconfont icon-touxiang layui-hide-xs" href="/page/portal/user/login.html"></a>
             </li>
             <li class="layui-nav-item">
-                <a href="user/login.html">登录</a>
+                <a href="/page/portal/user/login.html">登录</a>
             </li>
             <li class="layui-nav-item">
-                <a href="user/reg.html">注册</a>
+                <a href="/page/portal/user/register.html">注册</a>
             </li>
         </ul>
     </div>
@@ -55,7 +57,7 @@
             <div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;">
                 <div class="layui-tab-item layui-show">
                     <div class="layui-form layui-form-pane">
-                        <form method="post" action="/user/register.do">
+                        <form method="post">
                             <div class="layui-form-item">
                                 <label for="loginid" class="layui-form-label">账号</label>
                                 <div class="layui-input-inline">
@@ -116,7 +118,7 @@
                                 <div class="layui-inline">
                                     <label class="layui-form-label">生日</label>
                                     <div class="layui-input-block">
-                                        <input type="text" name="birthday" lay-verify="required" id="birthday"
+                                        <input type="text" name="birthday" lay-verify="date" id="birthday"
                                                autocomplete="off"
                                                class="layui-input">
                                     </div>
@@ -130,7 +132,6 @@
                                     >
                                 </div>
                             </div>
-
                             <div class="layui-form-item">
                                 <label class="layui-form-label">住所(楼)</label>
                                 <div class="layui-input-inline">
@@ -138,7 +139,7 @@
                                         <option value="">楼</option>
                                         <option value="1">1号楼</option>
                                         <option value="2">2号楼</option>
-                                        <option value="10">13号楼</option>
+                                        <option value="13">13号楼</option>
                                     </select>
                                 </div>
                             </div>
@@ -160,7 +161,7 @@
                                 <div class="layui-input-inline">
                                     <select name="room" lay-verify="required">
                                         <option value="">室</option>
-                                        <option value="1101">102室</option>
+                                        <option value="102">102室</option>
                                         <option value="1201">1201室</option>
                                         <option value="1505A">1505A室</option>
                                     </select>
@@ -174,6 +175,16 @@
                                     <input type="text" id="phone" name="phone" required lay-verify="phone"
                                            autocomplete="off" class="layui-input"
                                            placeholder="请输入您的手机号码">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">用户角色</label>
+                                <div class="layui-input-inline">
+                                    <select name="role" lay-verify="required" disabled>
+                                        <option value="1">业主</option>
+                                        <option value="0">管理员</option>
+                                        <option value="2">版主</option>
+                                    </select>
                                 </div>
                             </div>
                             <!--                            <div class="layui-form-item">-->
@@ -213,7 +224,7 @@
     </p>
 </div>
 
-<script src="../../../script/layui/layui.js"></script>
+<script src="/script/layui/layui.js"></script>
 <script>
     layui.cache.page = 'user';
     layui.cache.user = {
@@ -237,6 +248,43 @@
             elem: '#birthday'
         });
     });
+</script>
+
+<script>
+    // 表单提交
+    layui.use(['form', 'layer'], function () {
+        var form = layui.form;
+        var layer = layui.layer;
+        //监听提交
+        form.on('submit(*)', function (data) {
+            $.ajax({
+                type: 'post',
+                url: '/user/register.do',
+                dataType: 'json',
+                data: data.field,
+                async: false,
+                success: function (data) {
+                    layer.alert(data.msg, function () {
+                        if (data.msg == "注册成功！") {
+                            location.href = "/page/portal/user/login.html";
+                        } else {
+                            layer.closeAll();
+                        }
+                    });
+                },
+                error: function (data) {
+                    layer.alert(data.msg);
+                }
+            })
+            return false;
+        });
+    });
+</script>
+
+<script>
+    function loginTip() {
+        layer.alert('您还未登录，无权访问此板块！请先登录！')
+    }
 </script>
 
 </body>

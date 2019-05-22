@@ -5,8 +5,8 @@
     <title>薄荷社区-用户登录</title>
     <link rel="icon" href="/image/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="keywords" content="fly,layui,前端社区">
-    <meta name="description" content="Fly社区是模块化前端UI框架Layui的官网社区，致力于为web开发提供强劲动力">
+    <meta name="keywords" content="薄荷社区">
+    <meta name="description" content="薄荷社区,MintBBS,橙色薄荷°">
     <link rel="stylesheet" href="/script/layui/css/layui.css">
     <link rel="stylesheet" href="/css/global.css">
     <script src="/script/jquery-3.3.1.min.js"></script>
@@ -15,18 +15,33 @@
 
 <div class="fly-header layui-bg-black">
     <div class="layui-container">
-        <a class="fly-logo" href="/">
-            <img src="../../../image/logo.png" alt="layui">
+        <!-- logo图片 -->
+        <a class="fly-logo">
+            <img src="/image/logo.png" alt="薄荷社区">
         </a>
+        <!-- 板块按钮 -->
         <ul class="layui-nav fly-nav layui-hide-xs">
-            <li class="layui-nav-item layui-this">
-                <a href="/"><i class="iconfont icon-jiaoliu"></i>业主论坛</a>
+            <li class="layui-nav-item">
+                <a href="javascript:loginTip()"><i class="iconfont icon-jiaoliu"></i>论坛</a>
             </li>
             <li class="layui-nav-item">
-                <a href="/page/portal/market/market.html"><i class="iconfont icon-iconmingxinganli"></i>交易市场</a>
+                <a href="javascript:loginTip()"><i class="iconfont icon-iconmingxinganli"></i>市场</a>
             </li>
             <li class="layui-nav-item">
-                <a href="http://www.layui.com/" target="_blank"><i class="iconfont icon-ui"></i>吐槽区</a>
+                <a href="javascript:loginTip()"><i class="iconfont icon-ui"></i>微博</a>
+            </li>
+        </ul>
+        <!--用户模块-->
+        <ul class="layui-nav fly-nav-user">
+            <!-- 未登入的状态 -->
+            <li class="layui-nav-item">
+                <a class="iconfont icon-touxiang layui-hide-xs" href="/page/portal/user/login.html"></a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="/page/portal/user/login.html">登录</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="/page/portal/user/register.html">注册</a>
             </li>
         </ul>
     </div>
@@ -57,18 +72,18 @@
                                            autocomplete="off" class="layui-input" placeholder="请输入密码">
                                 </div>
                             </div>
-<!--                            <div class="layui-form-item">-->
-<!--                                <label for="L_vercode" class="layui-form-label">验证码</label>-->
-<!--                                <div class="layui-input-inline">-->
+                            <!--                            <div class="layui-form-item">-->
+                            <!--                                <label for="L_vercode" class="layui-form-label">验证码</label>-->
+                            <!--                                <div class="layui-input-inline">-->
 
-<!--                                    &lt;!&ndash;lay-verify="required"&ndash;&gt;-->
-<!--                                    <input type="text" id="L_vercode" name="vercode"-->
-<!--                                           placeholder="请输入验证码" autocomplete="off" class="layui-input">-->
-<!--                                </div>-->
-<!--                                &lt;!&ndash;<div class="layui-form-mid">&ndash;&gt;-->
-<!--                                &lt;!&ndash;<span style="color: #c00;">{{d.vervicode}}</span>&ndash;&gt;-->
-<!--                                &lt;!&ndash;</div>&ndash;&gt;-->
-<!--                            </div>-->
+                            <!--                                    &lt;!&ndash;lay-verify="required"&ndash;&gt;-->
+                            <!--                                    <input type="text" id="L_vercode" name="vercode"-->
+                            <!--                                           placeholder="请输入验证码" autocomplete="off" class="layui-input">-->
+                            <!--                                </div>-->
+                            <!--                                &lt;!&ndash;<div class="layui-form-mid">&ndash;&gt;-->
+                            <!--                                &lt;!&ndash;<span style="color: #c00;">{{d.vervicode}}</span>&ndash;&gt;-->
+                            <!--                                &lt;!&ndash;</div>&ndash;&gt;-->
+                            <!--                            </div>-->
                             <div class="layui-form-item">
                                 <button class="layui-btn" lay-filter="*" lay-submit>
                                     立即登录
@@ -171,6 +186,14 @@
         });
     });
 
+</script>
+
+
+<script>
+    // 登录提示
+    function loginTip() {
+        layer.alert('您还未登录，无权访问此板块！请先登录！')
+    }
 </script>
 
 </body>

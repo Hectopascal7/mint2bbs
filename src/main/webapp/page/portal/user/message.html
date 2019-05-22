@@ -8,6 +8,7 @@
     <meta name="description" content="Fly社区是模块化前端UI框架Layui的官网社区，致力于为web开发提供强劲动力">
     <link rel="stylesheet" href="../../../script/layui/css/layui.css">
     <link rel="stylesheet" href="../../../css/global.css">
+    <script src="/script/jquery-3.3.1.min.js"></script>
 </head>
 <body>
 
@@ -16,41 +17,23 @@
         <a class="fly-logo" href="/">
             <img src="../../../image/logo.png" alt="layui">
         </a>
+        <!-- 论坛主标题区 -->
         <ul class="layui-nav fly-nav layui-hide-xs">
-            <li class="layui-nav-item layui-this">
-                <a href="/"><i class="iconfont icon-jiaoliu"></i>业主论坛</a>
+            <li class="layui-nav-item">
+                <a href="/"><i class="iconfont icon-jiaoliu"></i>论坛</a>
             </li>
             <li class="layui-nav-item">
-                <a href="/page/portal/market/market.html"><i class="iconfont icon-iconmingxinganli"></i>交易市场</a>
+                <a href="/page/portal/market/market.html"><i class="iconfont icon-iconmingxinganli"></i>市场</a>
             </li>
             <li class="layui-nav-item">
-                <a href="http://www.layui.com/" target="_blank"><i class="iconfont icon-ui"></i>吐槽区</a>
+                <a href="/page/portal/weibo/index.html" target="_blank"><i class="iconfont icon-ui"></i>微博</a>
             </li>
         </ul>
 
         <!-- 用户个人中心功能区 -->
         <ul class="layui-nav fly-nav-user">
             <!-- 登入后的状态 -->
-            <li class="layui-nav-item">
-                <a class="fly-nav-avatar" href="javascript:;">
-                    <cite class="layui-hide-xs">橙色薄荷°</cite>
-                    <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：管理员"></i>
-                    <i class="layui-badge fly-badge-vip layui-hide-xs">管理员</i>
-                    <img src="../../../image/asuna.jpg">
-                </a>
-                <dl class="layui-nav-child">
-                    <dd>
-                        <a href="../user/home.html"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
-                    </dd>
-                    <dd>
-                        <a href="../user/message.html"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a>
-                    </dd>
-                    <dd>
-                        <a href="../user/setting.html"><i class="layui-icon">&#xe620;</i>基本设置</a>
-                    </dd>
-                    <hr style="margin: 5px 0;">
-                    <dd><a href="" style="text-align: center;">退出</a></dd>
-                </dl>
+            <li class="layui-nav-item" id="center">
             </li>
         </ul>
     </div>
@@ -134,6 +117,7 @@
 </div>
 
 <script src="../../../script/layui/layui.js"></script>
+<script src="/script/data.js"></script>
 <script>
     layui.cache.page = 'user';
     layui.cache.user = {
@@ -149,6 +133,32 @@
     }).extend({
         fly: 'index'
     }).use('fly');
+</script>
+
+<!--用户中心模板-->
+<script id="m_center" type="text/html">
+    <a class="fly-nav-avatar" href="javascript:;">
+        <cite>{{ d.nickname }}</cite>
+        {{# if(d.role === 1){ }}
+        <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：管理员"></i>
+        <i class="layui-badge fly-badge-vip layui-hide-xs" title="积分 {{d.point}}">Lv.3</i>
+        {{# } }}
+        <img src="{{d.profile}}">
+    </a>
+    <dl class="layui-nav-child">
+        <dd>
+            <a href="/page/portal/user/home.html?user={{d.uid}}"><i class="layui-icon"
+                                                                    style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
+        </dd>
+        <dd>
+            <a href="/page/portal/user/message.html"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a>
+        </dd>
+        <dd>
+            <a href="/page/portal/user/setting.html"><i class="layui-icon">&#xe620;</i>基本设置</a>
+        </dd>
+        <hr style="margin: 5px 0;">
+        <dd><a href="" style="text-align: center;">退出</a></dd>
+    </dl>
 </script>
 
 </body>

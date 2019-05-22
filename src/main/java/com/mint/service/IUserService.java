@@ -29,7 +29,9 @@ public interface IUserService {
      * @Param resident
      * @Return ServerResponse<String>
      */
-    ServerResponse<String> register(User user, Resident resident);
+
 
     User getIndexUserInfo(String uid);
+
+    ServerResponse<String> register(String loginid, String nickname, String password, String uid, String name, String sex, String birthday, String building, String idcnum, String unit, String room, String phone,String role);
 }

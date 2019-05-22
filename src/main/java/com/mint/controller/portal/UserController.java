@@ -5,6 +5,7 @@ import com.mint.common.Const;
 import com.mint.common.ServerResponse;
 import com.mint.pojo.Resident;
 import com.mint.pojo.User;
+import com.mint.service.IResidentService;
 import com.mint.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,6 +31,8 @@ public class UserController {
     // 自动注入-用户Service
     @Autowired
     private IUserService iUserService;
+    @Autowired
+    private IResidentService iResidentService;
 
     /**
      * @Description 用户登录
@@ -60,13 +63,15 @@ public class UserController {
      */
     @RequestMapping(value = "register.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<String> register(User user, Resident resident, String repassword, HttpSession session) {
+    public ServerResponse<String> register(String loginid, String nickname, String password, String repassword, String uid, String name, String sex, String birthday, String building, String idcnum, String unit, String room, String phone, String role) {
+        System.out.println(sex);
+        System.out.println(role);
         // 后台再进行一次密码校验，确保两次输入的密码一致
-        if (!user.getPassword().equals(repassword)) {
+        if (!password.equals(repassword)) {
             return ServerResponse.createByErrorMessage("两次输入的密码不一致，请重新输入！");
         } else {
             // 密码校验成功，执行注册
-            ServerResponse<String> response = iUserService.register(user, resident);
+            ServerResponse<String> response = iUserService.register(loginid, nickname, password, uid, name, sex, birthday, building, idcnum, unit, room, phone, role);
             return response;
         }
     }
@@ -98,5 +103,19 @@ public class UserController {
         User user = iUserService.getIndexUserInfo(uid);
         return ServerResponse.createBySuccess(user);
     }
+
+    /**
+     * @Description 获取用户主页资料
+     * @Param user
+     * @Param resident
+     * @Param session
+     * @Return ServerResponse<String>
+     */
+    @RequestMapping(value = "getUserByLicense.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<Resident> getUserByLicense(String license) {
+        return iResidentService.getUserByLicense(license);
+    }
+
 
 }

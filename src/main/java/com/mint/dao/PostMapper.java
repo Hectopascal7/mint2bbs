@@ -30,5 +30,9 @@ public interface PostMapper {
 
     List<Post> getUserLatestTopic(String uid);
 
+    List<Post> getHomeMoreTopic(String uid);
+
+    Post getReplyPost(@Param("tb_name")String tb_name,@Param("tid")String tid);
+
 //    List<PostEntity> getSectionPostWithPage1();
 }

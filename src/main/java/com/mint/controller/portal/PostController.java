@@ -151,4 +151,19 @@ public class PostController {
         ServerResponse<List<Post>> response = iPostService.getUserLatestTopic(uid);
         return response;
     }
+
+
+    /**
+     * @Description 获取帖子回复
+     * @Param tid
+     * @Param section
+     * @Return ServerResponse<HashMap < String, Object>>
+     */
+    @RequestMapping(value = "getHomeMoreTopic.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<List<Post>> getHomeMoreTopic(String uid) {
+        ServerResponse<List<Post>> response = iPostService.getHomeMoreTopic(uid);
+        return response;
+    }
+
 }
