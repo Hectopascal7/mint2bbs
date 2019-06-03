@@ -28,7 +28,7 @@ public interface IPostService {
      * @Description 获取置顶模块
      * @Return ServerResponse<List < Notice>>
      */
-    ServerResponse<List<PostEntity>> getAllSticky();
+    ServerResponse<List<HashMap<String, String>>> getAllSticky();
 
     /**
      * @Description 获取热门帖子
@@ -40,7 +40,7 @@ public interface IPostService {
      * @Description 获取帖子列表
      * @Return ServerResponse<List < Notice>>
      */
-    ServerResponse<List<PostEntity>> getPostByPtime(int page, String kind, String order);
+    ServerResponse<List<HashMap<String, String>>> getPostByPtime(int page, String kind, String order);
 
     /**
      * @Description 获取主页热门帖子
@@ -58,7 +58,7 @@ public interface IPostService {
      * @Param limit
      * @Return ServerResponse<List < Notice>>
      */
-    ServerResponse<List<PostEntity>> getSectionPostWithPage(String section, String kind, String order, int page, int limit);
+    ServerResponse<List<HashMap<String, String>>> getSectionPostWithPage(String section, String kind, String order, int page, int limit);
 
     /**
      * @Description 获取板块内帖子列表
@@ -66,9 +66,7 @@ public interface IPostService {
      * @Param section
      * @Return ServerResponse<HashMap < String, Object>>
      */
-    ServerResponse<HashMap<String, Object>> getPostDetail(String tid, String section);
-
-    ServerResponse<List<List<Reply>>> getReplies(String tid);
+    ServerResponse<HashMap<String, String>> getPostDetail(String tid, String section);
 
     /**
      * @Description 获取板块内帖子列表
@@ -79,4 +77,10 @@ public interface IPostService {
     ServerResponse<List<Post>> getUserLatestTopic(String uid);
 
     ServerResponse<List<Post>> getHomeMoreTopic(String uid);
+
+    ServerResponse<Integer> getSectionPostCount(String sid,String kind);
+
+    ServerResponse<List<HashMap<String, String>>> getMyPostWithPage(Integer page, Integer limit, HttpSession httpSession);
+
+    ServerResponse<Integer> getMyPostCount(HttpSession httpSession);
 }

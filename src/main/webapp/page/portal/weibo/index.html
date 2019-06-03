@@ -2,14 +2,13 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>薄荷社区-首页</title>
+    <title>薄荷社区-微博</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="keywords" content="薄荷社区">
     <meta name="description" content="薄荷社区,MintBBS,橙色薄荷°">
     <link rel="icon" href="/image/favicon.ico">
     <link rel="stylesheet" href="/script/layui/css/layui.css">
     <link rel="stylesheet" href="/css/global.css">
-    <script src="/script/jquery-3.3.1.min.js"></script>
 </head>
 <body>
 <!--头部-->
@@ -39,53 +38,50 @@
     </div>
 </div>
 
-<div class="fly-panel fly-column">
-    <!--板块导航及帖子模块功能区-->
-    <div class="layui-container" id="guide_bar"></div>
-</div>
-
-<div class="layui-container">
+<div class="layui-container" style="margin-top: 15px">
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md8">
             <div class="fly-panel">
                 <div class="fly-panel-title fly-filter">
-                    <a>版规</a>
+                    <a>我 说</a>
                     <a href="#signin" class="layui-hide-sm layui-show-xs-block fly-right" id="LAY_goSignin"
                        style="color: #FF5722;">去签到</a>
                 </div>
-                <ul class="fly-list" id="sticky">
-
-                </ul>
+                <form class="layui-form layui-form-pane" action="">
+                    <div class="layui-form-item layui-form-text" style="margin: 10px;">
+                        <div class="layui-input-block">
+                            <textarea placeholder="最多可输入48个字..." class="layui-textarea" name="content" id="content"
+                                      lay-verify="weibo" style="font-size: 15px"></textarea>
+                        </div>
+                        <div style="float: right;margin: 10px 0px 10px 0px">
+                            <input type="checkbox" name="" id="agree" title="我已查看且同意薄荷社区微博管理条例"
+                                   lay-skin="primary">
+                            <i class="layui-btn" lay-filter="weibo" lay-submit>发布微博</i>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <!--第二板块：回帖-->
+            <!-- 第二板块：微博列表区 -->
             <div class="fly-panel" style="margin-bottom: 0;">
                 <div class="fly-panel-title fly-filter">
-                    <a href="javascript:getAllPost()" id="total" class="layui-this">综合</a>
-                    <span class="fly-mid"></span>
-                    <a href="javascript:getBestPost()" id="best">精华</a>
+                    <a class="layui-this">Ta 说</a>
                     <span class="fly-filter-right layui-hide-xs">
-                        <a href="javascript:getPostByPtime()" class="layui-this" id="new">最新</a>
-                        <span class="fly-mid"></span>
-                        <a href="javascript:getPostByRcount()" id="hot">热议</a>
+                        <a href="javascript:refresh()" id="hot"><i class="layui-icon layui-icon-refresh-3"></i></a>
                     </span>
                 </div>
-
-                <!--帖子列表区-->
-                <ul class="fly-list" id="post"></ul>
-
-                <div style="text-align: center">
-                    <div class="laypage-main">
-                        <a class="laypage-next" href="javascript:getMore()">更多帖子</a>
-                    </div>
-                </div>
-
+                <!-- 微博列表区 -->
+                <ul class="fly-list" id="weibo"></ul>
             </div>
         </div>
         <div class="layui-col-md4">
 
             <div class="fly-panel">
-                <h3 class="fly-panel-title">社区公告</h3>
-                <ul class="fly-panel-main fly-list-static" id="notice"></ul>
+                <h3 class="fly-panel-title">版规</h3>
+                <ul class="fly-panel-main fly-list-static" id="notice">
+                    <li>
+                        <a href="/page/portal/topic/detail.html?post={{item.tid}}&section=notice" target="_blank">薄荷社区微博管理条例</a>
+                    </li>
+                </ul>
             </div>
 
             <div class="fly-panel fly-signin">
@@ -94,7 +90,6 @@
                     <i class="fly-mid"></i>
                     <a href="javascript:;" class="fly-link" id="LAY_signinHelp">说明</a>
                     <i class="fly-mid"></i>
-                    <a href="javascript:;" class="fly-link" id="LAY_signinTop">活跃榜<span class="layui-badge-dot"></span></a>
                     <span class="fly-signin-days">已连续签到<cite>16</cite>天</span>
                 </div>
                 <div class="fly-panel-main fly-signin-main">
@@ -108,26 +103,24 @@
                     -->
                 </div>
             </div>
-
             <div class="fly-panel fly-rank fly-rank-reply" id="LAY_replyRank">
                 <h3 class="fly-panel-title">回帖榜</h3>
                 <dl id="active_user"></dl>
             </div>
-
             <dl class="fly-panel fly-list-one" id="hot_post"></dl>
-
             <div class="fly-panel">
                 <div class="fly-panel-title">
                     社区工具栏
                 </div>
                 <div class="fly-panel-main">
                     <button class="fly-zanzhu tool" data-method="offset"
-                       time-limit="2017.09.25-2099.01.01" style="background-color: #5FB878;width: 100%;border: 0">车牌号查询</button>
+                            time-limit="2017.09.25-2099.01.01" style="background-color: #5FB878;width: 100%;border: 0">
+                        车牌号查询
+                    </button>
                     <a class="fly-zanzhu tool" data-method="offset" href=""
                        time-limit="2017.09.25-2099.01.01" style="background-color: #5FB878;">社区选举投票</a>
                 </div>
             </div>
-
             <div class="fly-panel fly-list-one">
                 <dt class="fly-panel-title">社区管理组</dt>
                 <dl class="fly-panel-main">
@@ -145,92 +138,26 @@
                     </dd>
                     <dd>
                         <a href="mailto:amamiya7@163.com">商务洽谈：邮件—amamiya7@163.com</a>
-                        <input type="text" style="text-align: center">
                     </dd>
                 </dl>
             </div>
         </div>
     </div>
 </div>
-
 <div class="fly-footer">
     <p>
-        <a href="http://fly.layui.com/" target="_blank">薄荷社区</a> 2019 &copy;
-        <a href="http://www.layui.com/" target="_blank">橙色薄荷° 出品</a>
+        <a href="http://sora.vio1et.cn" target="_blank">薄荷社区</a> 2019 &copy;
+        <a href="http://sora.vio1et.cn" target="_blank">橙色薄荷° 出品</a>
     </p>
     <p>
-        <a href="http://fly.layui.com/jie/3147/" target="_blank">Copyright &copy; 2019 橙色薄荷° All Rights Reserved.</a>
+        <a href="http://sora.vio1et.cn" target="_blank">Copyright &copy; 2019 橙色薄荷° All Rights Reserved.</a>
     </p>
 </div>
 
 <script src="/script/layui/layui.js"></script>
-<script>
-    layui.cache.page = '';
-    layui.cache.user = {
-        username: '游客'
-        , uid: -1
-        , avatar: '/image/avatar/00.jpg'
-        , experience: 83
-        , sex: '男'
-    };
-    layui.config({
-        version: "3.0.0"
-        , base: '/script/mods/' //这里实际使用时，建议改成绝对路径
-    }).extend({
-        fly: 'index'
-    }).use('fly');
-</script>
+<script src="/script/jquery-3.3.1.min.js"></script>
+<script src="/script/model/weibo.js"></script>
 
-<!--社区工具栏-->
-<script>
-    layui.use('layer', function () { //独立版的layer无需执行这一句
-        var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
-        //触发事件
-        var active = {
-            offset: function (othis) {
-                var type = othis.data('type');
-                var text='<input type="text" id="license" lay-verify="title" autocomplete="off" placeholder="请输入车牌号..." class="layui-input">';
-                layer.open({
-                    type: 1
-                    , offset: type //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
-                    , id: 'layerDemo' + type //防止重复弹出
-                    , content: '<div style="padding: 20px 100px;">' + text + '</div>'
-                    , btn: '查询'
-                    , btnAlign: 'c' //按钮居中
-                    , shade: 0 //不显示遮罩
-                    , yes: function () {
-                        var license=$("#license").val();
-                        $.ajax({
-                            type: 'post',
-                            url: '/user/getUserByLicense.do',
-                            dataType: 'json',
-                            data: {
-                                license:license
-                            },
-                            success: function (data) {
-                                layer.alert(data.data.name+data.data.phone);
-                            },
-                            error: function (data) {
-                                layer.msg("查询失败！");
-                            }
-                        })
-                        // layer.closeAll();
-                    }
-                });
-            }
-        };
-        $('.tool').on('click', function () {
-            var othis = $(this), method = othis.data('method');
-            active[method] ? active[method].call(this, othis) : '';
-        });
-
-    });
-</script>
-
-<!--<script type="text/javascript">-->
-<!--var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");-->
-<!--document.write(unescape("%3Cspan id='cnzz_stat_icon_30088308'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "w.cnzz.com/c.php%3Fid%3D30088308' type='text/javascript'%3E%3C/script%3E"));-->
-<!--</script>-->
 </body>
 
 <!--用户中心模板-->
@@ -259,88 +186,32 @@
     </dl>
 </script>
 
-<!--导航栏模板-->
-<script id="m_guide_bar" type="text/html">
-    <ul class="layui-clear">
-        {{# layui.each(d, function(index, item){ }}
-        {{# if(item.sid ==='index'){ }}
-        <li class="layui-hide-xs layui-this">
-            <a href="/index.html">{{item.sname}}</a>
-        </li>
-        {{#} else {}}
-        <li><a href="/page/portal/section/section.html?section={{item.sid}}">{{item.sname}}</a></li>
-        {{# } }}
-        {{# }); }}
-        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li>
-        <!--用户登入后显示-->
-        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="user/index.html">我的贴子</a></li>
-        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a
-                href="user/index.html#collection">收藏</a>
-        </li>
-    </ul>
-    <div class="fly-column-right layui-hide-xs">
-            <span class="fly-search">
-                <i class="layui-icon layui-icon-search"></i>
-            </span>
-        <a href="page/portal/topic/add.html?section=index" class="layui-btn">发表新帖</a>
-    </div>
-    <div class="layui-hide-sm layui-show-xs-block"
-         style="margin-top: -10px; padding-bottom: 10px; text-align: center;">
-        <a href="page/portal/topic/add.html?section=index" class="layui-btn">发表新帖</a>
-    </div>
-</script>
-
-<!--公告板模板-->
-<script id="m_notice" type="text/html">
+<!-- 微博模板 -->
+<script id="m_weibo" type="text/html">
     {{# layui.each(d, function(index, item){ }}
     <li>
-
-        <a href="/page/portal/topic/detail.html?post={{item.tid}}&section=notice" target="_blank">{{ item.title }}</a>
-        <!--<span>{{ item.ptime }}</span>-->
-
-    </li>
-    {{# }); }}
-    {{# if(d.length===0){ }}
-    <!-- 无数据时 -->
-    <li><a>暂无相关数据</a></li>
-    {{# } }}
-</script>
-
-<!-- 帖子模板 -->
-<script id="m_post" type="text/html">
-    {{# layui.each(d, function(index, item){ }}
-    <li>
-        <a href="/page/portal/user/home.html?user={{item.uid}}" class="fly-avatar">
-            <img src="{{item.profile}}"
-                 alt="{{item.nickname}}">
-        </a>
-        <!--<h2 class="layui-hide-sm layui-show-xs-block">-->
-        <!--<a class="layui-badge">{{item.sname}}</a>-->
-        <!--{{# if(item.issticky===1&&item.isbest===1){ }}-->
-        <!--<a href="/page/portal/topic/detail.html?post={{item.tid}}&section={{item.sid}}" style="max-width: 50%">-->
-        <!--{{item.title}}-->
-        <!--</a>-->
-        <!--{{#} else if((item.issticky===1&&item.isbest!==1)||(item.issticky!==1&&item.isbest===1)){ }}-->
-        <!--<a href="/page/portal/topic/detail.html?post={{item.tid}}&section={{item.sid}}" style="max-width: 65%">-->
-        <!--{{item.title}}-->
-        <!--</a>-->
-        <!--{{#} else { }}-->
-        <!--<a href="/page/portal/topic/detail.html?post={{item.tid}}&section={{item.sid}}">-->
-        <!--{{item.title}}-->
-        <!--</a>-->
-        <!--{{# } }}-->
-        <!--</h2>-->
-        <h2>
-            <a class="layui-badge">Ta说</a>
-            <a href="/page/portal/topic/detail.html?post={{item.tid}}&section={{item.sid}}">
-                Ta说
-            </a>
-        </h2>
-        <div class="fly-list-info">
-            <span>{{item.ptime}}</span>
+        <div class="fly-avatar">
+            {{# if(item.sex ==='1'){ }}
+            <img src="/image/boy.jpg">
+            {{#} else {}}
+            <img src="/image/girl.jpg">
+            {{# } }}
         </div>
+        <h2>
+            <a class="layui-badge">微博</a>
+            <a>Ta说</a>
+        </h2>
+        <p style="height: 50%; width:100%;display:-webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 3;overflow: hidden;">
+            {{item.content}}
+        </p>
+
     </li>
     {{# }); }}
+    <div style="text-align: center">
+        <div class="laypage-main">
+            <a class="laypage-next" href="javascript:getMore()">查看更多</a>
+        </div>
+    </div>
     {{# if(d.length===0){ }}
     <!-- 无数据时 -->
     <li>
@@ -368,334 +239,21 @@
     {{# } }}
 </script>
 
-<!--活跃用户榜单模板-->
+<!--活跃用户榜模板-->
 <script type="text/html" id="m_active_user">
+    {{# layui.each(d, function(index, item){ }}
     <dd>
-        {{# layui.each(d, function(index, item){ }}
-        <a href="user/home.html">
+        <a href="/page/portal/user/home.html?user={{item.uid}}">
             <img src="{{item.profile}}"><cite>{{item.nickname}}</cite><i>活跃度 {{item.count}}</i>
         </a>
-        {{# }); }}
-        {{# if(d.length===0){ }}
+    </dd>
+    {{# }); }}
+    {{# if(d.length===0){ }}
+    <dd>
         <!-- 无数据时 -->
         <div class="fly-none">暂无数据</div>
-        {{# } }}
     </dd>
-</script>
-
-<script>
-
-    // 根据发帖时间获取帖子列表
-    var order = 'ptime';
-    // 获取本板块全部类型的帖子
-    var kind = 'all';
-
-    function getAllPost() {
-        kind = "all";
-        $("#total").addClass("layui-this");
-        $("#best").removeClass("layui-this");
-        firstGetData();
-    }
-
-    function getBestPost() {
-        kind = "isbest";
-        $("#best").addClass("layui-this");
-        $("#total").removeClass("layui-this");
-        firstGetData();
-    }
-
-    function getPostByPtime() {
-        order = "ptime";
-        $("#new").addClass("layui-this");
-        $("#hot").removeClass("layui-this");
-        firstGetData();
-    }
-
-    function getPostByRcount() {
-        order = "rcount";
-        $("#hot").addClass("layui-this");
-        $("#new").removeClass("layui-this");
-        firstGetData();
-    }
-
-    function firstGetData() {
-        page = 1;
-        $.ajax({
-            type: 'post',
-            url: '/post/getPostByPtime.do',
-            dataType: 'json',
-            data: {
-                page: page,
-                kind: kind,
-                order: order
-            },
-            async: false,
-            success: function (data) {
-                post = data.data;
-                // layer.msg("123456789");
-                page++;
-            },
-            error: function (data) {
-                // layer.msg("获取帖子列表失败！");
-            }
-        })
-        layui.use('laytpl', function () {
-            laytpl = layui.laytpl;
-            // 帖子列表渲染
-            var post_model = document.getElementById('m_post').innerHTML;
-            var post_view = document.getElementById('post');
-            laytpl(post_model).render(post, function (html) {
-                // 当前只写了获取之前当前页所有数据的方法，是否使用追加有待商讨
-                // 更新innerHTML，获取数据量越来越大，需要获取当前页之前所有数据，适用于实时更新
-                post_view.innerHTML = html;
-                // 追加innerHTML，获取数据量小，只用获取新页面的数据，适用于不实时更新
-                // post_view.innerHTML += html;
-            });
-
-        });
-    }
-
-    var page = 1;
-
-    function getMore() {
-        $.ajax({
-            type: 'post',
-            url: '/post/getPostByPtime.do',
-            dataType: 'json',
-            data: {
-                kind: kind,
-                order: order,
-                page: page
-            },
-            async: false,
-            success: function (data) {
-                post = data.data;
-                page++;
-            },
-            error: function (data) {
-                alert("获取帖子失败！");
-            }
-        })
-        layui.use('laytpl', function () {
-            laytpl = layui.laytpl;
-            // 帖子列表渲染
-            var post_model = document.getElementById('m_post').innerHTML;
-            var post_view = document.getElementById('post');
-            laytpl(post_model).render(post, function (html) {
-                // 当前只写了获取之前当前页所有数据的方法，是否使用追加有待商讨
-                // 更新innerHTML，获取数据量越来越大，需要获取当前页之前所有数据，适用于实时更新
-                post_view.innerHTML = html;
-                // 追加innerHTML，获取数据量小，只用获取新页面的数据，适用于不实时更新
-                // post_view.innerHTML += html;
-            });
-
-        });
-    }
-
-    // 通过地址栏获取当前板块唯一标识
-    // 主页唯一标识
-    var section = 'index';
-
-    // 通过地址栏获取当前板块唯一标识
-    function GetQueryString(name) {
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-        var r = window.location.search.substr(1).match(reg);
-        if (r != null) return unescape(r[2]);
-        return null;
-    }
-
-</script>
-
-<!--获取数据，渲染模板-->
-<script type="text/javascript">
-
-    layui.use('layer', function () {
-
-        // ajax交互，JS中以定义的layer无法获取（猜测），手动定义一个
-        // 定义layer，用于打印提示信息
-        var layer = layui.layer;
-
-        // 用户活跃榜数据
-        var active_user;
-        // ajax-用户活跃榜数据获取
-        $.ajax({
-            type: 'post',
-            url: '/count/getActiveUser.do',
-            dataType: 'json',
-            async: false,
-            success: function (data) {
-                active_user = data.data;
-            },
-            error: function (data) {
-                layer.msg("获取用户活跃榜失败！");
-            }
-        })
-
-        // 用户中心数据
-        var user_info;
-        // ajax-用户数据中心数据获取
-        $.ajax({
-            type: 'post',
-            url: '/user/userCenter.do',
-            data: {},
-            dataType: 'json',
-            async: false,
-            success: function (data) {
-                user_info = data.data;
-            },
-            error: function (data) {
-                layer.msg("获取用户中心数据失败！");
-            }
-        })
-
-        // 右侧公告板数据
-        var noticeBoard;
-        // ajax-右侧公告板数据获取
-        $.ajax({
-            type: 'post',
-            url: '/post/getNoticeBoard.do',
-            dataType: 'json',
-            async: false,
-            success: function (data) {
-                noticeBoard = data.data;
-            },
-            error: function (data) {
-                layer.msg("获取公告板数据失败！");
-            }
-        })
-
-        // 导航栏数据
-        var guide_bar;
-        // ajax-导航栏数据获取
-        $.ajax({
-            type: 'post',
-            url: '/section/getSection.do',
-            dataType: 'json',
-            async: false,
-            success: function (data) {
-                guide_bar = data.data;
-            },
-            error: function (data) {
-                layer.msg("获取板块信息失败！");
-            }
-        })
-
-        // 置顶帖数据
-        var sticky;
-        // ajax-置顶帖数据获取
-        $.ajax({
-            type: 'post',
-            url: '/post/getAllSticky.do',
-            dataType: 'json',
-            async: false,
-            success: function (data) {
-                sticky = data.data;
-            },
-            error: function (data) {
-                layer.msg("获取置顶帖失败！");
-            }
-        })
-
-        // 热门帖数据
-        var hot_post;
-        // ajax-获取热门帖数据
-        $.ajax({
-            type: 'post',
-            url: '/post/getHotPost.do',
-            dataType: 'json',
-            async: false,
-            success: function (data) {
-                hot_post = data.data;
-            },
-            error: function (data) {
-                layer.msg("获取热门帖失败！");
-            }
-        })
-
-        // 帖子列表数据
-        var post;
-        // ajax-获取帖子列表
-        $.ajax({
-            type: 'post',
-            url: '/post/getPostByPtime.do',
-            dataType: 'json',
-            data: {
-                page: page,
-                kind: kind,
-                order: order
-            },
-            async: false,
-            success: function (data) {
-                post = data.data;
-                page++;
-            },
-            error: function (data) {
-                layer.msg("获取帖子列表失败！");
-            }
-        })
-
-        // 模板引擎渲染
-        layui.use('laytpl', function () {
-            // 定义一个模板引擎
-            laytpl = layui.laytpl;
-
-            // 用户中心渲染
-            var center_model = document.getElementById('m_center').innerHTML;
-            var center_view = document.getElementById('center');
-            laytpl(center_model).render(user_info, function (html) {
-                center_view.innerHTML = html;
-            });
-
-            // 社区公告板渲染
-            var notice_model = document.getElementById('m_notice').innerHTML;
-            var notice_view = document.getElementById('notice');
-            laytpl(notice_model).render(noticeBoard, function (html) {
-                notice_view.innerHTML = html;
-            });
-
-            // 板块导航渲染
-            var guide_bar_model = document.getElementById('m_guide_bar').innerHTML;
-            var guide_bar_view = document.getElementById('guide_bar');
-            laytpl(guide_bar_model).render(guide_bar, function (html) {
-                guide_bar_view.innerHTML = html;
-            });
-
-            // 置顶渲染
-            var sticky_model = document.getElementById('m_post').innerHTML;
-            var sticky_view = document.getElementById('sticky');
-            laytpl(sticky_model).render(sticky, function (html) {
-                sticky_view.innerHTML = html;
-            });
-
-            // 热门帖子渲染
-            var hot_post_model = document.getElementById('m_hot_post').innerHTML;
-            var hot_post_view = document.getElementById('hot_post');
-            laytpl(hot_post_model).render(hot_post, function (html) {
-                hot_post_view.innerHTML = html;
-            });
-
-            // 帖子列表渲染
-            var post_model = document.getElementById('m_post').innerHTML;
-            var post_view = document.getElementById('post');
-            laytpl(post_model).render(post, function (html) {
-                // 当前只写了获取之前当前页所有数据的方法，是否使用追加有待商讨
-                // 更新innerHTML，获取数据量越来越大，需要获取当前页之前所有数据，适用于实时更新
-                post_view.innerHTML = html;
-                // 追加innerHTML，获取数据量小，只用获取新页面的数据，适用于不实时更新
-                // post_view.innerHTML += html;
-            });
-
-            // 活跃用户榜单
-            var active_user_model = document.getElementById('m_active_user').innerHTML;
-            var active_user_view = document.getElementById('active_user');
-            laytpl(active_user_model).render(active_user, function (html) {
-                active_user_view.innerHTML = html;
-            });
-
-        });
-
-    })
-
+    {{# } }}
 </script>
 
 </html>

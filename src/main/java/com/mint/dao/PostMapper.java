@@ -3,6 +3,7 @@ package com.mint.dao;
 import com.mint.pojo.Post;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 public interface PostMapper {
@@ -32,7 +33,21 @@ public interface PostMapper {
 
     List<Post> getHomeMoreTopic(String uid);
 
-    Post getReplyPost(@Param("tb_name")String tb_name,@Param("tid")String tid);
+    Post getReplyPost(@Param("tb_name") String tb_name, @Param("tid") String tid);
 
-//    List<PostEntity> getSectionPostWithPage1();
+    Integer getSectionPostCount(@Param("tb_name") String tb_name, @Param("kind") String kind);
+
+    List<Post> getMyPostWithPage(@Param("start") Integer start, @Param("limit") Integer limit, @Param("uid") String uid);
+
+    Integer getMyPostCount(String uid);
+
+    Post getPostByTid(@Param("tid") String tid, @Param("tb_name") String tb_name);
+
+    Post getReceiveUidByTid(@Param("tid") String tid);
+
+    List<Post> getSectionPostWithPage(@Param("tb_name") String tb_name, @Param("kind") String kind, @Param("order") String order, @Param("start") int start, @Param("limit") int limit);
+
+    Post getSectionPostDetail(@Param("tb_name") String tb_name, @Param("tid") String tid);
+
+    Integer post(@Param("tb_name") String tb_name, @Param("tid") String tid, @Param("uid") String uid, @Param("sid") String sid, @Param("title") String title, @Param("ptime") Date ptime, @Param("content") String content);
 }

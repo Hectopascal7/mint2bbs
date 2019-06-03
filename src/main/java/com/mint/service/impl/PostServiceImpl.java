@@ -6,11 +6,14 @@ import com.mint.common.ServerResponse;
 import com.mint.dao.*;
 import com.mint.pojo.*;
 import com.mint.service.IPostService;
+import javafx.geometry.Pos;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import javax.swing.text.html.parser.Entity;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -35,9 +38,9 @@ public class PostServiceImpl implements IPostService {
     @Autowired
     private AdviceMapper adviceMapper;
     @Autowired
-    private ActivityMapper activityMapper;
+    private CollectionMapper collectionMapper;
     @Autowired
-    private GuideMapper guideMapper;
+    private PraiseMapper praiseMapper;
     @Autowired
     private SectionMapper sectionMapper;
     @Autowired
@@ -53,36 +56,13 @@ public class PostServiceImpl implements IPostService {
      */
     @Override
     public ServerResponse<String> post(String sid, String title, String content, HttpSession session) {
-        int result = 0;
         String tid = UUID.randomUUID().toString();
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         String uid = user.getUid();
-        switch (sid) {
-            case "topic":
-                Topic topic = new Topic(tid, uid, sid, title, new Date(System.currentTimeMillis()), content);
-                result = topicMapper.insertSelective(topic);
-                break;
-            case "activity":
-                Activity activity = new Activity(tid, uid, sid, title, new Date(System.currentTimeMillis()), content);
-                result = activityMapper.insertSelective(activity);
-                break;
-            case "notice":
-                Notice notice = new Notice(tid, uid, sid, title, new Date(System.currentTimeMillis()), content);
-                result = noticeMapper.insertSelective(notice);
-                break;
-            case "news":
-                News news = new News(tid, uid, sid, title, new Date(System.currentTimeMillis()), content);
-                result = newsMapper.insertSelective(news);
-                break;
-            case "guide":
-                Guide guide = new Guide(tid, uid, sid, title, new Date(System.currentTimeMillis()), content);
-                result = guideMapper.insertSelective(guide);
-                break;
-            case "advice":
-                Advice advice = new Advice(tid, uid, sid, title, new Date(System.currentTimeMillis()), content);
-                result = adviceMapper.insertSelective(advice);
-                break;
-        }
+        Section section = sectionMapper.selectByPrimaryKey(sid);
+        String tb_name = section.getTbname();
+        Date ptime = new Date(System.currentTimeMillis());
+        Integer result = postMapper.post(tb_name, tid, uid, sid, title, ptime, content);
         if (result == 1) {
             return ServerResponse.createBySuccessMessage("发帖成功！");
         } else {
@@ -104,23 +84,39 @@ public class PostServiceImpl implements IPostService {
      * @Return ServerResponse<List < Notice>>
      */
     @Override
-    public ServerResponse<List<PostEntity>> getAllSticky() {
+    public ServerResponse<List<HashMap<String, String>>> getAllSticky() {
         List<Post> list = postMapper.getAllSticky();
-        List<PostEntity> t_list = matchUser(list);
+        List<HashMap<String, String>> t_list = matchUser(list);
         return ServerResponse.createBySuccess(t_list);
     }
 
     /**
-     * @Description 帖子列表Post实体匹配到用户，生成前端对应帖子实体列表List<PostEntity>
+     * @Description 帖子列表Post实体匹配到用户，生成前端对应帖子实体列表List<HashMap<String, String>>
      * @Return ServerResponse<List < Notice>>
      */
-    public List<PostEntity> matchUser(List<Post> list) {
-        List<PostEntity> t_list = new ArrayList<>();
+    public List<HashMap<String, String>> matchUser(List<Post> list) {
+        List<HashMap<String, String>> t_list = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             Post post = list.get(i);
             User user = userMapper.getInfoByUid(post.getUid());
-            PostEntity entity = new PostEntity(post.getTid(), post.getSid(), post.getUid(), user.getNickname(), sectionMapper.getSnameBySid(post.getSid()), post.getTitle(), post.getPtime(), post.getAcount(), post.getRcount(), post.getIsbest(), post.getIssticky(), post.getPcount(), user.getRole(), user.getUlevel(), user.getProfile());
-            t_list.add(entity);
+            HashMap<String, String> map = new HashMap<>();
+            map.put("tid", post.getTid());
+            map.put("sid", post.getSid());
+            map.put("uid", post.getUid());
+            map.put("nickname", user.getNickname());
+            map.put("sname", sectionMapper.getSnameBySid(post.getSid()));
+            map.put("title", post.getTitle());
+            SimpleDateFormat sdf = new SimpleDateFormat("MM-dd HH:ss");
+            map.put("ptime", sdf.format(post.getPtime()));
+            map.put("acount", post.getAcount().toString());
+            map.put("rcount", post.getRcount().toString());
+            map.put("isbest", post.getIsbest().toString());
+            map.put("issticky", post.getIssticky().toString());
+            map.put("pcount", post.getPcount().toString());
+            map.put("role", user.getRole().toString());
+            map.put("point", user.getPoint().toString());
+            map.put("profile", user.getProfile());
+            t_list.add(map);
         }
         return t_list;
     }
@@ -141,9 +137,9 @@ public class PostServiceImpl implements IPostService {
      * @Return ServerResponse<List < Notice>>
      */
     @Override
-    public ServerResponse<List<PostEntity>> getPostByPtime(int page, String kind, String order) {
+    public ServerResponse<List<HashMap<String, String>>> getPostByPtime(int page, String kind, String order) {
         List<Post> list = postMapper.getPostByPtime(kind, order, page * 10);
-        List<PostEntity> t_list = matchUser(list);
+        List<HashMap<String, String>> t_list = matchUser(list);
         return ServerResponse.createBySuccess(t_list);
     }
 
@@ -155,13 +151,13 @@ public class PostServiceImpl implements IPostService {
      */
     @Override
     public ServerResponse<List<Post>> getSectionHotPost(String sid) {
-        String tb_name = "tb_" + sid;
+        Section section = sectionMapper.selectByPrimaryKey(sid);
+        String tb_name = section.getTbname();
         List<Post> list = postMapper.getSectionHotPost(tb_name);
         return ServerResponse.createBySuccess(list);
     }
 
     /**
-     * @param section
      * @param kind
      * @param order
      * @param page
@@ -175,30 +171,12 @@ public class PostServiceImpl implements IPostService {
      * @Return ServerResponse<List < Notice>>
      */
     @Override
-    public ServerResponse<List<PostEntity>> getSectionPostWithPage(String section, String kind, String order, int page, int limit) {
+    public ServerResponse<List<HashMap<String, String>>> getSectionPostWithPage(String sid, String kind, String order, int page, int limit) {
         int start = (page - 1) * limit;
-        List list = new ArrayList<>();
-        switch (section) {
-            case "topic":
-                list = topicMapper.getPostWithPage(kind, order, start, limit);
-                break;
-            case "guide":
-                list = guideMapper.getPostWithPage(kind, order, start, limit);
-                break;
-            case "activity":
-                list = activityMapper.getPostWithPage(kind, order, start, limit);
-                break;
-            case "news":
-                list = newsMapper.getPostWithPage(kind, order, start, limit);
-                break;
-            case "notice":
-                list = noticeMapper.getPostWithPage(kind, order, start, limit);
-                break;
-            case "advice":
-                list = adviceMapper.getPostWithPage(kind, order, start, limit);
-                break;
-        }
-        List<PostEntity> rlist = matchUser(list);
+        Section section = sectionMapper.selectByPrimaryKey(sid);
+        String tb_name = section.getTbname();
+        List<Post> list = postMapper.getSectionPostWithPage(tb_name, kind, order, start, limit);
+        List<HashMap<String, String>> rlist = matchUser(list);
         return ServerResponse.createBySuccess(rlist);
     }
 
@@ -209,53 +187,44 @@ public class PostServiceImpl implements IPostService {
      * @Return ServerResponse<HashMap < String, Object>>
      */
     @Override
-    public ServerResponse<HashMap<String, Object>> getPostDetail(String tid, String section) {
-        Post post = new Post();
-        switch (section) {
-            case "topic":
-                post = topicMapper.selectByPrimaryKey(tid);
-                break;
-            case "guide":
-                post = guideMapper.selectByPrimaryKey(tid);
-                break;
-            case "activity":
-                post = activityMapper.selectByPrimaryKey(tid);
-                break;
-            case "news":
-                post = newsMapper.selectByPrimaryKey(tid);
-                break;
-            case "notice":
-                post = noticeMapper.selectByPrimaryKey(tid);
-                break;
-            case "advice":
-                post = adviceMapper.selectByPrimaryKey(tid);
-                break;
-        }
+    public ServerResponse<HashMap<String, String>> getPostDetail(String tid, String sid) {
+        Section section = sectionMapper.selectByPrimaryKey(sid);
+        String tb_name = section.getTbname();
+        Post post = postMapper.getSectionPostDetail(tb_name, tid);
         User user = userMapper.getUserOnPostDetail(post.getUid());
-        System.out.println(user);
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("post", post);
-        map.put("user", user);
+        HashMap<String, String> map = new HashMap<>();
+        map.put("title", post.getTitle());
+        map.put("content", post.getContent());
+        map.put("isbest", post.getIsbest().toString());
+        map.put("issticky", post.getIssticky().toString());
+        map.put("rcount", post.getRcount().toString());
+        map.put("acount", post.getAcount().toString());
+        map.put("uid", user.getUid());
+        map.put("nickname", user.getNickname());
+        map.put("profile", user.getProfile());
+        map.put("signature", user.getSignature());
+        map.put("point", user.getPoint().toString());
+        map.put("role", user.getRole().toString());
+        map.put("sname", section.getSname());
+        String pid = praiseMapper.checkPraise(tid, user.getUid());
+        map.put("tid", post.getTid());
+        map.put("sid", post.getSid());
+        if (StringUtils.isBlank(pid)) {
+            map.put("praise", "0");
+        } else {
+            map.put("praise", "1");
+            map.put("pid", pid);
+        }
+        String cid = collectionMapper.checkCollection(tid, user.getUid());
+        if (StringUtils.isBlank(cid)) {
+            map.put("collect", "0");
+        } else {
+            map.put("collect", "1");
+            map.put("cid", cid);
+        }
         return ServerResponse.createBySuccess(map);
     }
 
-    @Override
-    public ServerResponse<List<List<Reply>>> getReplies(String tid) {
-        List<Reply> list = replyMapper.getMainReplies(tid);
-        List<List<Reply>> replyList = new ArrayList<>();
-        for (Reply reply : list) {
-            String rrid = reply.getRrid();
-            List<Reply> rlist = new ArrayList<>();
-            rlist.add(reply);
-            Reply rreply = null;
-            if (!("".equals(rrid)) && !(null == rrid)) {
-                rreply = replyMapper.selectByPrimaryKey(rrid);
-                rlist.add(rreply);
-            }
-            replyList.add(rlist);
-        }
-        return ServerResponse.createBySuccess(replyList);
-    }
 
     @Override
     public ServerResponse<List<Post>> getUserLatestTopic(String uid) {
@@ -267,6 +236,43 @@ public class PostServiceImpl implements IPostService {
     public ServerResponse<List<Post>> getHomeMoreTopic(String uid) {
         List<Post> list = postMapper.getHomeMoreTopic(uid);
         return ServerResponse.createBySuccess(list);
+    }
+
+    @Override
+    public ServerResponse<Integer> getSectionPostCount(String sid, String kind) {
+        Section section = sectionMapper.selectByPrimaryKey(sid);
+        String tb_name = section.getTbname();
+        Integer count = postMapper.getSectionPostCount(tb_name, kind);
+        return ServerResponse.createBySuccess(count);
+    }
+
+    @Override
+    public ServerResponse<List<HashMap<String, String>>> getMyPostWithPage(Integer page, Integer limit, HttpSession httpSession) {
+        User user = (User) httpSession.getAttribute(Const.CURRENT_USER);
+        String uid = user.getUid();
+        List<Post> list = postMapper.getMyPostWithPage((page - 1) * limit, limit, uid);
+        List<HashMap<String, String>> postList = new ArrayList<>();
+        for (Post p : list) {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("title", p.getTitle());
+            map.put("tid", p.getTid());
+            map.put("acount", p.getAcount().toString());
+            map.put("rcount", p.getRcount().toString());
+            Date date = p.getPtime();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            map.put("ptime", sdf.format(date));
+            map.put("sid", p.getSid());
+            postList.add(map);
+        }
+        return ServerResponse.createBySuccess(postList);
+    }
+
+    @Override
+    public ServerResponse<Integer> getMyPostCount(HttpSession httpSession) {
+        User user = (User) httpSession.getAttribute(Const.CURRENT_USER);
+        String uid = user.getUid();
+        Integer count = postMapper.getMyPostCount(uid);
+        return ServerResponse.createBySuccess(count);
     }
 
 }

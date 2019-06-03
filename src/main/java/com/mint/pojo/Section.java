@@ -9,11 +9,14 @@ public class Section {
 
     private String address;
 
-    public Section(String sid, Integer sorder, String sname, String address) {
+    private String tbname;
+
+    public Section(String sid, Integer sorder, String sname, String address, String tbname) {
         this.sid = sid;
         this.sorder = sorder;
         this.sname = sname;
         this.address = address;
+        this.tbname = tbname;
     }
 
     public Section() {
@@ -50,5 +53,13 @@ public class Section {
 
     public void setAddress(String address) {
         this.address = address == null ? null : address.trim();
+    }
+
+    public String getTbname() {
+        return tbname;
+    }
+
+    public void setTbname(String tbname) {
+        this.tbname = tbname == null ? null : tbname.trim();
     }
 }

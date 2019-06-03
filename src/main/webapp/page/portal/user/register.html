@@ -157,11 +157,22 @@
                                 </div>
                             </div>
                             <div class="layui-form-item">
+                                <label class="layui-form-label">住所(楼层)</label>
+                                <div class="layui-input-inline">
+                                    <select name="floor" lay-verify="required">
+                                        <option value="">楼层</option>
+                                        <option value="1">一层</option>
+                                        <option value="2">二层</option>
+                                        <option value="3">三层</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
                                 <label class="layui-form-label">住所(室)</label>
                                 <div class="layui-input-inline">
                                     <select name="room" lay-verify="required">
                                         <option value="">室</option>
-                                        <option value="102">102室</option>
+                                        <option value="01">01室</option>
                                         <option value="1201">1201室</option>
                                         <option value="1505A">1505A室</option>
                                     </select>
@@ -238,7 +249,7 @@
         version: "3.0.0"
         , base: '../../../script/mods/'
     }).extend({
-        fly: 'index'
+        fly: 'post.html'
     }).use('fly');
 
     layui.use(['form', 'layedit', 'laydate'], function () {

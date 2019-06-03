@@ -7,11 +7,13 @@
             <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="building" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="unit" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="floor" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="room" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="phone" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="idcnum" javaType="java.lang.String" jdbcType="VARCHAR"/>
         </constructor>
     </resultMap>
+
     <resultMap id="LicenseResult" type="com.mint.pojo.Resident">
         <constructor>
             <idArg column="uid" javaType="java.lang.String" jdbcType="VARCHAR"/>
@@ -19,9 +21,11 @@
             <arg column="phone" javaType="java.lang.String" jdbcType="VARCHAR"/>
         </constructor>
     </resultMap>
+
     <sql id="Base_Column_List">
-    uid, name, building, unit, room, phone, idcnum
+    uid, name, building, unit, floor, room, phone, idcnum
   </sql>
+
     <sql id="License_Column_List">
     uid, name，phone
   </sql>
@@ -37,11 +41,11 @@
   </delete>
     <insert id="insert" parameterType="com.mint.pojo.Resident">
     insert into tb_resident (uid, name, building, 
-      unit, room, phone, 
-      idcnum)
+      unit, floor, room, 
+      phone, idcnum)
     values (#{uid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{building,jdbcType=VARCHAR}, 
-      #{unit,jdbcType=VARCHAR}, #{room,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{idcnum,jdbcType=VARCHAR})
+      #{unit,jdbcType=VARCHAR}, #{floor,jdbcType=VARCHAR}, #{room,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{idcnum,jdbcType=VARCHAR})
   </insert>
     <insert id="insertSelective" parameterType="com.mint.pojo.Resident">
         insert into tb_resident
@@ -57,6 +61,9 @@
             </if>
             <if test="unit != null">
                 unit,
+            </if>
+            <if test="floor != null">
+                floor,
             </if>
             <if test="room != null">
                 room,
@@ -81,6 +88,9 @@
             <if test="unit != null">
                 #{unit,jdbcType=VARCHAR},
             </if>
+            <if test="floor != null">
+                #{floor,jdbcType=VARCHAR},
+            </if>
             <if test="room != null">
                 #{room,jdbcType=VARCHAR},
             </if>
@@ -104,6 +114,9 @@
             <if test="unit != null">
                 unit = #{unit,jdbcType=VARCHAR},
             </if>
+            <if test="floor != null">
+                floor = #{floor,jdbcType=VARCHAR},
+            </if>
             <if test="room != null">
                 room = #{room,jdbcType=VARCHAR},
             </if>
@@ -121,6 +134,7 @@
     set name = #{name,jdbcType=VARCHAR},
       building = #{building,jdbcType=VARCHAR},
       unit = #{unit,jdbcType=VARCHAR},
+      floor = #{floor,jdbcType=VARCHAR},
       room = #{room,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       idcnum = #{idcnum,jdbcType=VARCHAR}

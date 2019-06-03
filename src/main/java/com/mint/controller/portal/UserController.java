@@ -11,12 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * @Program: mint2bbs
@@ -63,7 +63,7 @@ public class UserController {
      */
     @RequestMapping(value = "register.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<String> register(String loginid, String nickname, String password, String repassword, String uid, String name, String sex, String birthday, String building, String idcnum, String unit, String room, String phone, String role) {
+    public ServerResponse<String> register(String loginid, String nickname, String password, String repassword, String uid, String name, String sex, String birthday, String building, String idcnum, String unit, String floor, String room, String phone, String role) {
         System.out.println(sex);
         System.out.println(role);
         // 后台再进行一次密码校验，确保两次输入的密码一致
@@ -71,7 +71,7 @@ public class UserController {
             return ServerResponse.createByErrorMessage("两次输入的密码不一致，请重新输入！");
         } else {
             // 密码校验成功，执行注册
-            ServerResponse<String> response = iUserService.register(loginid, nickname, password, uid, name, sex, birthday, building, idcnum, unit, room, phone, role);
+            ServerResponse<String> response = iUserService.register(loginid, nickname, password, uid, name, sex, birthday, building, unit, floor, room, idcnum, phone, role);
             return response;
         }
     }
@@ -117,5 +117,59 @@ public class UserController {
         return iResidentService.getUserByLicense(license);
     }
 
+    /**
+     * @Description 获取用户主页资料
+     * @Param now_password
+     * @Param new_password
+     * @Param re_new_password
+     * @Return ServerResponse<String>
+     */
+    @RequestMapping(value = "updatePassword.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse updatePassword(String now_password, String new_password, String re_new_password, HttpSession httpSession) {
+        return iUserService.updatePassword(now_password, new_password, re_new_password, httpSession);
+    }
+
+    /**
+     * @Description 获取用户主页资料
+     * @Param now_password
+     * @Param new_password
+     * @Param re_new_password
+     * @Return ServerResponse<String>
+     */
+    @RequestMapping(value = "updateUserInfo.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse updateUserInfo(String nickname, String email, String license, String signature, HttpSession httpSession) {
+        return iUserService.updateUserInfo(nickname, email, license, signature, httpSession);
+    }
+
+    /**
+     * @Description 上传商品图片
+     * @Param goodPic
+     * @Param httpServletRequest
+     * @Return ServerResponse
+     */
+    @RequestMapping(value = "uploadProfile.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<String> uploadProfile(@RequestParam("profile") MultipartFile profile, HttpServletRequest httpServletRequest) {
+        if (null != profile) {
+            return iUserService.uploadProfile(profile, httpServletRequest);
+        } else {
+            return ServerResponse.createByErrorMessage("头像上传失败！");
+        }
+    }
+
+    /**
+     * @Description 上传商品图片
+     * @Param goodPic
+     * @Param httpServletRequest
+     * @Return ServerResponse
+     */
+    @RequestMapping(value = "updateUserProfile.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse updateUserProfile(@RequestParam("profile") String profile, HttpSession httpSession) {
+        System.out.println("还可以啊");
+        return iUserService.updateUserProfile(profile, httpSession);
+    }
 
 }

@@ -29,8 +29,6 @@ public class User {
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date jointime;
 
-    private Integer ulevel;
-
     private String email;
 
     private String signature;
@@ -39,22 +37,7 @@ public class User {
 
     private String profile;
 
-    public User(String uid, String loginid, String password, String nickname, Integer role, Integer sex, Date birthday, Integer point, Date jointime, Integer ulevel, Integer status, String profile) {
-        this.uid = uid;
-        this.loginid = loginid;
-        this.password = password;
-        this.nickname = nickname;
-        this.role = role;
-        this.sex = sex;
-        this.birthday = birthday;
-        this.point = point;
-        this.jointime = jointime;
-        this.ulevel = ulevel;
-        this.status = status;
-        this.profile = profile;
-    }
-
-    public User(String uid, String loginid, String password, String nickname, Integer role, Integer sex, Date birthday, String license, Integer point, Date jointime, Integer ulevel, String email, String signature, Integer status) {
+    public User(String uid, String loginid, String password, String nickname, Integer role, Integer sex, Date birthday, String license, Integer point, Date jointime, String email, String signature, Integer status) {
         this.uid = uid;
         this.loginid = loginid;
         this.password = password;
@@ -65,13 +48,12 @@ public class User {
         this.license = license;
         this.point = point;
         this.jointime = jointime;
-        this.ulevel = ulevel;
         this.email = email;
         this.signature = signature;
         this.status = status;
     }
 
-    public User(String uid, String loginid, String password, String nickname, Integer role, Integer sex, Date birthday, String license, Integer point, Date jointime, Integer ulevel, String email, String signature, Integer status, String profile) {
+    public User(String uid, String loginid, String password, String nickname, Integer role, Integer sex, Date birthday, String license, Integer point, Date jointime, String email, String signature, Integer status, String profile) {
         this.uid = uid;
         this.loginid = loginid;
         this.password = password;
@@ -82,54 +64,41 @@ public class User {
         this.license = license;
         this.point = point;
         this.jointime = jointime;
-        this.ulevel = ulevel;
         this.email = email;
         this.signature = signature;
         this.status = status;
         this.profile = profile;
     }
 
-    public User(String nickname, Integer role, String profile, Integer ulevel) {
-        this.nickname = nickname;
-        this.role = role;
-        this.ulevel = ulevel;
-        this.profile = profile;
-    }
-
-    public User() {
-        super();
-    }
-
-    public User(String uid, String nickname, Integer role, Integer ulevel, String signature, Integer status, String profile) {
+    public User(String uid, String loginid, String password, String nickname, Integer role, Integer sex, Date birthday, Integer point, Date jointime, Integer status, String profile) {
         this.uid = uid;
+        this.loginid = loginid;
+        this.password = password;
         this.nickname = nickname;
         this.role = role;
-        this.ulevel = ulevel;
-        this.signature = signature;
+        this.sex = sex;
+        this.birthday = birthday;
+        this.point = point;
+        this.jointime = jointime;
         this.status = status;
         this.profile = profile;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(uid, user.uid) &&
-                Objects.equals(loginid, user.loginid) &&
-                Objects.equals(password, user.password) &&
-                Objects.equals(nickname, user.nickname) &&
-                Objects.equals(role, user.role) &&
-                Objects.equals(sex, user.sex) &&
-                Objects.equals(birthday, user.birthday) &&
-                Objects.equals(license, user.license) &&
-                Objects.equals(point, user.point) &&
-                Objects.equals(jointime, user.jointime) &&
-                Objects.equals(ulevel, user.ulevel) &&
-                Objects.equals(email, user.email) &&
-                Objects.equals(signature, user.signature) &&
-                Objects.equals(status, user.status) &&
-                Objects.equals(profile, user.profile);
+    public User(String nickname, Integer role, Integer point, String profile) {
+        this.nickname = nickname;
+        this.role = role;
+        this.point = point;
+        this.profile = profile;
+    }
+
+    public User(String uid, String nickname, Integer role, String signature, Integer point, Integer status, String profile) {
+        this.uid = uid;
+        this.nickname = nickname;
+        this.role = role;
+        this.signature = signature;
+        this.point = point;
+        this.status = status;
+        this.profile = profile;
     }
 
     @Override
@@ -145,7 +114,6 @@ public class User {
                 ", license='" + license + '\'' +
                 ", point=" + point +
                 ", jointime=" + jointime +
-                ", ulevel=" + ulevel +
                 ", email='" + email + '\'' +
                 ", signature='" + signature + '\'' +
                 ", status=" + status +
@@ -154,8 +122,33 @@ public class User {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return uid.equals(user.uid) &&
+                loginid.equals(user.loginid) &&
+                password.equals(user.password) &&
+                nickname.equals(user.nickname) &&
+                role.equals(user.role) &&
+                sex.equals(user.sex) &&
+                birthday.equals(user.birthday) &&
+                license.equals(user.license) &&
+                point.equals(user.point) &&
+                jointime.equals(user.jointime) &&
+                email.equals(user.email) &&
+                signature.equals(user.signature) &&
+                status.equals(user.status) &&
+                profile.equals(user.profile);
+    }
+
+    @Override
     public int hashCode() {
-        return Objects.hash(uid, loginid, password, nickname, role, sex, birthday, license, point, jointime, ulevel, email, signature, status, profile);
+        return Objects.hash(uid, loginid, password, nickname, role, sex, birthday, license, point, jointime, email, signature, status, profile);
+    }
+
+    public User() {
+        super();
     }
 
     public String getUid() {
@@ -236,14 +229,6 @@ public class User {
 
     public void setJointime(Date jointime) {
         this.jointime = jointime;
-    }
-
-    public Integer getUlevel() {
-        return ulevel;
-    }
-
-    public void setUlevel(Integer ulevel) {
-        this.ulevel = ulevel;
     }
 
     public String getEmail() {

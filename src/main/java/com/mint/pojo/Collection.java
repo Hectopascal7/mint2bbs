@@ -5,16 +5,22 @@ import java.util.Date;
 public class Collection {
     private String cid;
 
-    private String tid;
+    private String iid;
 
-    private String uid;
+    private Integer itype;
+
+    private String isid;
+
+    private String cuid;
 
     private Date ctime;
 
-    public Collection(String cid, String tid, String uid, Date ctime) {
+    public Collection(String cid, String iid, Integer itype, String isid, String cuid, Date ctime) {
         this.cid = cid;
-        this.tid = tid;
-        this.uid = uid;
+        this.iid = iid;
+        this.itype = itype;
+        this.isid = isid;
+        this.cuid = cuid;
         this.ctime = ctime;
     }
 
@@ -30,20 +36,36 @@ public class Collection {
         this.cid = cid == null ? null : cid.trim();
     }
 
-    public String getTid() {
-        return tid;
+    public String getIid() {
+        return iid;
     }
 
-    public void setTid(String tid) {
-        this.tid = tid == null ? null : tid.trim();
+    public void setIid(String iid) {
+        this.iid = iid == null ? null : iid.trim();
     }
 
-    public String getUid() {
-        return uid;
+    public Integer getItype() {
+        return itype;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid == null ? null : uid.trim();
+    public void setItype(Integer itype) {
+        this.itype = itype;
+    }
+
+    public String getIsid() {
+        return isid;
+    }
+
+    public void setIsid(String isid) {
+        this.isid = isid == null ? null : isid.trim();
+    }
+
+    public String getCuid() {
+        return cuid;
+    }
+
+    public void setCuid(String cuid) {
+        this.cuid = cuid == null ? null : cuid.trim();
     }
 
     public Date getCtime() {

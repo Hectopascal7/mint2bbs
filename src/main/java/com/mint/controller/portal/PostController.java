@@ -54,13 +54,13 @@ public class PostController {
     }
 
     /**
-     * @Description 置顶模块
+     * @Description 获取置顶模块
      * @Return ServerResponse<List < Notice>>
      */
     @RequestMapping(value = "getAllSticky.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<List<PostEntity>> getAllSticky() {
-        ServerResponse<List<PostEntity>> response = iPostService.getAllSticky();
+    public ServerResponse<List<HashMap<String, String>>> getAllSticky() {
+        ServerResponse<List<HashMap<String, String>>> response = iPostService.getAllSticky();
         return response;
     }
 
@@ -76,7 +76,7 @@ public class PostController {
     }
 
     /**
-     * @Description 获取主页热门帖子
+     * @Description 获取板块热门帖子
      * @Param sid
      * @Return ServerResponse<List < Notice>>
      */
@@ -93,8 +93,8 @@ public class PostController {
      */
     @RequestMapping(value = "getPostByPtime.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<List<PostEntity>> getPostByPtime(@RequestParam("page") int page, @RequestParam("kind") String kind, @RequestParam("order") String order) {
-        ServerResponse<List<PostEntity>> response = iPostService.getPostByPtime(page, kind, order);
+    public ServerResponse<List<HashMap<String, String>>> getPostByPtime(@RequestParam("page") int page, @RequestParam("kind") String kind, @RequestParam("order") String order) {
+        ServerResponse<List<HashMap<String, String>>> response = iPostService.getPostByPtime(page, kind, order);
         return response;
     }
 
@@ -104,12 +104,23 @@ public class PostController {
      */
     @RequestMapping(value = "getSectionPostWithPage.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<List<PostEntity>> getSectionPostWithPage
+    public ServerResponse<List<HashMap<String, String>>> getSectionPostWithPage
     (@RequestParam("section") String section, @RequestParam("kind")
             String kind, @RequestParam("order") String order,
      @RequestParam("page") int page, @RequestParam("limit") int limit) {
-        ServerResponse<List<PostEntity>> response = iPostService.getSectionPostWithPage(section, kind, order, page, limit);
+        ServerResponse<List<HashMap<String, String>>> response = iPostService.getSectionPostWithPage(section, kind, order, page, limit);
         System.out.println(JSON.toJSONString(response));
+        return response;
+    }
+
+    /**
+     * @Description 获取板块内帖子数量
+     * @Return ServerResponse<List < Notice>>
+     */
+    @RequestMapping(value = "getSectionPostCount.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<Integer> getSectionPostCount(@RequestParam("sid") String sid, @RequestParam("kind") String kind) {
+        ServerResponse<Integer> response = iPostService.getSectionPostCount(sid, kind);
         return response;
     }
 
@@ -121,22 +132,8 @@ public class PostController {
      */
     @RequestMapping(value = "getPostDetail.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<HashMap<String, Object>> getPostDetail(String tid, String section) {
+    public ServerResponse<HashMap<String, String>> getPostDetail(String tid, String section) {
         return iPostService.getPostDetail(tid, section);
-    }
-
-    /**
-     * @Description 获取帖子回复
-     * @Param tid
-     * @Param section
-     * @Return ServerResponse<HashMap < String, Object>>
-     */
-    @RequestMapping(value = "getReplies.do", method = RequestMethod.POST)
-    @ResponseBody
-    public ServerResponse<List<List<Reply>>> getReplies(String tid) {
-        ServerResponse serverResponse = iPostService.getReplies(tid);
-        System.out.println(JSON.toJSONString(serverResponse));
-        return iPostService.getReplies(tid);
     }
 
     /**
@@ -164,6 +161,30 @@ public class PostController {
     public ServerResponse<List<Post>> getHomeMoreTopic(String uid) {
         ServerResponse<List<Post>> response = iPostService.getHomeMoreTopic(uid);
         return response;
+    }
+
+    /**
+     * @Description 获取帖子回复
+     * @Param tid
+     * @Param section
+     * @Return ServerResponse<HashMap < String, Object>>
+     */
+    @RequestMapping(value = "getMyPostCount.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<Integer> getMyPostCount(HttpSession httpSession) {
+        return iPostService.getMyPostCount(httpSession);
+    }
+
+    /**
+     * @Description 获取帖子回复
+     * @Param tid
+     * @Param section
+     * @Return ServerResponse<HashMap < String, Object>>
+     */
+    @RequestMapping(value = "getMyPostWithPage.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<List<HashMap<String, String>>> getMyPostWithPage(Integer page, Integer limit, HttpSession httpSession) {
+        return iPostService.getMyPostWithPage(page, limit, httpSession);
     }
 
 }

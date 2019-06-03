@@ -1,5 +1,6 @@
 package com.mint.service.impl;
 
+import com.mint.common.Const;
 import com.mint.common.ServerResponse;
 import com.mint.dao.CountMapper;
 import com.mint.dao.ResidentMapper;
@@ -8,14 +9,20 @@ import com.mint.pojo.Count;
 import com.mint.pojo.Resident;
 import com.mint.pojo.User;
 import com.mint.service.IUserService;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.UUID;
 
 /**
  * @Program: mint2bbs
@@ -65,7 +72,7 @@ public class UserServiceImpl implements IUserService {
      * @Return ServerResponse<String>
      */
     @Override
-    public ServerResponse<String> register(String loginid, String nickname, String password, String uid, String name, String sex, String birthday, String building, String idcnum, String unit, String room, String phone, String role) {
+    public ServerResponse<String> register(String loginid, String nickname, String password, String uid, String name, String sex, String birthday, String building, String unit, String floor, String room, String idcnum, String phone, String role) {
         Integer r = Integer.parseInt(role);
         Integer s = Integer.parseInt(sex);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -76,7 +83,7 @@ public class UserServiceImpl implements IUserService {
             e.printStackTrace();
         }
         Date jointime = new Date(System.currentTimeMillis());
-        Resident resident = new Resident(uid, name, building, unit, room, phone, idcnum);
+        Resident resident = new Resident(uid, name, building, unit, floor, room, phone, idcnum);
         // 检查住户信息是否正确
         if (checkResident(resident)) {
             // 住户信息正确，检查该住户是否已经注册
@@ -94,7 +101,7 @@ public class UserServiceImpl implements IUserService {
                     } else {
                         profile = "/image/asuna.jpg";
                     }
-                    User user = new User(uid, loginid, password, nickname, r, s, b, 0, jointime, 0, 1, profile);
+                    User user = new User(uid, loginid, password, nickname, r, s, b, 0, jointime, 1, profile);
                     // 将用户信息存入用户信息表
                     System.out.println(user);
                     int result = userMapper.insertSelective(user);
@@ -118,6 +125,76 @@ public class UserServiceImpl implements IUserService {
             return ServerResponse.createByErrorMessage("用户信息校验错误！");
         }
     }
+
+    @Override
+    public ServerResponse updatePassword(String now_password, String new_password, String re_new_password, HttpSession httpSession) {
+        User user = (User) httpSession.getAttribute(Const.CURRENT_USER);
+        String uid = user.getUid();
+        if (!checkNowPassword(now_password, uid)) {
+            return ServerResponse.createByErrorMessage("当前密码错误，修改密码失败！");
+        } else {
+            if (!new_password.equals(re_new_password)) {
+                return ServerResponse.createByErrorMessage("新密码与确认密码不同，修改失败！");
+            } else {
+                Integer result = userMapper.updatePassword(new_password, uid);
+                if (1 == result) {
+                    return ServerResponse.createBySuccessMessage("更新密码成功，即将跳转登录页，请重新登录。");
+                } else {
+                    return ServerResponse.createByErrorMessage("密码更新失败！请联系管理员解决。");
+                }
+            }
+        }
+    }
+
+    @Override
+    public ServerResponse updateUserInfo(String nickname, String email, String license, String signature, HttpSession httpSession) {
+        User user = (User) httpSession.getAttribute(Const.CURRENT_USER);
+        String uid = user.getUid();
+        if (checkNickname(nickname, uid)) {
+            return ServerResponse.createByErrorMessage("更新用户信息失败，用户昵称已被使用！");
+        } else {
+            Integer result = userMapper.updateUserInfo(uid, nickname, email, license, signature);
+            if (Const.OP_SUCCESS == result) {
+                User u = userMapper.selectByPrimaryKey(uid);
+                u.setPassword(StringUtils.EMPTY);
+                httpSession.setAttribute(Const.CURRENT_USER, u);
+                return ServerResponse.createBySuccessMessage("更新个人信息成功！");
+            } else {
+                return ServerResponse.createByErrorMessage("更新个人信息失败！");
+            }
+        }
+    }
+
+    @Override
+    public ServerResponse<String> uploadProfile(MultipartFile profile, HttpServletRequest httpServletRequest) {
+        // 1.保存图片到本地
+        String originalFilename = profile.getOriginalFilename();//获取原名字
+        String newFilename = UUID.randomUUID().toString() + "." + FilenameUtils.getExtension(originalFilename);// 生成新名字
+        String uploadURL = httpServletRequest.getSession().getServletContext().getRealPath("/") + "/image/user/" + newFilename;
+        try {
+            profile.transferTo(new File(uploadURL));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ServerResponse.createByErrorMessage("图片上传失败！");
+        }
+        return ServerResponse.createBySuccess("图片上传成功！", "/image/user/" + newFilename);
+    }
+
+    @Override
+    public ServerResponse updateUserProfile(String profile, HttpSession httpSession) {
+        User user = (User) httpSession.getAttribute(Const.CURRENT_USER);
+        String uid = user.getUid();
+        Integer result = userMapper.updateUserProfile(profile, uid);
+        if (Const.OP_SUCCESS == result) {
+            User u = userMapper.selectByPrimaryKey(uid);
+            u.setPassword(StringUtils.EMPTY);
+            httpSession.setAttribute(Const.CURRENT_USER, u);
+            return ServerResponse.createBySuccessMessage("更新用户头像成功！");
+        } else {
+            return ServerResponse.createByErrorMessage("更新用户头像失败！");
+        }
+    }
+
 
     @Override
     public User getIndexUserInfo(String uid) {
@@ -155,6 +232,24 @@ public class UserServiceImpl implements IUserService {
         if (null != result) {
             return true;
             // 用户未注册
+        } else {
+            return false;
+        }
+    }
+
+    public boolean checkNowPassword(String now_password, String uid) {
+        Integer count = userMapper.checkNowPassword(now_password, uid);
+        if (1 == count) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean checkNickname(String nickname, String uid) {
+        Integer count = userMapper.checkNickname(nickname, uid);
+        if (1 == count) {
+            return true;
         } else {
             return false;
         }

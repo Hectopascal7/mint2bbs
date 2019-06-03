@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>用户中心</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="fly,layui,前端社区">
+    <meta name="description" content="Fly社区是模块化前端UI框架Layui的官网社区，致力于为web开发提供强劲动力">
+    <link rel="stylesheet" href="../../../script/layui/css/layui.css">
+    <link rel="stylesheet" href="../../../css/global.css">
+    <script src="/script/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+
+<div class="fly-header layui-bg-black">
+    <div class="layui-container">
+        <a class="fly-logo" href="/">
+            <img src="../../../image/logo.png" alt="layui">
+        </a>
+        <!-- 论坛主标题区 -->
+        <ul class="layui-nav fly-nav layui-hide-xs">
+            <li class="layui-nav-item">
+                <a href="/"><i class="iconfont icon-jiaoliu"></i>论坛</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="/page/portal/market/market.html"><i class="iconfont icon-iconmingxinganli"></i>市场</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="/page/portal/weibo/index.html" target="_blank"><i class="iconfont icon-ui"></i>微博</a>
+            </li>
+        </ul>
+        <ul class="layui-nav fly-nav-user">
+            <!-- 登入后的状态 -->
+            <li class="layui-nav-item" id="center">
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="layui-container fly-marginTop fly-user-main">
+    <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
+        <li class="layui-nav-item">
+            <a href="/page/portal/user/home.html" id="home">
+                <i class="layui-icon">&#xe609;</i>
+                我的主页
+            </a>
+        </li>
+        <li class="layui-nav-item layui-this">
+            <a href="/page/portal/user/post.html">
+                <i class="layui-icon">&#xe653;</i>
+                帖子中心
+            </a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="/page/portal/user/setting.html">
+                <i class="layui-icon">&#xe620;</i>
+                基本设置
+            </a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="/page/portal/user/message.html">
+                <i class="layui-icon">&#xe611;</i>
+                我的消息
+            </a>
+        </li>
+    </ul>
+
+    <div class="site-tree-mobile layui-hide">
+        <i class="layui-icon">&#xe602;</i>
+    </div>
+    <div class="site-mobile-shade"></div>
+
+    <div class="site-tree-mobile layui-hide">
+        <i class="layui-icon">&#xe602;</i>
+    </div>
+    <div class="site-mobile-shade"></div>
+
+
+    <div class="fly-panel fly-panel-user" pad20>
+        <!--
+        <div class="fly-msg" style="margin-top: 15px;">
+          您的邮箱尚未验证，这比较影响您的帐号安全，<a href="activate.html">立即去激活？</a>
+        </div>
+        -->
+        <div class="layui-tab layui-tab-brief" lay-filter="user">
+            <ul class="layui-tab-title" id="LAY_mine">
+                <li data-type="mine-jie" lay-id="index" class="layui-this">我发布的帖子（<span id="myPostCount"></span>）</li>
+                <li data-type="collection" data-url="/collection/find/" lay-id="collection">我收藏的帖子（<span
+                        id="myCollectionCount"></span>）
+                </li>
+            </ul>
+            <div class="layui-tab-content" style="padding: 20px 0;">
+                <div class="layui-tab-item layui-show">
+                    <ul class="mine-view jie-row" id="myPost"></ul>
+                    <div style="text-align: center">
+                        <div id="topic_page"></div>
+                    </div>
+                </div>
+
+
+                <div class="layui-tab-item">
+                    <ul class="mine-view jie-row" id="myCollection"></ul>
+                    <div style="text-align: center">
+                        <div id="collection_page"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="fly-footer">
+    <p>
+        <a href="http://fly.layui.com/" target="_blank">薄荷社区</a> 2019 &copy;
+        <a href="http://www.layui.com/" target="_blank">橙色薄荷° 出品</a>
+    </p>
+    <p>
+        <a href="http://fly.layui.com/jie/3147/" target="_blank">Copyright &copy; 2019 橙色薄荷° All Rights Reserved.</a>
+    </p>
+</div>
+
+<script type="text/html" id="m_myPost">
+    {{# layui.each(d, function(index, item){ }}
+    <li>
+        <a class="jie-title" href="/page/portal/topic/detail.html?post={{item.tid}}&section={{item.sid}}"
+           target="_blank">{{item.title}}</a>
+        <i>{{item.ptime}}</i>
+        <a class="mine-edit" href="/page/portal/topic/detail.html?post={{item.tid}}&section={{item.sid}}">查看</a>
+        <em>{{item.acount}}阅读/{{item.rcount}}回复</em>
+    </li>
+    {{# }); }}
+</script>
+
+<script src="/script/layui/layui.js"></script>
+
+<script>
+    layui.cache.page = 'user';
+    layui.cache.user = {
+        username: '游客'
+        , uid: -1
+        , avatar: '../../../image/avatar/00.jpg'
+        , experience: 83
+        , sex: '男'
+    };
+    layui.config({
+        version: "3.0.0"
+        , base: '/script/mods/'
+    }).extend({
+        fly: 'index'
+    }).use('fly');
+</script>
+
+<!--用户中心模板-->
+<script id="m_center" type="text/html">
+    <a class="fly-nav-avatar" href="javascript:;">
+        <cite>{{ d.nickname }}</cite>
+        {{# if(d.role === 1){ }}
+        <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：管理员"></i>
+        <i class="layui-badge fly-badge-vip layui-hide-xs" title="积分 {{d.point}}">Lv.3</i>
+        {{# } }}
+        <img src="{{d.profile}}">
+    </a>
+    <dl class="layui-nav-child">
+        <dd>
+            <a href="/page/portal/user/home.html?user={{d.uid}}"><i class="layui-icon"
+                                                                    style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
+        </dd>
+        <dd>
+            <a href="/page/portal/user/message.html"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a>
+        </dd>
+        <dd>
+            <a href="/page/portal/user/setting.html"><i class="layui-icon">&#xe620;</i>基本设置</a>
+        </dd>
+        <hr style="margin: 5px 0;">
+        <dd><a href="" style="text-align: center;">退出</a></dd>
+    </dl>
+</script>
+
+<script type="text/html" id="m_myCollection">
+    {{# layui.each(d, function(index, item){ }}
+    <li>
+        <a class="jie-title" href="/page/portal/topic/detail.html?post={{item.iid}}&section={{item.isid}}"
+           target="_blank">{{item.title}}</a>
+        <i>收藏于{{item.ctime}}</i>
+    </li>
+    {{# }); }}
+</script>
+
+<script>
+    layui.use(['laypage', 'layer'], function () {
+        var laypage = layui.laypage;
+        var layer = layui.layer;
+        var count;
+        $.ajax({
+            type: 'post',
+            url: '/post/getMyPostCount.do',
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                count = data.data;
+                $("#myPostCount").text(count);
+            },
+            error: function (data) {
+                layer.msg("获取帖子数量失败！");
+            }
+        })
+        //自定义每页条数的选择项
+        laypage.render({
+            elem: 'topic_page',
+            count: count,
+            limit: 10,
+            limits: [10, 20, 50],
+            layout: ['prev', 'page', 'next', 'limit', 'refresh', 'skip'],
+            // theme: 'main',
+            jump: function (obj, first) {
+                var data_list;
+                $.ajax({
+                    type: 'post',
+                    url: '/post/getMyPostWithPage.do',
+                    dataType: 'json',
+                    data: {
+                        page: obj.curr,
+                        limit: obj.limit,
+                    },
+                    async: false,
+                    success: function (data) {
+                        data_list = data.data;
+                    },
+                    error: function (data) {
+                        layer.msg("获取帖子失败！");
+                    }
+                })
+                layui.use('laytpl', function () {
+                    laytpl = layui.laytpl;
+                    // 帖子模块渲染
+                    var post_model = document.getElementById('m_myPost').innerHTML;
+                    var post_view = document.getElementById('myPost');
+                    laytpl(post_model).render(data_list, function (html) {
+                        post_view.innerHTML = html;
+                    });
+                });
+            }
+        });
+    })
+</script>
+<script>
+    layui.use(['laypage', 'layer'], function () {
+        var laypage = layui.laypage;
+        var layer = layui.layer;
+        var count;
+        $.ajax({
+            type: 'post',
+            url: '/collection/getMyCollectionCount.do',
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                count = data.data;
+                $("#myCollectionCount").text(count);
+            },
+            error: function (data) {
+                layer.msg("获取收藏数量失败！");
+            }
+        })
+        //自定义每页条数的选择项
+        laypage.render({
+            elem: 'collection_page',
+            count: count,
+            limit: 10,
+            limits: [10, 20, 50],
+            layout: ['prev', 'page', 'next', 'limit', 'refresh', 'skip'],
+            // theme: 'main',
+            jump: function (obj, first) {
+                var data_list;
+                $.ajax({
+                    type: 'post',
+                    url: '/collection/getMyCollectionWithPage.do',
+                    dataType: 'json',
+                    data: {
+                        page: obj.curr,
+                        limit: obj.limit,
+                    },
+                    async: false,
+                    success: function (data) {
+                        data_list = data.data;
+                    },
+                    error: function (data) {
+                        layer.msg("获取我的收藏失败！");
+                    }
+                })
+                layui.use('laytpl', function () {
+                    laytpl = layui.laytpl;
+                    // 帖子模块渲染
+                    var post_model = document.getElementById('m_myCollection').innerHTML;
+                    var post_view = document.getElementById('myCollection');
+                    laytpl(post_model).render(data_list, function (html) {
+                        post_view.innerHTML = html;
+                    });
+                });
+            }
+        });
+    })
+</script>
+
+<script>
+    layui.use('layer', function () {
+
+        // ajax交互，JS中以定义的layer无法获取（猜测），手动定义一个
+        // 定义layer，用于打印提示信息
+        var layer = layui.layer;
+
+        // 用户中心数据
+        var user_info;
+        // ajax-用户数据中心数据获取
+        $.ajax({
+            type: 'post',
+            url: '/user/userCenter.do',
+            data: {},
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                user_info = data.data;
+            },
+            error: function (data) {
+                layer.msg("获取用户中心数据失败！");
+            }
+        })
+
+        // 用户资料数据
+        var user_info;
+        // ajax-用户资料中心数据获取
+        $.ajax({
+            type: 'post',
+            url: '/user/userCenter.do',
+            data: {},
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                user_info = data.data;
+            },
+            error: function (data) {
+                layer.msg("获取用户中心数据失败！");
+            }
+        })
+
+        // 模板引擎渲染
+        layui.use('laytpl', function () {
+            // 定义一个模板引擎
+            laytpl = layui.laytpl;
+
+            // 用户中心渲染
+            var center_model = document.getElementById('m_center').innerHTML;
+            var center_view = document.getElementById('center');
+            laytpl(center_model).render(user_info, function (html) {
+                center_view.innerHTML = html;
+                $("#home").attr("href", "/page/portal/user/home.html?user=" + user_info.uid);
+            });
+        });
+    })
+</script>
+
+</body>
+</html>

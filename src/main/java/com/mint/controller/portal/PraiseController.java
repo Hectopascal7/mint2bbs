@@ -32,8 +32,22 @@ public class PraiseController {
      */
     @RequestMapping(value = "praise.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<String> praise(String section, HttpSession session) {
-        ServerResponse<String> response = iPraiseService.praise(section, session);
+    public ServerResponse<String> praise(String iid, int itype, String isid, HttpSession session) {
+        ServerResponse<String> response = iPraiseService.praise(iid, itype, isid, session);
         return response;
+    }
+
+
+    /**
+     * @Description 取消点赞
+     * @Param loginid
+     * @Param password
+     * @Param session
+     * @Return ServerResponse<User>
+     */
+    @RequestMapping(value = "cancelPraise.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse cancelPraise(String pid) {
+        return iPraiseService.cancelPraise(pid);
     }
 }

@@ -16,7 +16,7 @@
 <div class="fly-header layui-bg-black">
     <div class="layui-container">
         <a class="fly-logo" href="/">
-            <img src="../../../image/logo.png" alt="layui">
+            <img src="/image/logo.png" alt="layui">
         </a>
         <ul class="layui-nav fly-nav layui-hide-xs">
             <li class="layui-nav-item layui-this">
@@ -26,7 +26,7 @@
                 <a href="/page/portal/market/market.html"><i class="iconfont icon-iconmingxinganli"></i>市场</a>
             </li>
             <li class="layui-nav-item">
-                <a href="http://www.layui.com/" target="_blank"><i class="iconfont icon-ui"></i>留言板</a>
+                <a href="http://www.layui.com/" target="_blank"><i class="iconfont icon-ui"></i>微博</a>
             </li>
         </ul>
 
@@ -38,13 +38,14 @@
                 <a class="fly-nav-avatar" href="javascript:;" id="center"></a>
                 <dl class="layui-nav-child">
                     <dd>
-                        <a href="../user/home.html"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
+                        <a href="/page/portal/user/home.html"><i class="layui-icon"
+                                                                 style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
                     </dd>
                     <dd>
-                        <a href="../user/message.html"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a>
+                        <a href="/page/portal/user/message.html"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a>
                     </dd>
                     <dd>
-                        <a href="../user/setting.html"><i class="layui-icon">&#xe620;</i>基本设置</a>
+                        <a href="/page/portal/user/setting.html"><i class="layui-icon">&#xe620;</i>基本设置</a>
                     </dd>
                     <hr style="margin: 5px 0;">
                     <dd><a href="" style="text-align: center;">退出</a></dd>
@@ -97,9 +98,11 @@
                     社区工具栏
                 </div>
                 <div class="fly-panel-main">
-                    <a href="" target="_blank" class="fly-zanzhu"
-                       time-limit="2017.09.25-2099.01.01" style="background-color: #5FB878;">车牌号查询</a>
-                    <a href="" target="_blank" class="fly-zanzhu"
+                    <button class="fly-zanzhu tool" data-method="offset"
+                            time-limit="2017.09.25-2099.01.01" style="background-color: #5FB878;width: 100%;border: 0">
+                        车牌号查询
+                    </button>
+                    <a class="fly-zanzhu tool" data-method="offset" href=""
                        time-limit="2017.09.25-2099.01.01" style="background-color: #5FB878;">社区选举投票</a>
                 </div>
             </div>
@@ -196,15 +199,58 @@
         fly: 'index'
     }).use('fly');
 </script>
+
+<!--社区工具栏-->
+<script>
+    layui.use('layer', function () { //独立版的layer无需执行这一句
+        var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
+        //触发事件
+        var active = {
+            offset: function (othis) {
+                var type = othis.data('type');
+                var text = '<input type="text" id="license" lay-verify="title" autocomplete="off" placeholder="请输入车牌号..." class="layui-input">';
+                layer.open({
+                    type: 1
+                    , offset: type //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+                    , id: 'layerDemo' + type //防止重复弹出
+                    , content: '<div style="padding: 20px 100px;">' + text + '</div>'
+                    , btn: '查询'
+                    , btnAlign: 'c' //按钮居中
+                    , shade: 0 //不显示遮罩
+                    , yes: function () {
+                        var license = $("#license").val();
+                        $.ajax({
+                            type: 'post',
+                            url: '/user/getUserByLicense.do',
+                            dataType: 'json',
+                            data: {
+                                license: license
+                            },
+                            success: function (data) {
+                                layer.alert(data.data.name + data.data.phone);
+                            },
+                            error: function (data) {
+                                layer.msg("查询失败！");
+                            }
+                        })
+                        // layer.closeAll();
+                    }
+                });
+            }
+        };
+        $('.tool').on('click', function () {
+            var othis = $(this), method = othis.data('method');
+            active[method] ? active[method].call(this, othis) : '';
+        });
+
+    });
+</script>
+
 <!--导航栏模板-->
 <script id="m_guide_bar" type="text/html">
     <ul class="layui-clear">
         {{# layui.each(d, function(index, item){ }}
-        {{# if(item.sid === section && section==='index'){ }}
-        <li class="layui-hide-xs layui-this">
-            <a href="/index.html">{{item.sname}}</a>
-        </li>
-        {{#} else if(item.sid === 'index'&&section!=='index'){}}
+        {{# if(item.sname === '首页'){ }}
         <li class="layui-hide-xs">
             <a href="/index.html">{{item.sname}}</a>
         </li>
@@ -218,9 +264,10 @@
         {{# }); }}
         <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li>
         <!--用户登入后显示-->
-        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="user/index.html">我的贴子</a></li>
         <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a
-                href="user/index.html#collection">收藏</a>
+                href="/page/portal/user/post.html">我的贴子</a></li>
+        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a
+                href="/page/portal/user/post.html#collection">收藏</a>
         </li>
     </ul>
     <div class="fly-column-right layui-hide-xs">
@@ -279,10 +326,10 @@
         <div class="fly-list-info">
             <a href="../user/home.html" link>
                 <cite>{{item.nickname}}</cite>
-                {{# if(item.role===1){ }}
+                {{# if(item.role==='1'){ }}
                 <i class="iconfont icon-renzheng" title="认证信息：管理员"></i>
                 {{# } }}
-                <i class="layui-badge fly-badge-level">Lv {{item.ulevel}}</i>
+                <i class="layui-badge fly-badge-level">{{item.point}}PT</i>
             </a>
             <span>{{item.ptime}}</span>
 
@@ -328,7 +375,7 @@
 <!--</a>-->
 <!--<h2>-->
 <!--<a class="layui-badge">{{ d[i].sname }}</a>-->
-<!--<a href="../forum/detail.html">{{ d[i].post.title }}</a>-->
+<!--<a href="../forum/detail2.html">{{ d[i].post.title }}</a>-->
 <!--</h2>-->
 <!--<div class="fly-list-info">-->
 <!--<a href="../user/home.html" link>-->
@@ -434,13 +481,13 @@
         });
     });
 </script>
+
 <script>
 
     // 根据发帖时间获取帖子列表
     var order = 'ptime';
     // 获取本板块全部类型的帖子
     var kind = 'all';
-
 
     // 跳转到或刷新页面获取分页数据
     getPageData();
@@ -478,10 +525,28 @@
         layui.use(['laypage', 'layer'], function () {
             var laypage = layui.laypage;
             var layer = layui.layer;
+            var count;
+            $.ajax({
+                type: 'post',
+                url: '/post/getSectionPostCount.do',
+                dataType: 'json',
+                data: {
+                    sid: section,
+                    kind: kind
+                },
+                async: false,
+                success: function (data) {
+                    count = data.data;
+                },
+                error: function (data) {
+                    layer.msg("获取帖子失败！");
+                }
+            })
+
             //自定义每页条数的选择项
             laypage.render({
                 elem: 'page',
-                count: 100,
+                count: count,
                 limit: 10,
                 limits: [10, 20, 50],
                 layout: ['prev', 'page', 'next', 'limit', 'refresh', 'skip'],
@@ -507,6 +572,8 @@
                             layer.msg("获取帖子失败！");
                         }
                     })
+                    //
+                    // 渲染数据
                     layui.use('laytpl', function () {
                         laytpl = layui.laytpl;
                         // 帖子模块渲染

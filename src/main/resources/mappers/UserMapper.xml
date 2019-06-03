@@ -13,7 +13,6 @@
             <arg column="license" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="point" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="jointime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
-            <arg column="ulevel" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="email" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="signature" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
@@ -31,7 +30,6 @@
             <arg column="license" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="point" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="jointime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
-            <arg column="ulevel" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="email" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="signature" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
@@ -42,8 +40,8 @@
         <constructor>
             <arg column="nickname" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="role" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="point" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="profile" javaType="java.lang.String" jdbcType="VARCHAR"/>
-            <arg column="ulevel" javaType="java.lang.Integer" jdbcType="INTEGER"/>
         </constructor>
     </resultMap>
     <resultMap id="DetailUserInfo" type="com.mint.pojo.User">
@@ -51,21 +49,21 @@
             <idArg column="uid" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="nickname" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="role" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-            <arg column="ulevel" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="signature" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="point" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="profile" javaType="java.lang.String" jdbcType="LONGVARCHAR"/>
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">
     uid, loginid, password, nickname, role, sex, birthday, license, point, jointime, 
-    ulevel, email, signature, status
+    email, signature, status
   </sql>
     <sql id="Blob_Column_List">
     profile
   </sql>
     <sql id="User_On_PostDetail">
-    uid,nickname,role,ulevel,signature,status,profile
+    uid,nickname,role,signature,point,status,profile
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
         select
@@ -83,15 +81,13 @@
     insert into tb_user (uid, loginid, password, 
       nickname, role, sex, 
       birthday, license, point, 
-      jointime, ulevel, email, 
-      signature, status, profile
-      )
+      jointime, email, signature, 
+      status, profile)
     values (#{uid,jdbcType=VARCHAR}, #{loginid,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{nickname,jdbcType=VARCHAR}, #{role,jdbcType=INTEGER}, #{sex,jdbcType=INTEGER}, 
       #{birthday,jdbcType=DATE}, #{license,jdbcType=VARCHAR}, #{point,jdbcType=INTEGER}, 
-      #{jointime,jdbcType=TIMESTAMP}, #{ulevel,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, 
-      #{signature,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{profile,jdbcType=LONGVARCHAR}
-      )
+      #{jointime,jdbcType=TIMESTAMP}, #{email,jdbcType=VARCHAR}, #{signature,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{profile,jdbcType=LONGVARCHAR})
   </insert>
     <insert id="insertSelective" parameterType="com.mint.pojo.User">
         insert into tb_user
@@ -125,9 +121,6 @@
             </if>
             <if test="jointime != null">
                 jointime,
-            </if>
-            <if test="ulevel != null">
-                ulevel,
             </if>
             <if test="email != null">
                 email,
@@ -173,9 +166,6 @@
             <if test="jointime != null">
                 #{jointime,jdbcType=TIMESTAMP},
             </if>
-            <if test="ulevel != null">
-                #{ulevel,jdbcType=INTEGER},
-            </if>
             <if test="email != null">
                 #{email,jdbcType=VARCHAR},
             </if>
@@ -220,9 +210,6 @@
             <if test="jointime != null">
                 jointime = #{jointime,jdbcType=TIMESTAMP},
             </if>
-            <if test="ulevel != null">
-                ulevel = #{ulevel,jdbcType=INTEGER},
-            </if>
             <if test="email != null">
                 email = #{email,jdbcType=VARCHAR},
             </if>
@@ -249,7 +236,6 @@
       license = #{license,jdbcType=VARCHAR},
       point = #{point,jdbcType=INTEGER},
       jointime = #{jointime,jdbcType=TIMESTAMP},
-      ulevel = #{ulevel,jdbcType=INTEGER},
       email = #{email,jdbcType=VARCHAR},
       signature = #{signature,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
@@ -267,7 +253,6 @@
       license = #{license,jdbcType=VARCHAR},
       point = #{point,jdbcType=INTEGER},
       jointime = #{jointime,jdbcType=TIMESTAMP},
-      ulevel = #{ulevel,jdbcType=INTEGER},
       email = #{email,jdbcType=VARCHAR},
       signature = #{signature,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER}
@@ -298,10 +283,10 @@
     </select>
     <select id="getInfoByUid" resultMap="InfoMap" parameterType="string">
         select
-        nickname,profile,role,ulevel
+        nickname,role,point,profile
         from
         tb_user
-    where uid = #{uid}
+        where uid = #{uid}
     </select>
     <select id="getUserOnPostDetail" resultMap="DetailUserInfo" parameterType="string">
         select
@@ -310,4 +295,45 @@
         tb_user
         where uid = #{uid}
     </select>
+
+    <select id="checkNowPassword" resultType="java.lang.Integer" parameterType="string">
+        select count(*)
+        from tb_user
+        where
+        uid = #{uid} and password = #{now_password}
+    </select>
+    <select id="checkNickname" resultType="java.lang.Integer" parameterType="string">
+        select count(*)
+        from tb_user
+        where
+        nickname = #{nickname} and uid !=#{uid}
+    </select>
+    <update id="updatePassword" parameterType="string">
+    update tb_user
+    set password = #{new_password,jdbcType=VARCHAR}
+    where uid = #{uid,jdbcType=VARCHAR}
+  </update>
+    <update id="updateUserInfo">
+        update tb_user
+        <set>
+            <if test="nickname != null">
+                nickname = #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="license != null">
+                license = #{license,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="signature != null">
+                signature = #{signature,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where uid = #{uid,jdbcType=VARCHAR}
+    </update>
+    <update id="updateUserProfile">
+        update tb_user
+        set profile=#{profile}
+        where uid = #{uid,jdbcType=VARCHAR}
+    </update>
 </mapper>

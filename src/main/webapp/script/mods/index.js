@@ -342,22 +342,22 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function 
         */
     }
 
-    $('body').on('click', '#LAY_signin', function () {
-        var othis = $(this);
-        if (othis.hasClass(DISABLED)) return;
-
-        fly.json('/sign/in', {
-            token: signRender.token || 1
-        }, function (res) {
-            signRender(res.data);
-        }, {
-            error: function () {
-                othis.removeClass(DISABLED);
-            }
-        });
-
-        othis.addClass(DISABLED);
-    });
+    // $('body').on('click', '#LAY_signin', function () {
+    //     var othis = $(this);
+    //     if (othis.hasClass(DISABLED)) return;
+    //
+    //     fly.json('/sign/in', {
+    //         token: signRender.token || 1
+    //     }, function (res) {
+    //         signRender(res.data);
+    //     }, {
+    //         error: function () {
+    //             othis.removeClass(DISABLED);
+    //         }
+    //     });
+    //
+    //     othis.addClass(DISABLED);
+    // });
 
     //签到说明
     elemSigninHelp.on('click', function () {
@@ -374,10 +374,10 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function 
                 , '<tr><th>连续签到天数</th><th>每天可获积分</th></tr>'
                 , '</thead>'
                 , '<tbody>'
-                , '<tr><td>＜5</td><td>5</td></tr>'
-                , '<tr><td>≥5</td><td>10</td></tr>'
-                , '<tr><td>≥15</td><td>15</td></tr>'
-                , '<tr><td>≥30</td><td>20</td></tr>'
+                , '<tr><td>小于5天</td><td>5积分</td></tr>'
+                , '<tr><td>大于等于5天</td><td>10积分</td></tr>'
+                , '<tr><td>大于等于15天</td><td>15积分</td></tr>'
+                , '<tr><td>大于等于30天</td><td>20积分</td></tr>'
                 , '</tbody>'
                 , '</table>'
                 , '<ul>'
@@ -572,17 +572,17 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function 
     // });
 
     //加载特定模块
-    if (layui.cache.page && layui.cache.page !== 'index') {
+    if (layui.cache.page && layui.cache.page !== 'post.html') {
         var extend = {};
         extend[layui.cache.page] = layui.cache.page;
         layui.extend(extend);
         layui.use(layui.cache.page);
     }
 
-    //加载IM
-    if (!device.android && !device.ios) {
-        //layui.use('im');
-    }
+    // //加载IM
+    // if (!device.android && !device.ios) {
+    //     layui.use('im');
+    // }
 
     //加载编辑器
     fly.layEditor({

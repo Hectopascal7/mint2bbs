@@ -2,6 +2,7 @@ package com.mint.controller.portal;
 
 import com.alibaba.fastjson.JSON;
 import com.mint.common.ServerResponse;
+import com.mint.pojo.Reply;
 import com.mint.service.ICountService;
 import com.mint.service.IReplyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 
@@ -50,6 +52,30 @@ public class ReplyController {
     public ServerResponse<List<HashMap<String, String>>> getHomeMoreReply(String uid) {
         ServerResponse<List<HashMap<String, String>>> response = iReplyService.getHomeMoreReply(uid);
         return response;
+    }
+
+    /**
+     * @Description 获取帖子回复
+     * @Param tid
+     * @Param section
+     * @Return ServerResponse<HashMap < String, Object>>
+     */
+    @RequestMapping(value = "reply.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse reply(String tid, String content, String sid, HttpSession httpSession) {
+        return iReplyService.reply(tid, content, sid, httpSession);
+    }
+
+    /**
+     * @Description 获取帖子回复
+     * @Param tid
+     * @Param section
+     * @Return ServerResponse<HashMap < String, Object>>
+     */
+    @RequestMapping(value = "getReplies.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<List<HashMap<String, String>>> getReplies(String tid, String sid) {
+        return iReplyService.getReplies(tid,sid);
     }
 
 }

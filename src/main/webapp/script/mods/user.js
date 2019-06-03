@@ -160,27 +160,37 @@ layui.define(['laypage', 'fly', 'element', 'flow'], function (exports) {
         });
     }
 
-    //上传图片
+    // 更新头像
     if ($('.upload-img')[0]) {
         layui.use('upload', function (upload) {
             var avatarAdd = $('.avatar-add');
-
             upload.render({
-                elem: '.upload-img'
-                , url: '/user/upload/'
-                , size: 50
-                , before: function () {
+                elem: '.upload-img',
+                url: '/user/uploadProfile.do',
+                field: 'profile',
+                before: function () {
                     avatarAdd.find('.loading').show();
-                }
-                , done: function (res) {
-                    if (res.status == 0) {
-                        $.post('/user/set/', {
-                            avatar: res.url
-                        }, function (res) {
-                            location.reload();
-                        });
+                },
+                done: function (data) {
+                    if (data.status == 0) {
+                        $.ajax({
+                            type: 'post',
+                            url: '/user/updateUserProfile.do',
+                            data: {
+                                profile: data.data
+                            },
+                            dataType: 'json',
+                            async: false,
+                            success: function (data) {
+                                layer.msg(data.msg);
+                                // location.reload();
+                            },
+                            error: function (data) {
+                                layer.msg("调用【更新用户头像】服务失败！");
+                            }
+                        })
                     } else {
-                        layer.msg(res.msg, {icon: 5});
+                        layer.msg(data.msg, {icon: 5});
                     }
                     avatarAdd.find('.loading').hide();
                 }
@@ -193,7 +203,6 @@ layui.define(['laypage', 'fly', 'element', 'flow'], function (exports) {
 
     //合作平台
     if ($('#LAY_coop')[0]) {
-
         //资源上传
         $('#LAY_coop .uploadRes').each(function (index, item) {
             var othis = $(this);

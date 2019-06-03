@@ -85,16 +85,17 @@
                 <div class="layui-form layui-form-pane">
                     <form method="post">
                         <div class="layui-form-item layui-form-text">
-                            <a name="comment"></a>
+                            <!--                            <a name="comment"></a>-->
                             <div class="layui-input-block">
                                 <textarea id="L_content" name="content" required lay-verify="required"
                                           placeholder="请输入内容" class="layui-textarea fly-editor"
                                           style="height: 150px;"></textarea>
                             </div>
                         </div>
+                        <input name="tid" class="layui-hide" id="tid">
+                        <input name="sid" class="layui-hide" id="sid">
                         <div class="layui-form-item" style="text-align: center">
-                            <input type="hidden" name="jid" value="123">
-                            <button class="layui-btn" lay-filter="*" lay-submit onsubmit="replyAPost()">提交回复</button>
+                            <button class="layui-btn" lay-filter="replyToPost" lay-submit id="replyBtn">提交回复</button>
                         </div>
                     </form>
                 </div>
@@ -145,7 +146,8 @@
 </div>
 
 <!--引入layui的JS文件-->
-<script src="../../../script/layui/layui.js"></script>
+<script src="/script/layui/layui.js"></script>
+<script src="/script/model/topic_detail.js"></script>
 
 <!--layui设置-->
 <script>
@@ -159,17 +161,17 @@
     };
     layui.config({
         version: "3.0.0"
-        , base: '../../../script/mods/'
+        , base: '/script/mods/'
     }).extend({
         fly: 'index'
     }).use(['fly', 'face'], function () {
         var $ = layui.$
             , fly = layui.fly;
         //如果你是采用模版自带的编辑器，你需要开启以下语句来解析。
-        $('.detail-body').each(function () {
-            var othis = $(this), html = othis.html();
-            othis.html(fly.content(html));
-        });
+        // $('.detail-body').each(function () {
+        //     var othis = $(this), html = othis.html();
+        //     othis.html(fly.content(html));
+        // });
     });
 </script>
 
@@ -178,7 +180,7 @@
     <cite class="layui-hide-xs">{{ d.nickname }}</cite>
     {{#  if(d.role === 1){ }}
     <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：管理员"></i>
-    <i class="layui-badge fly-badge-vip layui-hide-xs" title="积分 {{d.point}}">Lv.3</i>
+    <i class="layui-badge fly-badge-vip layui-hide-xs" title="积分 {{d.point}}">{{d.point}}PT</i>
     {{#  } }}
     <img src="{{d.profile}}">
 </script>
@@ -244,16 +246,17 @@
 <!--帖子详情模板-->
 <script type="text/html" id="m_detail">
     <fieldset class="layui-elem-field layui-field-title" style="text-align: center;">
-        <legend>{{d.post.title}}</legend>
+        <legend>{{d.title}}</legend>
     </fieldset>
     <!--<h1>原有标题格式</h1>-->
     <div class="fly-detail-info">
-        {{# if(d.post.isbest===1){ }}
+        <span class="layui-badge">{{d.sname}}</span>
+        {{# if(d.isbest===1){ }}
         <span class="layui-badge">
             精华帖
         </span>
         {{# } }}
-        {{# if(d.post.isbest===1){ }}
+        {{# if(d.issticky===1){ }}
         <span class="layui-badge layui-bg-black">
             置顶
         </span>
@@ -291,38 +294,37 @@
         <!--取消加精-->
         <!--</span>-->
         <!--</div>-->
-
         <!--帖子回答、人气状态信息-->
         <span class="fly-list-nums">
             <a href="#comment">
-                <i class="iconfont" title="回复">&#xe60c;</i> {{d.post.rcount}}
+                <i class="iconfont" title="回复">&#xe60c;</i> {{d.rcount}}
             </a>
-            <i class="iconfont" title="浏览">&#xe60b;</i> {{d.post.acount}}
+            <i class="iconfont" title="浏览">&#xe60b;</i> {{d.acount}}
         </span>
     </div>
 
     <div class="detail-about">
         <!--头像-->
-        <a class="fly-avatar" href="/page/portal/user/home.html?uid={{d.user.uid}}">
-            <img src="{{d.user.profile}}" alt="{{d.user.nickname}}">
+        <a class="fly-avatar" href="/page/portal/user/home.html?uid={{d.uid}}">
+            <img src="{{d.profile}}" alt="{{d.nickname}}">
         </a>
         <!--个人信息-->
         <div class="fly-detail-user">
             <a href="../user/home.html" class="fly-link">
-                <cite>{{d.user.nickname}}</cite>
-                {{# if(d.user.role===1){ }}
+                <cite>{{d.nickname}}</cite>
+                {{# if(d.role==='1'){ }}
                 <i class="iconfont icon-renzheng" title="认证信息：管理员"></i>
                 {{# } }}
-                <i class="layui-badge fly-badge-vip">Lv {{d.user.ulevel}}</i>
+                <i class="layui-badge fly-badge-level">{{d.point}}PT</i>
             </a>
         </div>
         <!--个性签名-->
         <div class="detail-hits" id="LAY_jieAdmin" data-id="123">
             <span style="padding-right: 10px; color: #FF7200">
-                {{# if(d.user.signature===null){ }}
+                {{# if(d.signature===null){ }}
                 Ta还没有设置签名呢！
                 {{#}else {}}
-                {{d.user.signature}}
+                {{d.signature}}
                 {{# } }}
             </span>
             <!--<span class="layui-btn layui-btn-xs jie-admin" type="edit">-->
@@ -333,114 +335,113 @@
 
     <!--帖子内容-->
     <div class="detail-body photos" style="border: 1px dashed lightblue;padding: 10px">
-        {{d.post.content}}
+        {{d.content}}
     </div>
     <fieldset class="layui-elem-field layui-field-title" style="text-align: center">
         <legend>
-            <button class="layui-btn layui-btn-sm layui-btn-primary" onclick="collect()">收藏<i
-                    class="layui-icon layui-icon-praise" style="font-size: 30px; color: black;"></i></button>
-            <button class="layui-btn layui-btn-sm layui-btn-primary" onclick="praise()">点赞<i
-                    class="layui-icon layui-icon-rate" style="font-size: 30px; color: black;"></i></button>
+            <legend>
+                {{# if(d.collect === '0'){ }}
+                <button class="layui-btn layui-btn-sm collect fn-btn" data-type="collect" data-method="collect"
+                        data-id="{{d.tid}}">
+                    收藏<i class="layui-icon layui-icon-praise" style="font-size: 30px; color: black;"></i>
+                </button>
+                {{#} else {}}
+                <button class="layui-btn layui-btn-sm layui-btn-primary collect fn-btn" data-type="collect"
+                        data-method="cancelCollect"
+                        data-id="{{d.cid}}">取消收藏
+                </button>
+                {{# } }}
+                {{# if(d.praise === '0'){ }}
+                <button class="layui-btn layui-btn-sm praise fn-btn" data-type="praise" data-method="praise"
+                        data-id="{{d.tid}}">点赞<i
+                        class="layui-icon layui-icon-rate" style="font-size: 30px; color: black;"></i>
+                </button>
+                {{#} else {}}
+                <button class="layui-btn layui-btn-sm layui-btn-primary praise fn-btn" data-type="praise"
+                        data-method="cancelPraise"
+                        data-id="{{d.pid}}">取消点赞
+                </button>
+                {{# } }}
+            </legend>
         </legend>
     </fieldset>
 </script>
 
 <script type="text/html" id="m_reply">
-    {{# layui.each(d, function(index, item){ }}
-    {{# if(item.length!==2){ }}
-    <li data-id="111" class="jieda-daan">
-        <a name="item-1111111111"></a>
-        <div class="detail-about detail-about-reply">
-            <a class="fly-avatar" href="">
-                <img src="../../../image/asuna.jpg"
-                     alt=" ">
-            </a>
-            <div class="fly-detail-user">
-                <a href="" class="fly-link">
-                    <cite>橙色薄荷°</cite>
-                    <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
-                    <i class="layui-badge fly-badge-vip">管理员</i>
-                </a>
-
-                <span>(楼主)</span>
-                <!--
-                <span style="color:#5FB878">(管理员)</span>
-                <span style="color:#FF9E3F">（社区之光）</span>
-            <span style="color:#999">（该号已被封）</span>
-            -->
-            </div>
-
-            <div class="detail-hits">
-                <span>{{item[0].rtime}}</span>
-            </div>
-            <!--<i class="iconfont icon-logo" title="最佳答案"></i>-->
-        </div>
-        <div class="detail-body reply-body photos">{{item[0].content}}</div>
-        <div class="jieda-reply">
-            <span class="jieda-zan zanok" type="zan">
-                <i class="iconfont icon-zan"></i>
-                <em>{{item[0].pcount}}</em>
-            </span>
-            <span type="reply">
-                <i class="iconfont icon-svgmoban53"></i>回复
-            </span>
-            <div class="jieda-admin">
-                <span type="edit">编辑</span>
-                <span type="del">删除</span>
-                <!-- <span class="jieda-accept" type="accept">采纳</span> -->
-            </div>
-        </div>
-    </li>
-    {{#} else{ }}
-    <li data-id="111" class="jieda-daan">
-        <a name="item-1111111111"></a>
-        <div class="detail-about detail-about-reply">
-            <a class="fly-avatar" href="">
-                <img src="../../../image/asuna.jpg"
-                     alt=" ">
-            </a>
-            <div class="fly-detail-user">
-                <a href="" class="fly-link">
-                    <cite>橙色薄荷°</cite>
-                    <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
-                    <i class="layui-badge fly-badge-vip">管理员</i>
-                </a>
-
-                <span>(楼主)</span>
-                <!--
-                <span style="color:#5FB878">(管理员)</span>
-                <span style="color:#FF9E3F">（社区之光）</span>
-            <span style="color:#999">（该号已被封）</span>
-            -->
-            </div>
-
-            <div class="detail-hits">
-                <span>{{item[1].rtime}}</span>
-            </div>
-            <!--<i class="iconfont icon-logo" title="最佳答案"></i>-->
-        </div>
-        <div class="detail-body reply-body photos">{{item[1].content}}</div>
-        <div class="jieda-reply">
-            <span class="jieda-zan zanok" type="zan">
-                <i class="iconfont icon-zan"></i>
-                <em>{{item[0].pcount}}</em>
-            </span>
-            <span type="reply">
-                <i class="iconfont icon-svgmoban53"></i>回复
-            </span>
-            <div class="jieda-admin">
-                <span type="edit">编辑</span>
-                <span type="del">删除</span>
-                <!-- <span class="jieda-accept" type="accept">采纳</span> -->
-            </div>
-        </div>
-    </li>
-    {{# } }}
-    {{# }); }}
     {{# if(d.length===0){ }}
     <!-- 无数据时 -->
     <li class="fly-none">消灭零回复</li>
     {{# } }}
+    {{# layui.each(d, function(index, item){ }}
+    <li data-id="111" class="jieda-daan">
+        <a name="item-1111111111"></a>
+        <div class="detail-about detail-about-reply">
+            <a class="fly-avatar" href="">
+                <img src="{{item.profile}}"
+                     alt=" ">
+            </a>
+            <div class="fly-detail-user">
+                <a href="" class="fly-link">
+                    <cite>{{item.nickname}}</cite>
+                    {{# if(item.role==="1"){ }}
+                    <i class="iconfont icon-renzheng" title="认证信息：管理员"></i>
+                    {{# } }}
+                    <i class="layui-badge fly-badge-level">{{item.point}}PT</i>
+                </a>
+                {{# if(item.isauthor==="1"){ }}
+                <span>(楼主)</span>
+                {{# } }}
+                <!--
+                <span style="color:#5FB878">(管理员)</span>
+                <span style="color:#FF9E3F">（社区之光）</span>
+            <span style="color:#999">（该号已被封）</span>
+            -->
+            </div>
+
+            <div class="detail-hits">
+                <span>{{item.rtime}}</span>
+            </div>
+            <!--<i class="iconfont icon-logo" title="最佳答案"></i>-->
+        </div>
+        <div class="detail-body reply-body photos">
+            <!--            回复给【admin】：-->
+            <!--            <div class="home-dacontent">-->
+            <!--                【admin】：{{item.content}}-->
+            <!--            </div>-->
+            {{item.content}}
+        </div>
+        <!--        <div class="jieda-reply">-->
+        <!--            <span class="jieda-zan zanok" >-->
+        <!--                <i class="iconfont icon-close"></i>-->
+        <!--                <em>举报</em>-->
+        <!--            </span>-->
+        <!--            <div class="jieda-admin">-->
+        <!--                <span type="edit">-->
+        <!--                    <i class="iconfont icon-zan"></i>-->
+        <!--                    <em>{{item.pcount}}</em>-->
+        <!--                </span>-->
+        <!--                <span type="del"><i class="iconfont icon-svgmoban53"></i>回复</span>-->
+        <!--                &lt;!&ndash; <span class="jieda-accept" type="accept">采纳</span> &ndash;&gt;-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <div class="jieda-reply">
+              <span class="jieda-zan" type="zan">
+                <i class="iconfont icon-zan"></i>
+                <em>{{item.pcount}}</em>
+              </span>
+
+            <div class="jieda-admin">
+                <span type="reply">
+                    <i class="iconfont icon-close"></i>举报
+                </span>
+                <span type="reply">
+                    <i class="iconfont icon-svgmoban53"></i>回复
+                </span>
+                <!-- <span class="jieda-accept" type="accept">采纳</span> -->
+            </div>
+        </div>
+    </li>
+    {{# }); }}
 </script>
 
 <!--参数获取，数据渲染-->
@@ -455,46 +456,6 @@
 
     var section = getQueryParameter("section");
     var tid = getQueryParameter("post");
-
-    function replyAPost() {
-
-    }
-
-    function praise() {
-        $.ajax({
-            type: 'post',
-            url: '/praise/praise.do',
-            data: {
-                section: tid
-            },
-            dataType: 'json',
-            async: false,
-            success: function (data) {
-                layer.msg("点赞成功！");
-            },
-            error: function (data) {
-                layer.msg("点赞失败！");
-            }
-        })
-    }
-
-    function collect() {
-        $.ajax({
-            type: 'post',
-            url: '/collection/collect.do',
-            data: {
-                tid: tid
-            },
-            dataType: 'json',
-            async: false,
-            success: function (data) {
-                layer.msg("收藏成功！");
-            },
-            error: function (data) {
-                layer.msg("收藏失败！");
-            }
-        })
-    }
 
     layui.use('layer', function () {
         var layer = layui.layer;
@@ -562,6 +523,9 @@
             async: false,
             success: function (data) {
                 detail = data.data;
+                // $("#replyBtn").attr("data-id", detail.post.tid);
+                $("#tid").val(detail.tid);
+                $("#sid").val(detail.sid);
             },
             error: function (data) {
                 layer.msg("获取帖子详情数据失败！");
@@ -572,9 +536,10 @@
         var replies;
         $.ajax({
             type: 'post',
-            url: '/post/getReplies.do',
+            url: '/reply/getReplies.do',
             data: {
-                tid: tid
+                tid: tid,
+                sid: section
             },
             dataType: 'json',
             async: false,
@@ -674,6 +639,59 @@
         });
 
     });
+</script>
+
+<script>
+    layui.use('form', function () {
+        // 定义layer，用于打印提示信息
+        var layer = layui.layer;
+        // 监听表单提交，发布微博
+        var form = layui.form;
+        form.on('submit(replyToPost)', function (data) {
+            alert(JSON.stringify(data.field));
+            // var id = $('#replyBtn').attr('data-id');
+            // alert(id);
+            $.ajax({
+                type: 'post',
+                url: '/reply/reply.do',
+                data: data.field,
+                dataType: 'json',
+                async: false,
+                success: function (data) {
+                    layer.msg(data.msg, function () {
+                        // 帖子回复数据
+                        var replies;
+                        $.ajax({
+                            type: 'post',
+                            url: '/reply/getReplies.do',
+                            data: {
+                                tid: tid,
+                                sid: section
+                            },
+                            dataType: 'json',
+                            async: false,
+                            success: function (data) {
+                                replies = data.data;
+                            },
+                            error: function (data) {
+                                layer.msg("获取帖子回复数据失败！");
+                            }
+                        })
+                        // 回复渲染
+                        var reply_model = document.getElementById('m_reply').innerHTML;
+                        var reply_view = document.getElementById('reply');
+                        laytpl(reply_model).render(replies, function (html) {
+                            reply_view.innerHTML = html;
+                        });
+                    });
+                },
+                error: function (data) {
+                    layer.msg("调用【回复】服务失败！");
+                }
+            })
+            return false;
+        });
+    })
 </script>
 </body>
 </html>

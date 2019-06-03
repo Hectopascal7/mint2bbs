@@ -205,11 +205,17 @@
         select
         <include refid="Base_Column_List"/>
         from tb_notice
-        <if test='skind != "all" and skind=="isbest"'>
-            where isbest= 1
+        <if test='skind == "all" and sorder=="ptime"'>
+            order by issticky desc,${sorder} desc
         </if>
-        <if test='sorder == "ptime" or sorder=="rcount"'>
-            order by ${sorder} desc
+        <if test='skind == "all" and sorder=="rcount"'>
+            order by ${sorder} desc,ptime desc
+        </if>
+        <if test='skind == "isbest" and sorder=="ptime"'>
+            where isbest=1 order by ${sorder} desc
+        </if>
+        <if test='skind == "isbest" and sorder=="rcount"'>
+            where isbest=1 order by ${sorder} desc,ptime desc
         </if>
         limit #{start},#{slimit}
     </select>

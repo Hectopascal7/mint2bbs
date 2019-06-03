@@ -38,10 +38,38 @@ public class GoodController {
      * @Param session
      * @Return ServerResponse<User>
      */
+    @RequestMapping(value = "updateGoodPrice.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse updateGoodPrice(@RequestParam("gid") String gid, @RequestParam("price") String price) {
+        return iGoodService.updateGoodPrice(gid, price);
+    }
+
+    /**
+     * @Description 获取商品
+     * @Param loginid
+     * @Param password
+     * @Param session
+     * @Return ServerResponse<User>
+     */
     @RequestMapping(value = "getGoodListWithPage.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<List<HashMap<String, String>>> getGoodListWithPage(@RequestParam("isused") String isused, @RequestParam("order") String order, @RequestParam("page") int page) {
         ServerResponse<List<HashMap<String, String>>> response = iGoodService.getGoodListWithPage(isused, order, page);
+        return response;
+    }
+
+
+    /**
+     * @Description 获取我的商品
+     * @Param loginid
+     * @Param password
+     * @Param session
+     * @Return ServerResponse<User>
+     */
+    @RequestMapping(value = "getMyGoodList.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<List<Good>> getMyGoodList(HttpSession httpSession) {
+        ServerResponse<List<Good>> response = iGoodService.getMyGoodList(httpSession);
         return response;
     }
 
@@ -55,7 +83,7 @@ public class GoodController {
     @RequestMapping(value = "publishAGood.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse publishAGood(String title, String isused, String ndegree, String price, String content, String cover, String picture, HttpSession httpSession) {
-        return iGoodService.publishAGood(title, isused, ndegree, price, content, cover, picture,httpSession);
+        return iGoodService.publishAGood(title, isused, ndegree, price, content, cover, picture, httpSession);
     }
 
     /**
@@ -68,13 +96,44 @@ public class GoodController {
     @ResponseBody
     public ServerResponse uploadGoodPic(@RequestParam("goodPic") MultipartFile goodPic, HttpServletRequest httpServletRequest) {
         if (null != goodPic) {
-            String url = iGoodService.uploadGoodCover(goodPic, httpServletRequest);
-            System.out.println(JSON.toJSONString(ServerResponse.createBySuccess("封面上传成功！", url)));
-            return ServerResponse.createBySuccess("封面上传成功！", url);
+            return iGoodService.uploadGoodPic(goodPic, httpServletRequest);
         } else {
             return ServerResponse.createByErrorMessage("封面上传失败！");
         }
     }
 
+    /**
+     * @Description 设置商品已售出
+     * @Param goodPic
+     * @Param httpServletRequest
+     * @Return ServerResponse
+     */
+    @RequestMapping(value = "setGoodIsSaled.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse setGoodIsSaled(String gid) {
+        return iGoodService.setGoodIsSaled(gid);
+    }
 
+    /**
+     * @Description 获取商品信息
+     * @Param gid
+     * @Return ServerResponse
+     */
+    @RequestMapping(value = "getGoodInfo.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<HashMap<String, String>> getGoodInfo(String gid, HttpSession httpSession) {
+        return iGoodService.getGoodInfo(gid,httpSession);
+    }
+
+
+    /**
+     * @Description 获取热门商品
+     * @Param gid
+     * @Return ServerResponse
+     */
+    @RequestMapping(value = "getHotGood.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<List<HashMap<String, String>>> getHotGood() {
+        return iGoodService.getHotGood();
+    }
 }

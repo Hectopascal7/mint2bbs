@@ -41,25 +41,25 @@
 <div class="layui-container fly-marginTop fly-user-main">
     <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
         <li class="layui-nav-item">
-            <a href="home.html">
+            <a href="/page/portal/user/home.html" id="home">
                 <i class="layui-icon">&#xe609;</i>
                 我的主页
             </a>
         </li>
         <li class="layui-nav-item">
-            <a href="index.html">
-                <i class="layui-icon">&#xe612;</i>
-                用户中心
+            <a href="/page/portal/user/post.html">
+                <i class="layui-icon">&#xe653;</i>
+                帖子中心
             </a>
         </li>
         <li class="layui-nav-item">
-            <a href="setting.html">
+            <a href="/page/portal/user/setting.html">
                 <i class="layui-icon">&#xe620;</i>
                 基本设置
             </a>
         </li>
-        <li class="layui-nav-item layui-this">
-            <a href="message.html">
+        <li class="layui-nav-item ">
+            <a href="/page/portal/user/message.html">
                 <i class="layui-icon">&#xe611;</i>
                 我的消息
             </a>
@@ -80,25 +80,8 @@
     <div class="fly-panel fly-panel-user" pad20>
         <div class="layui-tab layui-tab-brief" lay-filter="user" id="LAY_msg" style="margin-top: 15px;">
             <button class="layui-btn layui-btn-danger" id="LAY_delallmsg">清空全部消息</button>
-            <div id="LAY_minemsg" style="margin-top: 10px;">
-                <!--<div class="fly-none">您暂时没有最新消息</div>-->
-                <ul class="mine-msg">
-                    <li data-id="123">
-                        <blockquote class="layui-elem-quote">
-                            <a href="/jump?username=Absolutely" target="_blank"><cite>Absolutely</cite></a>回答了您的求解<a
-                                target="_blank" href="/jie/8153.html/page/0/#item-1489505778669"><cite>layui后台框架</cite></a>
-                        </blockquote>
-                        <p><span>1小时前</span><a href="javascript:;"
-                                               class="layui-btn layui-btn-small layui-btn-danger fly-delete">删除</a></p>
-                    </li>
-                    <li data-id="123">
-                        <blockquote class="layui-elem-quote">
-                            系统消息：欢迎使用 layui
-                        </blockquote>
-                        <p><span>1小时前</span><a href="javascript:;"
-                                               class="layui-btn layui-btn-small layui-btn-danger fly-delete">删除</a></p>
-                    </li>
-                </ul>
+            <div id="message" style="margin-top: 10px;">
+
             </div>
         </div>
     </div>
@@ -117,7 +100,7 @@
 </div>
 
 <script src="../../../script/layui/layui.js"></script>
-<script src="/script/data.js"></script>
+<!--<script src="/script/data.js"></script>-->
 <script>
     layui.cache.page = 'user';
     layui.cache.user = {
@@ -129,7 +112,7 @@
     };
     layui.config({
         version: "3.0.0"
-        , base: '../../../script/mods/'
+        , base: '/script/mods/'
     }).extend({
         fly: 'index'
     }).use('fly');
@@ -159,6 +142,106 @@
         <hr style="margin: 5px 0;">
         <dd><a href="" style="text-align: center;">退出</a></dd>
     </dl>
+</script>
+
+<script type="text/html" id="m_message">
+    {{# if(d.length === 0){ }}
+    <div class="fly-none">您暂时没有最新消息</div>
+    {{# } }}
+    <ul class="mine-msg">
+        {{# layui.each(d, function(index, item){ }}
+        <li data-id="123">
+            <blockquote class="layui-elem-quote">
+                <a href="/jump?username=Absolutely" target="_blank"><cite>{{item.name}}</cite></a>回复了您的帖子<a
+                    target="_blank" href="/jie/8153.html/page/0/#item-1489505778669"><cite>{{item.title}}</cite></a>
+            </blockquote>
+            <p>
+                <span>{{item.mtime}}</span>
+                <a href="javascript:;" class="layui-btn layui-btn-small layui-btn-danger fly-delete">删除</a>
+            </p>
+        </li>
+        {{# }); }}
+    </ul>
+</script>
+
+<script>
+    layui.use('layer', function () {
+
+        // ajax交互，JS中以定义的layer无法获取（猜测），手动定义一个
+        // 定义layer，用于打印提示信息
+        var layer = layui.layer;
+
+        // 用户中心数据
+        var user_info;
+        // ajax-用户数据中心数据获取
+        $.ajax({
+            type: 'post',
+            url: '/user/userCenter.do',
+            data: {},
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                user_info = data.data;
+            },
+            error: function (data) {
+                layer.msg("获取用户中心数据失败！");
+            }
+        })
+
+
+        // 消息数据
+        var message;
+        // ajax-用户资料中心数据获取
+        $.ajax({
+            type: 'post',
+            url: '/message/getUnReadMessage.do',
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                message = data.data;
+            },
+            error: function (data) {
+                layer.msg("调取【获取未读消息】服务失败！");
+            }
+        })
+
+        // 模板引擎渲染
+        layui.use('laytpl', function () {
+            // 定义一个模板引擎
+            laytpl = layui.laytpl;
+
+            // 用户中心渲染
+            var center_model = document.getElementById('m_center').innerHTML;
+            var center_view = document.getElementById('center');
+            laytpl(center_model).render(user_info, function (html) {
+                center_view.innerHTML = html;
+                $("#home").attr("href", "/page/portal/user/home.html?user=" + user_info.uid);
+            });
+
+            // // 用户资料渲染
+            // var user_info_model = document.getElementById('m_user_info').innerHTML;
+            // var user_info_view = document.getElementById('user_info');
+            // laytpl(user_info_model).render(user_info, function (html) {
+            //     user_info_view.innerHTML = html;
+            // });
+
+            // // 用户头像渲染
+            // var profile_model = document.getElementById('m_profile').innerHTML;
+            // var profile_view = document.getElementById('profile');
+            // laytpl(profile_model).render(user_info, function (html) {
+            //     profile_view.innerHTML = html;
+            // });
+
+            // 用户消息渲染
+            var message_model = document.getElementById('m_message').innerHTML;
+            var message_view = document.getElementById('message');
+            laytpl(message_model).render(message, function (html) {
+                message_view.innerHTML = html;
+            });
+
+        });
+
+    })
 </script>
 
 </body>

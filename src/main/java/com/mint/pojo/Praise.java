@@ -5,19 +5,22 @@ import java.util.Date;
 public class Praise {
     private String pid;
 
-    private String rid;
+    private String iid;
 
-    private String tid;
+    private Integer itype;
 
-    private String uid;
+    private String isid;
+
+    private String puid;
 
     private Date ptime;
 
-    public Praise(String pid, String rid, String tid, String uid, Date ptime) {
+    public Praise(String pid, String iid, Integer itype, String isid, String puid, Date ptime) {
         this.pid = pid;
-        this.rid = rid;
-        this.tid = tid;
-        this.uid = uid;
+        this.iid = iid;
+        this.itype = itype;
+        this.isid = isid;
+        this.puid = puid;
         this.ptime = ptime;
     }
 
@@ -33,28 +36,36 @@ public class Praise {
         this.pid = pid == null ? null : pid.trim();
     }
 
-    public String getRid() {
-        return rid;
+    public String getIid() {
+        return iid;
     }
 
-    public void setRid(String rid) {
-        this.rid = rid == null ? null : rid.trim();
+    public void setIid(String iid) {
+        this.iid = iid == null ? null : iid.trim();
     }
 
-    public String getTid() {
-        return tid;
+    public Integer getItype() {
+        return itype;
     }
 
-    public void setTid(String tid) {
-        this.tid = tid == null ? null : tid.trim();
+    public void setItype(Integer itype) {
+        this.itype = itype;
     }
 
-    public String getUid() {
-        return uid;
+    public String getIsid() {
+        return isid;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid == null ? null : uid.trim();
+    public void setIsid(String isid) {
+        this.isid = isid == null ? null : isid.trim();
+    }
+
+    public String getPuid() {
+        return puid;
+    }
+
+    public void setPuid(String puid) {
+        this.puid = puid == null ? null : puid.trim();
     }
 
     public Date getPtime() {

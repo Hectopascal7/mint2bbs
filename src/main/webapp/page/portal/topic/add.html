@@ -217,6 +217,8 @@
         var layer = layui.layer;
         //监听提交
         form.on('submit(*)', function (data) {
+            alert(data.field.sid);
+            section = data.field.sid;
             $.ajax({
                 type: 'post',
                 url: '/post/post.do',
@@ -244,7 +246,7 @@
     <select lay-verify="required" name="sid" lay-filter="column">
         <option></option>
         {{# layui.each(d, function(index, item){ }}
-        {{# if(item.sid==='index'){ }}
+        {{# if(item.sname==='首页'){ }}
         {{#} else if(item.sid===section){ }}
         <option value="{{item.sid}}" selected="">{{item.sname}}</option>
         {{#} else { }}

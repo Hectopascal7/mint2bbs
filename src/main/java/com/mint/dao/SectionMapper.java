@@ -17,7 +17,7 @@ public interface SectionMapper {
 
     int updateByPrimaryKey(Section record);
 
-    List<Section> getSection();
+    List<Section> getAllSection();
 
     String getSnameBySid(String sid);
 }

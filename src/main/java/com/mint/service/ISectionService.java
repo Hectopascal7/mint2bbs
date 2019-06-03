@@ -13,6 +13,6 @@ import java.util.List;
  **/
 public interface ISectionService {
 
-    public ServerResponse<List<Section>> getSection();
+    public ServerResponse<List<Section>> getAllSection();
 
 }

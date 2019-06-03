@@ -26,15 +26,29 @@ public class PraiseServiceImpl implements IPraiseService {
     PraiseMapper praiseMapper;
 
     @Override
-    public ServerResponse<String> praise(String section, HttpSession session) {
+    public ServerResponse<String> praise(String iid, int itype, String isid, HttpSession session) {
         String pid = UUID.randomUUID().toString();
         User user = (User) session.getAttribute(Const.CURRENT_USER);
-        Praise praise = new Praise(pid, null, section, user.getUid(), new Date(System.currentTimeMillis()));
+        Date ptime = new Date(System.currentTimeMillis());
+        System.out.println(itype);
+        Praise praise = new Praise(pid, iid, itype, isid, user.getUid(), ptime);
         int result = praiseMapper.insert(praise);
         if (result == 1) {
-            return ServerResponse.createBySuccessMessage("点赞成功！");
+            return ServerResponse.createBySuccess("点赞成功！", pid);
         } else {
-            return ServerResponse.createByErrorMessage("点赞失败！");
+            return ServerResponse.createByError();
+        }
+    }
+
+    @Override
+    public ServerResponse<String> cancelPraise(String pid) {
+        Praise praise = praiseMapper.selectByPrimaryKey(pid);
+        int result = praiseMapper.deleteByPrimaryKey(pid);
+        System.out.println(pid);
+        if (result == 1) {
+            return ServerResponse.createBySuccess("取消点赞成功！", praise.getIid());
+        } else {
+            return ServerResponse.createByErrorMessage("取消点赞失败！");
         }
     }
 }

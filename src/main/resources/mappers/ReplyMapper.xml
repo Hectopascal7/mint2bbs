@@ -169,7 +169,7 @@
         <include refid="Blob_Column_List"/>
         from tb_reply
         where uid=#{uid}
-        order by rtime
+        order by rtime desc
         limit 3
     </select>
     <select id="getHomeMoreReply" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
@@ -179,6 +179,6 @@
         <include refid="Blob_Column_List"/>
         from tb_reply
         where uid=#{uid}
-        order by rtime
+        order by rtime desc
     </select>
 </mapper>

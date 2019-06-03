@@ -70,7 +70,7 @@ i {
     content: "\e60a"
 }
 
-.icon-guanbi:before {
+.icon-close:before {
     content: "\e614"
 }
 
@@ -1881,7 +1881,7 @@ body .fly-user-main {
 /* 案例 */
 .fly-case-header {
     position: relative;
-    height: 260px;
+    height: 200px;
     text-align: center;
     background: #393D49;
 }
@@ -2056,6 +2056,11 @@ body .fly-user-main {
 .layer-ext-ul li {
     margin: 8px;
 }
+
+body .layer-ext-case .layui-layer-content {
+    background-color: #F2F2F2;
+}
+
 
 .layer-ext-case .layui-layer-title {
     border: none;

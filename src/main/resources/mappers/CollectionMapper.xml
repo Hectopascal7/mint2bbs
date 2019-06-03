@@ -1,84 +1,131 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mint.dao.CollectionMapper">
-  <resultMap id="BaseResultMap" type="com.mint.pojo.Collection">
-    <constructor>
-      <idArg column="cid" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="tid" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="uid" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="ctime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-    </constructor>
-  </resultMap>
-  <sql id="Base_Column_List">
-    cid, tid, uid, ctime
+    <resultMap id="BaseResultMap" type="com.mint.pojo.Collection">
+        <constructor>
+            <idArg column="cid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="iid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="itype" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="isid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="cuid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="ctime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+    cid, iid, itype, isid, cuid, ctime
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from tb_collection
-    where cid = #{cid,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_collection
+        where cid = #{cid,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from tb_collection
     where cid = #{cid,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.mint.pojo.Collection">
-    insert into tb_collection (cid, tid, uid, 
-      ctime)
-    values (#{cid,jdbcType=VARCHAR}, #{tid,jdbcType=VARCHAR}, #{uid,jdbcType=VARCHAR}, 
-      #{ctime,jdbcType=TIMESTAMP})
+    <insert id="insert" parameterType="com.mint.pojo.Collection">
+    insert into tb_collection (cid, iid, itype, 
+      isid, cuid, ctime
+      )
+    values (#{cid,jdbcType=VARCHAR}, #{iid,jdbcType=VARCHAR}, #{itype,jdbcType=INTEGER}, 
+      #{isid,jdbcType=VARCHAR}, #{cuid,jdbcType=VARCHAR}, #{ctime,jdbcType=TIMESTAMP}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.mint.pojo.Collection">
-    insert into tb_collection
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="cid != null">
-        cid,
-      </if>
-      <if test="tid != null">
-        tid,
-      </if>
-      <if test="uid != null">
-        uid,
-      </if>
-      <if test="ctime != null">
-        ctime,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="cid != null">
-        #{cid,jdbcType=VARCHAR},
-      </if>
-      <if test="tid != null">
-        #{tid,jdbcType=VARCHAR},
-      </if>
-      <if test="uid != null">
-        #{uid,jdbcType=VARCHAR},
-      </if>
-      <if test="ctime != null">
-        #{ctime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.mint.pojo.Collection">
+    <insert id="insertSelective" parameterType="com.mint.pojo.Collection">
+        insert into tb_collection
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cid != null">
+                cid,
+            </if>
+            <if test="iid != null">
+                iid,
+            </if>
+            <if test="itype != null">
+                itype,
+            </if>
+            <if test="isid != null">
+                isid,
+            </if>
+            <if test="cuid != null">
+                cuid,
+            </if>
+            <if test="ctime != null">
+                ctime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cid != null">
+                #{cid,jdbcType=VARCHAR},
+            </if>
+            <if test="iid != null">
+                #{iid,jdbcType=VARCHAR},
+            </if>
+            <if test="itype != null">
+                #{itype,jdbcType=INTEGER},
+            </if>
+            <if test="isid != null">
+                #{isid,jdbcType=VARCHAR},
+            </if>
+            <if test="cuid != null">
+                #{cuid,jdbcType=VARCHAR},
+            </if>
+            <if test="ctime != null">
+                #{ctime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.mint.pojo.Collection">
+        update tb_collection
+        <set>
+            <if test="iid != null">
+                iid = #{iid,jdbcType=VARCHAR},
+            </if>
+            <if test="itype != null">
+                itype = #{itype,jdbcType=INTEGER},
+            </if>
+            <if test="isid != null">
+                isid = #{isid,jdbcType=VARCHAR},
+            </if>
+            <if test="cuid != null">
+                cuid = #{cuid,jdbcType=VARCHAR},
+            </if>
+            <if test="ctime != null">
+                ctime = #{ctime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where cid = #{cid,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.mint.pojo.Collection">
     update tb_collection
-    <set>
-      <if test="tid != null">
-        tid = #{tid,jdbcType=VARCHAR},
-      </if>
-      <if test="uid != null">
-        uid = #{uid,jdbcType=VARCHAR},
-      </if>
-      <if test="ctime != null">
-        ctime = #{ctime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where cid = #{cid,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.mint.pojo.Collection">
-    update tb_collection
-    set tid = #{tid,jdbcType=VARCHAR},
-      uid = #{uid,jdbcType=VARCHAR},
+    set iid = #{iid,jdbcType=VARCHAR},
+      itype = #{itype,jdbcType=INTEGER},
+      isid = #{isid,jdbcType=VARCHAR},
+      cuid = #{cuid,jdbcType=VARCHAR},
       ctime = #{ctime,jdbcType=TIMESTAMP}
     where cid = #{cid,jdbcType=VARCHAR}
   </update>
+
+    <select id="checkCollection" parameterType="java.lang.String" resultType="java.lang.String">
+    select
+    cid
+    from tb_collection
+    where iid = #{iid,jdbcType=VARCHAR}
+    and cuid = #{uid,jdbcType=VARCHAR}
+  </select>
+    <select id="getMyCollectionCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select
+    count(*)
+    from tb_collection
+    where cuid = #{uid,jdbcType=VARCHAR} and itype=30
+  </select>
+
+    <select id="getMyCollectionWithPage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_collection
+        where cuid=#{uid}
+        and itype=30
+        limit #{start},#{limit}
+    </select>
 </mapper>

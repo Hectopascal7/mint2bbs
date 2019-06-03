@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/script/layui/css/layui.css">
     <link rel="stylesheet" href="/css/global.css">
     <script src="/script/jquery-3.3.1.min.js"></script>
+
 </head>
 <body>
 <!--头部-->
@@ -88,24 +89,17 @@
                 <ul class="fly-panel-main fly-list-static" id="notice"></ul>
             </div>
 
-            <div class="fly-panel fly-signin">
+            <div class="fly-panel fly-signin" id="checkin">
                 <div class="fly-panel-title">
                     签到
                     <i class="fly-mid"></i>
-                    <a href="javascript:;" class="fly-link" id="LAY_signinHelp">说明</a>
+                    <a href="javascript:;" class="fly-link">说明</a>
                     <i class="fly-mid"></i>
-
-                    <span class="fly-signin-days">已连续签到<cite>16</cite>天</span>
+                    <span class="fly-signin-days">已连续签到<cite>0</cite>天</span>
                 </div>
                 <div class="fly-panel-main fly-signin-main">
-                    <button class="layui-btn layui-btn-danger" id="LAY_signin">今日签到</button>
+                    <button class="layui-btn layui-btn-danger" onclick="checkin()">签到</button>
                     <span>可获得<cite>5</cite>积分</span>
-
-                    <!-- 已签到状态 -->
-                    <!--
-                    <button class="layui-btn layui-btn-disabled">今日已签到</button>
-                    <span>获得了<cite>20</cite>飞吻</span>
-                    -->
                 </div>
             </div>
 
@@ -218,6 +212,7 @@
 </div>
 
 <script src="/script/layui/layui.js"></script>
+<script src="/script/moment.min.js"></script>
 <script>
     layui.cache.page = '';
     layui.cache.user = {
@@ -247,7 +242,7 @@
         <cite>{{ d.nickname }}</cite>
         {{# if(d.role === 1){ }}
         <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：管理员"></i>
-        <i class="layui-badge fly-badge-vip layui-hide-xs" title="积分 {{d.point}}">Lv.3</i>
+        <i class="layui-badge fly-badge-vip layui-hide-xs" title="积分 {{d.point}}">{{d.point}}PT</i>
         {{# } }}
         <img src="{{d.profile}}">
     </a>
@@ -267,11 +262,36 @@
     </dl>
 </script>
 
+<!--签到模块模板-->
+<script id="m_checkin" type="text/html">
+    <div class="fly-panel-title">
+        签到
+        <i class="fly-mid"></i>
+        <a href="javascript:;" class="fly-link">说明</a>
+        <i class="fly-mid"></i>
+        {{# if(isYesterday(d.ctime)||isToday(d.ctime)){ }}
+        <span class="fly-signin-days">已连续签到<cite>{{d.days}}</cite>天</span>
+        {{#} else {}}
+        <span class="fly-signin-days">已连续签到<cite>0</cite>天</span>
+        {{# } }}
+    </div>
+    <div class="fly-panel-main fly-signin-main">
+        {{# if(isToday(d.ctime)){ }}
+        <!-- 已签到状态 -->
+        <button class="layui-btn layui-btn-disabled">已签到</button>
+        <span>获得了<cite>{{point(d.days)}}</cite>积分</span>
+        {{#} else {}}
+        <button class="layui-btn layui-btn-danger" id="LAY_signin" onclick="checkin()">签到</button>
+        <span>可获得<cite>{{point(d.days)}}</cite>积分</span>
+        {{# } }}
+    </div>
+</script>
+
 <!--导航栏模板-->
 <script id="m_guide_bar" type="text/html">
     <ul class="layui-clear">
         {{# layui.each(d, function(index, item){ }}
-        {{# if(item.sid ==='index'){ }}
+        {{# if(item.sname ==='首页'){ }}
         <li class="layui-hide-xs layui-this">
             <a href="/index.html">{{item.sname}}</a>
         </li>
@@ -281,16 +301,16 @@
         {{# }); }}
         <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li>
         <!--用户登入后显示-->
-        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="/page/portal/user/index.html#index">我的贴子</a>
+        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="/page/portal/user/post.html#index">我的贴子</a>
         </li>
         <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a
-                href="/page/portal/user/index.html#collection">收藏</a>
+                href="/page/portal/user/post.html#collection">收藏</a>
         </li>
     </ul>
     <div class="fly-column-right layui-hide-xs">
-            <span class="fly-search">
-                <i class="layui-icon layui-icon-search"></i>
-            </span>
+        <!--            <span class="fly-search">-->
+        <!--                <i class="layui-icon layui-icon-search"></i>-->
+        <!--            </span>-->
         <a href="page/portal/topic/add.html?section=index" class="layui-btn">发表新帖</a>
     </div>
     <div class="layui-hide-sm layui-show-xs-block"
@@ -304,7 +324,9 @@
     {{# layui.each(d, function(index, item){ }}
     <li>
 
-        <a href="/page/portal/topic/detail.html?post={{item.tid}}&section=notice" target="_blank">{{ item.title }}</a>
+        <a href="/page/portal/topic/detail.html?post={{item.tid}}&section={{item.sid}}" target="_blank">
+            {{ item.title }}
+        </a>
         <!--<span>{{ item.ptime }}</span>-->
 
     </li>
@@ -326,15 +348,15 @@
         <!--<h2 class="layui-hide-sm layui-show-xs-block">-->
         <!--<a class="layui-badge">{{item.sname}}</a>-->
         <!--{{# if(item.issticky===1&&item.isbest===1){ }}-->
-        <!--<a href="/page/portal/topic/detail.html?post={{item.tid}}&section={{item.sid}}" style="max-width: 50%">-->
+        <!--<a href="/page/portal/topic/detail2.html?post={{item.tid}}&section={{item.sid}}" style="max-width: 50%">-->
         <!--{{item.title}}-->
         <!--</a>-->
         <!--{{#} else if((item.issticky===1&&item.isbest!==1)||(item.issticky!==1&&item.isbest===1)){ }}-->
-        <!--<a href="/page/portal/topic/detail.html?post={{item.tid}}&section={{item.sid}}" style="max-width: 65%">-->
+        <!--<a href="/page/portal/topic/detail2.html?post={{item.tid}}&section={{item.sid}}" style="max-width: 65%">-->
         <!--{{item.title}}-->
         <!--</a>-->
         <!--{{#} else { }}-->
-        <!--<a href="/page/portal/topic/detail.html?post={{item.tid}}&section={{item.sid}}">-->
+        <!--<a href="/page/portal/topic/detail2.html?post={{item.tid}}&section={{item.sid}}">-->
         <!--{{item.title}}-->
         <!--</a>-->
         <!--{{# } }}-->
@@ -348,10 +370,10 @@
         <div class="fly-list-info">
             <a href="../user/home.html" link>
                 <cite>{{item.nickname}}</cite>
-                {{# if(item.role===1){ }}
+                {{# if(item.role==='1'){ }}
                 <i class="iconfont icon-renzheng" title="认证信息：管理员"></i>
                 {{# } }}
-                <i class="layui-badge fly-badge-level">Lv {{item.ulevel}}</i>
+                <i class="layui-badge fly-badge-level">{{item.point}}pt</i>
             </a>
             <span>{{item.ptime}}</span>
 
@@ -364,11 +386,10 @@
             </span>
         </div>
         <div class="fly-list-badge">
-
-            {{# if(item.issticky===1){ }}
+            {{# if(item.issticky==='1'){ }}
             <span class="layui-badge layui-bg-black">置顶</span>
             {{# } }}
-            {{# if(item.isbest===1){ }}
+            {{# if(item.isbest==='1'){ }}
             <span class="layui-badge layui-bg-red">精华</span>
             {{# } }}
         </div>
@@ -424,6 +445,30 @@
     var order = 'ptime';
     // 获取本板块全部类型的帖子
     var kind = 'all';
+
+    function isToday(date) {
+        var today = moment().format("YYYY年MM月DD日");
+        var d = moment(date).format('YYYY年MM月DD日');
+        return d == today;
+    }
+
+    function isYesterday(date) {
+        var yesterday = moment().add(-1, 'days').format('YYYY年MM月DD日');
+        var d = moment(date).format('YYYY年MM月DD日');
+        return d == yesterday;
+    }
+
+    function point(days) {
+        if (days > 0 && days < 5) {
+            return 5;
+        } else if (days >= 5 && days < 15) {
+            return 10;
+        } else if (days >= 15 && days < 30) {
+            return 15;
+        } else {
+            return 20;
+        }
+    }
 
     function getAllPost() {
         kind = "all";
@@ -492,6 +537,21 @@
         });
     }
 
+    function checkin() {
+        $.ajax({
+            type: 'post',
+            url: '/checkin/checkin.do',
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                layer.msg(data.msg);
+            },
+            error: function (data) {
+                layer.msg("调取【签到】服务失败！");
+            }
+        })
+    }
+
     var page = 1;
 
     function getMore() {
@@ -531,7 +591,7 @@
 
     // 通过地址栏获取当前板块唯一标识
     // 主页唯一标识
-    var section = 'index';
+    var section = 'post.html';
 
     // 通过地址栏获取当前板块唯一标识
     function GetQueryString(name) {
@@ -671,6 +731,22 @@
             }
         })
 
+        // 帖子列表数据
+        var checkin;
+        // ajax-获取帖子列表
+        $.ajax({
+            type: 'post',
+            url: '/checkin/getUserCheckinInfo.do',
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                checkin = data.data;
+            },
+            error: function (data) {
+                layer.msg("调取【获取签到信息】服务失败！");
+            }
+        })
+
         // 模板引擎渲染
         layui.use('laytpl', function () {
             // 定义一个模板引擎
@@ -729,6 +805,14 @@
                 active_user_view.innerHTML = html;
             });
 
+            // 签到模块渲染
+            if (checkin !== null) {
+                var checkin_model = document.getElementById('m_checkin').innerHTML;
+                var checkin_view = document.getElementById('checkin');
+                laytpl(checkin_model).render(checkin, function (html) {
+                    checkin_view.innerHTML = html;
+                });
+            }
         });
 
     })

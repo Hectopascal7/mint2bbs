@@ -11,17 +11,13 @@ public class Resident {
 
     private String unit;
 
+    private String floor;
+
     private String room;
 
     private String phone;
 
     private String idcnum;
-
-    public Resident(String uid, String name, String phone) {
-        this.uid = uid;
-        this.name = name;
-        this.phone = phone;
-    }
 
     @Override
     public String toString() {
@@ -30,10 +26,17 @@ public class Resident {
                 ", name='" + name + '\'' +
                 ", building='" + building + '\'' +
                 ", unit='" + unit + '\'' +
+                ", floor='" + floor + '\'' +
                 ", room='" + room + '\'' +
                 ", phone='" + phone + '\'' +
                 ", idcnum='" + idcnum + '\'' +
                 '}';
+    }
+
+    public Resident(String uid, String name, String phone) {
+        this.uid = uid;
+        this.name = name;
+        this.phone = phone;
     }
 
     @Override
@@ -41,25 +44,27 @@ public class Resident {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Resident resident = (Resident) o;
-        return Objects.equals(uid, resident.uid) &&
-                Objects.equals(name, resident.name) &&
-                Objects.equals(building, resident.building) &&
-                Objects.equals(unit, resident.unit) &&
-                Objects.equals(room, resident.room) &&
-                Objects.equals(phone, resident.phone) &&
-                Objects.equals(idcnum, resident.idcnum);
+        return uid.equals(resident.uid) &&
+                name.equals(resident.name) &&
+                building.equals(resident.building) &&
+                unit.equals(resident.unit) &&
+                floor.equals(resident.floor) &&
+                room.equals(resident.room) &&
+                phone.equals(resident.phone) &&
+                idcnum.equals(resident.idcnum);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(uid, name, building, unit, room, phone, idcnum);
+        return Objects.hash(uid, name, building, unit, floor, room, phone, idcnum);
     }
 
-    public Resident(String uid, String name, String building, String unit, String room, String phone, String idcnum) {
+    public Resident(String uid, String name, String building, String unit, String floor, String room, String phone, String idcnum) {
         this.uid = uid;
         this.name = name;
         this.building = building;
         this.unit = unit;
+        this.floor = floor;
         this.room = room;
         this.phone = phone;
         this.idcnum = idcnum;
@@ -99,6 +104,14 @@ public class Resident {
 
     public void setUnit(String unit) {
         this.unit = unit == null ? null : unit.trim();
+    }
+
+    public String getFloor() {
+        return floor;
+    }
+
+    public void setFloor(String floor) {
+        this.floor = floor == null ? null : floor.trim();
     }
 
     public String getRoom() {

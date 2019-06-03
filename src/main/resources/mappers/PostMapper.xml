@@ -15,22 +15,6 @@
             <arg column="pcount" javaType="java.lang.Integer" jdbcType="INTEGER"/>
         </constructor>
     </resultMap>
-    <resultMap id="BaseResultMap11" type="com.mint.pojo.PostEntity">
-        <constructor>
-            <idArg column="tid" javaType="java.lang.String" jdbcType="VARCHAR"/>
-            <arg column="uname" javaType="java.lang.String" jdbcType="VARCHAR"/>
-            <arg column="sname" javaType="java.lang.String" jdbcType="VARCHAR"/>
-            <arg column="title" javaType="java.lang.String" jdbcType="VARCHAR"/>
-            <arg column="ptime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
-            <arg column="acount" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-            <arg column="rcount" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-            <arg column="isbest" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-            <arg column="issticky" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-            <arg column="pcount" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-            <arg column="role" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-            <arg column="ulevel" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-        </constructor>
-    </resultMap>
     <resultMap id="ResultMapWithBLOBs" type="com.mint.pojo.Post">
         <constructor>
             <idArg column="tid" javaType="java.lang.String" jdbcType="VARCHAR"/>
@@ -268,7 +252,6 @@
         where e.issticky=1
         limit 5
     </select>
-
     <select id="getHotPost" resultMap="ResultMapWithBLOBs">
         select
         <include refid="Base_Column_List"/>
@@ -327,7 +310,6 @@
         order by (e.acount+e.rcount) desc
         limit 10
     </select>
-
     <select id="getSectionHotPost" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -337,7 +319,6 @@
         order by (acount+rcount) desc
         limit 10
     </select>
-
     <select id="getPostByPtime" resultMap="BaseResultMap" parameterType="int">
         select
         <include refid="Base_Column_List"/>
@@ -401,12 +382,6 @@
         </if>
         limit #{tcount}
     </select>
-    <!--<select id="getPostWithPage1" resultType="java.util.HashMap">-->
-    <!--select-->
-    <!--tn.tid,tu.role-->
-    <!--from tb_news tn,tb_user tu-->
-    <!--where tn.uid=tu.uid-->
-    <!--</select>-->
     <select id="getUserLatestTopic" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -530,6 +505,211 @@
         ,
         <include refid="Blob_Column_List"/>
         from ${tb_name}
+        where tid=#{tid}
+    </select>
+    <select id="getSectionPostCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select
+        count(*)
+        from ${tb_name}
+        <if test='kind != "all" and kind=="isbest"'>
+            where isbest= 1
+        </if>
+    </select>
+    <select id="getMyPostWithPage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        (
+
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_activity
+
+        union all
+
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_guide
+
+        union all
+
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_news
+
+        union all
+
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_notice
+
+        union all
+
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_topic
+
+        union all
+
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_advice
+
+        ) e
+        order by e.ptime desc
+        limit #{start},#{limit}
+    </select>
+    <select id="getMyPostCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from
+        (
+
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_activity
+
+        union all
+
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_guide
+
+        union all
+
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_news
+
+        union all
+
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_notice
+
+        union all
+
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_topic
+
+        union all
+
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_advice
+
+        ) e
+    </select>
+
+    <select id="getPostByTid" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from ${tb_name}
+        where tid=#{tid}
+    </select>
+    <select id="getSectionPostWithPage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from ${tb_name}
+        <if test='kind == "all" and order=="ptime"'>
+            order by issticky desc,${order} desc
+        </if>
+        <if test='kind == "all" and order=="rcount"'>
+            order by ${sorder} desc,ptime desc
+        </if>
+        <if test='kind == "isbest" and order=="ptime"'>
+            where isbest=1 order by ${sorder} desc
+        </if>
+        <if test='kind == "isbest" and order=="rcount"'>
+            where isbest=1 order by ${sorder} desc,ptime desc
+        </if>
+        limit #{start},#{limit}
+    </select>
+    <select id="getSectionPostDetail" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from ${tb_name}
+        where tid=#{tid}
+    </select>
+    <insert id="post">
+    insert into ${tb_name} (tid, uid, sid,
+      title, ptime, acount,
+      rcount, isbest, issticky,
+      pcount, content)
+    values (#{tid,jdbcType=VARCHAR}, #{uid,jdbcType=VARCHAR}, #{sid,jdbcType=VARCHAR},
+      #{title,jdbcType=VARCHAR}, #{ptime,jdbcType=TIMESTAMP}, 0,
+      0, 0, 0,
+      0, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+
+    <select id="getReceiveUidByTid" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        (
+
+        select
+        <include refid="Base_Column_List"/>
+        from tb_activity
+
+        union all
+
+        select
+        <include refid="Base_Column_List"/>
+        from tb_guide
+
+        union all
+
+        select
+        <include refid="Base_Column_List"/>
+        from tb_news
+
+        union all
+
+        select
+        <include refid="Base_Column_List"/>
+        from tb_notice
+
+        union all
+
+        select
+        <include refid="Base_Column_List"/>
+        from tb_topic
+
+        union all
+
+        select
+        <include refid="Base_Column_List"/>
+        from tb_advice
+
+        ) e
         where tid=#{tid}
     </select>
 </mapper>

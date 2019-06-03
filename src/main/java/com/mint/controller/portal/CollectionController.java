@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @Program: mint2bbs
@@ -32,10 +34,49 @@ public class CollectionController {
      */
     @RequestMapping(value = "collect.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<String> collect(String tid, HttpSession session) {
-        ServerResponse<String> response = iCollectionService.collect(tid,session);
+    public ServerResponse<String> collect(String iid, int itype, String isid, HttpSession session) {
+        ServerResponse<String> response = iCollectionService.collect(iid, itype, isid, session);
         return response;
     }
 
+    /**
+     * @Description 取消收藏
+     * @Param user
+     * @Param resident
+     * @Param session
+     * @Return ServerResponse<String>
+     */
+    @RequestMapping(value = "cancelCollect.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse cancelCollect(String cid) {
+        return iCollectionService.cancelCollect(cid);
+    }
+
+    /**
+     * @Description 收藏
+     * @Param user
+     * @Param resident
+     * @Param session
+     * @Return ServerResponse<String>
+     */
+    @RequestMapping(value = "getMyCollectionCount.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<Integer> getMyCollectionCount(HttpSession session) {
+        return iCollectionService.getMyCollectionCount(session);
+    }
+
+
+    /**
+     * @Description 收藏
+     * @Param user
+     * @Param resident
+     * @Param session
+     * @Return ServerResponse<String>
+     */
+    @RequestMapping(value = "getMyCollectionWithPage.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<List<HashMap<String, String>>> getMyCollectionWithPage(Integer page, Integer limit, HttpSession session) {
+        return iCollectionService.getMyCollectionWithPage(page, limit, session);
+    }
 
 }

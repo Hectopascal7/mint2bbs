@@ -1,11 +1,11 @@
 package com.mint.service;
 
 import com.mint.common.ServerResponse;
-import com.mint.pojo.Resident;
 import com.mint.pojo.User;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.HashMap;
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * @Program: mint2bbs
@@ -23,15 +23,15 @@ public interface IUserService {
      */
     ServerResponse<User> login(String loginid, String password);
 
-    /**
-     * @Description 用户注册
-     * @Param user
-     * @Param resident
-     * @Return ServerResponse<String>
-     */
-
-
     User getIndexUserInfo(String uid);
 
-    ServerResponse<String> register(String loginid, String nickname, String password, String uid, String name, String sex, String birthday, String building, String idcnum, String unit, String room, String phone,String role);
+    ServerResponse<String> register(String loginid, String nickname, String password, String uid, String name, String sex, String birthday, String building, String unit, String floor, String room, String idcnum, String phone, String role);
+
+    ServerResponse updatePassword(String now_password, String new_password, String re_new_password, HttpSession httpSession);
+
+    ServerResponse updateUserInfo(String nickname, String email, String license, String signature, HttpSession httpSession);
+
+    ServerResponse<String> uploadProfile(MultipartFile profile, HttpServletRequest httpServletRequest);
+
+    ServerResponse updateUserProfile(String profile, HttpSession httpSession);
 }

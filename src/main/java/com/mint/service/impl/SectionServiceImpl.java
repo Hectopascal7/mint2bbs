@@ -22,7 +22,7 @@ public class SectionServiceImpl implements ISectionService {
     SectionMapper sectionMapper;
 
     @Override
-    public ServerResponse<List<Section>> getSection() {
-        return ServerResponse.createBySuccess(sectionMapper.getSection());
+    public ServerResponse<List<Section>> getAllSection() {
+        return ServerResponse.createBySuccess(sectionMapper.getAllSection());
     }
 }

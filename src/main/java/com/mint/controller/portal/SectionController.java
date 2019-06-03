@@ -30,8 +30,8 @@ public class SectionController {
      */
     @RequestMapping(value = "getSection.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<List<Section>> getSection() {
-        ServerResponse<List<Section>> response = iSectionService.getSection();
+    public ServerResponse<List<Section>> getAllSection() {
+        ServerResponse<List<Section>> response = iSectionService.getAllSection();
         return response;
     }
 

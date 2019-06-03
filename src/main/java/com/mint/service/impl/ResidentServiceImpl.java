@@ -3,7 +3,6 @@ package com.mint.service.impl;
 import com.mint.common.ServerResponse;
 import com.mint.dao.ResidentMapper;
 import com.mint.pojo.Resident;
-import com.mint.pojo.User;
 import com.mint.service.IResidentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

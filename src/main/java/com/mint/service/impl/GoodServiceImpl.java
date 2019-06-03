@@ -2,12 +2,16 @@ package com.mint.service.impl;
 
 import com.mint.common.Const;
 import com.mint.common.ServerResponse;
+import com.mint.dao.CollectionMapper;
 import com.mint.dao.GoodMapper;
+import com.mint.dao.PraiseMapper;
 import com.mint.dao.UserMapper;
+import com.mint.pojo.Good;
 import com.mint.pojo.GoodWithBLOBs;
 import com.mint.pojo.User;
 import com.mint.service.IGoodService;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,9 +31,13 @@ public class GoodServiceImpl implements IGoodService {
     private GoodMapper goodMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private PraiseMapper praiseMapper;
+    @Autowired
+    private CollectionMapper collectionMapper;
 
     @Override
-    public String uploadGoodCover(MultipartFile cover, HttpServletRequest httpServletRequest) {
+    public ServerResponse uploadGoodPic(MultipartFile cover, HttpServletRequest httpServletRequest) {
         // 1.保存图片到本地
         String originalFilename = cover.getOriginalFilename();//获取原名字
         String newFilename = UUID.randomUUID().toString() + "." + FilenameUtils.getExtension(originalFilename);// 生成新名字
@@ -38,8 +46,9 @@ public class GoodServiceImpl implements IGoodService {
             cover.transferTo(new File(uploadURL));
         } catch (IOException e) {
             e.printStackTrace();
+            return ServerResponse.createByErrorMessage("封面上传成功！");
         }
-        return "/image/good/" + newFilename;
+        return ServerResponse.createBySuccess("封面上传成功！", "/image/good/" + newFilename);
     }
 
     @Override
@@ -79,6 +88,95 @@ public class GoodServiceImpl implements IGoodService {
             goodList.add(map);
         }
         return ServerResponse.createBySuccess(goodList);
+    }
+
+    @Override
+    public ServerResponse<List<Good>> getMyGoodList(HttpSession httpSession) {
+        User user = (User) httpSession.getAttribute(Const.CURRENT_USER);
+        List<Good> list = goodMapper.getGoodListByUid(user.getUid());
+        return ServerResponse.createBySuccess(list);
+    }
+
+    @Override
+    public ServerResponse updateGoodPrice(String gid, String price) {
+        System.out.println(price);
+        BigDecimal newPrice = new BigDecimal(price);
+        System.out.println(newPrice);
+        Integer result = goodMapper.updateGoodPrice(gid, newPrice);
+        if (Const.OP_SUCCESS == result) {
+            return ServerResponse.createBySuccessMessage("修改成功！");
+        }
+        return ServerResponse.createByErrorMessage("修改失败！");
+    }
+
+    @Override
+    public ServerResponse setGoodIsSaled(String gid) {
+        Integer result = goodMapper.setGoodIsSaled(gid);
+        if (Const.OP_SUCCESS == result) {
+            return ServerResponse.createBySuccessMessage("设置成功！");
+        }
+        return ServerResponse.createByErrorMessage("设置失败！");
+    }
+
+    @Override
+    public ServerResponse<HashMap<String, String>> getGoodInfo(String gid, HttpSession httpSession) {
+        GoodWithBLOBs good = goodMapper.selectByPrimaryKey(gid);
+        if (null != good) {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("gid", good.getGid());
+            map.put("title", good.getTitle());
+            map.put("pcount", good.getPcount().toString());
+            map.put("isused", good.getIsused().toString());
+            map.put("ndegree", good.getNdegree());
+            map.put("price", good.getPrice().toString());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
+            map.put("ptime", sdf.format(good.getPtime()));
+            map.put("content", good.getContent());
+            map.put("picture", good.getPicture());
+            map.put("issaled", good.getIssaled().toString());
+            User u = userMapper.selectByPrimaryKey(good.getUid());
+            map.put("uid", u.getUid());
+            map.put("profile", u.getProfile());
+            map.put("nickname", u.getNickname());
+            map.put("role", u.getRole().toString());
+            map.put("signature", u.getSignature());
+            User currUser = (User) httpSession.getAttribute(Const.CURRENT_USER);
+            String pid = praiseMapper.checkPraise(gid, currUser.getUid());
+            if (StringUtils.isBlank(pid)) {
+                map.put("praise", "0");
+            } else {
+                map.put("praise", "1");
+                map.put("pid", pid);
+            }
+            String cid = collectionMapper.checkCollection(gid, currUser.getUid());
+            if (StringUtils.isBlank(cid)) {
+                map.put("collect", "0");
+            } else {
+                map.put("collect", "1");
+                map.put("cid", cid);
+            }
+            return ServerResponse.createBySuccess(map);
+        } else {
+            return ServerResponse.createByErrorMessage("未找到该商品!");
+        }
+    }
+
+    @Override
+    public ServerResponse<List<HashMap<String, String>>> getHotGood() {
+        List<Good> list = goodMapper.getHotGood();
+        if (list.size() > 0) {
+            List<HashMap<String, String>> goodList = new ArrayList<>();
+            for (Good good : list) {
+                HashMap<String, String> map = new HashMap<>();
+                map.put("gid", good.getGid());
+                map.put("title", good.getTitle());
+                map.put("pcount", good.getPcount().toString());
+                goodList.add(map);
+            }
+            return ServerResponse.createBySuccess(goodList);
+        } else {
+            return ServerResponse.createBySuccessMessage("商品数量为0。");
+        }
     }
 
 }

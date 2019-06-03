@@ -215,4 +215,33 @@
         order by ${order}
         limit #{limit}
     </select>
+
+    <select id="getGoodListByUid" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_good
+        where uid = #{uid,jdbcType=VARCHAR}
+    </select>
+
+    <update id="updateGoodPrice">
+    update tb_good
+    set price = #{price,jdbcType=DECIMAL}
+    where gid = #{gid,jdbcType=VARCHAR}
+  </update>
+
+    <update id="setGoodIsSaled">
+    update tb_good
+    set issaled = 1
+    where gid = #{gid,jdbcType=VARCHAR}
+  </update>
+
+    <select id="getHotGood" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_good
+        order by pcount desc
+        limit 15
+    </select>
 </mapper>

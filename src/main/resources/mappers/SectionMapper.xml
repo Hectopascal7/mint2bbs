@@ -7,10 +7,11 @@
             <arg column="sorder" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="sname" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="address" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="tbname" javaType="java.lang.String" jdbcType="VARCHAR"/>
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">
-    sid, sorder, sname, address
+    sid, sorder, sname, address, tbname
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
@@ -24,9 +25,9 @@
   </delete>
     <insert id="insert" parameterType="com.mint.pojo.Section">
     insert into tb_section (sid, sorder, sname, 
-      address)
+      address, tbname)
     values (#{sid,jdbcType=VARCHAR}, #{sorder,jdbcType=INTEGER}, #{sname,jdbcType=VARCHAR}, 
-      #{address,jdbcType=VARCHAR})
+      #{address,jdbcType=VARCHAR}, #{tbname,jdbcType=VARCHAR})
   </insert>
     <insert id="insertSelective" parameterType="com.mint.pojo.Section">
         insert into tb_section
@@ -43,6 +44,9 @@
             <if test="address != null">
                 address,
             </if>
+            <if test="tbname != null">
+                tbname,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="sid != null">
@@ -56,6 +60,9 @@
             </if>
             <if test="address != null">
                 #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="tbname != null">
+                #{tbname,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -71,6 +78,9 @@
             <if test="address != null">
                 address = #{address,jdbcType=VARCHAR},
             </if>
+            <if test="tbname != null">
+                tbname = #{tbname,jdbcType=VARCHAR},
+            </if>
         </set>
         where sid = #{sid,jdbcType=VARCHAR}
     </update>
@@ -78,10 +88,11 @@
     update tb_section
     set sorder = #{sorder,jdbcType=INTEGER},
       sname = #{sname,jdbcType=VARCHAR},
-      address = #{address,jdbcType=VARCHAR}
+      address = #{address,jdbcType=VARCHAR},
+      tbname = #{tbname,jdbcType=VARCHAR}
     where sid = #{sid,jdbcType=VARCHAR}
   </update>
-    <select id="getSection" resultMap="BaseResultMap">
+    <select id="getAllSection" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         from tb_section

@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>帖子详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="薄荷社区">
+    <meta name="description" content="薄荷社区">
+    <link rel="stylesheet" href="/script/layui/css/layui.css">
+    <link rel="stylesheet" href="/css/global.css">
+    <script src="/script/jquery-3.3.1.min.js"></script>
+</head>
+<body style="margin: 0; text-align: left">
+
+<div class="">
+    <div class="layui-col-md8 content detail">
+        <!--商品详情展示区域-->
+        <div class="fly-panel detail-box" id="detail"></div>
+        <!--回复展示区域-->
+        <div class="fly-panel detail-box" id="flyReply">
+            <fieldset class="layui-elem-field layui-field-title" style="text-align: center;">
+                <legend>回帖</legend>
+            </fieldset>
+            <ul class="jieda" id="reply"></ul>
+            <div class="layui-form layui-form-pane">
+                <form method="post">
+                    <div class="layui-form-item layui-form-text">
+                        <a name="comment"></a>
+                        <div class="layui-input-block">
+                                <textarea id="L_content" name="content" required lay-verify="required"
+                                          placeholder="请输入内容" class="layui-textarea fly-editor"
+                                          style="height: 150px;"></textarea>
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="text-align: center">
+                        <input type="hidden" name="jid" value="123">
+                        <button class="layui-btn" lay-filter="*" lay-submit onsubmit="replyAPost()">提交回复</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--引入layui的JS文件-->
+<script src="../../../script/layui/layui.js"></script>
+
+<!--layui设置-->
+<script>
+    layui.cache.page = 'jie';
+    layui.cache.user = {
+        username: '游客'
+        , uid: -1
+        , avatar: '../../res/images/avatar/00.jpg'
+        , experience: 83
+        , sex: '男'
+    };
+    layui.config({
+        version: "3.0.0"
+        , base: '../../../script/mods/'
+    }).extend({
+        fly: 'post.html'
+    }).use(['fly', 'face'], function () {
+        var $ = layui.$
+            , fly = layui.fly;
+        // 如果你是采用模版自带的编辑器，你需要开启以下语句来解析。
+        $('.detail-body #content').each(function () {
+            var othis = $(this), html = othis.html();
+            othis.html(fly.content(html));
+        });
+    });
+</script>
+
+<!--用户中心模板-->
+<script id="m_center" type="text/html">
+    <cite class="layui-hide-xs">{{ d.nickname }}</cite>
+    {{#  if(d.role === 1){ }}
+    <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：管理员"></i>
+    <i class="layui-badge fly-badge-vip layui-hide-xs" title="积分 {{d.point}}">Lv.3</i>
+    {{#  } }}
+    <img src="{{d.profile}}">
+</script>
+
+<!--导航栏模板-->
+<script id="m_guide_bar" type="text/html">
+    <ul class="layui-clear">
+        {{# layui.each(d, function(index, item){ }}
+        {{# if(item.sid === section && section==='index'){ }}
+        <li class="layui-hide-xs layui-this">
+            <a href="/index.html">{{item.sname}}</a>
+        </li>
+        {{#} else if(item.sid === 'index'){}}
+        <li class="layui-hide-xs">
+            <a href="/index.html">{{item.sname}}</a>
+        </li>
+        {{#} else if(item.sid === section){}}
+        <li class="layui-hide-xs layui-this">
+            <a href="/page/portal/section/section.html?section={{item.sid}}">{{item.sname}}</a>
+        </li>
+        {{#} else {}}
+        <li><a href="/page/portal/section/section.html?section={{item.sid}}">{{item.sname}}</a></li>
+        {{# } }}
+        {{# }); }}
+        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li>
+        <!--用户登入后显示-->
+        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="user/index.html">我的贴子</a></li>
+        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a
+                href="user/index.html#collection">收藏</a>
+        </li>
+    </ul>
+    <div class="fly-column-right layui-hide-xs">
+            <span class="fly-search">
+                <i class="layui-icon"></i>
+            </span>
+        <a href="/page/portal/topic/add.html?section={{section}}" class="layui-btn">发表新帖</a>
+    </div>
+    <!--<div class="layui-hide-sm layui-show-xs-block"-->
+    <!--style="margin-top: -10px; padding-bottom: 10px; text-align: center;">-->
+    <!--<a href="jie/add.html" class="layui-btn">发表新帖</a>-->
+    <!--</div>-->
+</script>
+
+<!--热门帖子模块模板-->
+<script type="text/html" id="m_hot_post">
+    <dt class="fly-panel-title">本周热议</dt>
+    <dl class="fly-panel-main">
+        {{# if(d.length>0){ }}
+        {{# for(var i = 0 ; i < d.length; i++){ }}
+        <dd>
+            <a href="/page/portal/topic/detail.html?post={{d[i].tid}}&section={{d[i].sid}}">{{ d[i].title }}</a>
+            <span><i class="iconfont icon-pinglun1"></i> {{ d[i].acount+d[i].rcount }}</span>
+        </dd>
+        {{# } }}
+        {{# } }}
+    </dl>
+    {{# if(d.length===0){ }}
+    <!-- 无数据时 -->
+    <div class="fly-none">没有相关数据</div>
+    {{# } }}
+</script>
+
+<!--帖子详情模板-->
+<script type="text/html" id="m_detail">
+    <fieldset class="layui-elem-field layui-field-title" style="text-align: center;">
+        <legend>{{d.title}}</legend>
+    </fieldset>
+    <!--<h1>原有标题格式</h1>-->
+    <div class="fly-detail-info">
+        {{# if(d.isused===1){ }}
+        <span class="layui-badge">二手商品</span>
+        {{#}else {}}
+        <span class="layui-badge">崭新商品</span>
+        {{# } }}
+        <span class="layui-badge layui-bg-green">{{d.ndegree}}</span>
+        {{# if(d.issaled===1){ }}
+        <span class="layui-badge layui-bg-orange">已出售</span>
+        {{#}else {}}
+        <span class="layui-badge layui-bg-orange">在售中</span>
+        {{# } }}
+        <span class="fly-list-nums">
+                        <a href="#comment">
+                            <i class="iconfont" title="回复">&#xe60c;</i> {{d.pcount}}
+                        </a>
+                        <i class="iconfont" title="浏览">&#xe60b;</i> {{d.pcount}}
+                    </span>
+    </div>
+    <div class="detail-about">
+        <!--头像-->
+        <a class="fly-avatar" href="/page/portal/user/home.html?uid={{d.uid}}">
+            <img src="{{d.profile}}" alt="{{d.nickname}}">
+        </a>
+        <!--个人信息-->
+        <div class="fly-detail-user">
+            <a href="../user/home.html" class="fly-link">
+                <cite>{{d.nickname}}</cite>
+                {{# if(d.role===1){ }}
+                <i class="iconfont icon-renzheng" title="认证信息：管理员"></i>
+                {{# } }}
+                <i class="layui-badge fly-badge-vip">Lv {{d.ulevel}}</i>
+            </a>
+        </div>
+        <!--个性签名-->
+        <div class="detail-hits" id="LAY_jieAdmin" data-id="123">
+                        <span style="padding-right: 10px; color: #FF7200">
+                            {{# if(d.signature===null){ }}
+                            Ta还没有设置签名呢！
+                            {{#}else {}}
+                            {{d.signature}}
+                            {{# } }}
+                        </span>
+        </div>
+    </div>
+    <!--帖子内容-->
+    <div class="detail-body photos" style="border: 1px dashed lightblue;padding: 10px">
+        <hr>
+        <h2 style="text-align: center">商品图片</h2>
+        <hr>
+        <div style="text-align: center">
+            <div class="layui-carousel" id="test3" lay-filter="test4" style="margin: 0 auto">
+                <div carousel-item="">
+                    {{# layui.each(d.picture.split(";"), function(index, item){ }}
+                    <div><img src="{{item}}"></div>
+                    {{# }); }}
+                </div>
+            </div>
+        </div>
+        <hr>
+        <h2 style="text-align: center">商品信息</h2>
+        <hr>
+        <table width="100%">
+            <tr>
+                <td>
+                    {{# if(d.isused === 1){ }}
+                    ⭐ 商品类别：二手
+                    {{#} else {}}
+                    ⭐ 商品类别：崭新
+                    {{# } }}
+                </td>
+            </tr>
+            <tr>
+                <td>⭐ 新旧程度：{{d.ndegree}}</td>
+            </tr>
+            <tr>
+                <td>⭐ 商品价格：{{d.price}}元</td>
+            </tr>
+            <tr>
+                <td>⭐ 发布时间：{{d.ptime}}</td>
+            </tr>
+            <tr>
+                <td>
+                    {{# if(d.isused === 1){ }}
+                    ⭐ 商品状态：已售出
+                    {{#} else {}}
+                    ⭐ 商品状态：在售中
+                    {{# } }}
+                </td>
+            </tr>
+        </table>
+        <hr>
+        <h2 style="text-align: center">商品介绍</h2>
+        <hr>
+        <p id="content">{{d.content}}</p>
+    </div>
+    <fieldset class="layui-elem-field layui-field-title" style="text-align: center">
+        <legend>
+            <button class="layui-btn layui-btn-sm layui-btn-primary" onclick="collect()">收藏<i
+                    class="layui-icon layui-icon-praise" style="font-size: 30px; color: black;"></i>
+            </button>
+            <button class="layui-btn layui-btn-sm layui-btn-primary" onclick="praise()">点赞<i
+                    class="layui-icon layui-icon-rate" style="font-size: 30px; color: black;"></i></button>
+        </legend>
+    </fieldset>
+</script>
+
+<script type="text/html" id="m_reply">
+    {{# layui.each(d, function(index, item){ }}
+    {{# if(item.length!==2){ }}
+    <li data-id="111" class="jieda-daan">
+        <a name="item-1111111111"></a>
+        <div class="detail-about detail-about-reply">
+            <a class="fly-avatar" href="">
+                <img src="../../../image/asuna.jpg"
+                     alt=" ">
+            </a>
+            <div class="fly-detail-user">
+                <a href="" class="fly-link">
+                    <cite>橙色薄荷°</cite>
+                    <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
+                    <i class="layui-badge fly-badge-vip">管理员</i>
+                </a>
+
+                <span>(楼主)</span>
+                <!--
+                <span style="color:#5FB878">(管理员)</span>
+                <span style="color:#FF9E3F">（社区之光）</span>
+            <span style="color:#999">（该号已被封）</span>
+            -->
+            </div>
+
+            <div class="detail-hits">
+                <span>{{item[0].rtime}}</span>
+            </div>
+            <!--<i class="iconfont icon-logo" title="最佳答案"></i>-->
+        </div>
+        <div class="detail-body reply-body photos">{{item[0].content}}</div>
+        <div class="jieda-reply">
+            <span class="jieda-zan zanok" type="zan">
+                <i class="iconfont icon-zan"></i>
+                <em>{{item[0].pcount}}</em>
+            </span>
+            <span type="reply">
+                <i class="iconfont icon-svgmoban53"></i>回复
+            </span>
+            <div class="jieda-admin">
+                <span type="edit">编辑</span>
+                <span type="del">删除</span>
+                <!-- <span class="jieda-accept" type="accept">采纳</span> -->
+            </div>
+        </div>
+    </li>
+    {{#} else{ }}
+    <li data-id="111" class="jieda-daan">
+        <a name="item-1111111111"></a>
+        <div class="detail-about detail-about-reply">
+            <a class="fly-avatar" href="">
+                <img src="../../../image/asuna.jpg"
+                     alt=" ">
+            </a>
+            <div class="fly-detail-user">
+                <a href="" class="fly-link">
+                    <cite>橙色薄荷°</cite>
+                    <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
+                    <i class="layui-badge fly-badge-vip">管理员</i>
+                </a>
+
+                <span>(楼主)</span>
+                <!--
+                <span style="color:#5FB878">(管理员)</span>
+                <span style="color:#FF9E3F">（社区之光）</span>
+            <span style="color:#999">（该号已被封）</span>
+            -->
+            </div>
+
+            <div class="detail-hits">
+                <span>{{item[1].rtime}}</span>
+            </div>
+            <!--<i class="iconfont icon-logo" title="最佳答案"></i>-->
+        </div>
+        <div class="detail-body reply-body photos">{{item[1].content}}</div>
+        <div class="jieda-reply">
+            <span class="jieda-zan zanok" type="zan">
+                <i class="iconfont icon-zan"></i>
+                <em>{{item[0].pcount}}</em>
+            </span>
+            <span type="reply">
+                <i class="iconfont icon-svgmoban53"></i>回复
+            </span>
+            <div class="jieda-admin">
+                <span type="edit">编辑</span>
+                <span type="del">删除</span>
+                <!-- <span class="jieda-accept" type="accept">采纳</span> -->
+            </div>
+        </div>
+    </li>
+    {{# } }}
+    {{# }); }}
+    {{# if(d.length===0){ }}
+    <!-- 无数据时 -->
+    <li class="fly-none">消灭零回复</li>
+    {{# } }}
+</script>
+
+<!--参数获取，数据渲染-->
+<script>
+
+    function getQueryParameter(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+    var gid = getQueryParameter("gid");
+
+    function praise() {
+        $.ajax({
+            type: 'post',
+            url: '/praise/praise.do',
+            data: {
+                section: tid
+            },
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                layer.msg("点赞成功！");
+            },
+            error: function (data) {
+                layer.msg("点赞失败！");
+            }
+        })
+    }
+
+    function collect() {
+        $.ajax({
+            type: 'post',
+            url: '/collection/collect.do',
+            data: {
+                tid: tid
+            },
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                layer.msg("收藏成功！");
+            },
+            error: function (data) {
+                layer.msg("收藏失败！");
+            }
+        })
+    }
+
+    layui.use('layer', function () {
+        var layer = layui.layer;
+        // // 用户中心数据
+        // var user_info;
+        // // ajax-用户数据中心数据获取
+        // $.ajax({
+        //     type: 'post',
+        //     url: '/user/userCenter.do',
+        //     data: {},
+        //     dataType: 'json',
+        //     async: false,
+        //     success: function (data) {
+        //         user_info = data.data;
+        //     },
+        //     error: function (data) {
+        //         layer.msg("获取用户中心数据失败！");
+        //     }
+        // })
+
+        // 板块导航栏数据
+        var guide_bar;
+        $.ajax({
+            type: 'post',
+            url: '/section/getSection.do',
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                guide_bar = data.data;
+            },
+            error: function (data) {
+                alert("获取论坛版块失败！");
+            }
+        })
+        //
+        // // 热门帖子模块数据
+        // var hot_post;
+        // $.ajax({
+        //     type: 'post',
+        //     url: '/post/getSectionHotPost.do',
+        //     dataType: 'json',
+        //     data: {
+        //         section: section,
+        //     },
+        //     async: false,
+        //     success: function (data) {
+        //         hot_post = data.data;
+        //     },
+        //     error: function (data) {
+        //         alert("获取热门模块失败！");
+        //     }
+        // })
+
+        // 帖子详情数据
+        var detail;
+        // ajax-用户数据中心数据获取
+        $.ajax({
+            type: 'post',
+            url: '/good/getGoodInfo.do',
+            data: {
+                gid: gid
+            },
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                detail2 = data.data;
+            },
+            error: function (data) {
+                layer.msg("获取帖子详情数据失败！");
+            }
+        })
+
+        // // 帖子回复数据
+        // var replies;
+        // $.ajax({
+        //     type: 'post',
+        //     url: '/post/getReplies.do',
+        //     data: {
+        //         tid: tid
+        //     },
+        //     dataType: 'json',
+        //     async: false,
+        //     success: function (data) {
+        //         replies = data.data;
+        //     },
+        //     error: function (data) {
+        //         layer.msg("获取帖子回复数据失败！");
+        //     }
+        // })
+
+        // 模板引擎渲染
+        layui.use('laytpl', function () {
+            // 定义一个模板引擎
+            laytpl = layui.laytpl;
+
+            // // 用户中心渲染
+            // var center_model = document.getElementById('m_center').innerHTML;
+            // var center_view = document.getElementById('center');
+            // laytpl(center_model).render(user_info, function (html) {
+            //     center_view.innerHTML = html;
+            // });
+            //
+            // // 板块导航渲染
+            // var guide_bar_model = document.getElementById('m_guide_bar').innerHTML;
+            // var guide_bar_view = document.getElementById('guide_bar');
+            // laytpl(guide_bar_model).render(guide_bar, function (html) {
+            //     guide_bar_view.innerHTML = html;
+            // });
+            //
+            // // 热门帖子渲染
+            // var hot_post_model = document.getElementById('m_hot_post').innerHTML;
+            // var hot_post_view = document.getElementById('hot_post');
+            // laytpl(hot_post_model).render(hot_post, function (html) {
+            //     hot_post_view.innerHTML = html;
+            // });
+
+            // 帖子详情渲染
+            var detail_model = document.getElementById('m_detail').innerHTML;
+            var detail_view = document.getElementById('detail');
+            laytpl(detail_model).render(detail2, function (html) {
+                detail_view.innerHTML = html;
+                layui.use(['carousel', 'form'], function () {
+                    var carousel = layui.carousel;
+                    var form = layui.form;
+                    //设定各种参数
+                    var ins3 = carousel.render({
+                        elem: '#test3',
+                        arrow: "always"
+                    });
+
+                    //事件
+                    carousel.on('change(test4)', function (res) {
+                        console.log(res)
+                    });
+
+                });
+            });
+
+            // // 回复渲染
+            // var reply_model = document.getElementById('m_reply').innerHTML;
+            // var reply_view = document.getElementById('reply');
+            // laytpl(reply_model).render(replies, function (html) {
+            //     reply_view.innerHTML = html;
+            // });
+
+        });
+    });
+
+</script>
+
+</body>
+</html>
