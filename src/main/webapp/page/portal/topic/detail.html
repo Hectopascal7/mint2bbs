@@ -92,9 +92,9 @@
                                           style="height: 150px;"></textarea>
                             </div>
                         </div>
-                        <input name="tid" class="layui-hide" id="tid">
-                        <input name="sid" class="layui-hide" id="sid">
                         <div class="layui-form-item" style="text-align: center">
+                            <input name="tid" class="layui-hide" id="tid">
+                            <input name="sid" class="layui-hide" id="sid">
                             <button class="layui-btn" lay-filter="replyToPost" lay-submit id="replyBtn">提交回复</button>
                         </div>
                     </form>
@@ -168,10 +168,10 @@
         var $ = layui.$
             , fly = layui.fly;
         //如果你是采用模版自带的编辑器，你需要开启以下语句来解析。
-        // $('.detail-body').each(function () {
-        //     var othis = $(this), html = othis.html();
-        //     othis.html(fly.content(html));
-        // });
+        $('.detail-body').each(function () {
+            var othis = $(this), html = othis.html();
+            othis.html(fly.content(html));
+        });
     });
 </script>
 
@@ -404,10 +404,6 @@
             <!--<i class="iconfont icon-logo" title="最佳答案"></i>-->
         </div>
         <div class="detail-body reply-body photos">
-            <!--            回复给【admin】：-->
-            <!--            <div class="home-dacontent">-->
-            <!--                【admin】：{{item.content}}-->
-            <!--            </div>-->
             {{item.content}}
         </div>
         <!--        <div class="jieda-reply">-->

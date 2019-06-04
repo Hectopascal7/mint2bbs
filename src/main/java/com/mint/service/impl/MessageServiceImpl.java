@@ -2,9 +2,11 @@ package com.mint.service.impl;
 
 import com.mint.common.Const;
 import com.mint.common.ServerResponse;
+import com.mint.dao.GoodMapper;
 import com.mint.dao.MessageMapper;
 import com.mint.dao.PostMapper;
 import com.mint.dao.UserMapper;
+import com.mint.pojo.Good;
 import com.mint.pojo.Message;
 import com.mint.pojo.Post;
 import com.mint.pojo.User;
@@ -27,6 +29,8 @@ public class MessageServiceImpl implements IMessageService {
     private UserMapper userMapper;
     @Autowired
     private PostMapper postMapper;
+    @Autowired
+    private GoodMapper goodMapper;
 
     @Override
     public ServerResponse<List<HashMap<String, String>>> getUnReadMessage(HttpSession httpSession) {
@@ -43,6 +47,11 @@ public class MessageServiceImpl implements IMessageService {
                 map.put("otype", "帖子");
                 Post post = postMapper.getReceiveUidByTid(m.getOid());
                 map.put("title", post.getTitle());
+            } else if (Const.OPERATION_OBJECT_GOOD == m.getOtype()) {
+                map.put("otype", "商品");
+                System.out.println("oid" + m.getOid());
+                Good good = goodMapper.selectByPrimaryKey(m.getOid());
+                map.put("title", good.getTitle());
             }
             SimpleDateFormat sdf = new SimpleDateFormat("MM-dd HH:mm:ss");
             map.put("mtime", sdf.format(m.getMtime()));

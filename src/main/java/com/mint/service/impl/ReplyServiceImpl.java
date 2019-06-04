@@ -3,11 +3,9 @@ package com.mint.service.impl;
 import com.mint.common.Const;
 import com.mint.common.ServerResponse;
 import com.mint.dao.*;
-import com.mint.pojo.Message;
-import com.mint.pojo.Post;
-import com.mint.pojo.Reply;
-import com.mint.pojo.User;
+import com.mint.pojo.*;
 import com.mint.service.IReplyService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +26,8 @@ public class ReplyServiceImpl implements IReplyService {
     private MessageMapper messageMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private GoodMapper goodMapper;
 
     @Override
     public ServerResponse<List<HashMap<String, String>>> getUserLatestReply(String uid) {
@@ -73,12 +73,21 @@ public class ReplyServiceImpl implements IReplyService {
             map.put("pcount", reply.getPcount().toString());
             map.put("role", user.getRole().toString());
             map.put("point", user.getPoint().toString());
-            String tb_name = sectionMapper.selectByPrimaryKey(sid).getTbname();
-            Post post = postMapper.getPostByTid(tid, tb_name);
-            if (reply.getUid().equals(post.getUid())) {
-                map.put("isauthor", "1");
+            if (!StringUtils.isBlank(sid)) {
+                String tb_name = sectionMapper.selectByPrimaryKey(sid).getTbname();
+                Post post = postMapper.getPostByTid(tid, tb_name);
+                if (reply.getUid().equals(post.getUid())) {
+                    map.put("isauthor", "1");
+                } else {
+                    map.put("isauthor", "0");
+                }
             } else {
-                map.put("isauthor", "0");
+                Good good = goodMapper.selectByPrimaryKey(tid);
+                if (reply.getUid().equals(good.getUid())) {
+                    map.put("isauthor", "1");
+                } else {
+                    map.put("isauthor", "0");
+                }
             }
             replyList.add(map);
         }
@@ -115,11 +124,21 @@ public class ReplyServiceImpl implements IReplyService {
         System.out.println(tid);
         Integer result = replyMapper.insert(reply);
         if (Const.OP_SUCCESS == result) {
-            Post post = postMapper.getReceiveUidByTid(tid);
+            String uid = "";
+            Integer otype = 0;
+            if (!StringUtils.isBlank(sid)) {
+                Post post = postMapper.getReceiveUidByTid(tid);
+                uid = post.getUid();
+                otype = 30;
+            } else {
+                System.out.println(goodMapper.selectByPrimaryKey(tid));
+                GoodWithBLOBs good = goodMapper.selectByPrimaryKey(tid);
+                uid = good.getUid();
+                otype = 50;
+            }
             String mid = UUID.randomUUID().toString();
-            System.out.println(post);
             System.out.println(user);
-            Message message = new Message(mid, user.getUid(), post.getUid(), Const.OPERATION_TYPE_REPLY, tid, rtime, Const.OPERATION_OBJECT_POST, 0);
+            Message message = new Message(mid, user.getUid(), uid, Const.OPERATION_TYPE_REPLY, tid, rtime, otype, 0);
             messageMapper.insert(message);
             return ServerResponse.createBySuccessMessage("回复成功！");
         } else {

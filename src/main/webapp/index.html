@@ -267,7 +267,7 @@
     <div class="fly-panel-title">
         签到
         <i class="fly-mid"></i>
-        <a href="javascript:;" class="fly-link">说明</a>
+        <a href="javascript:;" class="fly-link" id="LAY_signinHelp">说明</a>
         <i class="fly-mid"></i>
         {{# if(isYesterday(d.ctime)||isToday(d.ctime)){ }}
         <span class="fly-signin-days">已连续签到<cite>{{d.days}}</cite>天</span>
@@ -311,11 +311,11 @@
         <!--            <span class="fly-search">-->
         <!--                <i class="layui-icon layui-icon-search"></i>-->
         <!--            </span>-->
-        <a href="page/portal/topic/add.html?section=index" class="layui-btn">发表新帖</a>
+        <a href="/page/portal/topic/add.html" class="layui-btn">发表新帖</a>
     </div>
     <div class="layui-hide-sm layui-show-xs-block"
          style="margin-top: -10px; padding-bottom: 10px; text-align: center;">
-        <a href="page/portal/topic/add.html?section=index" class="layui-btn">发表新帖</a>
+        <a href="/page/portal/topic/add.html" class="layui-btn">发表新帖</a>
     </div>
 </script>
 
@@ -544,7 +544,36 @@
             dataType: 'json',
             async: false,
             success: function (data) {
-                layer.msg(data.msg);
+                layer.msg(data.msg, function () {
+                    // 帖子列表数据
+                    var checkin;
+                    // ajax-获取帖子列表
+                    $.ajax({
+                        type: 'post',
+                        url: '/checkin/getUserCheckinInfo.do',
+                        dataType: 'json',
+                        async: false,
+                        success: function (data) {
+                            checkin = data.data;
+                        },
+                        error: function (data) {
+                            layer.msg("调取【获取签到信息】服务失败！");
+                        }
+                    })
+                    // 模板引擎渲染
+                    layui.use('laytpl', function () {
+                        // 定义一个模板引擎
+                        laytpl = layui.laytpl;
+                        // 签到模块渲染
+                        if (checkin !== null) {
+                            var checkin_model = document.getElementById('m_checkin').innerHTML;
+                            var checkin_view = document.getElementById('checkin');
+                            laytpl(checkin_model).render(checkin, function (html) {
+                                checkin_view.innerHTML = html;
+                            });
+                        }
+                    });
+                });
             },
             error: function (data) {
                 layer.msg("调取【签到】服务失败！");

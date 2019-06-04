@@ -4,8 +4,9 @@
     <meta charset="utf-8">
     <title>薄荷社区-我的消息</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="keywords" content="fly,layui,前端社区">
-    <meta name="description" content="Fly社区是模块化前端UI框架Layui的官网社区，致力于为web开发提供强劲动力">
+    <meta name="keywords" content="薄荷社区">
+    <meta name="description" content="薄荷社区,MintBBS,橙色薄荷°">
+    <link rel="icon" href="/image/favicon.ico">
     <link rel="stylesheet" href="../../../script/layui/css/layui.css">
     <link rel="stylesheet" href="../../../css/global.css">
     <script src="/script/jquery-3.3.1.min.js"></script>
@@ -152,8 +153,13 @@
         {{# layui.each(d, function(index, item){ }}
         <li data-id="123">
             <blockquote class="layui-elem-quote">
-                <a href="/jump?username=Absolutely" target="_blank"><cite>{{item.name}}</cite></a>回复了您的帖子<a
-                    target="_blank" href="/jie/8153.html/page/0/#item-1489505778669"><cite>{{item.title}}</cite></a>
+                <a href="/jump?username=Absolutely" target="_blank">
+                    <cite>{{item.name}}</cite>
+                </a>
+                回复了您发布的{{item.otype}}
+                <a target="_blank" href="/jie/8153.html/page/0/#item-1489505778669">
+                    <cite>{{item.title}}</cite>
+                </a>
             </blockquote>
             <p>
                 <span>{{item.mtime}}</span>
