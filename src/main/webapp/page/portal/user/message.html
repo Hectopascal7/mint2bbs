@@ -152,18 +152,47 @@
     <ul class="mine-msg">
         {{# layui.each(d, function(index, item){ }}
         <li data-id="123">
-            <blockquote class="layui-elem-quote">
+            <h4>
                 <a href="/jump?username=Absolutely" target="_blank">
                     <cite>{{item.name}}</cite>
                 </a>
-                回复了您发布的{{item.otype}}
+                【{{item.mtype}}】了
+                {{# if(item.nickname != null){ }}
+                <a href="/page/portal/user/home.html?user={{item.uid}}" target="_blank">
+                    <cite>{{item.nickname}}</cite>
+                </a>
+                {{#} else {}}
+                您
+                {{# } }}
+                发布的{{item.otype}}
+            </h4>
+            <blockquote class="layui-elem-quote">
+                {{# if(item.otype === "回复"){ }}
+                {{item.content}}
+                {{#} else {}}
                 <a target="_blank" href="/jie/8153.html/page/0/#item-1489505778669">
                     <cite>{{item.title}}</cite>
                 </a>
+                {{# } }}
             </blockquote>
             <p>
                 <span>{{item.mtime}}</span>
-                <a href="javascript:;" class="layui-btn layui-btn-small layui-btn-danger fly-delete">删除</a>
+
+                {{# if(item.part == 'good'){ }}
+                {{# if(item.isread == '0'){ }}
+                <a href="/page/portal/market/detail.html?gid={{item.gid}}"
+                   class="layui-btn layui-btn-small layui-btn-normal">查看</a>
+                {{#} else {}}
+                <a href="javascript:;" class="layui-btn layui-btn-small layui-btn-danger">删除</a>
+                {{# } }}
+                {{#} else {}}
+                {{# if(item.isread == '0'){ }}
+                <a href="/page/portal/topic/detail.html?post={{item.tid}}&section={{item.sid}}"
+                   class="layui-btn layui-btn-small layui-btn-normal">查看</a>
+                {{#} else {}}
+                <a class="layui-btn layui-btn-small layui-btn-danger">删除</a>
+                {{# } }}
+                {{# } }}
             </p>
         </li>
         {{# }); }}
@@ -200,7 +229,7 @@
         // ajax-用户资料中心数据获取
         $.ajax({
             type: 'post',
-            url: '/message/getUnReadMessage.do',
+            url: '/message/getUserMessage.do',
             dataType: 'json',
             async: false,
             success: function (data) {

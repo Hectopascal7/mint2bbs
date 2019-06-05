@@ -18,5 +18,5 @@ public interface MessageMapper {
 
     int updateByPrimaryKey(Message record);
 
-    List<Message> getUnReadMessage(@Param("ruid") String ruid);
+    List<Message> getUserMessage(@Param("ruid") String ruid);
 }

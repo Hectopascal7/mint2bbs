@@ -136,6 +136,8 @@ public class GoodServiceImpl implements IGoodService {
             map.put("issaled", good.getIssaled().toString());
             User u = userMapper.selectByPrimaryKey(good.getUid());
             map.put("uid", u.getUid());
+            map.put("role", u.getRole().toString());
+            map.put("point", u.getPoint().toString());
             map.put("profile", u.getProfile());
             map.put("nickname", u.getNickname());
             map.put("role", u.getRole().toString());

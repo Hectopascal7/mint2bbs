@@ -406,12 +406,12 @@
         <div class="detail-body reply-body photos">
             {{item.content}}
         </div>
-        <!--        <div class="jieda-reply">-->
-        <!--            <span class="jieda-zan zanok" >-->
+        <!--        <div class="reply-op">-->
+        <!--            <span class="reply-praise zanok" >-->
         <!--                <i class="iconfont icon-close"></i>-->
         <!--                <em>举报</em>-->
         <!--            </span>-->
-        <!--            <div class="jieda-admin">-->
+        <!--            <div class="right-op">-->
         <!--                <span type="edit">-->
         <!--                    <i class="iconfont icon-zan"></i>-->
         <!--                    <em>{{item.pcount}}</em>-->
@@ -420,17 +420,17 @@
         <!--                &lt;!&ndash; <span class="jieda-accept" type="accept">采纳</span> &ndash;&gt;-->
         <!--            </div>-->
         <!--        </div>-->
-        <div class="jieda-reply">
-              <span class="jieda-zan" type="zan">
+        <div class="reply-op">
+            <span class="reply-praise" type="praise">
                 <i class="iconfont icon-zan"></i>
                 <em>{{item.pcount}}</em>
-              </span>
-
-            <div class="jieda-admin">
-                <span type="reply">
-                    <i class="iconfont icon-close"></i>举报
+            </span>
+            <div class="right-op">
+                <span class="reply-fn" data-type="report" type="report"
+                      data-mtype="9" data-oid="{{item.rid}}" data-otype="40">
+                    <i class="iconfont icon-close"></i>举1报
                 </span>
-                <span type="reply">
+                <span type="reply">1
                     <i class="iconfont icon-svgmoban53"></i>回复
                 </span>
                 <!-- <span class="jieda-accept" type="accept">采纳</span> -->

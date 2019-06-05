@@ -7,5 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface IMessageService {
-    ServerResponse<List<HashMap<String, String>>> getUnReadMessage(HttpSession httpSession);
+    ServerResponse<List<HashMap<String, String>>> getUserMessage(HttpSession httpSession);
+
+    ServerResponse report(Integer mtype, String oid, Integer otype, HttpSession httpSession);
 }

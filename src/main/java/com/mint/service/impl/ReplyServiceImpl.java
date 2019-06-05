@@ -57,18 +57,19 @@ public class ReplyServiceImpl implements IReplyService {
         List<HashMap<String, String>> replyList = new ArrayList<>();
         for (Reply reply : list) {
             HashMap<String, String> map = new HashMap<>();
-            String rrid = reply.getRrid();
-            List<Reply> rlist = new ArrayList<>();
-            rlist.add(reply);
-            if (!("".equals(rrid)) && !(null == rrid)) {
-                Reply rreply = replyMapper.selectByPrimaryKey(rrid);
-                rlist.add(rreply);
-            }
+//            String rrid = reply.getRrid();
+//            List<Reply> rlist = new ArrayList<>();
+//            rlist.add(reply);
+//            if (!("".equals(rrid)) && !(null == rrid)) {
+//                Reply rreply = replyMapper.selectByPrimaryKey(rrid);
+//                rlist.add(rreply);
+//            }
             User user = userMapper.selectByPrimaryKey(reply.getUid());
             map.put("profile", user.getProfile());
             map.put("nickname", user.getNickname());
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             map.put("rtime", sdf.format(reply.getRtime()));
+            map.put("rid", reply.getRid());
             map.put("content", reply.getContent());
             map.put("pcount", reply.getPcount().toString());
             map.put("role", user.getRole().toString());

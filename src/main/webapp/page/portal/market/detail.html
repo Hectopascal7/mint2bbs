@@ -317,10 +317,10 @@
         <div class="fly-detail-user">
             <a href="../user/home.html" class="fly-link">
                 <cite>{{d.nickname}}</cite>
-                {{# if(d.role===1){ }}
+                {{# if(d.role==='1'){ }}
                 <i class="iconfont icon-renzheng" title="认证信息：管理员"></i>
                 {{# } }}
-                <i class="layui-badge fly-badge-vip">Lv {{d.ulevel}}</i>
+                <i class="layui-badge fly-badge-vip">{{d.point}}PT</i>
             </a>
         </div>
         <!--个性签名-->
@@ -457,12 +457,12 @@
             <!--            </div>-->
             {{item.content}}
         </div>
-        <!--        <div class="jieda-reply">-->
-        <!--            <span class="jieda-zan zanok" >-->
+        <!--        <div class="reply-op">-->
+        <!--            <span class="reply-praise zanok" >-->
         <!--                <i class="iconfont icon-close"></i>-->
         <!--                <em>举报</em>-->
         <!--            </span>-->
-        <!--            <div class="jieda-admin">-->
+        <!--            <div class="right-op">-->
         <!--                <span type="edit">-->
         <!--                    <i class="iconfont icon-zan"></i>-->
         <!--                    <em>{{item.pcount}}</em>-->
@@ -471,14 +471,15 @@
         <!--                &lt;!&ndash; <span class="jieda-accept" type="accept">采纳</span> &ndash;&gt;-->
         <!--            </div>-->
         <!--        </div>-->
-        <div class="jieda-reply">
-              <span class="jieda-zan" type="zan">
+        <div class="reply-op">
+              <span class="reply-praise" type="praise">
                 <i class="iconfont icon-zan"></i>
                 <em>{{item.pcount}}</em>
               </span>
 
-            <div class="jieda-admin">
-                <span type="reply">
+            <div class="right-op">
+                <span class="reply-fn" data-type="report" type="report"
+                      data-mtype="9" data-oid="{{item.rid}}" data-otype="40">
                     <i class="iconfont icon-close"></i>举报
                 </span>
                 <span type="reply" onclick="replyTo()">

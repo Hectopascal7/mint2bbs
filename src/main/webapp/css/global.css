@@ -1473,7 +1473,7 @@ body .layui-edit-face .layui-layer-content {
     color: #fff;
 }
 
-.jieda-admin {
+.right-op {
     position: absolute;
     right: 0;
     top: 4px;
@@ -1537,39 +1537,39 @@ body .layui-edit-face .layui-layer-content {
     color: #4f99cf
 }
 
-.jieda-reply {
+.reply-op {
     position: relative;
 }
 
-.jieda-reply span {
+.reply-op span {
     padding-right: 20px;
     color: #999;
     cursor: pointer;
 }
 
-.jieda-reply span:hover {
+.reply-op span:hover {
     color: #666;
 }
 
-.jieda-reply span i {
+.reply-op span i {
     margin-right: 5px;
     font-size: 16px;
 }
 
-.jieda-reply span em {
+.reply-op span em {
     font-style: normal;
 }
 
-.jieda-reply span .icon-zan {
+.reply-op span .icon-zan {
     font-size: 22px;
 }
 
-.jieda-reply .zanok,
-.jieda-reply .jieda-zan:hover {
+.reply-op .zanok,
+.reply-op .reply-praise:hover {
     color: #c00
 }
 
-.jieda-reply span .icon-svgmoban53 {
+.reply-op span .icon-svgmoban53 {
     position: relative;
     top: 1px;
 }

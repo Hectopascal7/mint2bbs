@@ -19,9 +19,15 @@ public class MessageController {
     @Autowired
     private IMessageService iMessageService;
 
-    @RequestMapping(value = "getUnReadMessage.do", method = RequestMethod.POST)
+    @RequestMapping(value = "getUserMessage.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<List<HashMap<String, String>>> getUnReadMessage(HttpSession httpSession) {
-        return iMessageService.getUnReadMessage(httpSession);
+    public ServerResponse<List<HashMap<String, String>>> getUserMessage(HttpSession httpSession) {
+        return iMessageService.getUserMessage(httpSession);
+    }
+
+    @RequestMapping(value = "report.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse report(Integer mtype, String oid, Integer otype, HttpSession httpSession) {
+        return iMessageService.report(mtype,oid,otype,httpSession);
     }
 }
