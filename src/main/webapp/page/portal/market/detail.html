@@ -146,7 +146,7 @@
 
 <!--layui设置-->
 <script>
-    layui.cache.page = 'jie';
+    layui.cache.page = 'reply';
     layui.cache.user = {
         username: '游客'
         , uid: -1
@@ -305,7 +305,7 @@
             <a href="#comment">
                 <i class="iconfont" title="回复">&#xe60c;</i> {{d.pcount}}
             </a>
-            <i class="iconfont icon-zan" title="赞"></i> {{d.pcount}}
+            <i class="iconfont icon-praise" title="赞"></i> {{d.pcount}}
         </span>
     </div>
     <div class="detail-about">
@@ -458,13 +458,13 @@
             {{item.content}}
         </div>
         <!--        <div class="reply-op">-->
-        <!--            <span class="reply-praise zanok" >-->
+        <!--            <span class="reply-praise praise-ok" >-->
         <!--                <i class="iconfont icon-close"></i>-->
         <!--                <em>举报</em>-->
         <!--            </span>-->
         <!--            <div class="right-op">-->
         <!--                <span type="edit">-->
-        <!--                    <i class="iconfont icon-zan"></i>-->
+        <!--                    <i class="iconfont icon-praise"></i>-->
         <!--                    <em>{{item.pcount}}</em>-->
         <!--                </span>-->
         <!--                <span type="del"><i class="iconfont icon-svgmoban53"></i>回复</span>-->
@@ -473,7 +473,7 @@
         <!--        </div>-->
         <div class="reply-op">
               <span class="reply-praise" type="praise">
-                <i class="iconfont icon-zan"></i>
+                <i class="iconfont icon-praise"></i>
                 <em>{{item.pcount}}</em>
               </span>
 

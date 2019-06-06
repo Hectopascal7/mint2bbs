@@ -42,7 +42,7 @@ i {
     -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-zan:before {
+.icon-praise:before {
     content: "\e612"
 }
 
@@ -1560,11 +1560,11 @@ body .layui-edit-face .layui-layer-content {
     font-style: normal;
 }
 
-.reply-op span .icon-zan {
+.reply-op span .icon-praise {
     font-size: 22px;
 }
 
-.reply-op .zanok,
+.reply-op .praise-ok,
 .reply-op .reply-praise:hover {
     color: #c00
 }

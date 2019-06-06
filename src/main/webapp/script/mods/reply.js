@@ -119,6 +119,7 @@ layui.define('fly', function (exports) {
             var mtype = this.getAttribute("data-mtype");
             var otype = this.getAttribute("data-otype");
             var oid = this.getAttribute("data-oid");
+            var r_reply=$(this);
             $.ajax({
                 type: 'post',
                 url: '/message/report.do',
@@ -130,7 +131,9 @@ layui.define('fly', function (exports) {
                 dataType: 'json',
                 async: false,
                 success: function (data) {
-                    layer.msg(data.msg);
+                    layer.msg(data.msg,function () {
+                        r_reply.attr("disable");
+                    });
                 },
                 error: function (data) {
                     layer.msg("调用【举报】服务失败");
@@ -161,14 +164,14 @@ layui.define('fly', function (exports) {
     //回复操作 点赞、举报
     reply.operation = {
         // zan: function (li) { //赞
-        //     var othis = $(this), ok = othis.hasClass('zanok');
+        //     var othis = $(this), ok = othis.hasClass('praise-ok');
         //     fly.json('/api/reply-praise/', {
         //         ok: ok
         //         , id: li.data('id')
         //     }, function (res) {
         //         if (res.status === 0) {
         //             var zans = othis.find('em').html() | 0;
-        //             othis[ok ? 'removeClass' : 'addClass']('zanok');
+        //             othis[ok ? 'removeClass' : 'addClass']('praise-ok');
         //             othis.find('em').html(ok ? (--zans) : (++zans));
         //         } else {
         //             layer.msg(res.msg);
@@ -182,8 +185,63 @@ layui.define('fly', function (exports) {
         //     if (val.indexOf(aite) !== -1) return;
         //     dom.content.val(aite + ' ' + val);
         // }
-        praise: function (li) { //回复
-            alert("praise");
+        // 点赞回复
+        praise: function () {
+            var iid = this.getAttribute("data-iid");
+            var itype = this.getAttribute("data-itype");
+            var p_reply = $(this);
+            $.ajax({
+                type: 'post',
+                url: '/praise/praise.do',
+                data: {
+                    iid: iid,
+                    itype: itype,
+                },
+                dataType: 'json',
+                async: false,
+                success: function (data) {
+                    layer.msg(data.msg);
+                    p_reply.addClass("praise-ok");
+                    p_reply.attr("data-pid", data.data);
+                    p_reply.attr("type", "cancelPraise");
+                    p_reply.removeAttr("data-iid");
+                    p_reply.removeAttr("data-itype");
+                    p_reply.find("em:first").text(Number(p_reply.find("em:first").text()) + 1);
+                },
+                error: function (data) {
+                    layer.msg("调用【点赞】服务失败");
+                }
+            })
+        },
+        // 取消点赞回复
+        cancelPraise: function () {
+            var pid = this.getAttribute("data-pid");
+            var cp_reply = $(this);
+            $.ajax({
+                type: 'post',
+                url: '/praise/cancelPraise.do',
+                data: {
+                    'pid': pid
+                },
+                dataType: 'json',
+                async: false,
+                success: function (data) {
+                    if (data.status = 1) {
+                        layer.msg(data.msg);
+                        cp_reply.removeClass("praise-ok");
+                        cp_reply.attr("data-iid", data.data);
+                        cp_reply.attr("data-itype", 40);
+                        cp_reply.removeAttr("data-pid");
+                        cp_reply.attr("type", "praise");
+                        cp_reply.find("em:first").text(Number(cp_reply.find("em:first").text()) - 1);
+                    } else {
+                        layer.msg(data.msg);
+                    }
+                },
+                error: function (data) {
+                    layer.msg("调取【取消点赞】服务失败");
+                }
+            })
         }
         // , accept: function (li) { //采纳
         //     var othis = $(this);
@@ -263,5 +321,5 @@ layui.define('fly', function (exports) {
     //   $('html,body').scrollTop(replyTop);
     // }
 
-    exports('jie', null);
+    exports('reply', null);
 });

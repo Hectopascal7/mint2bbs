@@ -28,6 +28,8 @@ public class ReplyServiceImpl implements IReplyService {
     private UserMapper userMapper;
     @Autowired
     private GoodMapper goodMapper;
+    @Autowired
+    private PraiseMapper praiseMapper;
 
     @Override
     public ServerResponse<List<HashMap<String, String>>> getUserLatestReply(String uid) {
@@ -52,7 +54,7 @@ public class ReplyServiceImpl implements IReplyService {
     }
 
     @Override
-    public ServerResponse<List<HashMap<String, String>>> getReplies(String tid, String sid) {
+    public ServerResponse<List<HashMap<String, String>>> getReplies(String tid, String sid, HttpSession httpSession) {
         List<Reply> list = replyMapper.getMainReplies(tid);
         List<HashMap<String, String>> replyList = new ArrayList<>();
         for (Reply reply : list) {
@@ -74,6 +76,14 @@ public class ReplyServiceImpl implements IReplyService {
             map.put("pcount", reply.getPcount().toString());
             map.put("role", user.getRole().toString());
             map.put("point", user.getPoint().toString());
+            User u = (User) httpSession.getAttribute(Const.CURRENT_USER);
+            String pid = praiseMapper.checkPraise(reply.getRid(), u.getUid());
+            if (StringUtils.isBlank(pid)) {
+                map.put("praise", "0");
+            } else {
+                map.put("praise", "1");
+                map.put("pid", pid);
+            }
             if (!StringUtils.isBlank(sid)) {
                 String tb_name = sectionMapper.selectByPrimaryKey(sid).getTbname();
                 Post post = postMapper.getPostByTid(tid, tb_name);

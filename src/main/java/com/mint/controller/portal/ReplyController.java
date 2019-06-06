@@ -74,8 +74,8 @@ public class ReplyController {
      */
     @RequestMapping(value = "getReplies.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<List<HashMap<String, String>>> getReplies(String tid, String sid) {
-        return iReplyService.getReplies(tid,sid);
+    public ServerResponse<List<HashMap<String, String>>> getReplies(String tid, String sid,HttpSession httpSession) {
+        return iReplyService.getReplies(tid,sid,httpSession);
     }
 
 }

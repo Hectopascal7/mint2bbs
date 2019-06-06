@@ -44,7 +44,6 @@ public class PraiseServiceImpl implements IPraiseService {
     public ServerResponse<String> cancelPraise(String pid) {
         Praise praise = praiseMapper.selectByPrimaryKey(pid);
         int result = praiseMapper.deleteByPrimaryKey(pid);
-        System.out.println(pid);
         if (result == 1) {
             return ServerResponse.createBySuccess("取消点赞成功！", praise.getIid());
         } else {

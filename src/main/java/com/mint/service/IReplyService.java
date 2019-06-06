@@ -14,5 +14,5 @@ public interface IReplyService {
 
     ServerResponse reply(String tid, String content, String sid, HttpSession httpSession);
 
-    ServerResponse<List<HashMap<String,String>>> getReplies(String tid, String sid);
+    ServerResponse<List<HashMap<String,String>>> getReplies(String tid, String sid,HttpSession httpSession);
 }
