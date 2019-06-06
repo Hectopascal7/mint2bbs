@@ -80,10 +80,9 @@
 
     <div class="fly-panel fly-panel-user" pad20>
         <div class="layui-tab layui-tab-brief" lay-filter="user" id="LAY_msg" style="margin-top: 15px;">
-            <button class="layui-btn layui-btn-danger" id="LAY_delallmsg">清空全部消息</button>
-            <div id="message" style="margin-top: 10px;">
-
-            </div>
+            <button class="layui-btn layui-btn-normal message-fn" data-method="clearAllMessage">全部已读</button>
+            <button class="layui-btn layui-btn-danger message-fn" data-method="deleteMessage">清空全部已读</button>
+            <div id="message" style="margin-top: 10px;"></div>
         </div>
     </div>
 
@@ -101,6 +100,7 @@
 </div>
 
 <script src="../../../script/layui/layui.js"></script>
+<script src="/script/model/message.js"></script>
 <!--<script src="/script/data.js"></script>-->
 <script>
     layui.cache.page = 'user';
@@ -177,20 +177,23 @@
             </blockquote>
             <p>
                 <span>{{item.mtime}}</span>
-
                 {{# if(item.part == 'good'){ }}
                 {{# if(item.isread == '0'){ }}
-                <a href="/page/portal/market/detail.html?gid={{item.gid}}"
-                   class="layui-btn layui-btn-small layui-btn-normal">查看</a>
+                <a data-method="showMessage"
+                   class="layui-btn layui-btn-small layui-btn-normal message-fn"
+                   data-url="/page/portal/market/detail.html?gid={{item.gid}}" data-id="{{item.mid}}">查看</a>
                 {{#} else {}}
-                <a href="javascript:;" class="layui-btn layui-btn-small layui-btn-danger">删除</a>
+                <a href="javascript:;" class="layui-btn layui-btn-small layui-btn-danger message-fn"
+                   data-method="deleteMessage" data-id="{{item.mid}}">删除</a>
                 {{# } }}
                 {{#} else {}}
                 {{# if(item.isread == '0'){ }}
-                <a href="/page/portal/topic/detail.html?post={{item.tid}}&section={{item.sid}}"
-                   class="layui-btn layui-btn-small layui-btn-normal">查看</a>
+                <a class="layui-btn layui-btn-small layui-btn-normal message-fn" data-method="showMessage"
+                   data-url="/page/portal/topic/detail.html?post={{item.tid}}&section={{item.sid}}"
+                   data-id="{{item.mid}}">查看</a>
                 {{#} else {}}
-                <a class="layui-btn layui-btn-small layui-btn-danger">删除</a>
+                <a class="layui-btn layui-btn-small layui-btn-danger message-fn" data-method="deleteMessage"
+                   data-id="{{item.mid}}">删除</a>
                 {{# } }}
                 {{# } }}
             </p>
@@ -252,20 +255,6 @@
                 center_view.innerHTML = html;
                 $("#home").attr("href", "/page/portal/user/home.html?user=" + user_info.uid);
             });
-
-            // // 用户资料渲染
-            // var user_info_model = document.getElementById('m_user_info').innerHTML;
-            // var user_info_view = document.getElementById('user_info');
-            // laytpl(user_info_model).render(user_info, function (html) {
-            //     user_info_view.innerHTML = html;
-            // });
-
-            // // 用户头像渲染
-            // var profile_model = document.getElementById('m_profile').innerHTML;
-            // var profile_view = document.getElementById('profile');
-            // laytpl(profile_model).render(user_info, function (html) {
-            //     profile_view.innerHTML = html;
-            // });
 
             // 用户消息渲染
             var message_model = document.getElementById('m_message').innerHTML;

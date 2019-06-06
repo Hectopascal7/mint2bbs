@@ -40,14 +40,21 @@ public class ReplyServiceImpl implements IReplyService {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd HH:mm:ss");
             String ptime = simpleDateFormat.format(reply.getRtime());
             map.put("ptime", ptime);
-            String sid = reply.getSid();
-            System.out.println(sid);
-            String tb_name = sectionMapper.selectByPrimaryKey(sid).getTbname();
-            Post post = postMapper.getReplyPost(tb_name, reply.getTid());
-            map.put("sid", post.getSid());
-            map.put("title", post.getTitle());
+            if (StringUtils.isBlank(reply.getSid())) {
+                Good good = goodMapper.selectByPrimaryKey(reply.getTid());
+                map.put("type", "good");
+                map.put("gid", good.getGid());
+                map.put("title", good.getTitle());
+            } else {
+                String sid = reply.getSid();
+                String tb_name = sectionMapper.selectByPrimaryKey(sid).getTbname();
+                Post post = postMapper.getReplyPost(tb_name, reply.getTid());
+                map.put("type", "post");
+                map.put("sid", post.getSid());
+                map.put("title", post.getTitle());
+                map.put("tid", post.getTid());
+            }
             map.put("content", reply.getContent());
-            map.put("tid", post.getTid());
             latestReply.add(map);
         }
         return ServerResponse.createBySuccess(latestReply);
@@ -114,13 +121,22 @@ public class ReplyServiceImpl implements IReplyService {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd HH:mm:ss");
             String ptime = simpleDateFormat.format(reply.getRtime());
             map.put("ptime", ptime);
-            String sid = reply.getSid();
-            String tb_name = sectionMapper.selectByPrimaryKey(sid).getTbname();
-            Post post = postMapper.getReplyPost(tb_name, reply.getTid());
-            map.put("sid", post.getSid());
-            map.put("title", post.getTitle());
+            if (StringUtils.isBlank(reply.getSid())) {
+                Good good = goodMapper.selectByPrimaryKey(reply.getTid());
+                System.out.println(reply.getRid());
+                map.put("type", "good");
+                map.put("gid", good.getGid());
+                map.put("title", good.getTitle());
+            } else {
+                String sid = reply.getSid();
+                String tb_name = sectionMapper.selectByPrimaryKey(sid).getTbname();
+                Post post = postMapper.getReplyPost(tb_name, reply.getTid());
+                map.put("type", "post");
+                map.put("sid", post.getSid());
+                map.put("title", post.getTitle());
+                map.put("tid", post.getTid());
+            }
             map.put("content", reply.getContent());
-            map.put("tid", post.getTid());
             latestReply.add(map);
         }
         return ServerResponse.createBySuccess(latestReply);

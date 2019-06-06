@@ -58,7 +58,9 @@ public class MessageServiceImpl implements IMessageService {
                 map.put("tid", post.getTid());
             } else if (Const.OPERATION_OBJECT_GOOD == m.getOtype()) {
                 map.put("otype", "商品");
+                map.put("part", "good");
                 System.out.println("oid" + m.getOid());
+                map.put("gid", m.getOid());
                 Good good = goodMapper.selectByPrimaryKey(m.getOid());
                 map.put("title", good.getTitle());
             } else if (Const.OPERATION_OBJECT_REPLY == m.getOtype()) {
@@ -82,6 +84,7 @@ public class MessageServiceImpl implements IMessageService {
                     map.put("nickname", userMapper.getNicknameByUid(reply.getUid()));
                 }
             }
+            map.put("mid", m.getMid());
             SimpleDateFormat sdf = new SimpleDateFormat("MM-dd HH:mm:ss");
             map.put("mtime", sdf.format(m.getMtime()));
             map.put("isread", m.getIsread().toString());
@@ -104,6 +107,38 @@ public class MessageServiceImpl implements IMessageService {
             return ServerResponse.createBySuccessMessage("已经反馈给系统管理员，感谢您的监督！");
         } else {
             return ServerResponse.createByErrorMessage("反馈失败，请联系管理员！");
+        }
+    }
+
+    @Override
+    public ServerResponse updateMessageRead(String mid, HttpSession httpSession) {
+        if (StringUtils.isBlank(mid)) {
+            User user = (User) httpSession.getAttribute(Const.CURRENT_USER);
+            messageMapper.clearAllMessage(user.getUid());
+            return ServerResponse.createBySuccessMessage("全部设为已读成功！");
+        } else {
+            Integer result = messageMapper.updateMessageRead(mid);
+            if (Const.OP_SUCCESS == result) {
+                return ServerResponse.createBySuccessMessage("查看成功！");
+            } else {
+                return ServerResponse.createByErrorMessage("更新消息状态失败！");
+            }
+        }
+    }
+
+    @Override
+    public ServerResponse deleteMessage(String mid, HttpSession httpSession) {
+        if (StringUtils.isBlank(mid)) {
+            User user = (User) httpSession.getAttribute(Const.CURRENT_USER);
+            messageMapper.deleteUserReadMessage(user.getUid());
+            return ServerResponse.createBySuccessMessage("清空全部已读信息成功！");
+        } else {
+            Integer result = messageMapper.deleteByPrimaryKey(mid);
+            if (Const.OP_SUCCESS == result) {
+                return ServerResponse.createBySuccessMessage("删除成功！");
+            } else {
+                return ServerResponse.createByErrorMessage("删除消息失败！");
+            }
         }
     }
 }

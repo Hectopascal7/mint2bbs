@@ -28,6 +28,18 @@ public class MessageController {
     @RequestMapping(value = "report.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse report(Integer mtype, String oid, Integer otype, HttpSession httpSession) {
-        return iMessageService.report(mtype,oid,otype,httpSession);
+        return iMessageService.report(mtype, oid, otype, httpSession);
+    }
+
+    @RequestMapping(value = "updateMessageRead.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse updateMessageRead(String mid, HttpSession httpSession) {
+        return iMessageService.updateMessageRead(mid, httpSession);
+    }
+
+    @RequestMapping(value = "deleteMessage.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse deleteMessage(String mid, HttpSession httpSession) {
+        return iMessageService.deleteMessage(mid, httpSession);
     }
 }

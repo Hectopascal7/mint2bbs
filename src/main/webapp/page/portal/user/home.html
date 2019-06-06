@@ -135,13 +135,24 @@
         {{#} else {}}
         <ul class="home-jieda">
             {{# layui.each(d, function(index, item){ }}
+            {{# if(item.type==="post"){ }}
             <li>
                 <p>
                     <span>{{item.ptime}}</span>
-                    在<a href="/page/portal/topic/detail.html?post={{item.tid}}&section={{item.sid}}" target="_blank">{{item.title}}</a>中回答：
+                    在<a href="/page/portal/topic/detail.html?post={{item.tid}}&section={{item.sid}}"
+                        target="_blank">【帖】{{item.title}}</a>中回答：
                 </p>
                 <div class="home-dacontent">{{item.content}}</div>
             </li>
+            {{#} else {}}
+            <li>
+                <p>
+                    <span>{{item.ptime}}</span>
+                    在<a href="/page/portal/market/detail.html?gid={{item.gid}}" target="_blank">【商】{{item.title}}</a>中回答：
+                </p>
+                <div class="home-dacontent">{{item.content}}</div>
+            </li>
+            {{# } }}
             {{# }); }}
             <div style="text-align: center">
                 <div class="laypage-main">
@@ -165,17 +176,28 @@
         {{#} else {}}
         <ul class="home-jieda">
             {{# layui.each(d, function(index, item){ }}
+            {{# if(item.type==="post"){ }}
             <li>
                 <p>
                     <span>{{item.ptime}}</span>
-                    在<a href="/page/portal/topic/detail.html?post={{item.tid}}&section={{item.sid}}" target="_blank">{{item.title}}</a>中回答：
+                    在<a href="/page/portal/topic/detail.html?post={{item.tid}}&section={{item.sid}}"
+                        target="_blank">【帖】{{item.title}}</a>中回答：
                 </p>
                 <div class="home-dacontent">{{item.content}}</div>
             </li>
+            {{#} else {}}
+            <li>
+                <p>
+                    <span>{{item.ptime}}</span>
+                    在<a href="/page/portal/market/detail.html?gid={{item.gid}}" target="_blank">【商】{{item.title}}</a>中回答：
+                </p>
+                <div class="home-dacontent">{{item.content}}</div>
+            </li>
+            {{# } }}
             {{# }); }}
             <div style="text-align: center">
                 <div class="laypage-main">
-                    <a class="laypage-next" href="javascript:getHomePartReply()">收起...</a>
+                    <a class="laypage-next" href="javascript:getHomeMoreReply()">查看全部</a>
                 </div>
             </div>
         </ul>
@@ -269,6 +291,7 @@
         if (r != null) return unescape(r[2]);
         return null;
     }
+
     var uid = getQueryParameter("user");
     layui.use('layer', function () {
         // ajax交互，JS中以定义的layer无法获取（猜测），手动定义一个

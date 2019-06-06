@@ -19,4 +19,10 @@ public interface MessageMapper {
     int updateByPrimaryKey(Message record);
 
     List<Message> getUserMessage(@Param("ruid") String ruid);
+
+    Integer updateMessageRead(String mid);
+
+    Integer clearAllMessage(String ruid);
+
+    Integer deleteUserReadMessage(String ruid);
 }

@@ -10,4 +10,8 @@ public interface IMessageService {
     ServerResponse<List<HashMap<String, String>>> getUserMessage(HttpSession httpSession);
 
     ServerResponse report(Integer mtype, String oid, Integer otype, HttpSession httpSession);
+
+    ServerResponse updateMessageRead(String mid,HttpSession httpSession);
+
+    ServerResponse deleteMessage(String mid, HttpSession httpSession);
 }

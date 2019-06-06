@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mint.dao.MessageMapper">
-  <resultMap id="BaseResultMap" type="com.mint.pojo.Message">
-    <constructor>
-      <idArg column="mid" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="suid" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="ruid" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="mtype" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="oid" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="mtime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-      <arg column="otype" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="isread" javaType="java.lang.Integer" jdbcType="INTEGER" />
-    </constructor>
-  </resultMap>
-  <sql id="Base_Column_List">
+    <resultMap id="BaseResultMap" type="com.mint.pojo.Message">
+        <constructor>
+            <idArg column="mid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="suid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="ruid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="mtype" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="oid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="mtime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="otype" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="isread" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
     mid, suid, ruid, mtype, oid, mtime, otype, isread
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from tb_message
-    where mid = #{mid,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_message
+        where mid = #{mid,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from tb_message
     where mid = #{mid,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.mint.pojo.Message">
+    <insert id="insert" parameterType="com.mint.pojo.Message">
     insert into tb_message (mid, suid, ruid, 
       mtype, oid, mtime, 
       otype, isread)
@@ -34,89 +34,89 @@
       #{mtype,jdbcType=INTEGER}, #{oid,jdbcType=VARCHAR}, #{mtime,jdbcType=TIMESTAMP}, 
       #{otype,jdbcType=INTEGER}, #{isread,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.mint.pojo.Message">
-    insert into tb_message
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="mid != null">
-        mid,
-      </if>
-      <if test="suid != null">
-        suid,
-      </if>
-      <if test="ruid != null">
-        ruid,
-      </if>
-      <if test="mtype != null">
-        mtype,
-      </if>
-      <if test="oid != null">
-        oid,
-      </if>
-      <if test="mtime != null">
-        mtime,
-      </if>
-      <if test="otype != null">
-        otype,
-      </if>
-      <if test="isread != null">
-        isread,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="mid != null">
-        #{mid,jdbcType=VARCHAR},
-      </if>
-      <if test="suid != null">
-        #{suid,jdbcType=VARCHAR},
-      </if>
-      <if test="ruid != null">
-        #{ruid,jdbcType=VARCHAR},
-      </if>
-      <if test="mtype != null">
-        #{mtype,jdbcType=INTEGER},
-      </if>
-      <if test="oid != null">
-        #{oid,jdbcType=VARCHAR},
-      </if>
-      <if test="mtime != null">
-        #{mtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="otype != null">
-        #{otype,jdbcType=INTEGER},
-      </if>
-      <if test="isread != null">
-        #{isread,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.mint.pojo.Message">
-    update tb_message
-    <set>
-      <if test="suid != null">
-        suid = #{suid,jdbcType=VARCHAR},
-      </if>
-      <if test="ruid != null">
-        ruid = #{ruid,jdbcType=VARCHAR},
-      </if>
-      <if test="mtype != null">
-        mtype = #{mtype,jdbcType=INTEGER},
-      </if>
-      <if test="oid != null">
-        oid = #{oid,jdbcType=VARCHAR},
-      </if>
-      <if test="mtime != null">
-        mtime = #{mtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="otype != null">
-        otype = #{otype,jdbcType=INTEGER},
-      </if>
-      <if test="isread != null">
-        isread = #{isread,jdbcType=INTEGER},
-      </if>
-    </set>
-    where mid = #{mid,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.mint.pojo.Message">
+    <insert id="insertSelective" parameterType="com.mint.pojo.Message">
+        insert into tb_message
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="mid != null">
+                mid,
+            </if>
+            <if test="suid != null">
+                suid,
+            </if>
+            <if test="ruid != null">
+                ruid,
+            </if>
+            <if test="mtype != null">
+                mtype,
+            </if>
+            <if test="oid != null">
+                oid,
+            </if>
+            <if test="mtime != null">
+                mtime,
+            </if>
+            <if test="otype != null">
+                otype,
+            </if>
+            <if test="isread != null">
+                isread,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="mid != null">
+                #{mid,jdbcType=VARCHAR},
+            </if>
+            <if test="suid != null">
+                #{suid,jdbcType=VARCHAR},
+            </if>
+            <if test="ruid != null">
+                #{ruid,jdbcType=VARCHAR},
+            </if>
+            <if test="mtype != null">
+                #{mtype,jdbcType=INTEGER},
+            </if>
+            <if test="oid != null">
+                #{oid,jdbcType=VARCHAR},
+            </if>
+            <if test="mtime != null">
+                #{mtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="otype != null">
+                #{otype,jdbcType=INTEGER},
+            </if>
+            <if test="isread != null">
+                #{isread,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.mint.pojo.Message">
+        update tb_message
+        <set>
+            <if test="suid != null">
+                suid = #{suid,jdbcType=VARCHAR},
+            </if>
+            <if test="ruid != null">
+                ruid = #{ruid,jdbcType=VARCHAR},
+            </if>
+            <if test="mtype != null">
+                mtype = #{mtype,jdbcType=INTEGER},
+            </if>
+            <if test="oid != null">
+                oid = #{oid,jdbcType=VARCHAR},
+            </if>
+            <if test="mtime != null">
+                mtime = #{mtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="otype != null">
+                otype = #{otype,jdbcType=INTEGER},
+            </if>
+            <if test="isread != null">
+                isread = #{isread,jdbcType=INTEGER},
+            </if>
+        </set>
+        where mid = #{mid,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.mint.pojo.Message">
     update tb_message
     set suid = #{suid,jdbcType=VARCHAR},
       ruid = #{ruid,jdbcType=VARCHAR},
@@ -127,11 +127,26 @@
       isread = #{isread,jdbcType=INTEGER}
     where mid = #{mid,jdbcType=VARCHAR}
   </update>
-  <select id="getUserMessage" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from tb_message
+    <select id="getUserMessage" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_message
+        where ruid = #{ruid,jdbcType=VARCHAR}
+        order by mtime desc
+    </select>
+    <update id="updateMessageRead" parameterType="java.lang.String">
+    update tb_message
+    set isread = 1
+    where mid = #{mid,jdbcType=VARCHAR}
+  </update>
+    <update id="clearAllMessage" parameterType="java.lang.String">
+    update tb_message
+    set isread = 1
     where ruid = #{ruid,jdbcType=VARCHAR}
-    order by mtime desc
-  </select>
+  </update>
+    <delete id="deleteUserReadMessage" parameterType="java.lang.String">
+    delete from tb_message
+    where ruid = #{ruid,jdbcType=VARCHAR}
+    and isread=1
+  </delete>
 </mapper>
