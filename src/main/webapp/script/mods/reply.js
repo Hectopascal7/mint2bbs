@@ -231,8 +231,8 @@ layui.define('fly', function (exports) {
                     if (data.status = 1) {
                         layer.msg(data.msg);
                         cp_reply.removeClass("praise-ok");
-                        cp_reply.attr("data-iid", data.data);
-                        cp_reply.attr("data-itype", 40);
+                        cp_reply.attr("data-iid", data.data.iid);
+                        cp_reply.attr("data-itype", data.data.itype);
                         cp_reply.removeAttr("data-pid");
                         cp_reply.attr("type", "praise");
                         cp_reply.find("em:first").text(Number(cp_reply.find("em:first").text()) - 1);
@@ -241,7 +241,7 @@ layui.define('fly', function (exports) {
                     }
                 },
                 error: function (data) {
-                    layer.msg("调取【取消点赞】服务失败");
+                    layer.msg("调用【取消点赞】服务失败");
                 }
             })
         }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 
 /**
  * @Program: mint2bbs
@@ -47,7 +48,7 @@ public class PraiseController {
      */
     @RequestMapping(value = "cancelPraise.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse cancelPraise(String pid) {
+    public ServerResponse<HashMap<String, String>> cancelPraise(String pid) {
         return iPraiseService.cancelPraise(pid);
     }
 }

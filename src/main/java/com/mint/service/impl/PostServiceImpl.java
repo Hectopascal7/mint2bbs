@@ -208,9 +208,7 @@ public class PostServiceImpl implements IPostService {
         map.put("sname", section.getSname());
         map.put("tid", post.getTid());
         map.put("sid", post.getSid());
-
         User u = (User) httpSession.getAttribute(Const.CURRENT_USER);
-
         String pid = praiseMapper.checkPraise(tid, u.getUid());
         if (StringUtils.isBlank(pid)) {
             map.put("praise", "0");

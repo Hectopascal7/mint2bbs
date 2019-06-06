@@ -2,7 +2,9 @@ package com.mint.service.impl;
 
 import com.mint.common.Const;
 import com.mint.common.ServerResponse;
+import com.mint.dao.PostMapper;
 import com.mint.dao.PraiseMapper;
+import com.mint.pojo.Post;
 import com.mint.pojo.Praise;
 import com.mint.pojo.User;
 import com.mint.service.IPraiseService;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.UUID;
 
 /**
@@ -24,6 +27,8 @@ public class PraiseServiceImpl implements IPraiseService {
 
     @Autowired
     PraiseMapper praiseMapper;
+    @Autowired
+    PostMapper postMapper;
 
     @Override
     public ServerResponse<String> praise(String iid, int itype, String isid, HttpSession session) {
@@ -41,11 +46,22 @@ public class PraiseServiceImpl implements IPraiseService {
     }
 
     @Override
-    public ServerResponse<String> cancelPraise(String pid) {
+    public ServerResponse<HashMap<String, String>> cancelPraise(String pid) {
         Praise praise = praiseMapper.selectByPrimaryKey(pid);
         int result = praiseMapper.deleteByPrimaryKey(pid);
         if (result == 1) {
-            return ServerResponse.createBySuccess("取消点赞成功！", praise.getIid());
+            HashMap<String, String> map = new HashMap<>();
+            if (praise.getItype() == Const.OPERATION_OBJECT_POST) {
+                Post post = postMapper.getReceiveUidByTid(praise.getIid());
+                map.put("isid", post.getSid());
+                map.put("itype", Const.OPERATION_OBJECT_POST.toString());
+            } else if (praise.getItype() == Const.OPERATION_OBJECT_GOOD) {
+                map.put("itype", Const.OPERATION_OBJECT_GOOD.toString());
+            } else {
+                map.put("itype", Const.OPERATION_OBJECT_REPLY.toString());
+            }
+            map.put("iid", praise.getIid());
+            return ServerResponse.createBySuccess("取消点赞成功！", map);
         } else {
             return ServerResponse.createByErrorMessage("取消点赞失败！");
         }

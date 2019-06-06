@@ -50,11 +50,22 @@ public class CollectionServiceImpl implements ICollectionService {
     }
 
     @Override
-    public ServerResponse<String> cancelCollect(String cid) {
+    public ServerResponse<HashMap<String, String>> cancelCollect(String cid) {
         Collection collection = collectionMapper.selectByPrimaryKey(cid);
         int result = collectionMapper.deleteByPrimaryKey(cid);
         if (result == 1) {
-            return ServerResponse.createBySuccess("取消收藏成功！", collection.getIid());
+            HashMap<String, String> map = new HashMap<>();
+            if (collection.getItype() == Const.OPERATION_OBJECT_POST) {
+                Post post = postMapper.getReceiveUidByTid(collection.getIid());
+                map.put("isid", post.getSid());
+                map.put("itype", Const.OPERATION_OBJECT_POST.toString());
+            } else if (collection.getItype() == Const.OPERATION_OBJECT_GOOD) {
+                map.put("itype", Const.OPERATION_OBJECT_GOOD.toString());
+            } else {
+                map.put("itype", Const.OPERATION_OBJECT_REPLY.toString());
+            }
+            map.put("iid", collection.getIid());
+            return ServerResponse.createBySuccess("取消收藏成功！", map);
         } else {
             return ServerResponse.createByErrorMessage("取消收藏失败！");
         }

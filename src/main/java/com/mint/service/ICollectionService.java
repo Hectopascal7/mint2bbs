@@ -10,7 +10,7 @@ public interface ICollectionService {
 
     ServerResponse<String> collect(String iid, int itype, String isid, HttpSession session);
 
-    ServerResponse cancelCollect(String pid);
+    ServerResponse<HashMap<String, String>> cancelCollect(String pid);
 
     ServerResponse<Integer> getMyCollectionCount(HttpSession session);
 

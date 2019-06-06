@@ -48,7 +48,7 @@ public class CollectionController {
      */
     @RequestMapping(value = "cancelCollect.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse cancelCollect(String cid) {
+    public ServerResponse<HashMap<String, String>> cancelCollect(String cid) {
         return iCollectionService.cancelCollect(cid);
     }
 
