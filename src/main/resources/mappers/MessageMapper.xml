@@ -149,4 +149,13 @@
     where ruid = #{ruid,jdbcType=VARCHAR}
     and isread=1
   </delete>
+    <select id="checkReport" resultType="java.lang.Integer">
+        select
+        count(*)
+        from tb_message
+        where suid = #{suid,jdbcType=VARCHAR}
+        and oid = #{oid,jdbcType=VARCHAR}
+        and otype = #{otype,jdbcType=INTEGER}
+        and mtype=9
+    </select>
 </mapper>

@@ -142,7 +142,8 @@
 
 <!--引入layui的JS文件-->
 <script src="../../../script/layui/layui.js"></script>
-<script src="../../../script/model/market_detail.js"></script>
+<script src="/script/model/market_detail.js"></script>
+<script src="/script/model/content.js"></script>
 
 <!--layui设置-->
 <script>
@@ -409,6 +410,16 @@
                     data-id="{{d.pid}}">取消点赞
             </button>
             {{# } }}
+            {{# if(d.report === '0'){ }}
+            <button class="layui-btn layui-btn-sm content-fn" type="report" data-oid="{{d.gid}}"
+                    data-mtype="9" data-otype="50">
+                举报<i class="layui-icon layui-icon-face-cry" style="font-size: 30px; color: black;"></i>
+            </button>
+            {{#} else {}}
+            <button class="layui-btn layui-btn-sm content-fn layui-btn-disabled" type="reportDisable">
+                已举报<i class="layui-icon layui-icon-face-cry" style="font-size: 30px; color: black;"></i>
+            </button>
+            {{# } }}
         </legend>
     </fieldset>
 </script>
@@ -472,17 +483,25 @@
         <!--            </div>-->
         <!--        </div>-->
         <div class="reply-op">
-              <span class="reply-praise" type="praise">
+            <div class="left-op">
+                {{# if(item.praise==="1"){ }}
+                <span class="reply-praise praise-ok" type="cancelPraise" data-pid="{{item.pid}}">
                 <i class="iconfont icon-praise"></i>
                 <em>{{item.pcount}}</em>
-              </span>
-
+            </span>
+                {{#}else {}}
+                <span class="reply-praise" type="praise" data-iid="{{item.rid}}" data-itype="40">
+                <i class="iconfont icon-praise"></i>
+                <em>{{item.pcount}}</em>
+            </span>
+                {{# } }}
+            </div>
             <div class="right-op">
-                <span class="reply-fn" data-type="report" type="report"
+                <span class="reply-fn" type="report" disabled
                       data-mtype="9" data-oid="{{item.rid}}" data-otype="40">
                     <i class="iconfont icon-close"></i>举报
                 </span>
-                <span type="reply" onclick="replyTo()">
+                <span type="reply">
                     <i class="iconfont icon-svgmoban53"></i>回复
                 </span>
                 <!-- <span class="jieda-accept" type="accept">采纳</span> -->

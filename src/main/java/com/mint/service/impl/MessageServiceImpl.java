@@ -56,6 +56,10 @@ public class MessageServiceImpl implements IMessageService {
                 map.put("part", "post");
                 map.put("sid", post.getSid());
                 map.put("tid", post.getTid());
+                if (Const.OPERATION_TYPE_REPORT == m.getMtype()) {
+                    map.put("uid", post.getUid());
+                    map.put("nickname", userMapper.getNicknameByUid(post.getUid()));
+                }
             } else if (Const.OPERATION_OBJECT_GOOD == m.getOtype()) {
                 map.put("otype", "商品");
                 map.put("part", "good");
@@ -63,6 +67,10 @@ public class MessageServiceImpl implements IMessageService {
                 map.put("gid", m.getOid());
                 Good good = goodMapper.selectByPrimaryKey(m.getOid());
                 map.put("title", good.getTitle());
+                if (Const.OPERATION_TYPE_REPORT == m.getMtype()) {
+                    map.put("uid", good.getUid());
+                    map.put("nickname", userMapper.getNicknameByUid(good.getUid()));
+                }
             } else if (Const.OPERATION_OBJECT_REPLY == m.getOtype()) {
                 map.put("otype", "回复");
                 Reply reply = replyMapper.selectByPrimaryKey(m.getOid());

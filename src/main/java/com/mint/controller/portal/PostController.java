@@ -132,8 +132,8 @@ public class PostController {
      */
     @RequestMapping(value = "getPostDetail.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<HashMap<String, String>> getPostDetail(String tid, String section) {
-        return iPostService.getPostDetail(tid, section);
+    public ServerResponse<HashMap<String, String>> getPostDetail(String tid, String section, HttpSession httpSession) {
+        return iPostService.getPostDetail(tid, section, httpSession);
     }
 
     /**

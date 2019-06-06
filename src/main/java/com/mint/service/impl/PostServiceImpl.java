@@ -34,7 +34,7 @@ public class PostServiceImpl implements IPostService {
     @Autowired
     private UserMapper userMapper;
     @Autowired
-    private NewsMapper newsMapper;
+    private MessageMapper messageMapper;
     @Autowired
     private AdviceMapper adviceMapper;
     @Autowired
@@ -187,7 +187,7 @@ public class PostServiceImpl implements IPostService {
      * @Return ServerResponse<HashMap < String, Object>>
      */
     @Override
-    public ServerResponse<HashMap<String, String>> getPostDetail(String tid, String sid) {
+    public ServerResponse<HashMap<String, String>> getPostDetail(String tid, String sid, HttpSession httpSession) {
         Section section = sectionMapper.selectByPrimaryKey(sid);
         String tb_name = section.getTbname();
         Post post = postMapper.getSectionPostDetail(tb_name, tid);
@@ -206,22 +206,34 @@ public class PostServiceImpl implements IPostService {
         map.put("point", user.getPoint().toString());
         map.put("role", user.getRole().toString());
         map.put("sname", section.getSname());
-        String pid = praiseMapper.checkPraise(tid, user.getUid());
         map.put("tid", post.getTid());
         map.put("sid", post.getSid());
+
+        User u = (User) httpSession.getAttribute(Const.CURRENT_USER);
+
+        String pid = praiseMapper.checkPraise(tid, u.getUid());
         if (StringUtils.isBlank(pid)) {
             map.put("praise", "0");
         } else {
             map.put("praise", "1");
             map.put("pid", pid);
         }
-        String cid = collectionMapper.checkCollection(tid, user.getUid());
+
+        String cid = collectionMapper.checkCollection(tid, u.getUid());
         if (StringUtils.isBlank(cid)) {
             map.put("collect", "0");
         } else {
             map.put("collect", "1");
             map.put("cid", cid);
         }
+
+        Integer count = messageMapper.checkReport(tid, Const.OPERATION_OBJECT_POST, u.getUid());
+        if (count > 0) {
+            map.put("report", "1");
+        } else {
+            map.put("report", "0");
+        }
+
         return ServerResponse.createBySuccess(map);
     }
 

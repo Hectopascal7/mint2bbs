@@ -66,7 +66,7 @@ public interface IPostService {
      * @Param section
      * @Return ServerResponse<HashMap < String, Object>>
      */
-    ServerResponse<HashMap<String, String>> getPostDetail(String tid, String section);
+    ServerResponse<HashMap<String, String>> getPostDetail(String tid, String section,HttpSession httpSession);
 
     /**
      * @Description 获取板块内帖子列表

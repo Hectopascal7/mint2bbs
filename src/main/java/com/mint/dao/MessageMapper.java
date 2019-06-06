@@ -25,4 +25,6 @@ public interface MessageMapper {
     Integer clearAllMessage(String ruid);
 
     Integer deleteUserReadMessage(String ruid);
+
+    Integer checkReport(@Param("oid") String oid, @Param("otype") Integer otype, @Param("suid") String suid);
 }

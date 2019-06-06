@@ -70,7 +70,7 @@ layui.define('fly', function (exports) {
         });
     };
 
-    //求解管理
+    // 右-恢复操作 举报
     gather.jieAdmin = {
         //删求解
         // del: function (div) {
@@ -119,7 +119,7 @@ layui.define('fly', function (exports) {
             var mtype = this.getAttribute("data-mtype");
             var otype = this.getAttribute("data-otype");
             var oid = this.getAttribute("data-oid");
-            var r_reply=$(this);
+            var r_reply = $(this);
             $.ajax({
                 type: 'post',
                 url: '/message/report.do',
@@ -131,14 +131,16 @@ layui.define('fly', function (exports) {
                 dataType: 'json',
                 async: false,
                 success: function (data) {
-                    layer.msg(data.msg,function () {
-                        r_reply.attr("disable");
-                    });
+                    layer.msg(data.msg);
+                    r_reply.attr("type", "reportDisable");
                 },
                 error: function (data) {
                     layer.msg("调用【举报】服务失败");
                 }
             })
+        },
+        reportDisable: function () {
+            layer.msg("已经反馈给管理员了，请勿重复举报。")
         }
 
     };
@@ -161,7 +163,7 @@ layui.define('fly', function (exports) {
     //     }
     // }();
 
-    //回复操作 点赞、举报
+    //左-回复操作 点赞、取消点赞
     reply.operation = {
         // zan: function (li) { //赞
         //     var othis = $(this), ok = othis.hasClass('praise-ok');
@@ -310,7 +312,7 @@ layui.define('fly', function (exports) {
 
     };
 
-    $('.reply-op span').on('click', function () {
+    $('.left-op span').on('click', function () {
         var othis = $(this), type = othis.attr('type');
         reply.operation[type].call(this, othis);
     });

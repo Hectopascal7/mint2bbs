@@ -2,10 +2,7 @@ package com.mint.service.impl;
 
 import com.mint.common.Const;
 import com.mint.common.ServerResponse;
-import com.mint.dao.CollectionMapper;
-import com.mint.dao.GoodMapper;
-import com.mint.dao.PraiseMapper;
-import com.mint.dao.UserMapper;
+import com.mint.dao.*;
 import com.mint.pojo.Good;
 import com.mint.pojo.GoodWithBLOBs;
 import com.mint.pojo.User;
@@ -35,6 +32,8 @@ public class GoodServiceImpl implements IGoodService {
     private PraiseMapper praiseMapper;
     @Autowired
     private CollectionMapper collectionMapper;
+    @Autowired
+    private MessageMapper messageMapper;
 
     @Override
     public ServerResponse uploadGoodPic(MultipartFile cover, HttpServletRequest httpServletRequest) {
@@ -142,8 +141,11 @@ public class GoodServiceImpl implements IGoodService {
             map.put("nickname", u.getNickname());
             map.put("role", u.getRole().toString());
             map.put("signature", u.getSignature());
+
             User currUser = (User) httpSession.getAttribute(Const.CURRENT_USER);
+
             String pid = praiseMapper.checkPraise(gid, currUser.getUid());
+
             if (StringUtils.isBlank(pid)) {
                 map.put("praise", "0");
             } else {
@@ -157,6 +159,14 @@ public class GoodServiceImpl implements IGoodService {
                 map.put("collect", "1");
                 map.put("cid", cid);
             }
+
+            Integer count = messageMapper.checkReport(gid, Const.OPERATION_OBJECT_GOOD, currUser.getUid());
+            if (count > 0) {
+                map.put("report", "1");
+            } else {
+                map.put("report", "0");
+            }
+
             return ServerResponse.createBySuccess(map);
         } else {
             return ServerResponse.createByErrorMessage("未找到该商品!");
