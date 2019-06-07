@@ -228,7 +228,7 @@
     <cite class="layui-hide-xs">{{ d.nickname }}</cite>
     {{#  if(d.role === 1){ }}
     <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：管理员"></i>
-    <i class="layui-badge fly-badge-vip layui-hide-xs" title="积分 {{d.point}}">Lv.3</i>
+    <i class="layui-badge fly-badge-vip layui-hide-xs" title="薄荷币 {{d.point}}">Lv.3</i>
     {{#  } }}
     <img src="{{d.profile}}">
 </script>
@@ -297,14 +297,14 @@
         <span class="layui-badge">崭新商品</span>
         {{# } }}
         <span class="layui-badge layui-bg-green">{{d.ndegree}}</span>
-        {{# if(d.issaled===1){ }}
+        {{# if(d.issaled==="1"){ }}
         <span class="layui-badge layui-bg-orange">已出售</span>
         {{#}else {}}
         <span class="layui-badge layui-bg-orange">在售中</span>
         {{# } }}
         <span class="fly-list-nums">
             <a href="#comment">
-                <i class="iconfont" title="回复">&#xe60c;</i> {{d.pcount}}
+                <i class="iconfont" title="回复">&#xe60c;</i> {{d.rcount}}
             </a>
             <i class="iconfont icon-praise" title="赞"></i> {{d.pcount}}
         </span>
@@ -355,7 +355,7 @@
         <table width="100%">
             <tr>
                 <td>
-                    {{# if(d.isused === 1){ }}
+                    {{# if(d.isused === "1"){ }}
                     ⭐ 商品类别：二手
                     {{#} else {}}
                     ⭐ 商品类别：崭新
@@ -373,7 +373,7 @@
             </tr>
             <tr>
                 <td>
-                    {{# if(d.isused === 1){ }}
+                    {{# if(d.isused === "1"){ }}
                     ⭐ 商品状态：已售出
                     {{#} else {}}
                     ⭐ 商品状态：在售中

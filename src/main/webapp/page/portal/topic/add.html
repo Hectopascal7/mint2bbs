@@ -217,7 +217,6 @@
         var layer = layui.layer;
         //监听提交
         form.on('submit(*)', function (data) {
-            alert(data.field.sid);
             section = data.field.sid;
             $.ajax({
                 type: 'post',
@@ -226,10 +225,14 @@
                 data: data.field,
                 async: false,
                 success: function (data) {
-                    layer.alert(data.msg, function () {
-                        // 发帖成功，返回对应板块
-                        location.href = "/page/portal/section/section.html?section=" + section;
-                    });
+                    if (data.status == 0) {
+                        layer.alert(data.msg, function () {
+                            // 发帖成功，返回对应板块
+                            location.href = "/page/portal/section/section.html?section=" + section;
+                        });
+                    } else {
+                        layer.msg(data.msg);
+                    }
                 },
                 error: function (data) {
                     layer.alert(data.msg);
@@ -261,7 +264,7 @@
     <cite class="layui-hide-xs">{{ d.nickname }}</cite>
     {{#  if(d.role === 1){ }}
     <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：管理员"></i>
-    <i class="layui-badge fly-badge-vip layui-hide-xs" title="积分 {{d.point}}">Lv.3</i>
+    <i class="layui-badge fly-badge-vip layui-hide-xs" title="薄荷币 {{d.point}}">{{d.point}}PT</i>
     {{#  } }}
     <img src="{{ d.profile }}">
 </script>

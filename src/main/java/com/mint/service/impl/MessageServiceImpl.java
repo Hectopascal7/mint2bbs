@@ -109,7 +109,7 @@ public class MessageServiceImpl implements IMessageService {
         User user = (User) httpSession.getAttribute(Const.CURRENT_USER);
         String suid = user.getUid();
 //        String ruid="";
-        Message message = new Message(mid, suid, "00001", mtype, oid, mtime, otype, 0);
+        Message message = new Message(mid, suid, "ec42e476-ec50-44b1-9d2d-ba98618113c6", mtype, oid, mtime, otype, 0);
         Integer result = messageMapper.insert(message);
         if (Const.OP_SUCCESS == result) {
             return ServerResponse.createBySuccessMessage("已经反馈给系统管理员，感谢您的监督！");

@@ -3,6 +3,7 @@ package com.mint.service.impl;
 import com.mint.common.Const;
 import com.mint.common.ServerResponse;
 import com.mint.dao.CountMapper;
+import com.mint.dao.OperationMapper;
 import com.mint.dao.ResidentMapper;
 import com.mint.dao.UserMapper;
 import com.mint.pojo.Count;
@@ -39,6 +40,8 @@ public class UserServiceImpl implements IUserService {
     private ResidentMapper residentMapper;
     @Autowired
     private CountMapper countMapper;
+    @Autowired
+    private OperationMapper operationMapper;
 
     /**
      * @Description 用户登录
@@ -86,42 +89,55 @@ public class UserServiceImpl implements IUserService {
         Resident resident = new Resident(uid, name, building, unit, floor, room, phone, idcnum);
         // 检查住户信息是否正确
         if (checkResident(resident)) {
-            // 住户信息正确，检查该住户是否已经注册
-            if (checkUidIfRegistered(uid)) {
-                return ServerResponse.createByErrorMessage("该用户已注册，注册失败！");
+            // 住户信息正确，检查该住户是否被管理员删除过
+            Integer banCount = operationMapper.checkUserIfDeleted(resident.getUid());
+            if (banCount != 0) {
+                // 住户被删除，无资格注册
+                return ServerResponse.createByErrorMessage("该用户已被移除，无法注册！");
             } else {
-                // 住户信息正确且未注册，检查登录id是否存在
-                int resultCount = userMapper.checkLoginid(loginid);
-                // 登录id不存在，可以进行注册
-                if (resultCount == 0) {
-                    String profile = "";
-                    // 默认头像
-                    if (1 == s) {
-                        profile = "/image/kantai.jpg";
-                    } else {
-                        profile = "/image/asuna.jpg";
-                    }
-                    User user = new User(uid, loginid, password, nickname, r, s, b, 0, jointime, 1, profile);
-                    // 将用户信息存入用户信息表
-                    System.out.println(user);
-                    int result = userMapper.insertSelective(user);
-                    // 存储成功，注册成功
-                    if (result == 1) {
-                        // 初始化用户贴子数、赞赏数等信息
-                        Count count = new Count(user.getUid(), 0, 0, 0, 0);
-                        countMapper.insert(count);
-                        // 所有操作完毕，执行成功
-                        return ServerResponse.createBySuccessMessage("注册成功！");
-                        // 存储失败，注册失败
-                    } else {
-                        return ServerResponse.createByErrorMessage("注册失败！");
-                    }
-                    // 登录id已存在，无法进行注册
+                // 住户未被删除，有注册资格，检查注册该住户是否已注册
+                if (checkUidIfRegistered(uid)) {
+                    // 已注册，无法再次注册
+                    return ServerResponse.createByErrorMessage("该用户已注册，注册失败！");
                 } else {
-                    return ServerResponse.createByErrorMessage("注册账号已存在，请重新输入。");
+                    // 未注册，检查登录id是否存在
+                    int resultCount = userMapper.checkLoginid(loginid);
+                    // 登录id不存在，可以进行注册
+                    if (resultCount == 0) {
+                        String profile = "";
+                        // 设置默认头像
+                        if (1 == s) {
+                            // 性别：男
+                            profile = "/image/asuna.jpg";
+                        } else {
+                            // 性别：女
+                            profile = "/image/kantai.jpg";
+                        }
+                        // 生成用户信息对象
+//                        User user = new User(uid, loginid, password, nickname, r, s, b, 0, jointime, 1, profile);
+                        User user = new User(uid, loginid, password, nickname, r, s, b, "未设置", 0, jointime, "未设置", "Ta还没填写个性签名呢~", 1, profile);
+                        // 将用户信息存入用户信息表
+                        System.out.println(user);
+                        int result = userMapper.insertSelective(user);
+                        // 存储成功，注册成功
+                        if (result == 1) {
+                            // 初始化用户贴子数、赞赏数等信息
+                            Count count = new Count(user.getUid(), 0, 0, 0, 0, 0);
+                            countMapper.insert(count);
+                            // 所有操作完毕，执行成功
+                            return ServerResponse.createBySuccessMessage("注册成功！");
+                        } else {
+                            // 存储失败，注册失败
+                            return ServerResponse.createByErrorMessage("注册失败！");
+                        }
+                    } else {
+                        // 登录id已存在，无法进行注册
+                        return ServerResponse.createByErrorMessage("注册账号已存在，请重新输入。");
+                    }
                 }
             }
         } else {
+            // 住户信息校验失败，无法注册
             return ServerResponse.createByErrorMessage("用户信息校验错误！");
         }
     }

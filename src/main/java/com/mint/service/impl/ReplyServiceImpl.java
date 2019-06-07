@@ -30,6 +30,8 @@ public class ReplyServiceImpl implements IReplyService {
     private GoodMapper goodMapper;
     @Autowired
     private PraiseMapper praiseMapper;
+    @Autowired
+    private CountMapper countMapper;
 
     @Override
     public ServerResponse<List<HashMap<String, String>>> getUserLatestReply(String uid) {
@@ -155,6 +157,8 @@ public class ReplyServiceImpl implements IReplyService {
             Integer otype = 0;
             if (!StringUtils.isBlank(sid)) {
                 Post post = postMapper.getReceiveUidByTid(tid);
+                Section section = sectionMapper.selectByPrimaryKey(post.getSid());
+                postMapper.updatePostCount(section.getTbname(), post.getTid(), "rcount", 1);
                 uid = post.getUid();
                 otype = 30;
             } else {
@@ -167,7 +171,13 @@ public class ReplyServiceImpl implements IReplyService {
             System.out.println(user);
             Message message = new Message(mid, user.getUid(), uid, Const.OPERATION_TYPE_REPLY, tid, rtime, otype, 0);
             messageMapper.insert(message);
-            return ServerResponse.createBySuccessMessage("回复成功！");
+            // 回复成功，回复用户薄荷币+1
+            userMapper.updateUserPoint(user.getUid(), 1);
+            // 回复成功，回复用户回复数+1
+            countMapper.updateUserCount(user.getUid(), "rcount", 1);
+            user.setPoint(user.getPoint() + 1);
+            httpSession.setAttribute(Const.CURRENT_USER, user);
+            return ServerResponse.createBySuccessMessage("回复成功！薄荷币+1.");
         } else {
             return ServerResponse.createByErrorMessage("回复失败！");
         }

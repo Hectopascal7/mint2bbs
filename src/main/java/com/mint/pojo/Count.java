@@ -11,12 +11,15 @@ public class Count {
 
     private Integer gcount;
 
-    public Count(String uid, Integer tcount, Integer rcount, Integer pcount, Integer gcount) {
+    private Integer ccount;
+
+    public Count(String uid, Integer tcount, Integer rcount, Integer pcount, Integer gcount, Integer ccount) {
         this.uid = uid;
         this.tcount = tcount;
         this.rcount = rcount;
         this.pcount = pcount;
         this.gcount = gcount;
+        this.ccount = ccount;
     }
 
     public Count() {
@@ -61,5 +64,13 @@ public class Count {
 
     public void setGcount(Integer gcount) {
         this.gcount = gcount;
+    }
+
+    public Integer getCcount() {
+        return ccount;
+    }
+
+    public void setCcount(Integer ccount) {
+        this.ccount = ccount;
     }
 }

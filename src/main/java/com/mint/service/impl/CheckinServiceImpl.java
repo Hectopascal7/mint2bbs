@@ -3,6 +3,7 @@ package com.mint.service.impl;
 import com.mint.common.Const;
 import com.mint.common.ServerResponse;
 import com.mint.dao.CheckinMapper;
+import com.mint.dao.UserMapper;
 import com.mint.pojo.Checkin;
 import com.mint.pojo.User;
 import com.mint.service.ICheckinService;
@@ -20,6 +21,8 @@ public class CheckinServiceImpl implements ICheckinService {
 
     @Autowired
     private CheckinMapper checkinMapper;
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     public ServerResponse checkin(HttpSession httpSession) {
@@ -53,7 +56,15 @@ public class CheckinServiceImpl implements ICheckinService {
             } else {
                 getPoint = 30;
             }
-            return ServerResponse.createBySuccessMessage("连续签到" + latestDays + "天，获得" + getPoint + "积分。");
+            Integer updatePointResult = userMapper.updateUserPoint(uid, getPoint);
+            if (Const.OP_SUCCESS == updatePointResult) {
+                // 更新用户缓存信息
+                user.setPoint(user.getPoint() + getPoint);
+                httpSession.setAttribute(Const.CURRENT_USER, user);
+                return ServerResponse.createBySuccessMessage("连续签到" + latestDays + "天，获得" + getPoint + "薄荷币。");
+            } else {
+                return ServerResponse.createByErrorMessage("签到成功，【获得积分】异常，请联系管理员。");
+            }
         } else {
             return ServerResponse.createByErrorMessage("签到失败！");
         }

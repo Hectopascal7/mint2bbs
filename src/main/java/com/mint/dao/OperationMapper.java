@@ -16,4 +16,6 @@ public interface OperationMapper {
     int updateByPrimaryKeyWithBLOBs(Operation record);
 
     int updateByPrimaryKey(Operation record);
+
+    Integer checkUserIfDeleted(String uid);
 }

@@ -50,4 +50,6 @@ public interface PostMapper {
     Post getSectionPostDetail(@Param("tb_name") String tb_name, @Param("tid") String tid);
 
     Integer post(@Param("tb_name") String tb_name, @Param("tid") String tid, @Param("uid") String uid, @Param("sid") String sid, @Param("title") String title, @Param("ptime") Date ptime, @Param("content") String content);
+
+    Integer updatePostCount(@Param("tb_name") String tb_name, @Param("tid") String tid, @Param("countName") String countName, @Param("getCount") Integer getCount);
 }

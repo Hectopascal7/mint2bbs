@@ -34,6 +34,10 @@ public class GoodServiceImpl implements IGoodService {
     private CollectionMapper collectionMapper;
     @Autowired
     private MessageMapper messageMapper;
+    @Autowired
+    private CountMapper countMapper;
+    @Autowired
+    private ReplyMapper replyMapper;
 
     @Override
     public ServerResponse uploadGoodPic(MultipartFile cover, HttpServletRequest httpServletRequest) {
@@ -45,24 +49,32 @@ public class GoodServiceImpl implements IGoodService {
             cover.transferTo(new File(uploadURL));
         } catch (IOException e) {
             e.printStackTrace();
-            return ServerResponse.createByErrorMessage("封面上传成功！");
+            return ServerResponse.createByErrorMessage("图片上传成功！");
         }
-        return ServerResponse.createBySuccess("封面上传成功！", "/image/good/" + newFilename);
+        return ServerResponse.createBySuccess("图片上传成功！", "/image/good/" + newFilename);
     }
 
     @Override
     public ServerResponse publishAGood(String title, String isused, String ndegree, String price, String content, String cover, String picture, HttpSession httpSession) {
         String gid = UUID.randomUUID().toString();
         Integer used = Integer.parseInt(isused);
-        Integer degree = Integer.parseInt(ndegree);
+        if (Integer.parseInt(isused) == 0) {
+            ndegree = "崭新";
+        }
         BigDecimal goodPrice = new BigDecimal(price);
         Date ptime = new Date(System.currentTimeMillis());
         User user = (User) httpSession.getAttribute(Const.CURRENT_USER);
         String uid = user.getUid();
         GoodWithBLOBs good = new GoodWithBLOBs(gid, title, used, ndegree, goodPrice, ptime, 0, uid, 0, content, cover, picture);
-        int result = goodMapper.insert(good);
+        Integer result = goodMapper.insert(good);
         System.out.println("发布结果：" + result);
-        return ServerResponse.createBySuccessMessage("发布成功！");
+        if (Const.OP_SUCCESS == result) {
+            countMapper.updateUserCount(uid, "gcount", 1);
+            userMapper.updateUserPoint(uid, 10);
+            return ServerResponse.createBySuccessMessage("发布成功！获得10个薄荷币。");
+        } else {
+            return ServerResponse.createByErrorMessage("发布商品失败！");
+        }
     }
 
     @Override
@@ -70,6 +82,7 @@ public class GoodServiceImpl implements IGoodService {
         Integer used = Integer.parseInt(isused);
         List<GoodWithBLOBs> list = goodMapper.getGoodListWithPage(used, order, page * 8);
         List<HashMap<String, String>> goodList = new ArrayList<>();
+
         for (GoodWithBLOBs good : list) {
             HashMap<String, String> map = new HashMap<>();
             User user = userMapper.selectByPrimaryKey(good.getUid());
@@ -141,9 +154,8 @@ public class GoodServiceImpl implements IGoodService {
             map.put("nickname", u.getNickname());
             map.put("role", u.getRole().toString());
             map.put("signature", u.getSignature());
-
+            map.put("rcount", replyMapper.getReplyCount(good.getGid()).toString());
             User currUser = (User) httpSession.getAttribute(Const.CURRENT_USER);
-
             String pid = praiseMapper.checkPraise(gid, currUser.getUid());
 
             if (StringUtils.isBlank(pid)) {

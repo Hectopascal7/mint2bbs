@@ -31,4 +31,6 @@ public interface GoodMapper {
     Integer setGoodIsSaled(String gid);
 
     List<Good> getHotGood();
+
+    Integer updateGoodPcount(@Param("gid")String gid,@Param("getCount")Integer getCount);
 }

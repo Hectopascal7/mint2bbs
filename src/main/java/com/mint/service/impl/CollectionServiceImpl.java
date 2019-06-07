@@ -2,10 +2,7 @@ package com.mint.service.impl;
 
 import com.mint.common.Const;
 import com.mint.common.ServerResponse;
-import com.mint.dao.CollectionMapper;
-import com.mint.dao.GoodMapper;
-import com.mint.dao.PostMapper;
-import com.mint.dao.SectionMapper;
+import com.mint.dao.*;
 import com.mint.pojo.*;
 import com.mint.pojo.Collection;
 import com.mint.service.ICollectionService;
@@ -34,6 +31,10 @@ public class CollectionServiceImpl implements ICollectionService {
     private PostMapper postMapper;
     @Autowired
     private SectionMapper sectionMapper;
+    @Autowired
+    private CountMapper countMapper;
+    @Autowired
+    private ReplyMapper replyMapper;
 
     @Override
     public ServerResponse<String> collect(String iid, int itype, String isid, HttpSession session) {
@@ -41,8 +42,19 @@ public class CollectionServiceImpl implements ICollectionService {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         String cid = UUID.randomUUID().toString();
         Collection collection = new Collection(cid, iid, itype, isid, user.getUid(), new Date(System.currentTimeMillis()));
-        int result = collectionMapper.insert(collection);
+        Integer result = collectionMapper.insert(collection);
         if (result == 1) {
+            if (Const.OPERATION_OBJECT_GOOD == itype) {
+                Good good = goodMapper.selectByPrimaryKey(iid);
+                countMapper.updateUserCount(good.getUid(), "ccount", 1);
+            } else if (Const.OPERATION_OBJECT_REPLY == itype) {
+                Reply reply = replyMapper.selectByPrimaryKey(iid);
+                countMapper.updateUserCount(reply.getUid(), "ccount", 1);
+            } else {
+                Section section = sectionMapper.selectByPrimaryKey(isid);
+                Post post = postMapper.getPostByTid(iid, section.getTbname());
+                countMapper.updateUserCount(post.getUid(), "ccount", 1);
+            }
             return ServerResponse.createBySuccess("收藏成功！", cid);
         } else {
             return ServerResponse.createByErrorMessage("收藏失败！");
@@ -59,9 +71,14 @@ public class CollectionServiceImpl implements ICollectionService {
                 Post post = postMapper.getReceiveUidByTid(collection.getIid());
                 map.put("isid", post.getSid());
                 map.put("itype", Const.OPERATION_OBJECT_POST.toString());
+                countMapper.updateUserCount(post.getUid(), "ccount", -1);
             } else if (collection.getItype() == Const.OPERATION_OBJECT_GOOD) {
+                Good good = goodMapper.selectByPrimaryKey(collection.getIid());
+                countMapper.updateUserCount(good.getUid(), "ccount", -1);
                 map.put("itype", Const.OPERATION_OBJECT_GOOD.toString());
             } else {
+                Reply reply = replyMapper.selectByPrimaryKey(collection.getIid());
+                countMapper.updateUserCount(reply.getUid(), "ccount", -1);
                 map.put("itype", Const.OPERATION_OBJECT_REPLY.toString());
             }
             map.put("iid", collection.getIid());

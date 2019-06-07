@@ -106,7 +106,7 @@
         <cite>{{ d.nickname }}</cite>
         {{# if(d.role === 1){ }}
         <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：管理员"></i>
-        <i class="layui-badge fly-badge-vip layui-hide-xs" title="积分 {{d.point}}">Lv.3</i>
+        <i class="layui-badge fly-badge-vip layui-hide-xs" title="薄荷币 {{d.point}}">Lv.3</i>
         {{# } }}
         <img src="{{d.profile}}">
     </a>
@@ -225,7 +225,7 @@
             <p><a class="fly-case-nums fly-case-active" href="javascript:;"
                   style=" padding:0 0px; color: #01AAED;">{{item.ptime}}</a></p>
             {{# if(item.issaled === '1'){ }}
-            <!--            <button class="layui-btn layui-btn-primary fly-case-active" data-type="praise">已出售</button>-->
+            <button class="layui-btn layui-btn-primary fly-case-active" data-type="praise">已出售</button>
             {{#} else {}}
             <button class="layui-btn" data-type="praise">{{item.price}}元</button>
             {{# } }}

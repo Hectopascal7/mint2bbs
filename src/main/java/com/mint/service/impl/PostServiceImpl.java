@@ -36,7 +36,7 @@ public class PostServiceImpl implements IPostService {
     @Autowired
     private MessageMapper messageMapper;
     @Autowired
-    private AdviceMapper adviceMapper;
+    private CountMapper countMapper;
     @Autowired
     private CollectionMapper collectionMapper;
     @Autowired
@@ -50,21 +50,40 @@ public class PostServiceImpl implements IPostService {
      * @param sid
      * @param title
      * @param content
-     * @param session
+     * @param httpSession
      * @Description 发帖
      * @Return ServerResponse<User>
      */
     @Override
-    public ServerResponse<String> post(String sid, String title, String content, HttpSession session) {
+    public ServerResponse<String> post(String sid, String title, String content, HttpSession httpSession) {
         String tid = UUID.randomUUID().toString();
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        User user = (User) httpSession.getAttribute(Const.CURRENT_USER);
         String uid = user.getUid();
         Section section = sectionMapper.selectByPrimaryKey(sid);
+        // 阻止非管理员在【社区公告】版块发帖
+        if ("社区公告".equals(section.getSname()) && user.getRole() == Const.Role.ROLE_USER) {
+            return ServerResponse.createByErrorMessage("抱歉，您暂无权限在【社区公告】板块发帖。");
+        }
         String tb_name = section.getTbname();
         Date ptime = new Date(System.currentTimeMillis());
         Integer result = postMapper.post(tb_name, tid, uid, sid, title, ptime, content);
         if (result == 1) {
-            return ServerResponse.createBySuccessMessage("发帖成功！");
+            // 发帖成功，用户获得5积分。
+            Integer updatePointResult = userMapper.updateUserPoint(uid, 5);
+            if (Const.OP_SUCCESS == updatePointResult) {
+                // 更新帖子数
+                Integer updateTcountResult = countMapper.updateUserCount(uid, "tcount", 1);
+                if (Const.OP_SUCCESS == updateTcountResult) {
+                    // 更新缓存信息
+                    user.setPoint(user.getPoint() + 5);
+                    httpSession.setAttribute(Const.CURRENT_USER, user);
+                    return ServerResponse.createBySuccessMessage("发帖成功！薄荷币+5.");
+                } else {
+                    return ServerResponse.createByErrorMessage("发帖成功！【帖子数增加】异常，请联系管理员。");
+                }
+            } else {
+                return ServerResponse.createByErrorMessage("发帖成功！【积分获取】异常，请联系管理员。");
+            }
         } else {
             return ServerResponse.createByErrorMessage("发帖失败！");
         }
@@ -198,7 +217,7 @@ public class PostServiceImpl implements IPostService {
         map.put("isbest", post.getIsbest().toString());
         map.put("issticky", post.getIssticky().toString());
         map.put("rcount", post.getRcount().toString());
-        map.put("acount", post.getAcount().toString());
+
         map.put("uid", user.getUid());
         map.put("nickname", user.getNickname());
         map.put("profile", user.getProfile());
@@ -231,6 +250,10 @@ public class PostServiceImpl implements IPostService {
         } else {
             map.put("report", "0");
         }
+
+        postMapper.updatePostCount(section.getTbname(), tid, "acount", +1);
+        Integer nowCount = (post.getAcount() + 1);
+        map.put("acount", nowCount.toString());
 
         return ServerResponse.createBySuccess(map);
     }

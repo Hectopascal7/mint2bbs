@@ -244,4 +244,9 @@
         order by pcount desc
         limit 15
     </select>
+    <update id="updateGoodPcount">
+    update tb_good
+    set pcount = pcount+#{getCount}
+    where gid = #{gid,jdbcType=VARCHAR}
+  </update>
 </mapper>

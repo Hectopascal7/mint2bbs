@@ -41,9 +41,13 @@ public class Const {
     public static final Integer OPERATION_OBJECT_WEIBO = 60;
     public static final Integer OPERATION_OBJECT_LICENSE = 70;
 
+    // 操作对象常量
+    public static final Integer USER_SEX_MALE = 1;
+    public static final Integer USER_SEX_FEMALE = 2;
+
 
     public interface Role {
-        int ROLE_CUSTOMER = 0; //普通用户
+        int ROLE_USER = 0; //普通用户
         int ROLE_ADMIN = 1;//管理员
     }
 

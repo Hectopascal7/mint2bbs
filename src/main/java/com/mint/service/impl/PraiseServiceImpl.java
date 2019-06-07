@@ -2,11 +2,8 @@ package com.mint.service.impl;
 
 import com.mint.common.Const;
 import com.mint.common.ServerResponse;
-import com.mint.dao.PostMapper;
-import com.mint.dao.PraiseMapper;
-import com.mint.pojo.Post;
-import com.mint.pojo.Praise;
-import com.mint.pojo.User;
+import com.mint.dao.*;
+import com.mint.pojo.*;
 import com.mint.service.IPraiseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,9 +23,17 @@ import java.util.UUID;
 public class PraiseServiceImpl implements IPraiseService {
 
     @Autowired
-    PraiseMapper praiseMapper;
+    private PraiseMapper praiseMapper;
     @Autowired
-    PostMapper postMapper;
+    private PostMapper postMapper;
+    @Autowired
+    private CountMapper countMapper;
+    @Autowired
+    private GoodMapper goodMapper;
+    @Autowired
+    private ReplyMapper replyMapper;
+    @Autowired
+    private SectionMapper sectionMapper;
 
     @Override
     public ServerResponse<String> praise(String iid, int itype, String isid, HttpSession session) {
@@ -39,6 +44,22 @@ public class PraiseServiceImpl implements IPraiseService {
         Praise praise = new Praise(pid, iid, itype, isid, user.getUid(), ptime);
         int result = praiseMapper.insert(praise);
         if (result == 1) {
+            String p_uid = "";
+            if (Const.OPERATION_OBJECT_GOOD == itype) {
+                Good good = goodMapper.selectByPrimaryKey(iid);
+                goodMapper.updateGoodPcount(iid, 1);
+                p_uid = good.getUid();
+            } else if (Const.OPERATION_OBJECT_REPLY == itype) {
+                Reply reply = replyMapper.selectByPrimaryKey(iid);
+                replyMapper.updateReplyPcount(iid, 1);
+                p_uid = reply.getUid();
+            } else {
+                Section section = sectionMapper.selectByPrimaryKey(isid);
+                Post post = postMapper.getPostByTid(iid, section.getTbname());
+                p_uid = post.getUid();
+                postMapper.updatePostCount(section.getTbname(), iid, "pcount", 1);
+            }
+            countMapper.updateUserCount(p_uid, "pcount", 1);
             return ServerResponse.createBySuccess("点赞成功！", pid);
         } else {
             return ServerResponse.createByError();
@@ -53,11 +74,20 @@ public class PraiseServiceImpl implements IPraiseService {
             HashMap<String, String> map = new HashMap<>();
             if (praise.getItype() == Const.OPERATION_OBJECT_POST) {
                 Post post = postMapper.getReceiveUidByTid(praise.getIid());
+                Section section = sectionMapper.selectByPrimaryKey(post.getSid());
+                postMapper.updatePostCount(section.getTbname(), post.getTid(), "pcount", -1);
+                countMapper.updateUserCount(post.getUid(), "pcount", -1);
                 map.put("isid", post.getSid());
                 map.put("itype", Const.OPERATION_OBJECT_POST.toString());
             } else if (praise.getItype() == Const.OPERATION_OBJECT_GOOD) {
+                goodMapper.updateGoodPcount(praise.getIid(), -1);
+                Good good = goodMapper.selectByPrimaryKey(praise.getIid());
+                countMapper.updateUserCount(good.getUid(), "pcount", -1);
                 map.put("itype", Const.OPERATION_OBJECT_GOOD.toString());
             } else {
+                Reply reply = replyMapper.selectByPrimaryKey(praise.getIid());
+                replyMapper.updateReplyPcount(praise.getIid(), -1);
+                countMapper.updateUserCount(reply.getUid(), "pcount", -1);
                 map.put("itype", Const.OPERATION_OBJECT_REPLY.toString());
             }
             map.put("iid", praise.getIid());

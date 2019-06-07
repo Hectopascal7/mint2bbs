@@ -336,4 +336,9 @@
         set profile=#{profile}
         where uid = #{uid,jdbcType=VARCHAR}
     </update>
+    <update id="updateUserPoint">
+        update tb_user
+        set point=point+#{getPoint,jdbcType=INTEGER}
+        where uid = #{uid,jdbcType=VARCHAR}
+    </update>
 </mapper>

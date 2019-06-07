@@ -182,7 +182,7 @@
     <cite class="layui-hide-xs">{{ d.nickname }}</cite>
     {{#  if(d.role === 1){ }}
     <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：管理员"></i>
-    <i class="layui-badge fly-badge-vip layui-hide-xs" title="积分 {{d.point}}">{{d.point}}PT</i>
+    <i class="layui-badge fly-badge-vip layui-hide-xs" title="薄荷币 {{d.point}}">{{d.point}}PT</i>
     {{#  } }}
     <img src="{{d.profile}}">
 </script>
@@ -191,16 +191,12 @@
 <script id="m_guide_bar" type="text/html">
     <ul class="layui-clear">
         {{# layui.each(d, function(index, item){ }}
-        {{# if(item.sid === section && section==='index'){ }}
-        <li class="layui-hide-xs layui-this">
-            <a href="/index.html">{{item.sname}}</a>
-        </li>
-        {{#} else if(item.sid === 'index'){}}
+        {{# if(item.sname === '首页'){ }}
         <li class="layui-hide-xs">
             <a href="/index.html">{{item.sname}}</a>
         </li>
         {{#} else if(item.sid === section){}}
-        <li class="layui-hide-xs layui-this">
+        <li class=" layui-this">
             <a href="/page/portal/section/section.html?section={{item.sid}}">{{item.sname}}</a>
         </li>
         {{#} else {}}
@@ -209,9 +205,10 @@
         {{# }); }}
         <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li>
         <!--用户登入后显示-->
-        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="user/index.html">我的贴子</a></li>
         <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a
-                href="user/index.html#collection">收藏</a>
+                href="/page/portal/user/post.html">我的贴子</a></li>
+        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a
+                href="/page/portal/user/post.html#collection">收藏</a>
         </li>
     </ul>
     <div class="fly-column-right layui-hide-xs">
@@ -220,10 +217,10 @@
             </span>
         <a href="/page/portal/topic/add.html?section={{section}}" class="layui-btn">发表新帖</a>
     </div>
-    <!--<div class="layui-hide-sm layui-show-xs-block"-->
-    <!--style="margin-top: -10px; padding-bottom: 10px; text-align: center;">-->
-    <!--<a href="jie/add.html" class="layui-btn">发表新帖</a>-->
-    <!--</div>-->
+    <div class="layui-hide-sm layui-show-xs-block"
+         style="margin-top: -10px; padding-bottom: 10px; text-align: center;">
+        <a href="/page/portal/topic/add.html?section={{section}}" class="layui-btn">发表新帖</a>
+    </div>
 </script>
 
 <!--热门帖子模块模板-->

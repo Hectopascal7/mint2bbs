@@ -32,24 +32,18 @@ public class CountServiceImpl implements ICountService {
      * @Return ServerResponse<String>
      */
     @Override
-    public  ServerResponse<List<HashMap<String, String>>> getActiveUser() {
+    public ServerResponse<List<HashMap<String, String>>> getActiveUser() {
         List<Count> list = countMapper.getActiveUser();
-        List<HashMap<String, String>> rlist=new ArrayList<>();
-        for(int i=0;i<list.size();i++){
-            Count count=list.get(i);
-            int tcount=count.getTcount()+count.getPcount()+count.getRcount();
-
-
-            User user=userMapper.selectByPrimaryKey(count.getUid());
-
-//            String nickname=userMapper.getNicknameByUid(count.getUid());
-            // 获取用户头像
-//            String profile=userMapper.getProfileByUid(count.getUid());
-
-            HashMap<String,String> map=new HashMap<>();
-            map.put("count",String.valueOf(tcount));
-            map.put("nickname",user.getNickname());
-            map.put("profile",user.getProfile());
+        List<HashMap<String, String>> rlist = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            Count count = list.get(i);
+            int tcount = count.getTcount() + count.getPcount() + count.getRcount();
+            User user = userMapper.selectByPrimaryKey(count.getUid());
+            HashMap<String, String> map = new HashMap<>();
+            map.put("uid", user.getUid());
+            map.put("count", String.valueOf(tcount));
+            map.put("nickname", user.getNickname());
+            map.put("profile", user.getProfile());
             rlist.add(map);
         }
         return ServerResponse.createBySuccess(rlist);

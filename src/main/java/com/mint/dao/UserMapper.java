@@ -39,4 +39,7 @@ public interface UserMapper {
     Integer updateUserInfo(@Param("uid") String uid, @Param("nickname") String nickname, @Param("email") String email, @Param("license") String license, @Param("signature") String signature);
 
     Integer updateUserProfile(@Param("profile") String profile, @Param("uid") String uid);
+
+    // 更新用户积分
+    Integer updateUserPoint(@Param("uid") String uid, @Param("getPoint") Integer getPoint);
 }

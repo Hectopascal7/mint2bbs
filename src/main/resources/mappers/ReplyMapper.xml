@@ -181,4 +181,15 @@
         where uid=#{uid}
         order by rtime desc
     </select>
+    <update id="updateReplyPcount">
+    update tb_reply
+    set  pcount = pcount+#{getCount}
+    where rid = #{rid,jdbcType=VARCHAR}
+  </update>
+    <select id="getReplyCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from tb_reply
+        where tid=#{tid}
+    </select>
 </mapper>

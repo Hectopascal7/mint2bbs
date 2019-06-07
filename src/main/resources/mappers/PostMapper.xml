@@ -712,4 +712,10 @@
         ) e
         where tid=#{tid}
     </select>
+
+    <update id="updatePostCount">
+    update ${tb_name}
+    set ${countName} = ${countName}+#{getCount}
+    where tid = #{tid,jdbcType=VARCHAR}
+  </update>
 </mapper>

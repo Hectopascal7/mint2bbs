@@ -68,7 +68,8 @@
         {{# if(d.length===0){ }}
         <ul class="jie-row">
             <!-- 无数据时 -->
-            <div class="fly-none" style="min-height: 50px; padding:30px 0; height:auto;"><i style="font-size:14px;">Ta还没有发表任何帖子呢...</i>
+            <div class="fly-none" style="min-height: 50px; padding:30px 0; height:auto;">
+                <i style="font-size:14px;">Ta还没有发表任何帖子呢...</i>
             </div>
         </ul>
         {{#} else {}}
@@ -129,30 +130,22 @@
         <h3 class="fly-panel-title">Ta 最近的回复</h3>
         {{# if(d.length===0){ }}
         <!-- 无数据时 -->
-        <div class="fly-none" style="min-height: 50px; padding:30px 0; height:auto;">
-            <span>Ta还没有回复任何帖子</span>
-        </div>
+        <ul class="jie-row">
+            <div class="fly-none" style="min-height: 50px; padding:30px 0; height:auto;">
+                <!--            <span>Ta还没有回复任何帖子</span>-->
+                <i style="font-size:14px;">Ta还没有发表任何回复呢...</i>
+            </div>
+        </ul>
         {{#} else {}}
         <ul class="home-jieda">
             {{# layui.each(d, function(index, item){ }}
-            {{# if(item.type==="post"){ }}
             <li>
                 <p>
                     <span>{{item.ptime}}</span>
-                    在<a href="/page/portal/topic/detail.html?post={{item.tid}}&section={{item.sid}}"
-                        target="_blank">【帖】{{item.title}}</a>中回答：
+                    在<a href="/page/portal/topic/detail.html?post={{item.tid}}&section={{item.sid}}" target="_blank">{{item.title}}</a>中回答：
                 </p>
                 <div class="home-dacontent">{{item.content}}</div>
             </li>
-            {{#} else {}}
-            <li>
-                <p>
-                    <span>{{item.ptime}}</span>
-                    在<a href="/page/portal/market/detail.html?gid={{item.gid}}" target="_blank">【商】{{item.title}}</a>中回答：
-                </p>
-                <div class="home-dacontent">{{item.content}}</div>
-            </li>
-            {{# } }}
             {{# }); }}
             <div style="text-align: center">
                 <div class="laypage-main">
@@ -176,28 +169,17 @@
         {{#} else {}}
         <ul class="home-jieda">
             {{# layui.each(d, function(index, item){ }}
-            {{# if(item.type==="post"){ }}
             <li>
                 <p>
                     <span>{{item.ptime}}</span>
-                    在<a href="/page/portal/topic/detail.html?post={{item.tid}}&section={{item.sid}}"
-                        target="_blank">【帖】{{item.title}}</a>中回答：
+                    在<a href="/page/portal/topic/detail.html?post={{item.tid}}&section={{item.sid}}" target="_blank">{{item.title}}</a>中回答：
                 </p>
                 <div class="home-dacontent">{{item.content}}</div>
             </li>
-            {{#} else {}}
-            <li>
-                <p>
-                    <span>{{item.ptime}}</span>
-                    在<a href="/page/portal/market/detail.html?gid={{item.gid}}" target="_blank">【商】{{item.title}}</a>中回答：
-                </p>
-                <div class="home-dacontent">{{item.content}}</div>
-            </li>
-            {{# } }}
             {{# }); }}
             <div style="text-align: center">
                 <div class="laypage-main">
-                    <a class="laypage-next" href="javascript:getHomeMoreReply()">查看全部</a>
+                    <a class="laypage-next" href="javascript:getHomePartReply()">收起...</a>
                 </div>
             </div>
         </ul>
@@ -211,7 +193,7 @@
         <cite>{{ d.nickname }}</cite>
         {{# if(d.role === 1){ }}
         <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：管理员"></i>
-        <i class="layui-badge fly-badge-vip layui-hide-xs" title="积分 {{d.point}}">Lv.3</i>
+        <i class="layui-badge fly-badge-vip layui-hide-xs" title="薄荷币 {{d.point}}">{{d.point}}PT</i>
         {{# } }}
         <img src="{{d.profile}}">
     </a>
@@ -237,7 +219,7 @@
     <i class="iconfont icon-renzheng" title="薄荷社区官方认证"></i>
     <h1>
         {{ d.nickname }}
-        {{# if(d.sex === 0){ }}
+        {{# if(d.sex === 1){ }}
         <i class="iconfont icon-nan"></i>
         {{#} else {}}
         <i class="iconfont icon-nv"></i>

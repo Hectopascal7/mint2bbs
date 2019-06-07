@@ -1,6 +1,7 @@
 package com.mint.dao;
 
 import com.mint.pojo.Count;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -22,4 +23,7 @@ public interface CountMapper {
      * @Return ServerResponse<String>
      */
     List<Count> getActiveUser();
+
+    Integer updateUserCount(@Param("uid") String uid, @Param("countName") String countName,@Param("getCount")Integer getCount);
+
 }
