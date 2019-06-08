@@ -172,4 +172,17 @@ public class UserController {
         return iUserService.updateUserProfile(profile, httpSession);
     }
 
+    /**
+     * @Description 用户注册
+     * @Param user
+     * @Param resident
+     * @Param session
+     * @Return ServerResponse<String>
+     */
+    @RequestMapping(value = "getUidByNickname.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<String> getUidByNickname(String nickname) {
+        return iUserService.getUidByNickname(nickname);
+    }
+
 }

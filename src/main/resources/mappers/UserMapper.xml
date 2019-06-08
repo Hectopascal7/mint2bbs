@@ -341,4 +341,10 @@
         set point=point+#{getPoint,jdbcType=INTEGER}
         where uid = #{uid,jdbcType=VARCHAR}
     </update>
+    <select id="getUidByNickname" resultType="java.lang.String" parameterType="string">
+        select uid
+        from tb_user
+        where
+        nickname = #{nickname}
+    </select>
 </mapper>

@@ -15,7 +15,7 @@ layui.define('fly', function (exports) {
 
     var gather = {}, dom = {
         jieda: $('#jieda')
-        , content: $('#L_content')
+        , content: $('#content')
         , jiedaCount: $('#jiedaCount')
     };
 
@@ -115,6 +115,15 @@ layui.define('fly', function (exports) {
         //         }
         //     });
         // }
+        reply: function (li) { //回复
+            var val = dom.content.val();
+            var aite = '@' + li.find('.fly-detail-user cite').text().replace(/\s/g, '');
+            var rid = li.find('a').data("id");
+            $("#rrid").val(rid);
+            dom.content.focus()
+            if (val.indexOf(aite) !== -1) return;
+            dom.content.val(aite + ' ' + val);
+        },
         report: function () {
             var mtype = this.getAttribute("data-mtype");
             var otype = this.getAttribute("data-otype");
@@ -138,16 +147,22 @@ layui.define('fly', function (exports) {
                     layer.msg("调用【举报】服务失败");
                 }
             })
-        },
+        }
+        ,
         reportDisable: function () {
             layer.msg("已经反馈给管理员了，请勿重复举报。")
         }
 
-    };
+    }
+    ;
 
     $('body').on('click', '.right-op span', function () {
         var othis = $(this), type = othis.attr('type');
-        gather.jieAdmin[type] && gather.jieAdmin[type].call(this, othis.parent());
+        if (type == "reply") {
+            gather.jieAdmin[type] && gather.jieAdmin[type].call(this, othis.parents('li'));
+        } else {
+            gather.jieAdmin[type] && gather.jieAdmin[type].call(this, othis.parent());
+        }
     });
 
     //异步渲染
@@ -179,13 +194,6 @@ layui.define('fly', function (exports) {
         //             layer.msg(res.msg);
         //         }
         //     });
-        // }
-        // , reply: function (li) { //回复
-        //     var val = dom.content.val();
-        //     var aite = '@' + li.find('.fly-detail-user cite').text().replace(/\s/g, '');
-        //     dom.content.focus()
-        //     if (val.indexOf(aite) !== -1) return;
-        //     dom.content.val(aite + ' ' + val);
         // }
         // 点赞回复
         praise: function () {

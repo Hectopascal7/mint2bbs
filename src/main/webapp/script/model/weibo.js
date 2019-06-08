@@ -14,6 +14,7 @@ function refresh() {
         async: false,
         success: function (data) {
             weibo = data.data;
+            lastCount = data.data.length;
         },
         error: function (data) {
             layer.msg("获取微博列表失败！");

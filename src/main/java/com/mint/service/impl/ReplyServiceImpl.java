@@ -68,13 +68,6 @@ public class ReplyServiceImpl implements IReplyService {
         List<HashMap<String, String>> replyList = new ArrayList<>();
         for (Reply reply : list) {
             HashMap<String, String> map = new HashMap<>();
-//            String rrid = reply.getRrid();
-//            List<Reply> rlist = new ArrayList<>();
-//            rlist.add(reply);
-//            if (!("".equals(rrid)) && !(null == rrid)) {
-//                Reply rreply = replyMapper.selectByPrimaryKey(rrid);
-//                rlist.add(rreply);
-//            }
             User user = userMapper.selectByPrimaryKey(reply.getUid());
             map.put("profile", user.getProfile());
             map.put("nickname", user.getNickname());
@@ -93,6 +86,15 @@ public class ReplyServiceImpl implements IReplyService {
                 map.put("praise", "1");
                 map.put("pid", pid);
             }
+
+            if (!StringUtils.isBlank(reply.getRrid())) {
+                Reply r_reply = replyMapper.selectByPrimaryKey(reply.getRrid());
+                User r_user = userMapper.selectByPrimaryKey(r_reply.getUid());
+                map.put("rreply", "1");
+                map.put("rcontent", r_reply.getContent());
+                map.put("rnickname", r_user.getNickname());
+            }
+
             if (!StringUtils.isBlank(sid)) {
                 String tb_name = sectionMapper.selectByPrimaryKey(sid).getTbname();
                 Post post = postMapper.getPostByTid(tid, tb_name);
@@ -145,11 +147,16 @@ public class ReplyServiceImpl implements IReplyService {
     }
 
     @Override
-    public ServerResponse reply(String tid, String content, String sid, HttpSession httpSession) {
+    public ServerResponse reply(String tid, String content, String rrid, String sid, HttpSession httpSession) {
+        System.out.println(rrid);
+        if (StringUtils.isBlank(rrid)) {
+            rrid = null;
+        }
+        System.out.println(rrid);
         String rid = UUID.randomUUID().toString();
         Date rtime = new Date(System.currentTimeMillis());
         User user = (User) httpSession.getAttribute(Const.CURRENT_USER);
-        Reply reply = new Reply(rid, tid, null, user.getUid(), rtime, 0, sid, content);
+        Reply reply = new Reply(rid, tid, rrid, user.getUid(), rtime, 0, sid, content);
         System.out.println(tid);
         Integer result = replyMapper.insert(reply);
         if (Const.OP_SUCCESS == result) {
@@ -159,25 +166,42 @@ public class ReplyServiceImpl implements IReplyService {
                 Post post = postMapper.getReceiveUidByTid(tid);
                 Section section = sectionMapper.selectByPrimaryKey(post.getSid());
                 postMapper.updatePostCount(section.getTbname(), post.getTid(), "rcount", 1);
-                uid = post.getUid();
-                otype = 30;
+                if (StringUtils.isBlank(rrid)) {
+                    uid = post.getUid();
+                    otype = Const.OPERATION_OBJECT_POST;
+                } else {
+                    Reply r_reply = replyMapper.selectByPrimaryKey(rrid);
+                    uid = r_reply.getUid();
+                    otype = Const.OPERATION_OBJECT_REPLY;
+                }
             } else {
                 System.out.println(goodMapper.selectByPrimaryKey(tid));
                 GoodWithBLOBs good = goodMapper.selectByPrimaryKey(tid);
-                uid = good.getUid();
-                otype = 50;
+                if (StringUtils.isBlank(rrid)) {
+                    uid = good.getUid();
+                    otype = Const.OPERATION_OBJECT_GOOD;
+                } else {
+                    Reply r_reply = replyMapper.selectByPrimaryKey(rrid);
+                    uid = r_reply.getUid();
+                    otype = Const.OPERATION_OBJECT_REPLY;
+                }
             }
             String mid = UUID.randomUUID().toString();
             System.out.println(user);
-            Message message = new Message(mid, user.getUid(), uid, Const.OPERATION_TYPE_REPLY, tid, rtime, otype, 0);
-            messageMapper.insert(message);
+            if (Const.OPERATION_OBJECT_REPLY == otype) {
+                Message message = new Message(mid, user.getUid(), uid, Const.OPERATION_TYPE_REPLY, rid, rtime, otype, 0);
+                messageMapper.insert(message);
+            } else {
+                Message message = new Message(mid, user.getUid(), uid, Const.OPERATION_TYPE_REPLY, tid, rtime, otype, 0);
+                messageMapper.insert(message);
+            }
             // 回复成功，回复用户薄荷币+1
             userMapper.updateUserPoint(user.getUid(), 1);
             // 回复成功，回复用户回复数+1
             countMapper.updateUserCount(user.getUid(), "rcount", 1);
             user.setPoint(user.getPoint() + 1);
             httpSession.setAttribute(Const.CURRENT_USER, user);
-            return ServerResponse.createBySuccessMessage("回复成功！薄荷币+1.");
+            return ServerResponse.createBySuccessMessage("回复成功！获得1个薄荷币。");
         } else {
             return ServerResponse.createByErrorMessage("回复失败！");
         }

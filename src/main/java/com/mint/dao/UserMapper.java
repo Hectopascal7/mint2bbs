@@ -42,4 +42,6 @@ public interface UserMapper {
 
     // 更新用户积分
     Integer updateUserPoint(@Param("uid") String uid, @Param("getPoint") Integer getPoint);
+
+    String getUidByNickname(String nickname);
 }

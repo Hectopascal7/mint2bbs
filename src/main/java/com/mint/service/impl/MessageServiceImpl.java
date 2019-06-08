@@ -42,7 +42,7 @@ public class MessageServiceImpl implements IMessageService {
             String suid = m.getSuid();
             User suser = userMapper.selectByPrimaryKey(suid);
             map.put("name", suser.getNickname());
-
+            map.put("suid", suid);
             if (Const.OPERATION_TYPE_REPLY == m.getMtype()) {
                 map.put("mtype", "回复");
             } else if (Const.OPERATION_TYPE_REPORT == m.getMtype()) {
@@ -87,6 +87,11 @@ public class MessageServiceImpl implements IMessageService {
                     map.put("tid", post.getTid());
                 }
 
+                if (!StringUtils.isBlank(reply.getRrid())) {
+                    Reply myReply = replyMapper.selectByPrimaryKey(reply.getRrid());
+                    map.put("mycontent", myReply.getContent());
+                }
+
                 if (Const.OPERATION_TYPE_REPORT == m.getMtype()) {
                     map.put("uid", reply.getUid());
                     map.put("nickname", userMapper.getNicknameByUid(reply.getUid()));
@@ -102,6 +107,7 @@ public class MessageServiceImpl implements IMessageService {
         return ServerResponse.createBySuccess(mlist);
     }
 
+    // 举报
     @Override
     public ServerResponse report(Integer mtype, String oid, Integer otype, HttpSession httpSession) {
         String mid = UUID.randomUUID().toString();

@@ -34,4 +34,6 @@ public interface IUserService {
     ServerResponse<String> uploadProfile(MultipartFile profile, HttpServletRequest httpServletRequest);
 
     ServerResponse updateUserProfile(String profile, HttpSession httpSession);
+
+    ServerResponse<String> getUidByNickname(String nickname);
 }

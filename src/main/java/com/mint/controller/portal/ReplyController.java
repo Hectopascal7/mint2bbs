@@ -62,8 +62,8 @@ public class ReplyController {
      */
     @RequestMapping(value = "reply.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse reply(String tid, String content, String sid, HttpSession httpSession) {
-        return iReplyService.reply(tid, content, sid, httpSession);
+    public ServerResponse reply(String tid, String content, String rrid, String sid, HttpSession httpSession) {
+        return iReplyService.reply(tid, content,rrid, sid, httpSession);
     }
 
     /**
@@ -74,8 +74,8 @@ public class ReplyController {
      */
     @RequestMapping(value = "getReplies.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<List<HashMap<String, String>>> getReplies(String tid, String sid,HttpSession httpSession) {
-        return iReplyService.getReplies(tid,sid,httpSession);
+    public ServerResponse<List<HashMap<String, String>>> getReplies(String tid, String sid, HttpSession httpSession) {
+        return iReplyService.getReplies(tid, sid, httpSession);
     }
 
 }

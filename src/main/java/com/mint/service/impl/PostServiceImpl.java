@@ -77,7 +77,7 @@ public class PostServiceImpl implements IPostService {
                     // 更新缓存信息
                     user.setPoint(user.getPoint() + 5);
                     httpSession.setAttribute(Const.CURRENT_USER, user);
-                    return ServerResponse.createBySuccessMessage("发帖成功！薄荷币+5.");
+                    return ServerResponse.createBySuccessMessage("发帖成功！获得5个薄荷币。");
                 } else {
                     return ServerResponse.createByErrorMessage("发帖成功！【帖子数增加】异常，请联系管理员。");
                 }

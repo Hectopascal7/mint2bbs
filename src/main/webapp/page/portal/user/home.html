@@ -61,6 +61,7 @@
     </p>
 </div>
 
+
 <!-- 最近的帖子模板-简略模式 -->
 <script type="text/html" id="m_latest_topic">
     <div class="fly-panel">
@@ -76,7 +77,11 @@
         <ul class="jie-row">
             {{# layui.each(d, function(index, item){ }}
             <li>
+                {{# if(item.isbest===1){ }}
                 <span class="fly-jing">精</span>
+                {{#} else {}}
+                <span class="fly-jing">帖</span>
+                {{# } }}
                 <a href="" class="jie-title">{{item.title}}</a>
                 <i>{{item.ptime}}</i>
                 <em class="layui-hide-xs">{{item.rcount}}阅/{{item.pcount}}赞</em>
@@ -100,7 +105,7 @@
         <ul class="jie-row">
             {{# layui.each(d, function(index, item){ }}
             <li>
-                {{# if(item.isbest===1){ }}
+                {{# if(item.isbest==="1"){ }}
                 <span class="fly-jing">精</span>
                 {{#} else {}}
                 <span class="fly-jing">帖</span>
@@ -264,7 +269,15 @@
         , base: '/script/mods/'
     }).extend({
         fly: 'index'
-    }).use('fly');
+    }).use(['fly', 'face'], function () {
+        var $ = layui.$
+            , fly = layui.fly;
+        // 如果你是采用模版自带的编辑器，你需要开启以下语句来解析。
+        $('.home-dacontent').each(function () {
+            var othis = $(this), html = othis.html();
+            othis.html(fly.content(html));
+        });
+    });
 </script>
 
 <script>
@@ -466,12 +479,19 @@
             }
         })
         // 模板引擎渲染
-        layui.use('laytpl', function () {
+        layui.use(['laytpl', 'fly'], function () {
             // 最近帖子渲染
             var more_reply_model = document.getElementById('m_more_reply').innerHTML;
             var more_reply_view = document.getElementById('latest_reply');
             laytpl(more_reply_model).render(more_reply, function (html) {
                 more_reply_view.innerHTML = html;
+            });
+
+            var fly = layui.fly;
+            // 如果你是采用模版自带的编辑器，你需要开启以下语句来解析。
+            $('.home-dacontent').each(function () {
+                var othis = $(this), html = othis.html();
+                othis.html(fly.content(html));
             });
         });
     }
@@ -494,13 +514,19 @@
             }
         })
         // 模板引擎渲染
-        layui.use('laytpl', function () {
+        layui.use(['laytpl', 'fly'], function () {
             // 最近回复渲染
             var latest_reply_model = document.getElementById('m_latest_reply').innerHTML;
             var latest_reply_view = document.getElementById('latest_reply');
             laytpl(latest_reply_model).render(latest_reply, function (html) {
                 latest_reply_view.innerHTML = html;
             });
+        });
+        var fly = layui.fly;
+        // 如果你是采用模版自带的编辑器，你需要开启以下语句来解析。
+        $('.home-dacontent').each(function () {
+            var othis = $(this), html = othis.html();
+            othis.html(fly.content(html));
         });
     }
 </script>

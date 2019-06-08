@@ -12,7 +12,7 @@ public interface IReplyService {
 
     ServerResponse<List<HashMap<String, String>>> getHomeMoreReply(String uid);
 
-    ServerResponse reply(String tid, String content, String sid, HttpSession httpSession);
+    ServerResponse reply(String tid, String content, String rrid, String sid, HttpSession httpSession);
 
     ServerResponse<List<HashMap<String,String>>> getReplies(String tid, String sid,HttpSession httpSession);
 }

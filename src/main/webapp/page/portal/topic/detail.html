@@ -87,7 +87,7 @@
                         <div class="layui-form-item layui-form-text">
                             <!--                            <a name="comment"></a>-->
                             <div class="layui-input-block">
-                                <textarea id="L_content" name="content" required lay-verify="required"
+                                <textarea id="content" name="content" required lay-verify="required"
                                           placeholder="请输入内容" class="layui-textarea fly-editor"
                                           style="height: 150px;"></textarea>
                             </div>
@@ -95,6 +95,7 @@
                         <div class="layui-form-item" style="text-align: center">
                             <input name="tid" class="layui-hide" id="tid">
                             <input name="sid" class="layui-hide" id="sid">
+                            <input name="rrid" class="layui-hide" id="rrid">
                             <button class="layui-btn" lay-filter="replyToPost" lay-submit id="replyBtn">提交回复</button>
                         </div>
                     </form>
@@ -170,7 +171,11 @@
         var $ = layui.$
             , fly = layui.fly;
         //如果你是采用模版自带的编辑器，你需要开启以下语句来解析。
-        $('.detail-body').each(function () {
+        $('.post-detail').each(function () {
+            var othis = $(this), html = othis.html();
+            othis.html(fly.content(html));
+        });
+        $('.reply-detail').each(function () {
             var othis = $(this), html = othis.html();
             othis.html(fly.content(html));
         });
@@ -333,7 +338,7 @@
     </div>
 
     <!--帖子内容-->
-    <div class="detail-body photos" style="border: 1px dashed lightblue;padding: 10px">
+    <div class="detail-body photos post-detail" style="border: 1px dashed lightblue;padding: 10px">
         {{d.content}}
     </div>
     <fieldset class="layui-elem-field layui-field-title" style="text-align: center">
@@ -374,14 +379,15 @@
     </fieldset>
 </script>
 
+<!--回复模板-->
 <script type="text/html" id="m_reply">
     {{# if(d.length===0){ }}
     <!-- 无数据时 -->
     <li class="fly-none">消灭零回复</li>
     {{# } }}
     {{# layui.each(d, function(index, item){ }}
-    <li data-id="111" class="jieda-daan">
-        <a name="item-1111111111"></a>
+    <li class="jieda-daan">
+        <a data-id="{{item.rid}}"></a>
         <div class="detail-about detail-about-reply">
             <a class="fly-avatar" href="">
                 <img src="{{item.profile}}"
@@ -411,7 +417,15 @@
             <!--<i class="iconfont icon-logo" title="最佳答案"></i>-->
         </div>
         <div class="detail-body reply-body photos">
-            {{item.content}}
+            {{# if(item.rreply==="1"){ }}
+            回复给【{{item.rnickname}}】：
+            <div class="home-dacontent reply-detail">
+                {{item.rcontent}}
+            </div>
+            {{# } }}
+            <div class="main-reply reply-detail">
+                {{item.content}}
+            </div>
         </div>
         <!--        <div class="reply-op">-->
         <!--            <span class="reply-praise praise-ok" >-->
@@ -655,7 +669,7 @@
 </script>
 
 <script>
-    layui.use('form', function () {
+    layui.use(['form'], function () {
         // 定义layer，用于打印提示信息
         var layer = layui.layer;
         // 监听表单提交，发布微博
@@ -696,6 +710,14 @@
                         laytpl(reply_model).render(replies, function (html) {
                             reply_view.innerHTML = html;
                         });
+                        var fly = layui.fly;
+                        //如果你是采用模版自带的编辑器，你需要开启以下语句来解析。
+                        $('.reply-detail').each(function () {
+                            var othis = $(this), html = othis.html();
+                            othis.html(fly.content(html));
+                        });
+                        $('#content').val("");
+                        $('#rrid').val("");
                     });
                 },
                 error: function (data) {

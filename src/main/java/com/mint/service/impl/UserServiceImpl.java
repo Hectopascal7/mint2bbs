@@ -211,6 +211,12 @@ public class UserServiceImpl implements IUserService {
         }
     }
 
+    @Override
+    public ServerResponse<String> getUidByNickname(String nickname) {
+        String uid = userMapper.getUidByNickname(nickname);
+        return ServerResponse.createBySuccess(uid);
+    }
+
 
     @Override
     public User getIndexUserInfo(String uid) {

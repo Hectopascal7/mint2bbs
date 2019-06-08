@@ -116,7 +116,15 @@
         , base: '/script/mods/'
     }).extend({
         fly: 'index'
-    }).use('fly');
+    }).use(['fly', 'face'], function () {
+        var $ = layui.$
+            , fly = layui.fly;
+        // 如果你是采用模版自带的编辑器，你需要开启以下语句来解析。
+        $('.reply-detail').each(function () {
+            var othis = $(this), html = othis.html();
+            othis.html(fly.content(html));
+        });
+    });
 </script>
 
 <!--用户中心模板-->
@@ -125,8 +133,8 @@
         <cite>{{ d.nickname }}</cite>
         {{# if(d.role === 1){ }}
         <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：管理员"></i>
-        <i class="layui-badge fly-badge-vip layui-hide-xs" title="薄荷币 {{d.point}}">Lv.3</i>
         {{# } }}
+        <i class="layui-badge fly-badge-vip layui-hide-xs" title="薄荷币 {{d.point}}">{{d.point}}MC</i>
         <img src="{{d.profile}}">
     </a>
     <dl class="layui-nav-child">
@@ -153,7 +161,7 @@
         {{# layui.each(d, function(index, item){ }}
         <li data-id="123">
             <h4>
-                <a href="/jump?username=Absolutely" target="_blank">
+                <a href="/page/portal/user/home.html?user={{item.suid}}" target="_blank">
                     <cite>{{item.name}}</cite>
                 </a>
                 【{{item.mtype}}】了
@@ -168,9 +176,20 @@
             </h4>
             <blockquote class="layui-elem-quote">
                 {{# if(item.otype === "回复"){ }}
-                {{item.content}}
+                <div>
+                    <div class="home-dacontent reply-detail" style="margin-top: 0px; padding: 0px 15px;">
+                        {{item.mycontent}}
+                    </div>
+                    <div class="reply-detail">
+                        {{item.content}}
+                    </div>
+                </div>
+                {{#} else if(item.otype === "帖子"){ }}
+                <a target="_blank" href="/page/portal/topic/detail.html?post={{item.tid}}&section={{item.sid}}">
+                    <cite>{{item.title}}</cite>
+                </a>
                 {{#} else {}}
-                <a target="_blank" href="/jie/8153.html/page/0/#item-1489505778669">
+                <a target="_blank" href="/page/portal/market/detail.html?gid={{item.gid}}">
                     <cite>{{item.title}}</cite>
                 </a>
                 {{# } }}

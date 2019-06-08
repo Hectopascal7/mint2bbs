@@ -542,8 +542,24 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function 
             return;
         }
         text = text.replace(/^@|（[\s\S]+?）/g, '');
+        var uid;
+        $.ajax({
+            type: 'post',
+            url: '/user/getUidByNickname.do',
+            data: {
+                nickname: text
+            },
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                uid = data.data
+            },
+            error: function (data) {
+                layer.msg("获取用户中心数据失败！");
+            }
+        })
         othis.attr({
-            href: '/jump?username=' + text
+            href: '/page/portal/user/home.html?user=' + uid
             , target: '_blank'
         });
     });

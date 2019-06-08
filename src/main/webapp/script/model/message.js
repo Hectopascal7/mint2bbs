@@ -38,6 +38,12 @@ layui.use(['layer', 'form', 'laytpl', 'upload', 'fly'], function () {
                     if (data.status = 1) {
                         layer.msg(data.msg, function () {
                             reloadMessageList();
+                            var fly = layui.fly;
+                            // 如果你是采用模版自带的编辑器，你需要开启以下语句来解析。
+                            $('.reply-detail').each(function () {
+                                var othis = $(this), html = othis.html();
+                                othis.html(fly.content(html));
+                            });
                         })
                     } else {
                         layer.msg(data.msg);
@@ -62,6 +68,12 @@ layui.use(['layer', 'form', 'laytpl', 'upload', 'fly'], function () {
                 success: function (data) {
                     layer.msg(data.msg, function () {
                         reloadMessageList();
+                        var fly = layui.fly;
+                        // 如果你是采用模版自带的编辑器，你需要开启以下语句来解析。
+                        $('.reply-detail').each(function () {
+                            var othis = $(this), html = othis.html();
+                            othis.html(fly.content(html));
+                        });
                     })
                 },
                 error: function (data) {

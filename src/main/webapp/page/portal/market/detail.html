@@ -89,7 +89,8 @@
                             </div>
                         </div>
                         <div class="layui-form-item" style="text-align: center">
-                            <input type="hidden" name="tid" id="tid">
+                            <input name="tid" class="layui-hide" id="tid">
+                            <input name="rrid" class="layui-hide" id="rrid">
                             <button class="layui-btn" lay-filter="replyToGood" lay-submit id="replyBtn">提交回复</button>
                         </div>
                     </form>
@@ -164,7 +165,7 @@
         var $ = layui.$
             , fly = layui.fly;
         // 如果你是采用模版自带的编辑器，你需要开启以下语句来解析。
-        $('.detail-body #content').each(function () {
+        $('.reply-detail').each(function () {
             var othis = $(this), html = othis.html();
             othis.html(fly.content(html));
         });
@@ -172,7 +173,7 @@
 </script>
 
 <script>
-    layui.use('form', function () {
+    layui.use(['form', 'fly'], function () {
         // 定义layer，用于打印提示信息
         var layer = layui.layer;
         // 监听表单提交，发布微博
@@ -212,6 +213,14 @@
                         laytpl(reply_model).render(replies, function (html) {
                             reply_view.innerHTML = html;
                         });
+                        //如果你是采用模版自带的编辑器，你需要开启以下语句来解析。
+                        var fly = layui.fly;
+                        $('.reply-detail').each(function () {
+                            var othis = $(this), html = othis.html();
+                            othis.html(fly.content(html));
+                        });
+                        $('#content').val("");
+                        $('#rrid').val("");
                     });
                 },
                 error: function (data) {
@@ -326,13 +335,13 @@
         </div>
         <!--个性签名-->
         <div class="detail-hits" id="LAY_jieAdmin" data-id="123">
-                        <span style="padding-right: 10px; color: #FF7200">
-                            {{# if(d.signature===null){ }}
-                            Ta还没有设置签名呢！
-                            {{#}else {}}
-                            {{d.signature}}
-                            {{# } }}
-                        </span>
+            <span style="padding-right: 10px; color: #FF7200">
+                {{# if(d.signature===null){ }}
+                Ta还没有设置签名呢！
+                {{#}else {}}
+                {{d.signature}}
+                {{# } }}
+            </span>
         </div>
     </div>
     <!--帖子内容-->
@@ -428,7 +437,7 @@
     {{# } }}
     {{# layui.each(d, function(index, item){ }}
     <li data-id="111" class="jieda-daan">
-        <a name="item-1111111111"></a>
+        <a data-id="{{item.rid}}"></a>
         <div class="detail-about detail-about-reply">
             <a class="fly-avatar" href="">
                 <img src="{{item.profile}}"
@@ -458,11 +467,15 @@
             <!--<i class="iconfont icon-logo" title="最佳答案"></i>-->
         </div>
         <div class="detail-body reply-body photos">
-            <!--            回复给【admin】：-->
-            <!--            <div class="home-dacontent">-->
-            <!--                【admin】：{{item.content}}-->
-            <!--            </div>-->
-            {{item.content}}
+            {{# if(item.rreply==="1"){ }}
+            回复给【{{item.rnickname}}】：
+            <div class="home-dacontent reply-detail">
+                {{item.rcontent}}
+            </div>
+            {{# } }}
+            <div class="main-reply reply-detail">
+                {{item.content}}
+            </div>
         </div>
         <!--        <div class="reply-op">-->
         <!--            <span class="reply-praise praise-ok" >-->
