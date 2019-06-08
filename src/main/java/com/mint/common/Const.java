@@ -31,6 +31,8 @@ public class Const {
     public static final Integer OPERATION_TYPE_BEST = 7;
     public static final Integer OPERATION_TYPE_REPLY = 8;
     public static final Integer OPERATION_TYPE_REPORT = 9;
+    public static final Integer OPERATION_TYPE_COLLECT = 10;
+    public static final Integer OPERATION_TYPE_PRAISE = 11;
 
     // 操作对象常量
     public static final Integer OPERATION_OBJECT_RESIDENT = 10;

@@ -106,8 +106,8 @@
         <cite>{{ d.nickname }}</cite>
         {{# if(d.role === 1){ }}
         <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：管理员"></i>
-        <i class="layui-badge fly-badge-vip layui-hide-xs" title="薄荷币 {{d.point}}">Lv.3</i>
         {{# } }}
+        <i class="layui-badge fly-badge-vip layui-hide-xs" title="薄荷币 {{d.point}}">{{d.point}}MC</i>
         <img src="{{d.profile}}">
     </a>
     <dl class="layui-nav-child">
@@ -215,15 +215,15 @@
             <img src="{{item.cover}}" alt="商品封面">
             <cite class="layui-btn layui-btn-primary layui-btn-small">看一看</cite>
         </a>
-        <h2><a href="/page/">[{{item.ndegree}}]{{item.title}}</a></h2>
+        <h2><a href="/page/portal/market/detail.html?gid={{item.gid}}">[{{item.ndegree}}]{{item.title}}</a></h2>
         <p class="fly-case-desc">{{item.content}}</p>
         <div class="fly-case-info">
-            <a href="../user/home.html" class="fly-case-user" target="_blank"><img
+            <a href="/page/portal/user/home.html?user={{item.uid}}" class="fly-case-user" target="_blank"><img
                     src="{{item.profile}}"></a>
             <p class="layui-elip" style="font-size: 16px;"><span style="color: #666;">{{item.nickname}}</span>
             </p>
-            <p><a class="fly-case-nums fly-case-active" href="javascript:;"
-                  style=" padding:0 0px; color: #01AAED;">{{item.ptime}}</a></p>
+            <p class="fly-case-nums fly-case-active" href="javascript:;"
+               style=" padding:0 0px; color: #01AAED;">{{item.ptime}}</p>
             {{# if(item.issaled === '1'){ }}
             <button class="layui-btn layui-btn-primary fly-case-active" data-type="praise">已出售</button>
             {{#} else {}}
@@ -234,6 +234,7 @@
     {{# }); }}
 </script>
 
+<!--商品发布页模板-->
 <script type="text/html" id="publishGood">
     <ul class="layui-form" style="margin: 30px;">
         <li class="layui-form-item">
@@ -288,7 +289,7 @@
                 <!--                    // <p id="demoText"></p>-->
                 <!--                    // </div>-->
             </div>
-            <div class="layui-form-mid layui-word-aux" id="preview">推荐尺寸：478*300，上传一张Ta的照片~</div>
+            <div class="layui-form-mid layui-word-aux" id="previewCover">上传一张Ta的照片~</div>
         </li>
         <li class="layui-form-item">
             <label class="layui-form-label" style="text-align: left">商品图片</label>
@@ -299,7 +300,7 @@
                     <i class="layui-icon">&#xe67c;</i>上传图片
                 </button>
             </div>
-            <div class="layui-form-mid layui-word-aux" id="preview">上传多张图片让别人更了解Ta~</div>
+            <div class="layui-form-mid layui-word-aux" id="previewPic">上传多张图片让别人更了解Ta~</div>
         </li>
         <li class="layui-form-item">
             <label class="layui-form-label"> </label>

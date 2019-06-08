@@ -81,6 +81,30 @@ function getMore() {
     });
 }
 
+function isToday(date) {
+    var today = moment().format("YYYY年MM月DD日");
+    var d = moment(date).format('YYYY年MM月DD日');
+    return d == today;
+}
+
+function isYesterday(date) {
+    var yesterday = moment().add(-1, 'days').format('YYYY年MM月DD日');
+    var d = moment(date).format('YYYY年MM月DD日');
+    return d == yesterday;
+}
+
+function point(days) {
+    if (days > 0 && days < 5) {
+        return 5;
+    } else if (days >= 5 && days < 15) {
+        return 10;
+    } else if (days >= 15 && days < 30) {
+        return 15;
+    } else {
+        return 20;
+    }
+}
+
 layui.use(['layer', 'form', 'laytpl'], function () {
 
     // 定义layer，用于打印提示信息
@@ -103,6 +127,35 @@ layui.use(['layer', 'form', 'laytpl'], function () {
             layer.msg("获取用户活跃榜失败！");
         }
     })
+
+    // 帖子列表数据
+    var checkin;
+    // ajax-获取帖子列表
+    $.ajax({
+        type: 'post',
+        url: '/checkin/getUserCheckinInfo.do',
+        dataType: 'json',
+        async: false,
+        success: function (data) {
+            checkin = data.data;
+        },
+        error: function (data) {
+            layer.msg("调取【获取签到信息】服务失败！");
+        }
+    })
+    // 模板引擎渲染
+    layui.use(['laytpl'], function () {
+        // 定义一个模板引擎
+        laytpl = layui.laytpl;
+        // 签到模块渲染
+        if (checkin !== null) {
+            var checkin_model = document.getElementById('m_checkin').innerHTML;
+            var checkin_view = document.getElementById('checkin');
+            laytpl(checkin_model).render(checkin, function (html) {
+                checkin_view.innerHTML = html;
+            });
+        }
+    });
 
     // 用户中心数据
     var user_info;

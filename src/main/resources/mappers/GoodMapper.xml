@@ -212,7 +212,7 @@
         <include refid="Blob_Column_List"/>
         from tb_good
         where isused=#{isused}
-        order by ${order}
+        order by ${order} desc
         limit #{limit}
     </select>
 
@@ -223,6 +223,7 @@
         <include refid="Blob_Column_List"/>
         from tb_good
         where uid = #{uid,jdbcType=VARCHAR}
+        order by ptime desc
     </select>
 
     <update id="updateGoodPrice">
@@ -241,7 +242,7 @@
         select
         <include refid="Base_Column_List"/>
         from tb_good
-        order by pcount desc
+        order by pcount,ptime desc
         limit 15
     </select>
     <update id="updateGoodPcount">

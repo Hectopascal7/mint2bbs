@@ -147,48 +147,6 @@ function getMore() {
     });
 }
 
-// 显示我的商品
-function showMyGood() {
-    var list_html = '';
-    // 商品列表数据
-    var good;
-    // ajax-获取商品列表
-    $.ajax({
-        type: 'post',
-        url: '/good/getMyGoodList.do',
-        dataType: 'json',
-        data: {
-            page: 1,
-            isused: 0,
-            order: 'ptime',
-            limit: 1
-        },
-        async: false,
-        success: function (data) {
-            good = data.data;
-            layui.use('laytpl', function () {
-                laytpl = layui.laytpl;
-                laytpl((document.getElementById('my_good_list').innerHTML)).render(good, function (html) {
-                    list_html = html;
-                });
-            });
-        },
-        error: function (data) {
-            layer.msg("获取您的商品列表失败！");
-        }
-    })
-    layer.open({
-        type: 1,
-        title: '我的商品',
-        id: 'myGoodList',
-        shade: 0.8,
-        shadeClose: true,
-        area: 'auto',
-        skin: 'layer-ext-case',
-        content: list_html
-    })
-}
-
 // 修改商品价格
 function updatePrice(gid) {
     var text = '<div class="layui-form-item" style="padding-top: 10px">\n' +
@@ -309,6 +267,7 @@ function showMyGoods() {
 //     })
 // }
 
+// 设置商品已售出
 function setGoodIsSaled(gid) {
     layer.confirm('设置商品已售出?', {icon: 3, title: '提示'}, function () {
         $.ajax({
@@ -367,11 +326,13 @@ layui.use(['layer', 'form', 'laytpl', 'upload', 'fly'], function () {
 
     // 商品图片是否上传校验
     form.verify({
+        // 封面必填校验
         cover: function (value) { //value：表单的值、item：表单的DOM对象
             if (value.trim().length == 0) {
                 return '还未上传商品封面！';
             }
         },
+        // 图片必填校验
         picture: function (value) { //value：表单的值、item：表单的DOM对象
             if (value.trim().length == 0) {
                 return '还未上传商品图片！';
@@ -381,7 +342,6 @@ layui.use(['layer', 'form', 'laytpl', 'upload', 'fly'], function () {
 
     var active = {
         publishGood: function (othis) {
-            console.log($('#gogogog').innerText);
             layer.open({
                 type: 1,
                 id: 'GoodPublishTab',
@@ -389,9 +349,13 @@ layui.use(['layer', 'form', 'laytpl', 'upload', 'fly'], function () {
                 area: (device.ios || device.android) ? ($(window).width() + 'px') : '660px',
                 content: $('#publishGood').text(),
                 success: function (layero, index) {
+
                     var covimg = layero.find('.cover');
                     var picimg = layero.find('.picture');
-                    var preview = $('#preview');
+                    var previewCover = $('#previewCover');
+                    var previewPic = $('#previewPic');
+
+                    // 商品封面上传
                     upload.render({
                         url: '/good/uploadGoodPic.do'
                         , elem: '#cover_upload'
@@ -407,13 +371,14 @@ layui.use(['layer', 'form', 'laytpl', 'upload', 'fly'], function () {
                             if (data.status == 0) {
                                 layer.msg(data.msg);
                                 covimg.val(data.data);
-                                preview.html('<a href="' + data.data + '" target="_blank" style="color: #5FB878;">封面已上传，点击可预览</a>');
+                                previewCover.html('<a href="' + data.data + '" target="_blank" style="color: #5FB878;">封面已上传，点击可预览。</a>');
                             } else {
                                 layer.msg(data.msg, {icon: 5});
                             }
                         }
                     });
 
+                    // 商品图片上传
                     upload.render({
                         url: '/good/uploadGoodPic.do'
                         , elem: '#pic_upload'
@@ -434,7 +399,7 @@ layui.use(['layer', 'form', 'laytpl', 'upload', 'fly'], function () {
                                 } else {
                                     picimg.val(picimg.val() + ";" + data.data);
                                 }
-                                // preview.html('<a href="' + data.data + '" target="_blank" style="color: #5FB878;">封面已上传，点击可预览</a>');
+                                previewPic.html('<a target="_blank" style="color: #5FB878;">图片已上传，可继续上传。</a>');
                             } else {
                                 layer.msg(data.msg, {icon: 5});
                             }
@@ -483,7 +448,6 @@ layui.use(['layer', 'form', 'laytpl', 'upload', 'fly'], function () {
 
                     form.on('submit(demo1)', function (data) {
                         console.log(data.field)
-
                         return false;
                     });
 
@@ -501,6 +465,7 @@ layui.use(['layer', 'form', 'laytpl', 'upload', 'fly'], function () {
                             layer.alert(res.msg, {
                                 icon: 1
                             })
+                            getGoodList();
                         });
                     });
                 }

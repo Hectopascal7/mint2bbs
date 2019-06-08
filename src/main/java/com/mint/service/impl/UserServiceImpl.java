@@ -115,7 +115,7 @@ public class UserServiceImpl implements IUserService {
                         }
                         // 生成用户信息对象
 //                        User user = new User(uid, loginid, password, nickname, r, s, b, 0, jointime, 1, profile);
-                        User user = new User(uid, loginid, password, nickname, r, s, b, "未设置", 0, jointime, "未设置", "Ta还没填写个性签名呢~", 1, profile);
+                        User user = new User(uid, loginid, password, nickname, r, s, b, "未设置", 0, jointime, "未设置", "Ta还没填写个性签名呢~", Const.USER_STATUS_NORMAL, profile);
                         // 将用户信息存入用户信息表
                         System.out.println(user);
                         int result = userMapper.insertSelective(user);

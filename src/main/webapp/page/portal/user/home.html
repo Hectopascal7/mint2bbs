@@ -193,8 +193,8 @@
         <cite>{{ d.nickname }}</cite>
         {{# if(d.role === 1){ }}
         <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：管理员"></i>
-        <i class="layui-badge fly-badge-vip layui-hide-xs" title="薄荷币 {{d.point}}">{{d.point}}PT</i>
         {{# } }}
+        <i class="layui-badge fly-badge-vip layui-hide-xs" title="薄荷币 {{d.point}}">{{d.point}}PT</i>
         <img src="{{d.profile}}">
     </a>
     <dl class="layui-nav-child">
@@ -216,7 +216,9 @@
 <!-- 用户信息模板 -->
 <script id="m_user" type="text/html">
     <img src="{{d.profile}}" alt="橙色薄荷°">
+    {{# if(d.role === 1){ }}
     <i class="iconfont icon-renzheng" title="薄荷社区官方认证"></i>
+    {{# } }}
     <h1>
         {{ d.nickname }}
         {{# if(d.sex === 1){ }}
@@ -225,7 +227,7 @@
         <i class="iconfont icon-nv"></i>
         {{# } }}
         <!-- <i class="iconfont icon-nv"></i>  -->
-        {{# if(d.role !== 1){ }}
+        {{# if(d.role === 1){ }}
         <i class="layui-badge fly-badge-vip">管理员</i>
         {{# } }}
         <!--        <span style="color:#c00;">（管理员）</span>-->

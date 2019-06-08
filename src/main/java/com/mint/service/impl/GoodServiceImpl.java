@@ -86,6 +86,7 @@ public class GoodServiceImpl implements IGoodService {
         for (GoodWithBLOBs good : list) {
             HashMap<String, String> map = new HashMap<>();
             User user = userMapper.selectByPrimaryKey(good.getUid());
+            map.put("uid", user.getUid());
             map.put("nickname", user.getNickname());
             map.put("profile", user.getProfile());
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
